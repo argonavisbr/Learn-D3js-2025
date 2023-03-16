@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Hello World D3: animated transition</title>
+    <script type="module" src="https://d3js.org/d3.v7.min.js"></script>
+</head>
+
+<body>
+<svg id="chart" width="600" height="200"></svg>
+<script type="module">
+    const array = [100, 200, 300, 350, 375, 400, 500];
+
+    d3.select("#chart")
+        .selectAll("circle")
+        .data(array).join("circle")
+        .attr("r", "10").attr("cy", 100).attr("cx", d => d);
+
+    /* A function to update the dataset */
+    function update(dataset) {
+        d3.select("#chart").selectAll("circle")
+            .data(dataset)
+            .transition().duration(1000)   // spend 1 second gradually changing the attributes
+            .attr("r", 5)
+            .attr("cx", d => d)
+            .style("fill", "red")
+    }
+
+    const newArray = [225, 425, 125, 50, 450, 75, 325]; // new values for the data
+    setTimeout(update, 2000, newArray); // will call update with parameter newArray after 2 seconds
+
+</script>
+</body>
+</html>

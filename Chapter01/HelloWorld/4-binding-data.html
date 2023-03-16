@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Hello World D3: binding data to SVG</title>
+    <script type="module" src="https://d3js.org/d3.v7.min.js"></script>
+</head>
+
+<body>
+<svg id="chart" width="600" height="200"></svg>
+<script type="module">
+    // array with different x coordinate values for the SVG <circle>
+    const array = [100, 200, 300, 350, 375, 400, 500];
+
+    d3.select("#chart")             // selects the <svg> element by its id
+            .selectAll("circle")    // declares a selection of <circle> elements
+            .data(array)            // sets the data (now an array containing 7 integers)
+            .join("circle")         // binds a <circle> to EACH data element, and
+              .attr("r", 10)        // sets its r attribute (radius) to 10 pixels
+              .attr("cy", 100)      // sets its cy attribute (vertical position) to 100 pixels
+              .attr("cx", d => d)   // sets its cx attribute to the current data element of the array
+
+            // Note that everything after .join() repeats for each element of the array.
+</script>
+
+</body>
+</html>

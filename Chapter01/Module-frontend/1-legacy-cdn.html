@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>D3: Legacy import - CDN library</title>
+
+    <!-- CDN URL:
+         Use the global 'd3' handle to access the entire library.
+         The version is determined in the URL.
+         This will work in any browser.
+         Attribute type="module" is ignored in older browsers
+         Inline <script> blocks that use the module must also contain the type="module" attribute
+         or the "defer" attribute if script is loaded from an external file with src.
+    -->
+    <script type="module" src="https://d3js.org/d3.v7.min.js"></script>
+
+</head>
+
+<body>
+<svg id="chart" width="600" height="200"></svg>
+<script type="module">
+    const array = [100, 200, 300, 350, 375, 400, 500];
+
+    d3.select("#chart")
+        .selectAll("circle")
+        .data(array).join("circle")
+        .attr("r", "10").attr("cy", 100).attr("cx", d => d);
+
+    function update(dataset) {
+        d3.select("#chart").selectAll("circle")
+            .data(dataset)
+            .transition().duration(1000)
+            .attr("r", 5)
+            .attr("cx", d => d)
+            .style("fill", "red")
+    }
+
+    const newArray = [225, 425, 125, 50, 450, 75, 325];
+    setTimeout(update, 2000, newArray);
+
+</script>
+</body>
+</html>

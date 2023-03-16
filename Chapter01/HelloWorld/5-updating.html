@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Hello World D3: updating SVG with new data</title>
+    <script type="module" src="https://d3js.org/d3.v7.min.js"></script>
+</head>
+
+<body>
+<svg id="chart" width="600" height="200"></svg>
+<script type="module">
+    const array = [100, 200, 300, 350, 375, 400, 500];
+    d3.select("#chart")
+            .selectAll("circle")
+            .data(array).join("circle")
+            .attr("r", "10").attr("cy", 100).attr("cx", d => d);
+
+    /* A function to update the dataset */
+    function update(dataset) {
+        d3.select("#chart").selectAll("circle")   // select all <circle> elements from the #chart <svg>
+            .data(dataset)                        // replace the data with a new data array
+            .attr("r", 5)                         // change the r attribute of all <circle> elements
+            .attr("cx", d => d)                   // change the cx attribute of all <circle> elements
+            .style("fill", "red")                 // set the CSS fill attribute with the value "red"
+    }
+
+    const newArray = [225, 425, 125, 50, 450, 75, 325]; // new values for the data
+    setTimeout(update, 2000, newArray); // will call update with parameter newArray after 2 seconds
+
+</script>
+
+</body>
+</html>

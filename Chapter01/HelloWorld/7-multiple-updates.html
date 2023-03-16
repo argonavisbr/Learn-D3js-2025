@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Hello World D3: example with 2 updates</title>
+    <script type="module" src="https://d3js.org/d3.v7.min.js"></script>
+</head>
+
+<body>
+<svg id="chart" width="600" height="200"></svg>
+
+<script type="module">
+
+    /* Initializes and updates the dataset */
+    function update(dataset, color, radius) {
+        const selection = d3.select("#chart")
+            .selectAll("circle")  // select any existing circles and bind to dataset
+            .data(dataset);
+
+        selection.join("circle")  // add or remove circles if necessary based on dataset
+            .merge(selection)     // merge with the previous selection
+            .attr("cy", 100)      // before the transition (don't animate y position changes)
+            .transition().duration(1000)   // spend 1 second gradually changing the following attributes
+            .attr("r", radius)
+            .attr("cx", d => d)
+            .style("fill", color);
+    }
+
+    const array1 = [100, 200, 300, 350]; // initial values
+    update(array1, "black", 10);
+
+    const array2 = [75, 150, 225, 300, 375, 450, 525]; // new values for the data
+    setTimeout(update, 2000, array2, "red", 5); // will call update with parameter newArray after 2 seconds
+
+    const array3 = [50, 200]; // new values for the data
+    setTimeout(update, 4000, array3, "blue", 15); // will call update with parameter newArray after 2 seconds
+
+</script>
+
+</body>
+</html>
