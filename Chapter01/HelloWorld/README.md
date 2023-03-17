@@ -4,28 +4,36 @@ Simple examples using D3 and HTML to test your installation.
 
 ## 1) Description of each file in this folder
 
-1-*svg-circle.html*
+`1-svg-circle.html`
+
     Drawing a circle in a HTML page using SVG.
 
-2-*d3-append.html*
+`2-d3-append.html`
+    
     Dynamically drawing a circle in a HTML page using D3.
 
-3-*binding-data.html*
+`3-binding-data.html`
+    
     Binding a piece of data to the dynamically generated SVG code and drawing a circle using that data.
 
-4-*binding-data.html*
+`4-binding-data.html`
+    
     Binding an array of several elements to generate several circles in different places.
 
-5-*updating.html*
+`5-updating.html`
+    
     Updating the data and forcing the circles to be immediately repositioned according to the new data.
 
-6-*transition.html*
+`6-transition.html`
+    
     Animating the update so that the circles take one second to move to their new places.
 
-7-*multiple-updates.html** [EXTRA EXAMPLE]
+`7-multiple-updates.html` [EXTRA EXAMPLE]
+    
     Using a single function for many updates, allowing the amount of data to change.
 
-8-*enter-exit.html** [EXTRA EXAMPLE]
+`8-enter-exit.html` [EXTRA EXAMPLE]
+    
     Same as previous example, breaking down the general update pattern (enter, exit and merge selections).
 
     
@@ -35,7 +43,7 @@ Simple examples using D3 and HTML to test your installation.
 Any IDE or code editor that you use to edit HTML files can be used.
 
 You need to be connected to the Internet, since all examples download the D3 library from a CDN (see other ways to
-load the library in the /Module-frontend folder).
+load the library in the `/Module-frontend` folder).
 
 You also need to serve the files through a local web server. Most examples won't work if you simply open the file in a
 browser. You can get one automatically if you use an IDE such as Visual Studio Code (with the Live Preview extension),
@@ -59,7 +67,7 @@ You can now preview your files using http://localhost:8080/
 You can also cut and paste the examples in a cloud-based IDE such as CodePen or JSFiddle, which are popular, very
 easy to use and require minimum configuration (you just need to configure it informing the CDN URL of the D3 library).
 You can start by forking the following examples, which are already set up. They contain the code from
-Chapter01/HelloWorld/2-d3-append.html:
+`Chapter01/HelloWorld/2-d3-append.html`:
 
 - JSFiddle: https://jsfiddle.net/helderdarocha/93fty6zh/1/
 - CodePen:  https://codepen.io/helderdarocha/pen/xxazVeN
