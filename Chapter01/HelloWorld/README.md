@@ -4,37 +4,37 @@ Simple examples using D3 and HTML to test your installation.
 
 ## 1) Description of each file in this folder
 
-`1-svg-circle.html`
+__`1-svg-circle.html`__
 
-    Drawing a circle in a HTML page using SVG.
+Drawing a circle in a HTML page using SVG.
 
-`2-d3-append.html`
+__`2-d3-append.html`__
     
-    Dynamically drawing a circle in a HTML page using D3.
+Dynamically drawing a circle in a HTML page using D3.
 
-`3-binding-data.html`
+__`3-binding-data.html`__
     
-    Binding a piece of data to the dynamically generated SVG code and drawing a circle using that data.
+Binding a piece of data to the dynamically generated SVG code and drawing a circle using that data.
 
-`4-binding-data.html`
+__`4-binding-data.html`__
     
-    Binding an array of several elements to generate several circles in different places.
+Binding an array of several elements to generate several circles in different places.
 
-`5-updating.html`
+__`5-updating.html`__
     
-    Updating the data and forcing the circles to be immediately repositioned according to the new data.
+Updating the data and forcing the circles to be immediately repositioned according to the new data.
 
-`6-transition.html`
+__`6-transition.html`__
     
-    Animating the update so that the circles take one second to move to their new places.
+Animating the update so that the circles take one second to move to their new places.
 
-`7-multiple-updates.html` [EXTRA EXAMPLE]
+__`7-multiple-updates.html`__ [EXTRA EXAMPLE]
     
-    Using a single function for many updates, allowing the amount of data to change.
+Using a single function for many updates, allowing the amount of data to change.
 
-`8-enter-exit.html` [EXTRA EXAMPLE]
+__`8-enter-exit.html`__ [EXTRA EXAMPLE]
     
-    Same as previous example, breaking down the general update pattern (enter, exit and merge selections).
+Same as previous example, breaking down the general update pattern (enter, exit and merge selections).
 
     
 
@@ -64,7 +64,7 @@ You can now preview your files using http://localhost:8080/
 
 ## 3) Using a cloud-based editor
 
-You can also cut and paste the examples in a cloud-based IDE such as CodePen or JSFiddle, which are popular, very
+You can also cut and paste the examples in a cloud-based IDE such as _CodePen_ or _JSFiddle_, which are popular, very
 easy to use and require minimum configuration (you just need to configure it informing the CDN URL of the D3 library).
 You can start by forking the following examples, which are already set up. They contain the code from
 `Chapter01/HelloWorld/2-d3-append.html`:
@@ -80,7 +80,7 @@ You can, of course, use any other cloud-based IDE or sandbox of your choice.
 
 ## 4) Observable notebooks
 
-Observable notebooks are a playground where you can run code interactively. You can use them to experiment with code
+_Observable_ notebooks are a playground where you can run code interactively. You can use them to experiment with code
 and see the results immediately. You can the examples from this chapter here:
 
 https://observablehq.com/d/90d319473e8012ae
