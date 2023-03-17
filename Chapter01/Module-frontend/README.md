@@ -2,7 +2,7 @@
 
 How to import the D3 library using frontend JavaScript or HTML.
 
-##2) Description of each file
+##2) Description of each file in this folder
 
 1-legacy-cdn.html
     Loads D3 library from a CDN using the <script> tag. The type="module" attribute allows modern browsers to defer
