@@ -2,15 +2,18 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>D3: Legacy import - CDN library</title>
-
-    <script type="module" src="https://d3js.org/d3.v7.min.js"></script>
-
+    <title>D3: Module import - CDN library</title>
 </head>
-
 <body>
 <svg id="chart" width="600" height="200"></svg>
 <script type="module">
+    // Import individual modules
+
+    const d3 = await Promise.all([
+        import("https://cdn.skypack.dev/d3-transition@3"),
+        import("https://cdn.skypack.dev/d3-selection@3")
+    ]).then(d3 => Object.assign({}, ...d3));
+
     const array = [100, 200, 300, 350, 375, 400, 500];
 
     d3.select("#chart")
@@ -29,7 +32,6 @@
 
     const newArray = [225, 425, 125, 50, 450, 75, 325];
     setTimeout(update, 2000, newArray);
-
 </script>
 </body>
 </html>

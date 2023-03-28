@@ -14,16 +14,18 @@
     d3.select("#chart")
         .selectAll("circle")
         .data(array).join("circle")
-        .attr("r", "10").attr("cy", 100).attr("cx", d => d);
+           .attr("r", "10")
+           .attr("cy", 100)
+           .attr("cx", d => d);
 
     /* A function to update the dataset */
     function update(dataset) {
         d3.select("#chart").selectAll("circle")
             .data(dataset)
-            .transition().duration(1000)   // spend 1 second gradually changing the attributes
-            .attr("r", 5)
-            .attr("cx", d => d)
-            .style("fill", "red")
+               .transition().duration(1000)   // spend 1 second gradually changing the following attributes
+               .attr("r", 5)
+               .attr("cx", d => d)
+               .style("fill", "red")
     }
 
     const newArray = [225, 425, 125, 50, 450, 75, 325]; // new values for the data
