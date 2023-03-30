@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>JavaScript examples</title>
+</head>
+<body>
+<h1>JavaScript examples: objects </h1>
+<p>Open developer console to see results. Open source code to see comments</p>
+<script>
+
+    console.log("You can navigate in the object using your browser's JavaScript console.")
+
+    // An object is an unordered collection of data.
+    // Values in an object are stored as key-value pairs.
+
+    const color = {name: "red", code: 0xff0000};
+    const empty = {};
+
+    console.log(color);
+    console.log(empty);
+
+
+    // Objects can contain other objects and arrays, which can also contain objects.
+    // They can also contain functions (which have access to local properties and behave as methods):
+    const city = {name: "Sao Paulo",
+        location: {latitude: 23.555, longitude: 46.63},
+        airports: ["SAO","CGH","GRU","VCP"]};
+    const circle = {
+        x: 200,
+        y: 100,
+        r: 50,
+        area: function() {
+            return this.r * this.r * 3.14;
+        }
+    }
+
+    console.log(city);
+    console.log(circle);
+
+
+    // A typical dataset used by a simple chart usually consists of an array of objects.
+
+    const array = [
+        {continent: "Asia", areakm2: 43820000},
+        {continent: "Europe", areakm2: 10180000},
+        {continent: "Africa", areakm2: 30370000},
+        {continent: "South America", areakm2: 17840000},
+        {continent: "Oceania", areakm2: 9008500},
+        {continent: "North America", areakm2: 24490000}
+    ];
+
+    console.log(array);
+
+    // You can access the properties of an object using the dot operator or brackets containing the key as a string.
+
+    const latitude = city.location.latitude;
+    const oceania = array[4].continent;
+    const code = color["code"];
+    circle.r = 100;
+    const area = circle.area();
+
+    console.log(`city.location.latitude = ${city.location.latitude}`);
+    console.log(`array[4].continent = ${array[4].continent}`);
+    console.log(`color["code"] = ${color["code"]}`);
+    console.log(`circle.area() = ${circle.area()}`);
+
+    // You can also loop over the properties of an object:
+    console.log("Looping over properties of circle")
+    for(let key in circle) {
+        console.log(key + ": " + circle[key]);
+    }
+
+    // Properties and functions can be added to objects:
+
+    const map = {};
+    function getCoords(coords) {
+        map.latitude = coords.lat;   // adding a latitude property
+        map.longitude = coords.lng;  // adding a longitude property
+    }
+    console.log(map);
+
+    // Objects can also be created with a constructor:
+
+    const now = new Date();
+    console.log(now);
+
+    // JSON is a data format based on JavaScript objects.
+    // It has the same structure as JavaScript object but the property keys have to be placed within double quotes:
+
+    const json = {"name": "Sao Paulo",
+                  "location": {"latitude": 23.555, "longitude": 46.63},
+                  "airports": ["SAO","CGH","GRU","VCP"]};
+    console.log(json);
+
+</script>
+</body>
+</html>

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://cdn.jsdelivr.net/npm/d3-selection@3"></script>
+</head>
+<style>
+    svg { border: solid 1px lightgray; }
+    #bars { fill: red;}
+    #round { opacity: .7; fill: blue; }
+</style>
+<body>
+<script>
+    const svg = d3.select("body")
+        .append("svg")
+        .attr("width", 600)
+        .attr("height", 300);
+
+    const bars = svg.append("g")
+        .attr("id", "bars")
+        .attr("transform", "translate(0,100) rotate(-90, 100, 150)");
+
+    bars.append("rect")
+        .attr('x', 100)
+        .attr('y', 150)
+        .attr('height', 20)
+        .attr('width', 150);
+    bars.append("rect")
+        .attr('x', 100)
+        .attr('y', 180)
+        .attr('height', 20)
+        .attr('width', 100);
+    bars.append("rect")
+        .attr('x', 100)
+        .attr('y', 210)
+        .attr('height', 20)
+        .attr('width', 200);
+
+    const round = svg.append("g")
+        .attr("id", "round")
+        .attr("transform", "translate(200,100) scale(.3)");
+
+    round.append("circle")
+        .attr('cx', 280)
+        .attr('cy', 220)
+        .attr('r', 50);
+    round.append("ellipse")
+        .attr('cx', 150)
+        .attr('cy', 90)
+        .attr('rx', 80)
+        .attr('ry', 50);
+</script>
+
+</body>
+</html>

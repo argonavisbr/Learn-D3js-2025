@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>JavaScript examples</title>
+</head>
+<body>
+<h1>JavaScript examples: arrays</h1>
+<p>Open developer console to see results. Open source code to see comments</p>
+<script>
+
+    // Declaring arrays
+    const colors = ["red", "blue", "green"];
+    const geocoords = [27.2345, 34.9937];
+    const numbers = [1,2,3,4,5,6];
+    const empty = [];
+
+    console.log(colors);
+    console.log(geocoords);
+    console.log(numbers);
+    console.log(empty);
+
+    // You can access the items of an array using an array index, which starts counting from zero:
+    const blue     = colors[1];    // retrieves the second element
+    const latitude = geocoords[0]; // retrieves the first element
+
+    console.log(`colors[1]: ${blue}`);
+    console.log(`geocoords[0]: ${latitude}`);
+
+    // Each array has a length property that returns the number of elements.
+    // It’s very useful to iterate using the array index:
+    for(let index = 0; index < colors.length; index++) {
+        console.log(colors[index]);
+    }
+
+    //You can also loop over the elements of an array using the of operator (introduced in ES2015),
+    // when you don’t need the index:
+    for(let color of colors) {
+        console.log(color);
+    }
+
+    // You can use the forEach() method, which runs a function for each element
+    // and also allows optional access to the index, item and array inside this function:
+    colors.forEach( (value, index, colors) => {
+        console.log(`value: ${value}, index: ${index}, array[index]: ${colors[index]}`);
+    });
+
+    // Multi-dimensional arrays are created in JavaScript as arrays of arrays:
+    const points = [[200,300], [150,100], [100,300]];
+
+    //You can retrieve individual items like this:
+    const firstPoint = points[0];
+    const middleX = points[1][0];
+
+    console.log(`points[0]: [${firstPoint}]`);
+    console.log(`points[1][0]: ${middleX}`);
+
+</script>
+</body>
+</html>

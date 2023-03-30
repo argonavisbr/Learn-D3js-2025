@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://cdn.jsdelivr.net/npm/d3-selection@3"></script>
+</head>
+<style>
+    svg {
+        border: solid 1px lightgray;
+    }
+</style>
+<body>
+<h2>SVG gradients</h2>
+<script>
+    const svg = d3.select("body")
+        .append("svg")
+        .attr("width", 600)
+        .attr("height", 300);
+
+    const defs = svg.append("defs");
+
+    const linearGradient = defs.append("linearGradient")
+        .attr("id","rainbow")
+        .attr("x2",1);
+    linearGradient.append("stop")
+        .attr("offset", "0%")
+        .attr("stop-color", "rgb(255,0,0)");
+    linearGradient.append("stop")
+        .attr("offset", "25%")
+        .attr("stop-color", "rgb(255,255,64)");
+    linearGradient.append("stop")
+        .attr("offset", "50%")
+        .attr("stop-color", "rgb(64,255,64)");
+    linearGradient.append("stop")
+        .attr("offset", "75%")
+        .attr("stop-color", "rgb(64,64,255)");
+    linearGradient.append("stop")
+        .attr("offset", "100%")
+        .attr("stop-color", "rgb(128,0,255)");
+
+    const radialGradient = defs.append("radialGradient")
+        .attr("id","glow")
+        .attr("cx",0.35)
+        .attr("cy",0.35)
+        .attr("r",1);
+    radialGradient.append("stop")
+        .attr("offset", "0")
+        .attr("stop-color", "rgb(255,255,255)");
+    radialGradient.append("stop")
+        .attr("offset", "0.5")
+        .attr("stop-color", "rgb(0,128,255)");
+    radialGradient.append("stop")
+        .attr("offset", "1")
+        .attr("stop-color", "rgb(128,0,255)");
+
+    svg.append("rect")
+        .attr("x", 0)
+        .attr("y", 0)
+        .attr("width", 200)
+        .attr("height", 200)
+        .attr("transform", "translate(50,50)")
+        .style("fill", "url(#rainbow)");
+
+    svg.append("circle")
+        .attr("cx", 100)
+        .attr("cy", 100)
+        .attr("r", 100)
+        .attr("transform", "translate(300,50)")
+        .style("fill", "url(#glow)");
+</script>
+</body>
+</html>

@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>JavaScript examples</title>
+</head>
+<body>
+<h1>JavaScript examples: array methods</h1>
+<p>Open developer console to see results. Open source code to see comments</p>
+<script>
+    console.log("*** Functions that modify the array ***");
+
+    // 1. push()
+    let colors = ["red", "blue", "green"];
+    console.log(`Before colors.push("yellow"): [${colors}]`);
+
+    // Push an element to the tail of the array
+    colors.push("yellow"); // Result: ["red", "blue", "green", "yellow"];
+
+    console.log(`After: [${colors}]`);
+
+
+    // 2. pop()
+    colors = ["red", "blue", "green"];
+    console.log(`Before colors.pop(): [${colors}]`);
+
+    // Remove an element from the tail of the array
+    const popped = colors.pop(); // Result: ["red", "blue"];
+
+    console.log(`Popped item: ${popped}`);
+    console.log(`Array after colors.pop(): [${colors}]`);
+
+
+    // 3. unshift()
+    colors = ["red", "blue", "green"];
+    console.log(`Before colors.unshift(): [${colors}]`);
+
+    // Insert an element to the head of the array
+    colors.unshift("yellow"); // Result: ["yellow", "red", "blue", "green"];
+
+    console.log(`Array after colors.unshift(): [${colors}]`);
+
+
+    // 4. shift()
+    colors = ["red", "blue", "green"];
+    console.log(`Before colors.shift(): [${colors}]`);
+
+    // Remove an element from the head of the array
+    const shifted = colors.shift(); // ["blue", "green"];
+
+    console.log(`Shifted item: ${shifted}`);
+    console.log(`Array after colors.shift(): [${colors}]`);
+
+
+    // 5. reverse()
+    let numbers = [1,2,3,4,5,6];
+    console.log(`Before numbers.reverse(): [${numbers}]`);
+
+    numbers.reverse();
+
+    console.log(`After numbers.reverse(): [${numbers}]`);
+
+
+    // 6. sort()
+    numbers = [1,2,3,4,5,6];
+    console.log(`Before numbers.sort((a,b) => b - a): [${numbers}]`);
+
+    numbers.sort((a,b) => b - a);  // numbers = [6,5,4,3,2,1]
+
+    console.log(`After numbers.sort((a,b) => b - a): [${numbers}]`);
+
+
+    // 7. splice(start, removeCount, addItem...)
+    numbers = [1,2,3,4,5,6];
+    console.log(`Before splice(2,3): [${numbers}]`);
+
+    // Extract the sub-array starting from the third position (2)
+    const s1 = numbers.splice(2); // s1 = [3,4,5,6] numbers = [1,2]
+    console.log(`After splice(2). Original array: [${numbers}], Returned result: [${s1}]`);
+
+    // Extract the 2-element sub-array starting from the third position (2)
+    numbers = [1,2,3,4,5,6];
+    const s2 = numbers.splice(2,2); // s2 = [3,4] numbers = [1,2,5,6]
+    console.log(`After splice(2,2). Original array: [${numbers}], Returned result: [${s2}]`);
+
+    // Insert a single item (number 9) before the third position (2)
+    numbers = [1,2,3,4,5,6];
+    const s3 = numbers.splice(2,0,9); // s3 = [1,2,9,3,4,5,6] numbers = []
+    console.log(`After splice(2,0,9). Original array: [${numbers}], Returned result: [${s3}]`);
+
+    // Extract the 2-element sub-array starting from the third position (2),
+    // then insert a single item (number 9) in it's place
+    numbers = [1,2,3,4,5,6];
+    const s4 = numbers.splice(2,2,9); // s4 = [1,2,9,5,6] numbers = [3,4]
+    console.log(`After splice(2,2,9). Original array: [${numbers}], Returned result: [${s4}]`);
+
+    // Extract the 2-element sub-array starting from the third position (2),
+    // then insert three items (numbers 9, 99 and 999) in it's place
+    numbers = [1,2,3,4,5,6];
+    const s5 = numbers.splice(2,2,9,99,999); // s5 = [1,2,9,99,999,5,6] numbers = [3,4]
+    console.log(`After splice(2,2,9). Original array: [${numbers}], Returned result: [${s5}]`);
+
+
+</script>
+</body>
+</html>

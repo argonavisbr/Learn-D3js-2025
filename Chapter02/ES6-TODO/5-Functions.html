@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>JavaScript examples</title>
+</head>
+<body>
+<h1>JavaScript examples: functions</h1>
+<p>Open developer console to see results. Open source code to see comments</p>
+<script>
+
+    // Functions are created in JavaScript using the function keyword:
+
+    // Declaring function with a name
+    function f() {
+        console.log('function1', this);
+    }
+
+    // Declaring anonymous function assigned to constant
+    const g = function(name) {
+        console.log('function ' + name, this);
+    }
+
+    // Calling
+    f(); // calls f
+    g('test'); // calls g() with a parameter
+
+    // The functions above are part of the Global object (Window, in a browser)
+    // You can access it in the function with the 'this' reference.
+
+    // A function can be placed in the scope of any object, behaving as a method.
+    // The 'this' reference in the following code refers to the obj object and
+    // can access its members using this.a and this.b:
+
+    const obj = {a: 5, b: 6}
+
+    // Declaring anonymous function assigned to member property of obj
+    obj.method = function() {
+        console.log('method', `'this' reference: ${this}`);
+    }
+
+    // Calling the method
+    obj.method();
+
+    // Arrow functions were introduced in ES2015.
+    // Code that uses this.a and this.b will not find any data in the object
+    // and will return undefined (because the 'this' reference in arrow functions
+    // doesn't reference obj, but the global Window object).
+
+    // Declaring
+    obj.arrow = () => console.log('arrow', `'this' reference: ${this}`);
+
+    // Calling
+    obj.arrow();
+
+</script>
+</body>
+</html>

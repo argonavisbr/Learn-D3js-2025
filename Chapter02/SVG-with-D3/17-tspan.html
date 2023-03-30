@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>SVG text using D3</title>
+    <script src="https://cdn.jsdelivr.net/npm/d3-selection@3"></script>
+</head>
+<style>
+    text {font-size: 12pt;}
+    svg {border: solid lightgray 1px}
+</style>
+<body>
+<script>
+    const svg = d3.select("body")
+        .append("svg")
+        .attr("width", 600)
+        .attr("height", 200);
+
+    const g = svg.append("g")
+                 .attr("transform","translate(50,50)");
+
+    const word = g.append("text")
+                  .attr("x", 5)
+                  .attr("y", 15);
+    word.append("tspan")
+        .attr("dx", 0)
+        .attr("dy", 0)
+        .text("One");
+
+    word.append("tspan")
+        .attr("dy", 15)
+        .text("Two");
+
+    word.append("tspan")
+        .attr("dy", 15)
+        .text("Three");
+
+    word.append("tspan")
+        .attr("dy", 15)
+        .text("Four");
+
+    word.append("tspan")
+        .attr("dy", 15)
+        .text("Five");
+
+
+    word.append("tspan")
+        .attr("x", 5)
+        .attr("dy", 0)
+        .text("One");
+
+    word.append("tspan")
+        .attr("dy", -15)
+        .text("Two");
+
+    word.append("tspan")
+        .attr("dy", -15)
+        .text("Three");
+
+    word.append("tspan")
+        .attr("dy", -15)
+        .text("Four");
+
+    word.append("tspan")
+        .attr("dy", -15)
+        .text("Five");
+
+
+    const char = g.append("text")
+        .attr("x", 5)
+        .attr("y", 15)
+        .attr("transform", "translate(300,0)");
+
+    char.append("tspan")
+        .style("fill", "red")
+        .attr("dy", "0 0 0 0 15 0 0 0 7 3 3 3 3 0 7 0 0 0 0 15 0 0 0")
+        .text("One Two +++++ Four Five");
+
+    char.append("tspan")
+        .style("fill", "blue")
+        .attr("x", 5)
+        .attr("dy", "0 0 0 0 -15 0 0 0 -7 -3 -3 -3 -3 0 -7 0 0 0 0 -15 0 0 0")
+        .text("One Two +++++ Four Five");
+
+</script>
+
+</body>
+</html>

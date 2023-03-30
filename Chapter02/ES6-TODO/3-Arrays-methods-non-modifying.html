@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>JavaScript examples</title>
+</head>
+<body>
+<h1>JavaScript examples: array methods</h1>
+<p>Open developer console to see results. Open source code to see comments</p>
+<script>
+
+    // Functions that don't modify the array
+    console.log("*** Functions that do NOT modify the array ***");
+    numbers = [1,2,3,4,5,6];
+    colors  = ["red", "blue", "green", "red", "yellow", "blue", "blue", "yellow", "green"];
+
+
+    // 8. slice(begin, end)
+    numbers = [1,2,3,4,5,6];
+    console.log(`Before slice(2,3): [${numbers}]`);
+
+    // Returns a shallow copy of the array between indexes 2 and 4 (3rd, inclusive, and 5th, exclusive, positions)
+    const mid = numbers.slice(2,4); // mid = [3,4]
+
+    console.log(`Returned result after numbers.slice(2,4): [${mid}]`);
+
+
+    // 9. filter() - does not modify array
+    // Filter according to rule
+
+    console.log(`Array: [${numbers}]`);
+
+    const even = numbers.filter(n => n % 2 == 0); // [2,4,6]
+
+    console.log(`Returned array after numbers.filter(n => n % 2 == 0): [${even}]`);
+
+
+    // 10. find() - does not modify array
+    // Find first occurrence
+
+    console.log(`Array: [${numbers}]`);
+
+    const two = numbers.find(n => n % 2 == 0); // 2
+
+    console.log(`Returned result after numbers.find(n => n % 2 == 0): ${two}`);
+
+
+
+    // 11. indexOf() - does not modify array
+
+    console.log(`Array: [${colors}]`);
+
+    const idx = colors.indexOf("blue"); // 1
+
+    console.log(`Returned result after colors.indexOf("blue"): ${idx}`);
+
+
+    // 12. lastIndefOf() - does not modify array
+    console.log(`Array: [${colors}]`);
+
+    const lidx = colors.lastIndexOf("blue"); // 6
+
+    console.log(`Returned result after colors.lastIndexOf("blue"): ${lidx}`);
+
+
+
+    // 13. includes() - does not modify array
+    console.log(`Array: [${colors}]`);
+
+    const yes = colors.includes("yellow"); // true
+    const no  = colors.includes("purple"); false
+
+    console.log(`Returned result after colors.includes("yellow"): ${yes}`);
+    console.log(`Returned result after colors.includes("purple"): ${no}`);
+
+
+
+    // 14. concat() - does not modify array
+    console.log(`Array: [${numbers}]`);
+
+    const eight = numbers.concat([7,8]); // [1,2,3,4,5,6,7,8]
+
+    console.log(`Returned result after numbers.concat([7,8]): ${eight}`);
+
+
+    // 15. join() - does not modify array
+    console.log(`Array: [${numbers}]`);
+
+    const csv = numbers.join();    // "1,2,3,4,5,6"
+    const conc = numbers.join(""); // "123456"
+
+    console.log(`Returned string after numbers.join(): "${csv}"`);
+    console.log(`Returned string after numbers.join(""): "${conc}"`);
+
+
+    // 16. map() - does not modify array
+    console.log(`Array: [${numbers}]`);
+
+    const squares = numbers.map(n => n*n); // [1,4,9,16,25,36]
+
+    console.log(`Returned array after numbers.map(n => n*n): [${squares}]`);
+
+
+
+    // 17. reduce() - does not modify array
+    console.log(`Array: [${numbers}]`);
+
+    const sum = numbers.reduce((a, n) => a + n);
+
+    console.log(`Returned number after numbers.reduce((a, n) => a + n): ${sum}`);
+
+
+
+    // 18. forEach() - does not modify array
+    const empty = [];
+    console.log(`Numbers array: [${numbers}]`);
+    console.log(`Empty array: [${empty}]`);
+
+    numbers.forEach(n => empty.push(n*n));  // empty = [1,4,9,16,26,36]
+
+    console.log(`Empty array after numbers.forEach(n => empty.push(n*n)): [${empty}]`);
+
+
+
+</script>
+</body>
+</html>

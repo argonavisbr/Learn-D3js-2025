@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>JavaScript examples</title>
+</head>
+<body>
+<h1>JavaScript examples: strings</h1>
+<p>Open developer console to see results. Open source code to see comments</p>
+
+<p>Text result</p>
+<pre id="text"></pre>
+<script>
+    // Multiline strings (in code) can be created adding a backslash at the end of each line:
+
+    const line =
+        "Multiline strings can be \
+         created adding a backslash \
+         at the end of each line";
+    console.log(line);
+
+    // This is just a convenience and doesn't actually introduce any line breaks:
+    document.getElementById("text").innerText = line;
+
+    // Template literals (string interpolation) are strings created with backticks.
+    // JavaScript expressions can be placed inside ${} placeholders.
+    // The result is concatenated as a single string.
+
+    const template = `The square root of 2 is ${Math.sqrt(2)}`;
+    console.log(template);
+
+    // If you need to use a special character in a string, such as a double quote in a double quoted string,
+    // or a backslash, you need to precede it with another backslash:
+
+    const s = "This is a backslash \\ and this is a double quote \"";
+    console.log(s);
+
+
+</script>
+</body>
+</html>

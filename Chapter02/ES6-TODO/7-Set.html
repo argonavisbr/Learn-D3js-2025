@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>JavaScript examples: Set</title>
+</head>
+<body>
+<h1>ES2015 examples: Set</h1>
+<p>Open developer console to see results. Open code to see comments</p>
+<script>
+
+    // Creating and adding elements to a Set
+    const set = new Set();
+    console.log(set);
+
+    set.add(5);     // adding an integer
+    set.add(7);
+
+    console.log(set);
+
+    set.add(1);     // adding more integers
+    set.add(5);
+    set.add(7);
+
+    console.log(set);
+
+    console.log(`Result of set.has(3): ${set.has(3)}`);    // true or false if set contains 3
+    console.log(`Result of set.size: ${set.size}`);      // the size of the set (number of elements)
+
+    const array = [... set];    // transform the set into an array (spread operator)
+    console.log(`Set transformed into array: [${array}]`);
+
+</script>
+</body>
+</html>

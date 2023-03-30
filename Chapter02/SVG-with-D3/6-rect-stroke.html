@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://cdn.jsdelivr.net/npm/d3-selection@3"></script>
+</head>
+<style>
+    svg {
+        border: solid 1px lightgray;
+    }
+</style>
+<body>
+<h2>SVG strokes</h2>
+<script>
+    const svg = d3.select("body")
+        .append("svg")
+        .attr("width", 750)
+        .attr("height", 200);
+
+    svg.append("rect")
+        .attr("x", 25)
+        .attr("y", 50)
+        .attr("width", 100)
+        .attr("height", 100)
+        .attr("rx", 10)
+        .attr("ry", 10)
+        .style("stroke", "green")
+        .style("stroke-width",2)
+        .style("stroke-dasharray","5 5")
+        .style("fill-opacity",0);
+
+    svg.append("rect")
+        .attr("x", 175)
+        .attr("y", 50)
+        .attr("width", 100)
+        .attr("height", 100)
+        .attr("rx", 10)
+        .attr("ry", 10)
+        .style("stroke", "red")
+        .style("stroke-width",5)
+        .style("stroke-opacity",0.5)
+        .style("fill-opacity",0);
+
+    svg.append("rect")
+        .attr("x", 325)
+        .attr("y", 50)
+        .attr("width", 100)
+        .attr("height", 100)
+        .attr("rx", 10)
+        .attr("ry", 10)
+        .style("stroke", "green")
+        .style("fill", "blue")
+        .style("stroke-width",20)
+        .style("stroke-opacity",0.2)
+        .style("fill-opacity",0.2);
+
+    svg.append("rect")
+        .attr("x", 475)
+        .attr("y", 50)
+        .attr("width", 100)
+        .attr("height", 100)
+        .attr("rx", 10)
+        .attr("ry", 10)
+        .style("stroke", "black")
+        .style("fill","gray")
+        .style("fill-opacity",0.2)
+        .style("stroke-width",10)
+        .style("stroke-dashoffset",0)
+        .style("stroke-linecap","round")
+        .style("stroke-dasharray","20 40")
+
+    svg.append("rect")
+        .attr("x", 625)
+        .attr("y", 50)
+        .attr("width", 100)
+        .attr("height", 100)
+        .attr("rx", 10)
+        .attr("ry", 10)
+        .style("stroke", "red")
+        .style("fill","pink")
+        .style("fill-opacity",0.2)
+        .style("stroke-width",10)
+        .style("stroke-dashoffset",20)
+        .style("stroke-linecap","square")
+        .style("stroke-dasharray","20 40")
+
+</script>
+
+</body>
+</html>

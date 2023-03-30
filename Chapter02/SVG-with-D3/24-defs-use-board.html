@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://cdn.jsdelivr.net/npm/d3-selection@3"></script>
+</head>
+<style>
+    svg {
+        border: solid 1px lightgray;
+    }
+</style>
+<body>
+<h2>SVG reusing objects</h2>
+<script>
+    const svg = d3.select("body")
+        .append("svg")
+        .attr("width", 400)
+        .attr("height", 400);
+
+    // *** defs section - nothing here appears on the page ***/
+
+    const defs = svg.append("defs");
+
+    // a single square
+    defs.append("rect")
+        .attr("id", "square")
+        .attr("x", 0)
+        .attr("y", 0)
+        .attr("width", 20)
+        .attr("height", 20);
+
+    // Reusing the square to create a white and a black square
+    defs.append("use")
+        .attr("id", "black")
+        .attr("xlink:href", "#square")
+        .style("fill", "rgb(64,32,32)");
+    defs.append("use")
+        .attr("id", "white")
+        .attr("xlink:href", "#square")
+        .style("fill", "rgb(255,255,200)");
+
+    // Reusing a group of four squares of alternated colors
+    const four = defs.append("g")
+        .attr("id", "foursquares");
+
+    four.append("use").attr("xlink:href", "#black");
+    four.append("use").attr("xlink:href", "#white")
+        .attr("transform", "translate(20)");
+    four.append("use").attr("xlink:href", "#white")
+        .attr("transform", "translate(0,20)");
+    four.append("use").attr("xlink:href", "#black")
+        .attr("transform", "translate(20,20)");
+
+    // Reusing a group of square to create a pair or rows
+    const tworows = defs.append("g")
+        .attr("id", "tworows");
+    for(x = 0; x < 4; x++) {
+        tworows.append("use")
+            .attr("xlink:href", "#foursquares")
+            .attr("transform", `translate(${x * 40}, 0)`);
+    }
+
+    // Repeating the pair of rows to create a board
+    const board = defs.append("g")
+        .attr("id", "board");
+
+    for(y = 0; y < 4; y++) {
+        board.append("use")
+            .attr("xlink:href", "#tworows")
+            .attr("transform", `translate(0, ${y*40})`);
+    }
+
+    // *** end of defs section ***
+
+    // Using the board object to create a single larger board
+    svg.append("use")
+        .attr("xlink:href", "#board")
+        .attr("transform", "scale(2.5)");
+
+</script>
+
+</body>
+</html>
