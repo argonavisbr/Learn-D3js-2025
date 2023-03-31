@@ -23,7 +23,7 @@
     ctx.fillStyle = 'rgb(50,100,150)';
 
     // load and draw map
-    fetch('../Data/world-lowres.geojson')
+    fetch('../data/world-lowres.geojson')
     .then(response => response.text())
     .then((jsonData) => {
         let object = JSON.parse(jsonData);
