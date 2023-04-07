@@ -7,11 +7,13 @@
 <body>
 <h1>See console for results</h1>
 <script>
+    // Example fetching JSON string and then parsing it into an object
     fetch('../data/sample.json')
-            .then(response => response.text())
+            .then(response => response.text())  // You can use response.json() to parse to object in one step
             .then(function(text) {
-                const jsonData = JSON.parse(text);
-                jsonData.forEach(function(item) {
+                console.log("json", text);        // text is a JSON string
+                const object = JSON.parse(text);  // object is a JavaScript object
+                object.forEach(function(item) {
                     console.log(item.continent, item.population, item.areakm2);
                 })
             });

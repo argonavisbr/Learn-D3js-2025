@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Fetch URL and XPath extract example</title>
+</head>
+<body>
+
+<h1>Fetch URL and XPath extract example</h1>
+
+<p>This example fetches an HTML document from a website, extracts some of its data and generates a list with it. See your JavaScript console for details.</p>
+
+<ul id="diameters"></ul>
+
+<script>
+    // The page with data we want
+    const url = 'https://nssdc.gsfc.nasa.gov/planetary/factsheet';
+
+    // A proxy to get rid of CORS errors (you need to access the site and enable it first).
+    const proxy = 'https://cors-anywhere.herokuapp.com';
+
+    fetch(`${proxy}/${url}`)
+        .then(response => response.text()
+            .then(html => {
+                const doc = parseHtml(html);
+                testDocument(doc);  // test if it's working
+                extractData(doc);   // get selected data
+            }));
+
+    // Uses JavaScript's DOMParser to return a document object (required for the XPath evaluator)
+    function parseHtml(html) {
+        //console.log(html);   // Should contain the all the HTML
+        return (new DOMParser()).parseFromString(html, "text/html");
+    }
+
+    // Uses JavaScript's XPath evaluator to find a node in a provided document
+    function xpath(expression, doc) {
+        return document.evaluate(expression, doc, null, XPathResult.ANY_TYPE, null);
+    }
+
+    // Extract some document elements to test
+    function testDocument(doc) {
+        // Get the title
+        let result = xpath('/html/head/title/text()', doc);
+        if (result.resultType == 4) {
+            let title = result.iterateNext();
+            console.log('Title', title.data);
+        }
+
+        // Get the bgcolor of the body tag
+        result = xpath('/html/body/@bgcolor', doc);
+        if (result.resultType == 4) {
+            let bgcolor = result.iterateNext();
+            console.log('Body bgcolor', bgcolor.value);
+        }
+
+        // Get the <H1> header:
+        result = xpath('/html/body//H1/text()', doc);
+        console.log(result);
+        if (result.resultType == 4) {
+            let header = result.iterateNext();
+            console.log('H1 header', header.data);
+        }
+    }
+
+    // Extract selected data from the document
+    function extractData(doc) {
+        // Extracting diameters
+        let result = xpath('/html/body/p/table/tbody/tr[3]/td/text()', doc);
+        const diameters = [];
+        if (result.resultType == 4) {
+            let data = result.iterateNext();
+            while(data) {
+                diameters.push( +data.data.replace(/\,/g,'')); // get rid of commas and convert to number
+                data = result.iterateNext();
+            }
+        }
+
+        // Extracting names
+        result = xpath('/html/body/p/table/tbody/tr[1]/td//a/text()', doc);
+        const names = [];
+        if (result.resultType == 4) {
+            let data = result.iterateNext();
+            while(data) {
+                // Names are un uppercase - make lowercase and capitalize
+                names.push( data.data.toLowerCase().replace(/([a-z])(.*)/g, (_,c,w) => c.toUpperCase()+w) );
+                data = result.iterateNext();
+            }
+        }
+
+        // create an object with the data
+        const planets = [];
+        for(let i = 0; i < names.length; i++) {
+            planets.push({name: names[i], diameterKm: diameters[i]});
+        }
+
+        // display on the page
+        const ul = document.getElementById("diameters");
+        for(let planet of planets) {
+            const li = document.createElement("li");
+            li.innerText = `${planet.name}: ${planet.diameterKm} km`;
+            ul.appendChild(li);
+        }
+    }
+</script>
+
+</body>
+</html>

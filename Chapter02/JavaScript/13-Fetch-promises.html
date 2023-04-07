@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>JavaScript examples</title>
+</head>
+<body>
+<h1>JavaScript examples: </h1>
+<p>Open developer console to see results. Open code to see comments</p>
+
+<p>Contents from good file: <span id="result"></span></p>
+<p>Loading bad file status: <span id="status"></span></p>
+<script>
+
+    // Fetch returns a promise
+    // The function in then() will run when the file is loaded
+    fetch('../data/PlanetDiameters.csv')
+        .then(response => response.text())
+        .then(text   => text.substring(14,19))
+        .then(word => document.getElementById('result').innerHTML = word);
+
+
+    // Fetching a file that doesn't exist
+    fetch('../data/BadFile')
+        .then(resp => {
+            if (resp.ok) {
+                return resp.text();
+            } else if (resp.status == 404) {
+                throw new Error(`File not found!`);
+            }
+        })
+        .then(text => document.getElementById('status').innerHTML = "Success")
+        .catch(error => document.getElementById('status').innerHTML = error);
+
+</script>
+</body>
+</html>

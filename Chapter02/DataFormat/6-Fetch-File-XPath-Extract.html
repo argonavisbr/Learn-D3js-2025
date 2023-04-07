@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Fetch URL and XPath extract example</title>
+</head>
+<body>
+
+<h1>Fetch URL and XPath extract example</h1>
+
+<p>This example uses XPath to extract data from an XML file. See your JavaScript console for details.</p>
+
+<ul id="continents"></ul>
+
+<script>
+
+    fetch(`../data/continents.xml`)
+        .then(response => response.text()
+            .then(xml => {
+                const doc = parseXml(xml);
+                extractData(doc);   // get selected data
+            }));
+
+    // Uses JavaScript's DOMParser to return a document object (required for the XPath evaluator)
+    function parseXml(xml) {
+        return (new DOMParser()).parseFromString(xml, "text/xml");
+    }
+
+    // Uses JavaScript's XPath evaluator to find a node in a provided document
+    function xpath(expression, doc) {
+        return document.evaluate(expression, doc, null, XPathResult.ANY_TYPE, null);
+    }
+
+    // Extract selected data from the document
+    function extractData(doc) {
+        // Extracting diameters
+        let continents = xpath('/continents/continent', doc);
+        if (continents.resultType == 4) {
+            let continent = continents.iterateNext();
+            while(continent) {
+                let name = xpath('name/text()', continent).iterateNext().textContent;
+                let population = +xpath('population/text()', continent).iterateNext().textContent;
+                console.log(name, population);
+                const ul = document.getElementById("continents");
+                ul.appendChild(document.createElement("li")).innerHTML = `${name}: ${population}`;
+                continent = continents.iterateNext();
+            }
+        }
+
+        // Extracting names
+        result = xpath('/html/body/p/table/tbody/tr[1]/td//a/text()', doc);
+        const names = [];
+        if (result.resultType == 4) {
+            let data = result.iterateNext();
+            while(data) {
+                // Names are un uppercase - make lowercase and capitalize
+                names.push( data.data.toLowerCase().replace(/([a-z])(.*)/g, (_,c,w) => c.toUpperCase()+w) );
+                data = result.iterateNext();
+            }
+        }
+
+        // create an object with the data
+        const planets = [];
+        for(let i = 0; i < names.length; i++) {
+            planets.push({name: names[i], diameterKm: diameters[i]});
+        }
+
+        // display on the page
+        const ul = document.getElementById("diameters");
+        for(let planet of planets) {
+            const li = document.createElement("li");
+            li.innerText = `${planet.name}: ${planet.diameterKm} km`;
+            ul.appendChild(li);
+        }
+    }
+</script>
+
+</body>
+</html>

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>SVG reusing objects with D3</title>
     <script src="https://cdn.jsdelivr.net/npm/d3-selection@3"></script>
 </head>
 <style>
@@ -11,7 +11,7 @@
     }
 </style>
 <body>
-<h2>SVG reusing objects</h2>
+<h2>SVG reusing objects with D3</h2>
 <script>
     const svg = d3.select("body")
         .append("svg")
@@ -29,22 +29,22 @@
 
     defs.append("use")
         .attr("id", "black")
-        .attr("xlink:href", "#square")
+        .attr("href", "#square")
         .style("fill", "rgb(64,32,32)");
     defs.append("use")
         .attr("id", "white")
-        .attr("xlink:href", "#square")
+        .attr("href", "#square")
         .style("fill", "rgb(255,255,200)");
 
     const g = foursquares = svg.append("g")
         .attr("transform", "translate(10,10) scale(3)");
 
-    g.append("use").attr("xlink:href", "#black");
-    g.append("use").attr("xlink:href", "#white")
+    g.append("use").attr("href", "#black");
+    g.append("use").attr("href", "#white")
         .attr("transform", "translate(20)");
-    g.append("use").attr("xlink:href", "#white")
+    g.append("use").attr("href", "#white")
         .attr("transform", "translate(0,20)");
-    g.append("use").attr("xlink:href", "#black")
+    g.append("use").attr("href", "#black")
         .attr("transform", "translate(20,20)");
 
 </script>

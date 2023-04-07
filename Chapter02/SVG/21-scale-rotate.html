@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>SVG transform-scale-rotate</title>
 </head>
 <style>
     svg {
@@ -10,7 +10,7 @@
     }
 </style>
 <body>
-<h2>SVG circle</h2>
+<h2>SVG transform-scale-rotate</h2>
 <svg width="600" height="300">
     <defs>
         <g id="coords">
@@ -21,9 +21,9 @@
         </g>
     </defs>
 
-    <use xlink:href="#coords" stroke="black" />
+    <use href="#coords" stroke="black" />
 
-    <use xlink:href="#coords" stroke="red"
+    <use href="#coords" stroke="red"
          transform="translate(200,20) rotate(30) scale(1.5) " />
 </svg>
 </body>

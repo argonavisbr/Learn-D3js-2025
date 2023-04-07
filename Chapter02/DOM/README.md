@@ -2,14 +2,10 @@
 
 Examples using DOM with HTML and SVG.
 
-## 2) Description of each file in this folder
+## 2) Files in this folder
 
-__`1-.html`__
-
-x
-
-__`2-.html`__
-
-x
-
-
+__`1-Dynamic-page.html`__
+__`2-Static-page.html`__
+__`3-Page-and-script.html`__
+__`4-External-script.html`__
+__`5-SVG-DOM.html`__

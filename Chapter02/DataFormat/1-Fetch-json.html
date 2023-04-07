@@ -57,9 +57,7 @@
 
     fetch('../data/PlanetDay.json')
             .then(response => response.json())
-            .then(function(object) {
-        showData(object);
-    });
+            .then(object   => showData(object));
 
 </script>
 

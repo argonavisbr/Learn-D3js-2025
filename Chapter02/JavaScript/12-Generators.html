@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>JavaScript examples</title>
+</head>
+<body>
+<h1>JavaScript examples: </h1>
+<p>Open developer console to see results. Open code to see comments</p>
+<table id="colors">
+
+</table>
+<script>
+
+    // Generators and iterators
+    function* randomColor() {
+        while (true) {
+            const r = Math.floor(Math.random()*256);
+            const g = Math.floor(Math.random()*256);
+            const b = Math.floor(Math.random()*256);
+            yield `rgb(${r},${g},${b})`;
+        }
+    }
+
+    const color = randomColor();
+    const table = document.getElementById("colors");
+    for (let i = 0; i < 15; i++) {
+        const c = color.next().value;
+
+        const tr = document.createElement("tr");
+        tr.style.backgroundColor = c;
+        table.appendChild(tr);
+        tr.appendChild(document.createElement("td")).innerHTML = c;
+    }
+
+
+</script>
+</body>
+</html>

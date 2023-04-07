@@ -8,12 +8,13 @@
 <body>
 <h1>See console for results</h1>
 <script>
+    // Example fetching a CSV text file and parsing it into an object
     fetch('../data/sample.csv')
             .then(response => response.text())
     .then(function(csvText) {
         const csvData = Papa.parse(csvText, {header: true}).data;
         csvData.forEach(function(item) {
-            console.log(item.continent, +item.population, +item.areakm2);
+            console.log(item.continent, +item.population, +item.areakm2); // The + converts to number!
         })
     });
 </script>

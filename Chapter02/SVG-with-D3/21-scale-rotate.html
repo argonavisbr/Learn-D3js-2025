@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>SVG transform: scale and rotate using D3</title>
     <script src="https://cdn.jsdelivr.net/npm/d3-selection@3"></script>
 </head>
 <style>
@@ -11,7 +11,7 @@
     }
 </style>
 <body>
-<h2>SVG transform: scale and rotate</h2>
+<h2>SVG transform: scale and rotate using D3</h2>
 <script>
     const svg = d3.select("body")
         .append("svg")
@@ -42,11 +42,11 @@
         .text("y");
 
     svg.append("use")
-        .attr("xlink:href", "#coords")
+        .attr("href", "#coords")
         .attr("stroke", "black");
 
     svg.append("use")
-        .attr("xlink:href", "#coords")
+        .attr("href", "#coords")
         .attr("stroke", "red")
         .attr("transform", "translate(200,20) rotate(30) scale(1.5)");
 

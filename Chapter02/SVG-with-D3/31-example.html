@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>SVG example using D3</title>
     <script src="https://cdn.jsdelivr.net/npm/d3-selection@3"></script>
     <style>
         svg {
@@ -14,7 +14,7 @@
     </style>
 </head>
 <body>
-
+<h1>SVG example using D3</h1>
 <script>
     const svg = d3.select("body")
             .append("svg")
@@ -86,7 +86,7 @@
             .text("Graphics")
     svg.append("image")
             .attr("x", 125).attr("y", 25).attr("height", 100).attr("width", 100)
-            .attr("xlink:href", "../Data/Images/pluto.jpg")
+            .attr("href", "../Data/Images/pluto.jpg")
             .attr("clip-path", "url(#circle)")
             .attr("opacity", 0.75)
     svg.append("path")

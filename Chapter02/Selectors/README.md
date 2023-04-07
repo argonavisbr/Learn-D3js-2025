@@ -6,10 +6,14 @@ Examples using W3C selectors.
 
 __`1-CSS-selectors.html`__
 
-x
+Examples using W3C selectors with CSS
 
 __`2-DOM-selectors.html`__
 
-x
+Examples using W3C selectors with DOM
+
+__`3-D3-selectors.html`__
+
+Examples using W3C selectors with D3
 
 

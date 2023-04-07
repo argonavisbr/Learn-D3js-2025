@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>SVG defs</title>
 </head>
 <style>
     svg {
@@ -15,16 +15,16 @@
     <defs>
         <rect id="square"  x="0" y="0" width="20" height="20"/>
 
-        <use id="black" xlink:href="#square" id="black" fill="rgb(64,32,32)" />
-        <use id="white" xlink:href="#square" id="white" fill="rgb(255,225,200)" />
+        <use id="black" href="#square" id="black" fill="rgb(64,32,32)" />
+        <use id="white" href="#square" id="white" fill="rgb(255,225,200)" />
 
     </defs>
 
     <g transform="translate(10,10) scale(3)">
-        <use xlink:href="#black" />
-        <use xlink:href="#white" transform="translate(20)"/>
-        <use xlink:href="#white" transform="translate(0,20)"/>
-        <use xlink:href="#black"  transform="translate(20,20)"/>
+        <use href="#black" />
+        <use href="#white" transform="translate(20)"/>
+        <use href="#white" transform="translate(0,20)"/>
+        <use href="#black"  transform="translate(20,20)"/>
     </g>
 </svg>
 </body>

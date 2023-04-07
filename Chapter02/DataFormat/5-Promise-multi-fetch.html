@@ -6,38 +6,44 @@
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/4.6.0/papaparse.min.js"></script>
     <style>
-        #data {
+        .data {
             width: 800px;
         }
-        #data div {
+        .data div {
             margin-top: 2px;
         }
-        #data div span {
+        .data div span {
             display: inline-block;
         }
-        #data div span:nth-child(1) {
+        .data div span:nth-child(1) {
             position: absolute;
         }
-        #data div span:nth-child(2) {
+        .data div span:nth-child(2) {
             position: absolute;
             background: orange;
             left: 90px;
         }
-        #data div span:nth-child(3) {
+        .data div span:nth-child(3) {
             position: relative;
+        }
+
+        #days span:nth-child(2)  {
+            background: blue;
         }
     </style>
 </head>
 <body>
 
 <h1>Number of hours in a day</h1>
+<div id="hours" class="data"></div>
 
-<div id="data"></div>
+<h1>Number of days in a year</h1>
+<div id="days" class="data"></div>
 
 <script>
 
-    function showData(dataArray) {
-        let dataDiv = document.getElementById("data");
+    function showData(dataArray, id) {
+        let dataDiv = document.getElementById(id);
         if (dataArray.length == 0) {
             dataDiv.innerHTML = "<p>Error reading file</p>";
         } else {
@@ -62,12 +68,20 @@
 
     Promise.all(promises).then(function(results) {
         const jsonData = JSON.parse(results[0]);
-        const csvData  = Papa.parse(results[1], {header: true}).data;
+        const [csvData]  = Papa.parse(results[1], {header: true}).data;
 
         console.log(csvData)
         console.log(jsonData)
 
-        showData(jsonData)
+        showData(jsonData, "hours");
+
+        const csvObj = [];
+        for(let key in csvData) {
+            csvObj.push({Location: key, Duration: +csvData[key]});
+        }
+        console.log(csvObj);
+
+        showData(csvObj, "days");
     });
 
 

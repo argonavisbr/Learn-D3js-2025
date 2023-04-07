@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>SVG defs</title>
 </head>
 <style>
     svg {
@@ -15,32 +15,32 @@
     <defs>
         <rect id="square"  x="0" y="0" width="20" height="20"/>
 
-        <use id="black" xlink:href="#square" id="black" fill="rgb(64,32,32)" />
-        <use id="white" xlink:href="#square" id="white" fill="rgb(255,225,200)" />
+        <use id="black" href="#square" id="black" fill="rgb(64,32,32)" />
+        <use id="white" href="#square" id="white" fill="rgb(255,225,200)" />
 
         <g id="foursquares">
-            <use xlink:href="#black" />
-            <use xlink:href="#white" transform="translate(20)"/>
-            <use xlink:href="#white" transform="translate(0,20)"/>
-            <use xlink:href="#black"  transform="translate(20,20)"/>
+            <use href="#black" />
+            <use href="#white" transform="translate(20)"/>
+            <use href="#white" transform="translate(0,20)"/>
+            <use href="#black"  transform="translate(20,20)"/>
         </g>
 
         <g id="tworows">
-            <use xlink:href="#foursquares" />
-            <use xlink:href="#foursquares" transform="translate(40, 0)" />
-            <use xlink:href="#foursquares" transform="translate(80, 0)" />
-            <use xlink:href="#foursquares" transform="translate(120, 0)" />
+            <use href="#foursquares" />
+            <use href="#foursquares" transform="translate(40, 0)" />
+            <use href="#foursquares" transform="translate(80, 0)" />
+            <use href="#foursquares" transform="translate(120, 0)" />
         </g>
 
         <g id="board">
-            <use xlink:href="#tworows" transform="translate(0, 0)" />
-            <use xlink:href="#tworows" transform="translate(0, 40)" />
-            <use xlink:href="#tworows" transform="translate(0, 80)" />
-            <use xlink:href="#tworows" transform="translate(0, 120)" />
+            <use href="#tworows" transform="translate(0, 0)" />
+            <use href="#tworows" transform="translate(0, 40)" />
+            <use href="#tworows" transform="translate(0, 80)" />
+            <use href="#tworows" transform="translate(0, 120)" />
         </g>
     </defs>
 
-    <use xlink:href="#board" transform="scale(2.5)" />
+    <use href="#board" transform="scale(2.5)" />
 
 </svg>
 </body>

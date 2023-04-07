@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>SVG clipping</title>
 </head>
 <style>
     svg {
@@ -11,11 +11,11 @@
 </style>
 <body>
 <h2>SVG clipping</h2>
-<svg width="425" height="425"
+<svg width="425" height="425">
     <!-- Original image (not clipped) -->
     <image x="25" y="25"
            height="350" width="350"
-           xlink:href="../Data/Images/pluto.jpg"/>
+           href="../Data/Images/pluto.jpg"/>
 
 </svg>
 <svg width="425" height="425">
@@ -28,7 +28,7 @@
     <!-- Clipped image -->
     <image x="25" y="25"
            height="350" width="350"
-           xlink:href="../Data/Images/pluto.jpg"
+           href="../Data/Images/pluto.jpg"
            clip-path="url(#poly)"/>
 </svg>
 </body>

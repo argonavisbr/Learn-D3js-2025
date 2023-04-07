@@ -61,6 +61,7 @@
         showData(dataArray);
     });
 
+    // A very simple and limited parser: will fail if there are commas in the strings
     function parse(text) {
         let headers = text.split("\n")[0].split(",");
         let values = text.split("\n")[1].split(",");
