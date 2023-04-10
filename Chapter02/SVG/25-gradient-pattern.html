@@ -25,10 +25,15 @@
             <stop offset="0.5" stop-color="rgb(0,128,255)" />
             <stop offset="1" stop-color="rgb(128,0,255)" />
         </radialGradient>
+        <pattern id="diamond" viewBox="0 0 10 10" width="20%" height="10%">
+            <polygon points="0,5 5,0 10,5 5,10" fill="blue"/>
+        </pattern>
     </defs>
 
-    <rect x="0" y="0" width="200" height="200" fill="url(#rainbow)" transform="translate(50,50)"/>
-    <circle cx="100" cy="100" r="100" fill="url(#glow)" transform="translate(300,50)"/>
+    <rect width="150" height="200" fill="url(#rainbow)" transform="translate(50,50)"/>
+    <circle r="75" fill="url(#glow)" transform="translate(300,150)"/>
+    <ellipse rx="50" ry="100" fill="url(#diamond)" transform="translate(450,150)" />
+
 </svg>
 </body>
 </html>

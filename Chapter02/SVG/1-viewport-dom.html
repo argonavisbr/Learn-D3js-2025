@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>SVG Viewport</title>
+</head>
+<style>
+    svg {
+        border: solid 1px lightgray;
+        background-color: hsla(240,100%,50%,0.2)
+    }
+    canvas {
+        border: solid 1px lightred;
+        background-color: hsla(120,100%,50%,0.2)
+    }
+</style>
+<body>
+<h2>SVG viewport</h2>
+<script>
+    // Creates an SVG viewport (requires createElementNS and namespace when using HTML DOM)
+    const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+    svg.setAttribute("width", 400);
+    svg.setAttribute("height", 300);
+    document.getElementsByTagName("body")[0].appendChild(svg);
+
+    // Creates a Canvas graphics context (it's part of the HTML namespace)
+    const can = document.createElement("canvas");
+    can.setAttribute("width", 400);
+    can.setAttribute("height", 300);
+    document.getElementsByTagName("body")[0].appendChild(can);
+</script>
+</body>
+</html>

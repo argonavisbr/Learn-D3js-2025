@@ -14,10 +14,10 @@
 <script>
     const svg = d3.select('body')
         .append('svg')
-        .attr('width', 600)
+        .attr('width', 400)
         .attr('height', 300)
-        .attr('viewBox', '-200 -150 400 300');
-    
+        .attr('viewBox', '0 0 400 300'); // default (removing this line won't change anything)
+
     svg.append('line')
         .attr('x1', 0)
         .attr('y1',-300)
@@ -58,6 +58,5 @@
         .attr('fill', 'orange');
 
 </script>
-
 </body>
 </html>
