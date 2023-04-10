@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>SVG gradients using D3</title>
+    <title>SVG gradients and patterns using D3</title>
     <script src="https://cdn.jsdelivr.net/npm/d3-selection@3"></script>
 </head>
 <style>
@@ -11,7 +11,8 @@
     }
 </style>
 <body>
-<h2>SVG gradients using D3</h2>
+<h2>SVG gradients and patterns using D3</h2>
+
 <script>
     const svg = d3.select("body")
         .append("svg")
@@ -20,6 +21,7 @@
 
     const defs = svg.append("defs");
 
+    // Linear gradient
     const linearGradient = defs.append("linearGradient")
         .attr("id","rainbow")
         .attr("x2",1);
@@ -39,6 +41,8 @@
         .attr("offset", "100%")
         .attr("stop-color", "rgb(128,0,255)");
 
+
+    // Radial gradient
     const radialGradient = defs.append("radialGradient")
         .attr("id","glow")
         .attr("cx",0.35)
@@ -54,20 +58,36 @@
         .attr("offset", "1")
         .attr("stop-color", "rgb(128,0,255)");
 
+    // Pattern
+    const pattern = defs.append("pattern")
+        .attr("id","diamond")
+        .attr("viewBox","0 0 10 10")
+        .attr("width","20%")
+        .attr("height","10%")
+        .append("polygon")
+            .attr("points", "0,5 5,0 10,5 5,10")
+            .attr("fill","blue");
+
+
+    // Gradient applied to rectangle
     svg.append("rect")
-        .attr("x", 0)
-        .attr("y", 0)
-        .attr("width", 200)
+        .attr("width", 150)
         .attr("height", 200)
         .attr("transform", "translate(50,50)")
         .style("fill", "url(#rainbow)");
 
+    // Gradient applied to circle
     svg.append("circle")
-        .attr("cx", 100)
-        .attr("cy", 100)
-        .attr("r", 100)
-        .attr("transform", "translate(300,50)")
+        .attr("r", 75)
+        .attr("transform", "translate(300,150)")
         .style("fill", "url(#glow)");
+
+    // Pattern applied to ellipse
+    svg.append("ellipse")
+        .attr("rx", 50)
+        .attr("ry", 100)
+        .attr("transform", "translate(450,150)")
+        .style("fill", "url(#diamond)");
 </script>
 </body>
 </html>
