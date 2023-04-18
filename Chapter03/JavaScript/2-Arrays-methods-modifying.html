@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>JavaScript examples</title>
+    <title>JavaScript examples: array methods</title>
 </head>
 <body>
 <h1>JavaScript examples: array methods</h1>
@@ -15,9 +15,10 @@
     console.log(`Before colors.push("yellow"): [${colors}]`);
 
     // Push an element to the tail of the array
-    colors.push("yellow"); // Result: ["red", "blue", "green", "yellow"];
+    let ret = colors.push("yellow"); // Result: ["red", "blue", "green", "yellow"];
 
     console.log(`After: [${colors}]`);
+    console.log(`Return from push: [${ret}]`); // size of array
 
 
     // 2. pop()
@@ -36,9 +37,10 @@
     console.log(`Before colors.unshift(): [${colors}]`);
 
     // Insert an element to the head of the array
-    colors.unshift("yellow"); // Result: ["yellow", "red", "blue", "green"];
+    ret = colors.unshift("yellow"); // Result: ["yellow", "red", "blue", "green"];
 
     console.log(`Array after colors.unshift(): [${colors}]`);
+    console.log(`Return from unshift: [${ret}]`); // size of array
 
 
     // 4. shift()
@@ -56,49 +58,55 @@
     let numbers = [1,2,3,4,5,6];
     console.log(`Before numbers.reverse(): [${numbers}]`);
 
-    numbers.reverse();
+    ret = numbers.reverse();
 
     console.log(`After numbers.reverse(): [${numbers}]`);
+    console.log(`Return from reverse: [${ret}]`); // the modified array
 
 
     // 6. sort()
+    colors = ["red", "blue", "green"];
+    console.log(`Before colors.sort((a,b) => b - a): [${colors}]`);
+
+    ret = colors.sort();  // colors = ["blue", "green", "red"]
+    console.log(`After colors.sort(): [${colors}]`);
+    console.log(`Return from sort: [${ret}]`); // the modified array itself
+
     numbers = [1,2,3,4,5,6];
     console.log(`Before numbers.sort((a,b) => b - a): [${numbers}]`);
 
     numbers.sort((a,b) => b - a);  // numbers = [6,5,4,3,2,1]
-
     console.log(`After numbers.sort((a,b) => b - a): [${numbers}]`);
 
 
-    // 7. splice(start, removeCount, addItem...)
-    numbers = [1,2,3,4,5,6];
-    console.log(`Before splice(2,3): [${numbers}]`);
+    // 7. splice(start, removeCount, ...addItem)
+    colors = ["red", "blue", "green", "yellow"];
+    console.log(`Before splice(1,2): [${colors}]`);
 
-    // Extract the sub-array starting from the third position (2)
-    const s1 = numbers.splice(2); // s1 = [3,4,5,6] numbers = [1,2]
-    console.log(`After splice(2). Original array: [${numbers}], Returned result: [${s1}]`);
+    // Remove the sub-array starting from the second position (1)
+    let deleted = colors.splice(1); // colors = ["red"] deleted = ["blue", "green", "yellow"]
+    console.log(`After splice(1). Original array: [${colors}], Returned result: [${deleted}]`);
 
-    // Extract the 2-element sub-array starting from the third position (2)
-    numbers = [1,2,3,4,5,6];
-    const s2 = numbers.splice(2,2); // s2 = [3,4] numbers = [1,2,5,6]
-    console.log(`After splice(2,2). Original array: [${numbers}], Returned result: [${s2}]`);
+    // Extract the 2-element sub-array starting from the second position (1)
+    colors = ["red", "blue", "green", "yellow"];
+    deleted = colors.splice(1,2); // colors = ["red", "yellow"] deleted = ["blue", "green"]
+    console.log(`After splice(1,2). Original array: [${colors}], Returned result: [${deleted}]`);
 
-    // Insert a single item (number 9) before the third position (2)
-    numbers = [1,2,3,4,5,6];
-    const s3 = numbers.splice(2,0,9); // s3 = [1,2,9,3,4,5,6] numbers = []
-    console.log(`After splice(2,0,9). Original array: [${numbers}], Returned result: [${s3}]`);
+    // Insert a single item ("pink") before the second position (1)
+    colors = ["red", "blue", "green", "yellow"];
+    deleted = colors.splice(1,0,"pink"); // colors = ["red", "pink", "blue", "green", "yellow"] deleted = []
+    console.log(`After splice(1,0,"pink""). Original array: [${colors}], Returned result: [${deleted}]`);
 
-    // Extract the 2-element sub-array starting from the third position (2),
-    // then insert a single item (number 9) in it's place
-    numbers = [1,2,3,4,5,6];
-    const s4 = numbers.splice(2,2,9); // s4 = [1,2,9,5,6] numbers = [3,4]
-    console.log(`After splice(2,2,9). Original array: [${numbers}], Returned result: [${s4}]`);
+    // Replace a single item (number 3) with a new item (number 9)
+    colors = ["red", "blue", "green", "yellow"];
+    deleted = colors.splice(1,1,"pink"); // colors = ["red", "pink", "green", "yellow"] deleted = ["blue"]
+    console.log(`After splice(1,2,9). Original array: [${colors}], Returned result: [${deleted}]`);
 
     // Extract the 2-element sub-array starting from the third position (2),
     // then insert three items (numbers 9, 99 and 999) in it's place
-    numbers = [1,2,3,4,5,6];
-    const s5 = numbers.splice(2,2,9,99,999); // s5 = [1,2,9,99,999,5,6] numbers = [3,4]
-    console.log(`After splice(2,2,9). Original array: [${numbers}], Returned result: [${s5}]`);
+    colors = ["red", "blue", "green", "yellow"];
+    deleted = colors.splice(1,2,"a","b","c"); // colors = ["red", "a", "b", "c", "yellow"] deleted = ["blue", "green"]
+    console.log(`After splice(1,2,"a","b","c"). Original array: [${colors}], Returned result: [${deleted}]`);
 
 
 </script>

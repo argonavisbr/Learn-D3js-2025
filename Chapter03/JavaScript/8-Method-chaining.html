@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>JavaScript examples: method chaining</title>
+</head>
+<body>
+<h1>JavaScript examples: method chaining</h1>
+<p>Open developer console to see results. Open source code to see comments</p>
+<script>
+
+    // 1. Chaining arrays
+    // Compute a value after several transforms
+    const sum2 =
+        numbers.slice(2,4)                  // [3,4]
+            .concat([7,8,9,10])             // [3,4,7,8,9,10]
+            .filter(n => n%2!=0)            // [3,7,9]
+            .map(n => n*n)                  // [9,49,81]
+            .reduce((acum, n) => acum + n)   // 139
+
+    console.log(`Chained operations - sum: ${sum2}`)
+
+
+    // 2. Chaining arrays and strings
+    // Convert the string "04/14/2023" into the JSON string {"day": 14, "month": 4, "year": 2023}
+    const string = "2023-4-12";
+    const labels = ["year", "month", "day"]
+
+    // A. One way to do it (not the best way)
+    const json = string.split("-")
+        .map( (d,i,a) => a[i] = `"${labels[i]}": ${d}`)
+        .reverse()
+        .join(", ")
+        .replace(/^/g, "{ ")
+        .replace(/$/g, " }");
+
+    console.log(JSON.parse(json));
+
+    // There are better ways to do this in modern JavaScript:
+    // B. Using reduce()
+    const obj = string.split("-")
+                      .reverse()
+                      .reduce((acc, item, index) => ({ ...acc, [labels.reverse()[index]]: +item}), {})
+    console.log(obj);
+
+    // C. using Object.fromEntries (supported in ES2019)
+    // First create a 2D array with entries and values:
+    const values = string.split("-").reverse().map(n => +n);
+    const matrix2 = labels.map((e,i) => [e, values[i]]);
+
+    // Then generate the object from the entries (ES2019)
+    const obj2 = Object.fromEntries(matrix2);
+
+</script>
+</body>
+</html>

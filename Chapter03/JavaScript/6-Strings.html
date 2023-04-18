@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>JavaScript examples</title>
+    <title>JavaScript examples: strings</title>
 </head>
 <body>
 <h1>JavaScript examples: strings</h1>
@@ -19,8 +19,15 @@
          at the end of each line";
     console.log(line);
 
-    // This is just a convenience and doesn't actually introduce any line breaks:
+    // This is just a convenience and doesn't actually introduce any line breaks in the text:
     document.getElementById("text").innerText = line;
+
+    // But you don't need a backslash if your string is quoted with backticks:
+    const line2 =
+        `Multiline strings can also be
+         created without any backslash
+         if you use backticks`;
+    console.log(line);
 
     // Template literals (string interpolation) are strings created with backticks.
     // JavaScript expressions can be placed inside ${} placeholders.

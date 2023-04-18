@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>JavaScript examples: functions</title>
+</head>
+<body>
+<h1>JavaScript examples: functions</h1>
+<p>Open developer console to see results. Open source code to see comments</p>
+<script>
+
+    // 1. Creating functions in JavaScript
+
+    function add1(a,b) {
+        return a+b;
+    }
+    const add2 = function(a,b) {
+        return a+b;
+    }
+    const add3 = (a,b) => {
+        return a+b;
+    };
+
+    // 2. Calling functions
+        console.log(add1(4,5)); // 9
+        console.log(add2(4,5)); // 9
+        console.log(add3(4,5)); // 9
+
+    // 3. Arrow functions
+    const squareDiagonal1 = (side) => {
+        return Math.sqrt(2) * side;
+    }
+    const squareDiagonal2 = a => Math.sqrt(2) * a;
+
+    console.log(squareDiagonal1(10)); // 14.142
+    console.log(squareDiagonal2(10)); // 14.142
+
+
+    // 4. Methods
+    const rect = {w: 3, h: 4};
+    rect.diagonal1 = function() {
+        return Math.sqrt( this.w*this.w + this.h*this.h );
+    }
+
+    // 5. Calling methods
+    console.log(rect.diagonal1()); // 5
+
+    // 6. This in arrow functions
+    rect.diagonal2 = () => Math.sqrt( this.w*this.w + this.h*this.h );
+    console.log(rect.diagonal2()); // NaN because this.w and this.h are undefined!
+
+    // 7. Higher order functions
+    rect.operation = function(f) {
+        return f(this.w, this.h);
+    }
+
+    // 8. Calling higher order functions
+    // With add1
+    const v1 = rect.operation(add1); // 7
+    console.log(v1);
+
+    // With embedded multiply function
+    const v2 = rect.operation(function(a,b) {
+        return a*b;
+    });
+    console.log(v2);
+
+    // Using arrow function
+    const v3 = rect.operation( (a,b)  => a*b );
+    console.log(v3);
+
+
+</script>
+</body>
+</html>

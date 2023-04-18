@@ -2,21 +2,25 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>JavaScript examples</title>
+    <title>JavaScript examples: Promises</title>
 </head>
 <body>
-<h1>JavaScript examples: </h1>
+<h1>JavaScript examples: Promises</h1>
 <p>Open developer console to see results. Open code to see comments</p>
 
 <p>Contents from good file: <span id="result"></span></p>
 <p>Loading bad file status: <span id="status"></span></p>
 <script>
 
+    // Simple fetch and print string
+    fetch('../data/PlanetDiameters.csv')
+        .then(response => console.log(response.text()));
+
     // Fetch returns a promise
     // The function in then() will run when the file is loaded
     fetch('../data/PlanetDiameters.csv')
-        .then(response => response.text())
-        .then(text   => text.substring(14,19))
+        .then(response => response.text())      // HttpResponse object
+        .then(text   => text.substring(14,19))  // String object
         .then(word => document.getElementById('result').innerHTML = word);
 
 

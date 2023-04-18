@@ -2,27 +2,29 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>JavaScript examples</title>
+    <title>JavaScript examples: Promise-all</title>
 </head>
 <body>
-<h1>JavaScript examples: </h1>
+<h1>JavaScript examples: Promise-all</h1>
 <p>Open developer console to see results. Open code to see comments</p>
 <script>
 
     const filenames = [
-        'sample.csv',
-        'sample.json',
-        'sample.xml'
+        'continents.csv',
+        'continents.json',
+        'continents.xml'
     ];
 
-    var promises =
+    const promises =
         filenames.map(
             file => fetch(`../data/${file}`).then(resp => resp.text())
         );
 
     Promise.all(promises)
         .then( files => {
-            files.forEach(file => console.log("File size:", file.length, "bytes"));
+            const total = files.map(file => file.length)
+                               .reduce( (tot, len) => tot + len);
+            console.log(`Total size (bytes): ${total}`);
         });
 
 </script>

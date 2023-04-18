@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>JavaScript examples</title>
+    <title>JavaScript examples: strings</title>
 </head>
 <body>
 <h1>JavaScript examples: strings</h1>
@@ -23,14 +23,41 @@
     console.log(`"${s}" ends with "This": ${result}`);
 
 
-    // 3. substring(s,e)
-    // Returns a substring between start (incl.) and end indexes (not incl.)
+    // 3. indexOf(s)
+    // Returns the index of the first occurrence of a substring
     const k = "Aardvark"
+    let index = k.indexOf("ar"); // i = 1
+    console.log(`The result of "${k}".indexOf("ar") is: ${index}`);
+
+    // 4. lastIndexOf(s)
+    // Returns the index of the last occurrence of a substring
+    // k = "Aardvark"
+    index = k.lastIndexOf("ar"); // i = 5
+    console.log(`The result of "${k}".lastIndexOf("ar") is: ${index}`);
+
+
+    // 5. charAt(i)
+    // Returns char at index i. Also supported as ‘string’[i]
+    // k = "Aardvark"
+    result = k.charAt(4);
+    console.log(`The result of "${k}".charAt(4) is: ${result}`);
+
+
+    // 6. substring(s,e)
+    // Returns a substring between start (incl.) and end indexes (not incl.)
+    // k = "Aardvark"
     result = k.substring(1,6); // "ardva"
     console.log(`The result of "${k}".substring(1,6) is: ${result}`);
 
 
-    // 4. split(delim)
+    // 7. trim()
+    // Removes whitespace from both ends of a string.
+    const text = "   data   "
+    result = text.trim(); // r = "data"
+    console.log(`Original text "${text}", Result: "${result}"`);
+
+
+    // 8. split(delim)
     // Splits a string by a delimiter string and returns an array
     result = s.split(" "); // result = ["This","is","a","test","string"]
     console.log(`The result of "${s}".split(" ") is the array: [${result}]`);
@@ -43,29 +70,6 @@
     result = s.split(/\s/); // result = ["This","is","a","test","string"]
     console.log(`The result of "${s}".split(/w) is the array: [${result}]`);
 
-    // 5. indexOf(s)
-    // Returns the index of the first occurrence of a substring
-    // k = "Aardvark"
-    let index = k.indexOf("ar"); // i = 1
-    console.log(`The result of "${k}".indexOf("ar") is: ${index}`);
-
-    // 6. lastIndexOf(s)
-    // Returns the index of the last occurrence of a substring
-    // k = "Aardvark"
-    index = k.lastIndexOf("ar"); // i = 5
-    console.log(`The result of "${k}".lastIndexOf("ar") is: ${index}`);
-
-    // 7. charAt(i)
-    // Returns char at index i. Also supported as ‘string’[i]
-    // k = "Aardvark"
-    result = k.charAt(4);
-    console.log(`The result of "${k}".charAt(4) is: ${result}`);
-
-    // 8. trim()
-    // Removes whitespace from both ends of a string.
-    const text = "   data   "
-    result = text.trim(); // r = "data"
-    console.log(`Original text "${text}", Result: "${result}"`);
 
     // 9. match(regx)
     // Returns an array as the result of matching a regular expression against the string.
@@ -87,7 +91,6 @@
 
     result = k.replace('ardv', 'ntib') // result = "Antibark"
     console.log(`The result of "${k}".replace('ardv', 'ntib') is: [${result}]`);
-
 
 </script>
 </body>
