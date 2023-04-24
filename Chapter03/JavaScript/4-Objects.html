@@ -127,11 +127,12 @@
     // Properties and functions can be added to objects:
 
     const map = {};
-    function getCoords(coords) {
-        map.latitude = coords.lat;   // adding a latitude property
-        map.longitude = coords.lng;  // adding a longitude property
+    function setCoords(c) {
+        map.latitude = c.x;   // adding a latitude property
+        map.longitude = c.y;  // adding a longitude property
     }
-    console.log(map);
+    setCoords(coords);
+    console.log("setCoords(coords)", map); // {latitude: 35.5, longitude: 122.9}
 
     // Objects can also be created with a constructor:
 

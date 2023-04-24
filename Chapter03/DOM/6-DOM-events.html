@@ -1,0 +1,28 @@
+<html>
+<body>
+<h1>Simple page</h1>
+<p>Simple paragraph</p>
+<div id="my-section">
+    <img src="../images/pluto.jpg" width="100"/>
+    <p>Click me!</p>
+</div>
+</body>
+
+<script>
+    // TODO
+    // Create event
+    // Trigger event
+    // Identify event source
+    // Layered events
+    // Native DOM events from chapter 8
+
+    const div = document.getElementById("my-section");
+    div.style.cursor = "pointer";
+    div.addEventListener("click", function() {
+        const p = document.createElement("p");
+        p.innerHTML = "New line";
+        this.appendChild(p);
+    });
+</script>
+
+</html>
