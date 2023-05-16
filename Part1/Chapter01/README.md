@@ -12,8 +12,3 @@ __`Module-frontend/`__
 
 Simple examples showing how to load the D3 library in a frontend environment (without node/NPM).
 
-__`Exercises/`__
-
-Exercises to explore the topics learned in this chapter.
-
-

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>D3: Module import - CDN library</title>
+
+    <!-- Required by d3-selection-multi -->
+    <script src="https://cdn.jsdelivr.net/npm/d3-selection@3"></script>
+
+    <!-- Required by the d3-transition module -->
+    <script src="https://cdn.jsdelivr.net/npm/d3-dispatch@3"></script>
+    <script src="https://cdn.jsdelivr.net/npm/d3-timer@3"></script>
+    <script src="https://cdn.jsdelivr.net/npm/d3-interpolate@3"></script>
+    <script src="https://cdn.jsdelivr.net/npm/d3-color@3"></script>
+    <script src="https://cdn.jsdelivr.net/npm/d3-ease@3"></script>
+
+    <!-- Required by d3-selection-multi -->
+    <script src="https://cdn.jsdelivr.net/npm/d3-transition@3"></script>
+
+    <!-- Import script -->
+    <script src="https://cdn.jsdelivr.net/npm/d3-selection-multi@1"></script>
+</head>
+<body>
+<svg id="chart" width="600" height="200"></svg>
+<script>
+
+    const array = [100, 200, 300, 350, 375, 400, 500];
+
+    d3.select("#chart")
+        .selectAll("circle")
+        .data(array).join("circle")
+        .attrs({"r": 10, "cy": 100, "cx": d => d});
+        //.attr("r", "10").attr("cy", 100).attr("cx", d => d);
+</script>
+</body>
+</html>

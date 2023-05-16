@@ -2,13 +2,18 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>D3: Module import - CDN library</title>
-    <script src="https://cdn.jsdelivr.net/npm/d3-selection@1"></script>
-    <script src="https://cdn.jsdelivr.net/npm/d3-selection-multi@1"></script>
+    <title>D3: Module import - ESM library</title>
+
 </head>
 <body>
 <svg id="chart" width="600" height="200"></svg>
-<script>
+<script type="module">
+
+    const d3 = await Promise.all([
+        import("https://cdn.skypack.dev/d3-selection@1"),      // Must be version 1
+        import("https://cdn.skypack.dev/d3-selection-multi@1")
+    ]).then(d3 => Object.assign({}, ...d3));
+
 
     const array = [100, 200, 300, 350, 375, 400, 500];
 
