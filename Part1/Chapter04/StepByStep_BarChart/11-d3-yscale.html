@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Title</title>
+    <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+    <style>
+        #bar-chart {
+            border: solid 1px gray;
+        }
+        .bar {
+            fill: orange;
+        }
+        .category {
+            text-anchor: end;
+        }
+        text {
+            font-size: 10pt;
+            alignment-baseline: hanging;
+        }
+    </style>
+</head>
+<body>
+<script>
+    // Chart data
+    const width = 600;
+    const height = 300;
+
+    const dataset = [225, 425, 125, 50, 450, 75, 325];
+
+    const bar_height = height / dataset.length - 2;
+
+    const xscale = d3.scaleLinear()
+        .domain([0, d3.max(dataset)])
+        .range([0, width-100]);
+
+    const yscale = d3.scaleLinear()
+        .domain([0, dataset.length])
+        .range([1, height]);
+
+    // Using yscale()
+    console.log('yscale(0)', yscale(0));
+    console.log('yscale(1)', yscale(1));
+    console.log('yscale(6)', yscale(6));
+
+    const body = d3.select("body");
+
+    body.append("h1")
+        .text("Bar chart");
+
+    const svg = body.append("svg")
+        .attr("id", "bar-chart")
+        .attr("width", width)
+        .attr("height", height);
+
+    const entries = svg.selectAll(".entry")
+        .data(dataset)
+        .join("g")
+        .attr("class", "entry")
+        .attr("transform", (d,i) => `translate(50, ${yscale(i)})`);
+
+    entries.append("rect")
+        .attr("class", "bar")
+        .attr("height", bar_height)
+        .attr("width", d => xscale(d));
+
+    entries.append("text")
+        .attr("class", "category")
+        .attr("x", -5)
+        .attr("y", (bar_height/2) - 5)
+        .text((d,i) => `Item ${1 + i}`);
+
+    entries.append("text")
+        .attr("x", d => xscale(d) + 5)
+        .attr("y", (bar_height/2) - 5)
+        .text(d => d);
+
+</script>
+
+</body>
+</html>

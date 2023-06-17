@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Title</title>
+    <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+    <style>
+        #bar-chart {
+            border: solid 1px gray;
+        }
+        .category {
+            text-anchor: end;
+        }
+        text {
+            font-size: 10pt;
+            alignment-baseline: hanging;
+        }
+    </style>
+</head>
+<body>
+<script>
+    const width = 600;
+    const height = 300;
+    const url = "../data/sol_2019.json";
+
+    // handle for this page's body tag
+    const body = d3.select("body");
+
+    // configure scale and color functions with output range
+    const xscale = d3.scaleLinear()
+                     .range([0, width-140]);
+    const yscale = d3.scaleLinear()
+                     .range([1, height]);
+    const color = d3.scaleOrdinal(d3.schemeTableau10);
+
+    // configure number formatting function
+    const fmt = d3.format(".2f");
+
+    // This map will store configuration for different charts
+    const charts = new Map();
+    charts.set("min", {title: 'Minimum'}); // displays minimum distances
+    charts.set("avg", {title: 'Average'}); // displays average distances
+    charts.set("max", {title: 'Maximum'}); // displays maximum distances
+
+    // This will contain the dataset after the file loads
+    const dataset = [];
+
+    // Initial bar height
+    let bar_height = 0;
+
+    // Current chart to display
+    let current = 'avg';
+
+    // Load and render
+    d3.json(url)
+        .then(data => {
+            makeDataset(data, 'planets'); // populates the dataset array with selected data
+            renderChart();      // draws the initial chart
+            renderControls();   // draws the chart selector panel
+        });
+
+
+    /* Functions: can be stored in a separate JS file */
+
+    /**
+     * This function extracts selected planetary data from a section in the sol_2019.json file
+     * @param section May be 'planets', 'asteroids', 'tnos', 'centaurs' or 'comets'
+     */
+    function makeDataset(data, section) {
+        let i = 0;
+        data[section].forEach(object => {
+            dataset.push(
+                {
+                    name: object.name,
+                    avg: +object.semiMajorAxisAU,
+                    min: +object.periheliumAU,
+                    max: +object.apheliumAU,
+                    color: color(i++)
+                }
+            );
+        });
+    }
+
+    /**
+     * Sorts the dataset
+     */
+    function sort() {
+        dataset.sort((a, b) => d3.ascending(a[current], b[current]));
+    }
+
+    /**
+     * Renders a bar chart with average, maximum or minimum orbital distances in AU.
+     * @param type Can be 'max', 'min' or 'avg'
+     */
+    function renderChart() {
+        sort();
+
+        // computations
+        bar_height = height / dataset.length - 2;
+        yscale.domain([0, dataset.length])
+        xscale.domain([0, d3.max(dataset, d => d3.max([d.avg,d.max,d.min]))]);
+        color.domain(yscale.domain());
+
+        // draw the chart
+        body.append("h1")
+            .text(" distance from the Sun")
+            .append('span').lower()
+                .attr('id', 'title')
+                .text(charts.get(current).title);
+
+        const svg = body.append("svg")
+            .attr("id", "bar-chart")
+            .attr("width", width)
+            .attr("height", height);
+
+        const entries = svg.selectAll(".entry")
+            .data(dataset)
+            .join("g")
+            .attr("class", "entry")
+            .attr("transform", (d,i) => `translate(70, ${yscale(i)})`);
+
+        entries.append("rect")
+            .attr("class", "bar")
+            .attr("height", bar_height)
+            .attr("width", d => xscale(d[current]))
+            .style("fill", d => d.color);
+
+        entries.append("text")
+            .attr("class", "category")
+            .attr("x", -5)
+            .attr("y", (bar_height/2) - 5)
+            .text(d => d.name);
+
+        entries.append("text")
+            .attr("class", "value")
+            .attr("x", d => xscale(d[current]) + 5)
+            .attr("y", (bar_height/2) - 5)
+            .text(d => `${fmt(d[current])} AU`);
+    }
+
+    /**
+     * Renders three control buttons to select which chart is to be displayed
+     */
+    function renderControls() {
+        const form = body.append("form");
+        charts.forEach( (value, key) => {
+            form.append("button")
+                .attr("type", "button")
+                .attr("id", key)
+                .property("disabled", current === key)
+                .on("click", () => update(key))
+                .text(value.title);
+        })
+    }
+
+    /**
+     * Updates the chart with new data.
+     * @param type The corresponding key in the charts map ('avg', 'max' or 'min')
+     */
+    function update(type) {
+        current = type; // set new current chart type
+        sort(); // re-sort the array
+
+        // Update interface
+        d3.select("#title")
+            .text(charts.get(current).title);
+        d3.selectAll("button")
+            .property("disabled", false);
+        d3.select(`#${current}`)
+            .property("disabled", true);
+
+        const entries = body.select("#bar-chart")
+            .selectAll(".entry")
+            .data(dataset); // needs update, because the order changed
+
+        entries.select(".bar")
+               .style("fill", d => d.color) // needs update, because the order changed
+               .attr("width", d => xscale(d[current]));
+
+        entries.select(".category")
+               .text(d => d.name); // needs update, because the order changed
+
+        entries.select(".value")
+            .attr("x", d => xscale(d[current]) + 5)
+            .text(d => `${fmt(d[current])} AU`);
+    }
+
+</script>
+
+</body>
+</html>

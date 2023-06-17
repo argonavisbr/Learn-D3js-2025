@@ -4,31 +4,15 @@ Files and exercises for chapter 4.
 
 ## 1) Description of each subfolder in this folder
 
-__`Selecting/`__
+__`StepByStep_BarChart/`__
 
 Description.
 
-__`Binding/`__
+__`Updating_BarChart/`__
 
 Description.
 
-__`Loading/`__
-
-Description.
-
-__`Updating/`__
-
-Description.
-
-__`HTML_Bar/`__
-
-Description.
-
-__`SVG_Map/`__
-
-Description.
-
-__`SVG_Bar/`__
+__`WorldMap/`__
 
 Description.
 

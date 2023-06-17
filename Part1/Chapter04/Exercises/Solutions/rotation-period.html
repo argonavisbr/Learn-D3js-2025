@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Title</title>
+    <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+    <style>
+        #bar-chart {
+            border: solid 1px gray;
+        }
+        .category {
+            text-anchor: end;
+        }
+        text {
+            font-size: 10pt;
+            alignment-baseline: hanging;
+        }
+    </style>
+</head>
+<body>
+<script>
+    // Chart data
+    const width = 600;
+    const height = 300;
+
+    const url = "../../data/sol_2019.json";
+
+    d3.json(url)
+        .then(data => {
+            const temp = []; // empty array
+
+            data.planets
+                .filter(d => d.category == 'rocky' || d.category == 'gaseous')
+                .forEach(object => {
+                temp.push(
+                    {
+                        name: object.name,
+                        day: Math.abs(object.siderealRotationPeriodH)
+                    }
+                );
+            });
+            drawChart(temp.filter(d => d.day < 100));
+        });
+
+    
+    function drawChart(dataset) {
+        // configure data
+        dataset.sort((a,b) => d3.ascending(a.day, b.day));
+
+        const bar_height = height / dataset.length - 2;
+
+        // define functions
+        const xscale = d3.scaleLinear()
+            .domain([0, d3.max(dataset, d => d.day)])
+            .range([0, width-150]);
+
+        const yscale = d3.scaleLinear()
+            .domain([0, dataset.length])
+            .range([1, height]);
+
+        const color = d3.scaleOrdinal(d3.schemeTableau10)
+            .domain(yscale.domain());
+
+        const fmt = d3.format(",.0d");
+
+        // render chart
+        const body = d3.select("body");
+        body.append("h1")
+            .text("Length of day");
+
+        const svg = body.append("svg")
+            .attr("id", "bar-chart")
+            .attr("width", width)
+            .attr("height", height);
+
+        const entries = svg.selectAll(".entry")
+            .data(dataset)
+            .join("g")
+            .attr("class", "entry")
+            .attr("transform", (d,i) => `translate(70, ${yscale(i)})`);
+
+        entries.append("rect")
+            .attr("class", "bar")
+            .attr("height", bar_height)
+            .attr("width", d => xscale(d.day))
+            .style("fill", (d,i) => color(i));
+
+        entries.append("text")
+            .attr("class", "category")
+            .attr("x", -5)
+            .attr("x", -5)
+            .attr("y", (bar_height/2) - 5)
+            .text(d => d.name);
+
+        entries.append("text")
+            .attr("x", d => xscale(d.day) + 5)
+            .attr("y", (bar_height/2) - 5)
+            .text(d => `${fmt(d.day)} hours`);
+    }
+
+
+</script>
+
+</body>
+</html>

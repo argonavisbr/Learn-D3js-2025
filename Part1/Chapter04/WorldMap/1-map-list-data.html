@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>List of countries from GeoJSON file</title>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+</head>
+<body>
+<script>
+    const url = "../Data/world-lowres.geojson";
+
+    d3.json(url)
+        .then(function(data) {
+            const countries = [];
+
+            data.features.forEach(function(obj) {
+                countries.push({
+                    name: obj.properties.name,
+                    id: obj.id
+                });
+            });
+            draw(countries);
+        });
+
+    function draw(countries) {
+        d3.select("body").append("ol")
+            .selectAll("li")
+            .data(countries)
+            .join("li")       // same as enter().append("li")
+            .text(d => d.name + " (" + d.id + ")");
+    }
+</script>
+
+</body>
+</html>
