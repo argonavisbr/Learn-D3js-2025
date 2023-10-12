@@ -51,7 +51,7 @@
     d3.json(url)
         .then(data => {
             makeDataset(data, 'planets'); // populates the dataset array with selected data
-            renderChart(current); // draws the initial chart
+            renderChart(); // draws the initial chart
             renderControls();     // draws the chart selector panel
         });
 
@@ -88,7 +88,7 @@
      * Renders a bar chart with average, maximum or minimum orbital distances in AU.
      * @param type Can be 'max', 'min' or 'avg'
      */
-    function renderChart(type) {
+    function renderChart() {
         sort();
 
         // computations
@@ -118,7 +118,7 @@
         entries.append("rect")
             .attr("class", "bar")
             .attr("height", bar_height)
-            .attr("width", d => xscale(d[type]))
+            .attr("width", d => xscale(d[current]))
             .style("fill", d => d.color);
 
         entries.append("text")
@@ -128,9 +128,9 @@
             .text(d => d.name);
 
         entries.append("text")
-            .attr("x", d => xscale(d[type]) + 5)
+            .attr("x", d => xscale(d[current]) + 5)
             .attr("y", (bar_height/2) - 5)
-            .text(d => `${fmt(d[type])} AU`);
+            .text(d => `${fmt(d[current])} AU`);
     }
 
     /**

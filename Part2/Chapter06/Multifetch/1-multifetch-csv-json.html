@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Multifetch</title>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+</head>
+<body>
+
+
+<script>
+    const shapesFile = '../data/world-lowres.geojson';
+    const pointsFile  = '../data/cities15000.csv';
+
+    Promise.all([
+        d3.json(shapesFile),
+        d3.dsv(';', pointsFile, function(row) {
+            return {
+                name: row.asciiname,
+                coords: [+row.longitude, +row.latitude],
+                pop: +row.population
+            }
+        })
+    ]).then(function([shapes, points]) {
+        console.log(shapes, points);
+        // do something with the data
+    });
+</script>
+
+
+</body>
+</html>

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Using selection.raise() and selection.lower()</title>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+</head>
+<body>
+
+<h1>Using selection.raise() and selection.lower()</h1>
+<h3>Edit the code to experiment with these methods</h3>
+
+<div>
+    <p>Zero</p>
+    <p>One</p>
+    <p>Two</p>
+    <p>Three</p>
+    <p>Four</p>
+    <p>Five</p>
+    <p>Six</p>
+    <p>Seven</p>
+    <p>Eight</p>
+    <p>Nine</p>
+</div>
+
+<script>
+    const selection = d3.select("div").selectAll("p");
+    console.log(selection.nodes());
+
+    const bound = selection
+        .data([6,3,2,1,4])
+        .text((d,i,n) => d3.select(n[i]).text() + " " + d);
+    console.log(bound);
+
+    const sorted = bound.sort( (a,b) => a - b);
+    console.log(sorted.nodes());
+</script>
+</body>
+</html>

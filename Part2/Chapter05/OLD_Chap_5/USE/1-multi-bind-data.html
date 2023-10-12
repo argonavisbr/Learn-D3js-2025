@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Data</title>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <style>
+        svg { border: solid gray 1px }
+    </style>
+</head>
+<body>
+
+<svg height="500" width="400"></svg>
+
+<script>
+    // Initial selection
+    const svg = d3.select("svg")
+    const selection = svg.selectAll("circle");
+
+    const cube = [
+        [
+            ['r11','r12','r13'],
+            ['r21','r22','r23'],
+            ['r31','r32','r33'],
+        ],[
+            ['b11','b12','b13'],
+            ['b21','b22','b23'],
+            ['b31','b32','b33'],
+        ],[
+            ['y11','y12','y13'],
+            ['y21','y22','y23'],
+            ['y31','y32','y33'],
+        ],[
+            ['w11','w12','w13'],
+            ['w21','w22','w23'],
+            ['w31','w32','w33'],
+        ],[
+            ['g11','g12','g13'],
+            ['g21','g22','g23'],
+            ['g31','g32','g33'],
+        ],[
+            ['o11','o12','o13'],
+            ['o21','o22','o23'],
+            ['o31','o32','o33'],
+        ],
+    ]
+
+    // Initial update
+    svg.selectAll("g.side")
+        .data(cube)
+        .join("g").attr("class","side")
+        .attr("transform", (d,i) => `translate(${i%2==0?10:120}, ${70*(i%2==0?(i/2):((i-1)/2))})`)
+        .text( (d,i) => console.log(i,d) || d)
+        .selectAll("g.row")
+           .data(d => d)
+           .join("g").attr("class","row")
+           .attr("transform", (d,i) => `translate(10, ${20*i + 20})`)
+           .text( (d,i) => console.log(i,d) || d)
+           .selectAll("text.cell")
+                .data(d => d)
+                .join("text").attr("class","cell")
+                .attr("x", (d,i) => 30*i)
+                .text( (d,i) => console.log(i,d) || d);
+
+
+</script>
+
+</body>
+</html>

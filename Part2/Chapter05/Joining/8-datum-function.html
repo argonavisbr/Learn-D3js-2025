@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Using datum</title>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+</head>
+<body>
+<h1>See more results in console.</h1>
+
+<svg height="200" width="400"></svg>
+
+<script>
+    const dataset = [20,40,60];
+    const svg = d3.select("svg");
+
+    dataset.forEach( () => svg.append("rect") );
+
+    svg.selectAll("rect")
+        .datum( (d,i) => d = dataset[i] )
+        .attr("height", d => d)
+        .attr("width", d => d)
+        .attr("x", (d,i) => d + i*50)
+        .attr("y", 100)
+
+</script>
+
+</body>
+</html>

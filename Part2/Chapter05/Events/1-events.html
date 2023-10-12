@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Using selection events</title>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+</head>
+<body>
+<h1>Select an item</h1>
+
+<p id="a1">Before</p>
+<div class="air">
+    <p id="a2">Hawk</p>
+    <p id="a3">Parrot</p>
+    <p id="a4">Vulture</p>
+</div>
+<div class="water">
+    <p id="a5">Dolphin</p>
+    <p id="a6">Shark</p>
+</div>
+<p id="a7">After</p>
+
+<canvas></canvas>
+
+<script>
+    d3.selectAll("div p")
+        .data(['one','two','three','four','five'])
+        .on("mouseover", function(event, d) {
+            console.log(event);
+            const text = d3.select(event.target).text();
+            d3.select("h1").text(`Item ${d}: ${text}`);
+        })
+        .on("mouseout click", () => d3.select("h1").text("Select an item"));
+
+</script>
+
+</body>
+</html>

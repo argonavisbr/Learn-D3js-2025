@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Data</title>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <style>
+        svg { border: solid gray 1px }
+    </style>
+</head>
+<body>
+
+<svg height="400" width="800"></svg>
+
+<script>
+    // Initial selection
+    const svg = d3.select("svg")
+    const selection = svg.selectAll("circle");
+
+    console.log(selection);
+
+    //apply("Initial update", [5,10,15,20,25])
+    setTimeout(apply, 2000, "Removing update", [7,15,26])
+   // setTimeout(apply, 4000, "Adding update", [18,15,9,3,15,18])
+
+    function apply(label, data) {
+        const updateSel = svg.selectAll("circle").data(data);
+        console.log(label, updateSel);
+
+        const joinedSel = updateSel.join("circle")
+        update();
+        console.log("Joined selection", joinedSel);
+    }
+
+    function update() {
+        svg.selectAll("circle")
+            .attr("cy", 200)
+            .transition()
+            .attr("cx", (d,i) => (i+1)*100)
+            .attr("r", d => d);
+    }
+
+    d3.select("svg")
+        .selectAll("circle.dot") // this is a selector
+        .data([18,15,9,3,15,18])
+        .join("circle")          // this is a tag name
+        .attr("class", "dot");   // don't forget this!
+
+</script>
+
+</body>
+</html>

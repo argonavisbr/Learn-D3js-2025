@@ -147,17 +147,18 @@
                 .attr("type", "button")
                 .attr("id", key)
                 .property("disabled", current === key)
-                .on("click", () => update(key))
+                .on("click", update)
                 .text(value.title);
         })
     }
 
     /**
      * Updates the chart with new data.
-     * @param type The corresponding key in the charts map ('avg', 'max' or 'min')
+     * @param event The DOM 'click' event. Use event.target to access the button
+     * and event.target.id to access the button's id property.
      */
-    function update(type) {
-        current = type; // set new current chart type
+    function update(event) {
+        current = event.target.id; // set new current chart type
         sort(); // re-sort the array
 
         // Update interface
