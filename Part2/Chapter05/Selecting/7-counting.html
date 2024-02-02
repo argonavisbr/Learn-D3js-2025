@@ -2,8 +2,11 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Template file for Chapter05/Selecting</title>
+    <title>Counting elements in a selection</title>
     <script src="https://d3js.org/d3.v7.min.js"></script>
+    <style>
+        div {width: 200px}
+    </style>
 </head>
 <body>
 <h1>Use JavaScript console to follow examples</h1>
@@ -22,7 +25,19 @@
 
 <canvas></canvas>
 
-<script></script>
+<script>
+
+    const divp = d3.selectAll("div.water p");
+    console.log('divp.size()', divp.size());
+
+    const newsel1 = divp.filter(d => d);
+    console.log('newsel1.empty()', newsel1.empty());
+
+    const newsel2 = divp.data(["a","b","c","d"]);
+    console.log('newsel2.size()', newsel2.size());
+    console.log('newsel2.empty()', newsel2.empty());
+
+</script>
 
 </body>
 </html>

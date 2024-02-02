@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Ordinal scales</title>
+    <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+    <style>
+        circle {
+            fill-opacity: .1;
+            fill: red;
+        }
+        text {
+            text-anchor: middle;
+            font-family: sans-serif
+        }
+    </style>
+</head>
+<body>
+
+<script>
+    let data = d3.range(0,501,25);
+    let domain = [100,200,300,400,500];
+
+    const colorScale = d3.scaleOrdinal().domain(domain).range(['black','blue','red','green']);
+    const sizeScale  = d3.scaleOrdinal().domain(domain).range([16,13,10,13]);
+    const boldScale  = d3.scaleOrdinal().domain(domain).range(['bold','normal']);
+
+    console.log("color of ", colorScale(0));
+
+    colorScale.unknown('gray');
+    sizeScale.unknown('9');
+    boldScale.unknown('normal');
+
+    const axisScale = d3.scaleLinear()
+            .domain(d3.extent(data))
+            .range([0,600]);
+
+    d3.select("body").append("svg").attr("height", 650).attr("width", 850);
+
+    d3.select("svg").append("g")
+            .selectAll("text")
+            .data(data).join("text")
+            .attr("x", d => axisScale(d) + 22)
+            .attr("y",22)
+            .style("font-weight", d => boldScale(d))
+            .style("font-size", d => sizeScale(d))
+            .style("fill", d => colorScale(d))
+            .text(d => d);
+
+</script>
+
+</body>
+</html>

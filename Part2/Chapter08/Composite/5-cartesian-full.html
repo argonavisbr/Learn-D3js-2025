@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Cartesian axes with 4 quadrants</title>
+    <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+    <style>
+        .label {
+            fill: black;
+            font-size: 12pt;
+            text-anchor: middle;
+        }
+        svg {
+            border: solid 1px lightgray;
+        }
+        .zero {stroke: gray}
+    </style>
+</head>
+<body>
+<script>
+    const height = 500, width = 800, marginX = 50, marginY = 50;
+
+    const scaleX = d3.scaleLinear()
+                     .range([marginX, width - marginX])
+                     .domain([-20,50]);
+    const scaleY = d3.scaleLinear()
+                     .range([height - marginY, marginY])
+                     .domain([-1,1]);
+
+    const axisX = d3.axisBottom(scaleX).ticks(2);
+    const axisY = d3.axisLeft(scaleY);
+
+    const svg = d3.select("body")
+            .append("svg")
+            .attr("width", width)
+            .attr("height",height);
+
+    svg.append("g").attr("class", "x-axis")
+            .attr("transform", `translate(0,${height - marginY})`)
+            .call(axisX);
+
+    svg.append("g").attr("class", "y-axis")
+            .attr("transform", `translate(${marginX},0)`)
+            .call(axisY);
+
+    svg.selectAll(".x-axis .tick line")
+       .filter(v => v == 0)
+       .attr("y1", -height+marginY*2)
+       .attr("class", "zero")
+
+    svg.selectAll(".y-axis .tick line")
+       .filter(v => v == 0)
+       .attr("x1", width - marginX*2)
+       .attr("class", "zero")
+
+
+</script>
+</body>
+</html>

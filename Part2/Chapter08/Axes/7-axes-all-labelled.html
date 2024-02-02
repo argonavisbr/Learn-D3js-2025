@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>All axes labelled</title>
+    <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+    <!-- Using free Yanone Kaffeesatz fonts: https://www.yanone.de/fonts/kaffeesatz/ -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz">
+    <style>
+        * {
+            font-family: 'Yanone Kaffeesatz', sans-serif;
+        }
+        .label {
+            fill: black;
+            font-size: 10pt;
+            text-anchor: middle;
+        }
+        svg {
+            border: solid 1px lightblue;
+        }
+
+    </style>
+</head>
+<body>
+<script>
+    const scale = d3.scaleLinear().range([0,250]);
+
+    const svg = d3.select("body").append("svg").attr("width", 500).attr("height",270);
+
+    draw(d3.axisBottom(scale), [10,60], "axisBottom", 1, 0);
+    draw(d3.axisTop(scale), [10,210], "axisTop", -1, 0);
+    draw(d3.axisLeft(scale), [350,10], "axisLeft", 1, 90);
+    draw(d3.axisRight(scale), [400,10], "axisRight", -1, 90);
+
+    function draw(axis, position, label, sign, rotate) {
+        svg.append("g")
+            .attr("transform", `translate(${position})`)
+            .call(axis)
+            .each(function() {
+                const g = d3.select(this);
+                g.append("text").attr("class","label")
+                 .text(`${label} @ (${position})`)
+                 .attr("transform", `rotate(${rotate}) translate(125,${sign * 50})`);
+                g.append("circle").attr("r",3).style("fill","red");
+            });
+    }
+
+</script>
+</body>
+</html>

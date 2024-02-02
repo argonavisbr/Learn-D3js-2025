@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Exponential Scales</title>
+    <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+    <style>
+        circle {
+            fill-opacity: 1;
+        }
+        line, path {
+            stroke: #ccc;
+        }
+    </style>
+</head>
+<body>
+
+<script>
+    const d = [5,32];
+    const r = [0,1000];
+
+    const data = d3.range(d[0], d[1]);
+
+    // Using D3 (red)
+    const scale1 = d3.scaleLinear()
+        .domain(d)
+        .range(r);
+    const scale2 = d3.scaleSqrt()
+            .domain(d)
+            .range(r);
+    const scale3 = d3.scaleRadial()
+            .domain(d)
+            .range(r);
+
+    // Using simplified functions (blue)
+    const scale_f1 = createLinearScale(d, r);
+    const scale_f2 = createSqrtScale(d, r);
+    const scale_f3 = createRadialscale(d, r);
+
+    const xAxis1 = d3.axisBottom().scale(scale1).tickSize(25);
+    const xAxis2 = d3.axisBottom().scale(scale2).tickSize(25);
+    const xAxis3 = d3.axisBottom().scale(scale3).tickSize(25);
+
+    const svg = d3.select("body").append("svg")
+                  .attr("height", 550).attr("width", 1050);
+
+    render(scale1, xAxis1, 0, 'red');
+    render(scale2, xAxis2, 100, 'red');
+    render(scale3, xAxis3, 200, 'red');
+    render(scale_f1, xAxis1, 50, 'blue');
+    render(scale_f2, xAxis2, 150, 'blue');
+    render(scale_f3, xAxis3, 250, 'blue');
+
+    function render(scale, axis, y, color) {
+        const g = svg.append("g")
+            .attr("transform",`translate(25,${y+25})`)
+            .call(axis);
+
+        g.selectAll("circle")
+            .data(data)
+            .join(enter => enter.append("circle"))
+            .attr("r", 5)
+            .attr("cx", d=>scale(d))
+            .attr("fill", color);
+    }
+
+    // Example functions
+    // f(x) = ax + b
+    function createLinearScale(domain, range) {
+        const a = (range[1]-range[0])/(domain[1]-domain[0]);
+        const b = - a * domain[0] + range[0];
+        return x => a*x + b;
+    }
+
+    // f(x) = ax^0.5 + b
+    function createSqrtScale(domain, range) {
+        const a = (range[1]-range[0])/(Math.sqrt(domain[1])-Math.sqrt(domain[0]));
+        const b = - a * Math.sqrt(domain[0]) + range[0];
+        return x => a*Math.sqrt(x) + b;
+    }
+
+    // f(x) = sqrt(((y2*y2 - y1*y1)/x2-x1) * (x - x1) + y1*y1)
+    function createRadialscale(domain, range) {
+        const a = (range[1]*range[1]-range[0]*range[0])/(domain[1]-domain[0]);
+        const b = - a * domain[0] + range[0]*range[0];
+        return x => Math.sqrt(Math.abs(a*x + b));
+    }
+
+
+
+
+
+
+</script>
+
+</body>
+</html>

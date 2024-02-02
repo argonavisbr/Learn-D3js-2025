@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>d3-array examples</title>
+    <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+    <!-- Using free Yanone Kaffeesatz fonts: https://www.yanone.de/fonts/kaffeesatz/ -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz">
+    <style>
+        svg { border: solid 1px gray; }
+        * { font-family: 'Yanone Kaffeesatz', sans-serif; }
+        h1 {font-size: 14pt}
+    </style>
+</head>
+<body>
+<script>
+    const pixel = 30; // size of pixel
+    const data = Uint8ClampedArray.from([0,0,0,0,0,0,0,
+                  0,0,0,255,0,0,0,
+                  0,0,0,255,0,0,0,
+                  0,255,255,255,255,255,0,
+                  0,0,0,255,0,0,0,
+                  0,0,0,255,0,0,0,
+                  0,0,0,0,0,0,0].map(d => d == 0 ? 255 : 0));
+    const side = 7;
+    const imageData = {data: data, width: side, height: side};
+    const w = svgH = side * pixel;
+
+    const scaleY = d3.scaleLinear().domain([0,side]).range([0,svgH]);
+    const scaleX = d3.scaleLinear().domain([0,side]).range([0,w])
+
+    const svg = d3.select("body").append("svg").attr("height",svgH).attr("width",w);
+    const title = d3.select("body").append("h1");
+
+    // No blur
+    console.log(imageData.data.toString());
+
+    svg.selectAll("rect")
+        .data(data)
+        .join("rect")
+        .attr("x", (d,i) => scaleX(Math.floor(i / side)))
+        .attr("y", (d,i) => scaleY(i % side))
+        .attr("width", w/side)
+        .attr("height", svgH/side)
+        .style("fill", d => `rgb(${d},${d},${d})`);
+    title.text("Original image");
+
+    // Blur 0.1
+    d3.blur2(imageData, .1);
+    console.log(imageData.data.toString());
+
+    svg.selectAll("rect")
+        .data(imageData.data)
+        .transition().duration(3000).delay(1000)
+        .style("fill", d => `rgb(${d},${d},${d})`);
+    title.transition().delay(1000).text("Original image + blur(0.1)");
+
+    // Cumulative Blur 0.1
+    d3.blur2(imageData, .1);
+    console.log(imageData.data.toString());
+
+    svg.selectAll("rect")
+        .data(imageData.data)
+        .transition().duration(3000).delay(4000)
+        .style("fill", d => `rgb(${d},${d},${d})`);
+    title.transition().delay(4000).text("Original image + blur(0.1) + blur(0.1)");
+
+
+
+
+</script>
+
+</body>
+</html>

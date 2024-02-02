@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+    <script src="../js/render-palettes.js"></script>
+    <title>Categorical color schemes</title>
+    <link rel="stylesheet" href="../css/render-palletes.css">
+</head>
+<body>
+<h1 style="margin-left: 25px">Categorical</h1>
+<svg width="800" height="800"></svg>
+<script>
+
+    const schemes = [
+        {scheme: 'schemeTableau10', size: 10},
+        {scheme: 'schemeCategory10', size: 10},
+        {scheme: 'schemePastel1', size: 9},
+        {scheme: 'schemePastel2', size: 8},
+        {scheme: 'schemeDark2', size: 8},
+        {scheme: 'schemeAccent', size: 8},
+        {scheme: 'schemeSet1', size: 9},
+        {scheme: 'schemeSet2', size: 8},
+        {scheme: 'schemeSet3', size: 12},
+        {scheme: 'schemePaired', size: 12},
+    ];
+
+    schemes.forEach((scheme, index) => renderSchemeOrdinal(scheme, index))
+
+</script>
+
+</body>
+</html>

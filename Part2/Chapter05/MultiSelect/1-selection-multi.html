@@ -7,18 +7,17 @@
     <script src="https://d3js.org/d3-selection-multi.v1.min.js"></script>
 </head>
 <body>
-<svg width="800" height="600"></svg>
+<svg width="400" height="400"></svg>
 <script>
-    const width = 800, height = 600;
-
-    // Data objects
+    const size = 400;
 
     const data = [
-        {color: "red", x: 200, y: 150},
-        {color: "green", x: 400, y: 300},
-        {color: "blue", x: 600, y: 450}
+        {color: "red", x: 100, y: 100},
+        {color: "green", x: 200, y: 200},
+        {color: "blue", x: 300, y: 300}
     ];
 
+    // Data objects
     const shapeStyles = {
         fill: d => d.color,
         stroke: "black",
@@ -34,8 +33,8 @@
     };
 
     const rectData = {
-        x: d => width - 50 - d.x,
-        y: d => height - 50 - d.y,
+        x: d => size - d.x,
+        y: d => size - d.y,
         width: 100,
         height: 100
     };
@@ -44,15 +43,15 @@
 
     d3.select("svg")
         .selectAll("circle")
-        .data(data).enter()
-        .append("circle")
+        .data(data)
+        .join("circle")
             .styles(shapeStyles)
             .attrs(circleData);
 
     d3.select("svg")
         .selectAll("rect")
-        .data(data).enter()
-        .append("rect")
+        .data(data)
+        .join("rect")
             .styles(shapeStyles)
             .attrs(rectData);
 

@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Random number generators</title>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <style>
+        text {
+            font-family: 'Yanone Kaffeesatz', sans-serif;
+            font-size: 12pt;
+        }
+        svg {border: solid 1px blue}
+    </style>
+</head>
+<body>
+
+<script>
+    const width  = 1000;
+    const height = 600;
+    const cols = 5;
+    const rows = 4;
+    const marginW = 10;
+    const marginH = 20;
+
+    const randomFunctions = [
+        ["randomUniform",[0,1]],
+        ["randomInt",[0,1000]],
+        ["randomNormal",[1,0.5]],
+        ["randomLogNormal",[1,.3]],
+        ["randomBates",[2.5]],
+        ["randomIrwinHall",[25]],
+        ["randomExponential",[1/20]],
+        ["randomPareto",[100]],
+        ["randomBernoulli",[.75]],
+        ["randomGeometric",[0.25]],
+        ["randomBinomial",[100, .1]],
+        ["randomGamma",[5,-1]],
+        ["randomGamma",[2,2]],
+        ["randomBeta",[2,1.2]],
+        ["randomCauchy",[5,10]],
+        ["randomLogistic",[0,1]],
+        ["randomPoisson",[10]],
+        ["randomWeibull",[100]],
+        ["randomWeibull",[-100]],
+        ["randomWeibull",[3]]
+    ];
+
+    const color  = d3.scaleSqrt().range(["#003399", "#ff4400"]);
+
+    const scaleX = d3.scaleLinear().range([marginW,width/cols - marginW]);
+    const scaleY = d3.scaleLinear().range([height/rows-1, marginH*2]);
+
+    const svg = d3.select("body")
+                  .append("svg").attr("height",height).attr("width",width);
+
+    randomFunctions.forEach((d,i) => draw(d[0], d[1],i));
+
+    /**
+     * Draws a chart for each random number generator
+     * @param func function
+     * @param args arguments
+     * @param index
+     */
+    function draw(func, args, index) {
+
+        const data = generateData(func, args);
+
+        scaleX.domain(d3.extent(data.values));
+        scaleY.domain(d3.extent(data.bins, d => d.length));
+        color.domain(scaleY.domain());
+
+        // Chart coordinates
+        const x = index % cols;
+        const y = Math.floor(index / cols);
+
+        // Chart
+        const g = svg.append("g")
+                .attr("transform", `translate(${[x * width/cols,y * height/rows]})`);
+
+        // Label (function name)
+        g.append("text")
+                .text(`d3.${func}(${args.join(", ")})`)
+                .attr("text-anchor", "middle")
+                .attr("x", width/(cols * 2))
+                .attr("y", height/rows - marginH/2);
+
+        // Bars
+        g.selectAll("rect.bar")
+            .data(data.bins)
+            .join("rect").attr("class", "bar")
+               .attr("x", d => scaleX(d.x0))
+               .attr("width", (width/cols) / (data.bins.length+15))
+               .attr("y", d => scaleY(d.length) - 30)
+               .attr("height", d => height/rows - scaleY(d.length))
+               .style("fill", d => color(d.length))
+    }
+
+    /**
+     * Generates 10000 random numbers and bins.
+     * @param generator
+     * @param args
+     * @returns {{bins, values}}
+     */
+    function generateData(generator, args) {
+        const data = {
+            values: [],
+            bins: undefined
+        };
+
+        // Creates a random number generator
+        const random = d3[generator].apply(d3, args);
+
+        for(let i = 0; i < 10000; i++) {
+            data.values.push(random());
+        }
+
+        const bin = d3.bin()
+        //              .thresholds(100)
+        data.bins = bin(data.values);
+
+        return data;
+    }
+
+
+</script>
+
+</body>
+</html>

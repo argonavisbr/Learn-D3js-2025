@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Exponential Scales</title>
+    <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+    <style>
+        circle {
+            fill-opacity: 1;
+            fill: red;
+        }
+    </style>
+</head>
+<body>
+
+<script>
+    const data = d3.range(-250,250,1);
+
+    const scaleX = d3.scaleLinear()
+                     .domain([0,500])
+                     .range([50,910]);
+
+    const scaleY = d3.scalePow()
+                     .domain([-250,250])
+                     .range([500,0])
+                     .exponent(2);
+
+    const xAxis = d3.axisBottom().scale(scaleX).tickSize(500);
+    const yAxis = d3.axisRight().scale(scaleY).tickSize(860);
+
+    console.log("y", -250, scaleY(-250));
+    console.log("y", -100, scaleY(-100));
+    console.log("y", -50, scaleY(-50));
+    console.log("y", 0, scaleY(0));
+    console.log("y", 50, scaleY(50));
+    console.log("y", 100, scaleY(100));
+    console.log("y", 200, scaleY(200));
+
+    d3.select("body")
+            .append("svg").attr("height", 550).attr("width", 960)
+            .selectAll("circle")
+            .data(data).enter()
+            .append("circle")
+            .attr("r", 1)
+            .attr("cx", (d,i)=>scaleX(i))
+            .attr("cy", d=>scaleY(d)+25);
+
+    d3.select("svg")
+            .append("g")
+            .attr("transform","translate(50,25)")
+            .call(yAxis)
+    d3.select("svg")
+            .append("g")
+            .attr("transform","translate(0,25)")
+            .call(xAxis)
+    
+</script>
+
+</body>
+</html>

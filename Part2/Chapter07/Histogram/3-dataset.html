@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Histogram</title>
+    <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+</head>
+<body>
+<svg width="100%" height="100%" viewBox="0 0 500 300"/>
+<script>
+    const data = {}
+
+    generateData(10000);
+    createBins(100);
+    draw();
+
+    function generateData(sampleSize) {
+        data.values = [];
+        const rand = d3.randomNormal(0,160);
+        for(let i = 0; i < sampleSize; i++) {
+            data.values.push(rand());
+        }
+    }
+    function createBins(numBins) {}
+    function draw() {}
+</script>
+
+</body>
+</html>

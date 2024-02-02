@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+    <script src="../js/color-scales.js"></script>
+    <link rel="stylesheet" href="../css/color-spaces.css">
+    <title>LCH/HCL color channels</title>
+</head>
+<body>
+<h1>LCH/HCL color space</h1>
+<svg height="200" width="700"></svg>
+<script>
+    // scales
+    const scaleH = d3.scaleLinear().range([50,500]).domain([0,360]);
+    const scaleC = d3.scaleLinear().range([50,500]).domain([0,100])
+    const scaleL = d3.scaleLinear().range([50,500]).domain([0,100])
+
+    //axes
+    const axis1 = d3.axisBottom(scaleH)
+            .tickValues([0,60,120,180,240,300,360]);
+    const axis2 = d3.axisBottom(scaleC)
+            .tickValues([0,25,50,75,100]);
+    const axis3 = d3.axisBottom(scaleL)
+            .tickValues([0,25,50,75,100]);
+
+    // data
+    const h = d3.range(0,360),
+          c = d3.range(0,100,.2),
+          l = d3.range(0,100,.2);
+
+    drawScale(1, scaleH, axis1, h, d => d3.hcl(d,100,50), "H (hue), C = 100, L = 50");
+    drawScale(2, scaleC, axis2, c, d => d3.hcl(0,d,50), "C (chroma), H = 0, L = 50");
+    drawScale(3, scaleL, axis3, l, d => d3.hcl(0,100,d), "L (luminance), H = 0, C = 100");
+
+</script>
+</body>
+</html>

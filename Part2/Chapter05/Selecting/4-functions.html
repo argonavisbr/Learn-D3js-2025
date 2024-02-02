@@ -2,8 +2,11 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Template file for Chapter05/Selecting</title>
+    <title>Selection functions</title>
     <script src="https://d3js.org/d3.v7.min.js"></script>
+    <style>
+        div {width: 200px}
+    </style>
 </head>
 <body>
 <h1>Use JavaScript console to follow examples</h1>
@@ -22,7 +25,29 @@
 
 <canvas></canvas>
 
-<script></script>
+<script>
+
+    const divp1 = d3.select("div")
+        .selectAll("p");
+    console.log('divp1', divp1);
+
+    const filt1 = divp1.filter(function(d,i,nodes) {
+        return console.log(d,i,nodes[i],this) || true
+    });
+    console.log('filt1', filt1);
+
+    const divp2 = divp1.data([7,4,8]);
+    console.log('divp2', divp2);
+
+    const filt2 = divp2.filter(function(d,i,nodes) {
+        return console.log(d,i,nodes[i],this) || true
+    });
+    console.log('filt2', filt2);
+
+    const filt3 = divp2.filter((d,i,nodes) => console.log(d,i,nodes[i],this) || true);
+    console.log('filt3', filt3);
+
+</script>
 
 </body>
 </html>

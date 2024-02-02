@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Linear scales - segmented</title>
+    <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+    <style>
+        circle {
+            fill-opacity: 1;
+            fill: red;
+        }
+        line, path {
+            stroke: #ccc;
+        }
+    </style>
+</head>
+<body>
+
+<script>
+    // Generating the data array
+    const data = d3.range(-10,11);
+    // Creating the scale - with 2 segments
+    const scale = d3.scaleLinear().domain([-10,0,10]).range([0,900,1000]);
+    // Configuring the axis
+    const xAxis = d3.axisBottom().scale(scale).tickSize(25);
+
+    // Using the scale
+    console.log(0, scale(0));
+    console.log(5, scale(5));
+    console.log(10, scale(10));
+    console.log(15, scale(15));
+    console.log(20, scale(20));
+    console.log(25, scale(25));
+
+    // Example with a linear color scale
+    const colors = d3.scaleLinear().domain([0,100]).range(["red","green"]);
+    console.log(colors(50))
+
+    // Rendering the axis
+    d3.select("body").append("svg")
+        .append("g")
+        .attr("transform","translate(25,25)")
+        .call(xAxis);
+
+    // Rendering the data
+    d3.select("svg").attr("height", 550).attr("width", 1050)
+        .selectAll("circle")
+        .data(data)
+        .join("circle")
+        .attr("r", 5)
+        .attr("cx", d=>scale(d)+25)
+        .attr("cy", 25);
+
+</script>
+
+</body>
+</html>

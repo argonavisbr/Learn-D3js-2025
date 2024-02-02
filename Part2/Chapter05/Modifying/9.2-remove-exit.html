@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Removing from exit selection</title>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <style>
+        div {
+            margin: 2px 50px;
+            padding: 5px;
+            width: 300px;
+            border: solid 1px blue;
+            overflow: visible
+        }
+
+        div > div {
+            border: solid 1px red;
+            width: 200px;
+        }
+
+    </style>
+</head>
+<body>
+
+<div>
+    <div>One</div>
+    <div>Two</div>
+    <div>Three</div>
+    <div>Four</div>
+</div>
+
+<script>
+
+    d3.selectAll("div div")
+        .data(["a","b","c"])
+        .exit()
+           .remove();
+
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+    <script src="../js/render-palettes.js"></script>
+    <title>Cyclic interpolated schemes</title>
+    <link rel="stylesheet" href="../css/render-palletes.css">
+</head>
+<body>
+<h1>Cyclic interpolated schemes</h1>
+<svg width="900" height="100"></svg>
+<script>
+    const schemes = ['interpolateRainbow', 'interpolateSinebow']
+        .map(d => ({scheme: d, size: 600, step: 5}));
+
+    schemes.forEach((scheme, index) => renderSchemeSequential(scheme, index));;
+
+</script>
+
+</body>
+</html>

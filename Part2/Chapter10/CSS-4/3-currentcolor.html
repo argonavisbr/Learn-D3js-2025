@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Colors</title>
+    <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+    <style>
+        * {
+            font-family: monospace;
+            font-size: 22pt;
+            font-weight: bold;
+        }
+
+        .labels text {
+            alignment-baseline: hanging;
+            color: black;
+            font-size: 11pt;
+            font-weight: normal;
+        }
+
+        g { color: darkcyan;}
+        rect {fill: currentColor}
+        text {fill: currentColor}
+        line {stroke: currentColor}
+
+    </style>
+</head>
+<body>
+    <svg width="600" height="500">
+        <g>
+            <rect x="50" y="50" width="250" height="50"></rect>
+            <text x="50" y="150">A line of text</text>
+            <line x1="50" y1="180" x2="300" y2="180"></line>
+
+            <g class="labels">
+                <text x="350" y="70">fill='currentColor'</text>
+                <text x="350" y="135">fill='currentColor'</text>
+                <text x="350" y="175">stroke='currentColor'</text>
+            </g>
+        </g>
+    </svg>
+
+    <script>
+        d3.select("g")
+            .transition().delay(500)
+            .style("color", "magenta");
+        d3.select("g")
+            .transition().delay(1500)
+            .style("color", "olive");
+        d3.select("g")
+            .transition().delay(2500)
+            .style("color", "orange")
+    </script>
+</body>
+</html>

@@ -2,8 +2,11 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Template file for Chapter05/Selecting</title>
+    <title>Filters</title>
     <script src="https://d3js.org/d3.v7.min.js"></script>
+    <style>
+        div {width: 200px}
+    </style>
 </head>
 <body>
 <h1>Use JavaScript console to follow examples</h1>
@@ -22,7 +25,29 @@
 
 <canvas></canvas>
 
-<script></script>
+<script>
+
+    const f1 = d3.selectAll("p")
+                 .filter( (d,i) => i%2==0 );
+    console.log('f1', f1);
+
+    const f2 = d3.selectAll("p")
+                 .filter("p:nth-child(2n+1)");
+    console.log('f2', f2);
+
+    const f3 = d3.selectAll("p")
+                 .data([9,6,5,4,3,2,1])
+                   .filter(d => d%3 == 0);
+    console.log('f3', f3);
+
+    const f4 = d3.selectAll("p")
+                 .select(function(d,i) {
+                    return i%2 != 0 ? this : null
+                 });
+    console.log('f4', f4);
+
+
+</script>
 
 </body>
 </html>

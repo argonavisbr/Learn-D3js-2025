@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+    <script src="../js/color-scales.js"></script>
+    <link rel="stylesheet" href="../css/color-spaces.css">
+    <title>LAB color channels</title>
+</head>
+<body>
+<h1>LAB color space</h1>
+<svg height="200" width="700"></svg>
+<script>
+    // scales
+    const scaleL = d3.scaleLinear().range([50,500]).domain([0,100]);
+    const scaleA = d3.scaleLinear().range([50,500]).domain([-100,100])
+    const scaleB = d3.scaleLinear().range([50,500]).domain([-100,100])
+
+    // axes
+    const axis1 = d3.axisBottom(scaleL)
+            .tickValues([0,25,50,75,100]);
+    const axis2 = d3.axisBottom(scaleA)
+            .tickValues([-100,-75,-25,0,25,50,75,100]);
+    const axis3 = d3.axisBottom(scaleB)
+            .tickValues([-100,-75,-25,0,25,50,75,100]);
+
+    // data
+    const l = d3.range(0,100,.2),
+          a = d3.range(-100,100,.5),
+          b = d3.range(-100,100,.5);
+
+    drawScale(1, scaleL, axis1, l, d => d3.lab(d,0,0), "L (lightness), A = 0, B = 0");
+    drawScale(2, scaleA, axis2, a, d => d3.lab(50,d,0), "A, L = 50, B = 0");
+    drawScale(3, scaleB, axis3, b, d => d3.lab(50,0,d), "B, L = 50, A = 0");
+
+</script>
+</body>
+</html>

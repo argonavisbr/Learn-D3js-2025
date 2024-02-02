@@ -2,8 +2,11 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Template file for Chapter05/Selecting</title>
+    <title>Contextual selections</title>
     <script src="https://d3js.org/d3.v7.min.js"></script>
+    <style>
+        div {width: 200px}
+    </style>
 </head>
 <body>
 <h1>Use JavaScript console to follow examples</h1>
@@ -22,7 +25,14 @@
 
 <canvas></canvas>
 
-<script></script>
+<script>
+
+    const divp = d3.select("div")
+                   .selectAll("p");
+
+    console.log('divp', divp);
+
+</script>
 
 </body>
 </html>

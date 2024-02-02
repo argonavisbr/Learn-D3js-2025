@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+    <script src="../js/render-palettes.js"></script>
+    <title>Multi-hue interpolated schemes</title>
+    <link rel="stylesheet" href="../css/render-palletes.css">
+</head>
+<h1>Multi-hue interpolated schemes</h1>
+<svg width="900" height="500"></svg>
+<script>
+    const schemes = [
+        'interpolateBuGn',
+        'interpolateBuPu',
+        'interpolateGnBu',
+        'interpolateOrRd',
+        'interpolatePuBuGn',
+        'interpolatePuBu',
+        'interpolatePuRd',
+        'interpolateRdPu',
+        'interpolateYlGnBu',
+        'interpolateYlGn',
+        'interpolateYlOrBr',
+        'interpolateYlOrRd'].map(d => ({scheme: d, size: 600, step: 5}));
+
+    schemes.forEach((scheme, index) => renderSchemeSequential(scheme, index));
+
+</script>
+
+</body>
+</html>

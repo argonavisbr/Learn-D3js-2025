@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>d3-array examples</title>
+    <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+    <!-- Using free Yanone Kaffeesatz fonts: https://www.yanone.de/fonts/kaffeesatz/ -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz">
+    <style>
+        svg { border: solid 1px gray; }
+        * { font-family: 'Yanone Kaffeesatz', sans-serif; }
+        h1 {font-size: 14pt}
+    </style>
+</head>
+<body>
+<script>
+
+    const rate = [4.8,4.83,4.77,4.85,4.89,4.81,4.86,4.92,5.01,4.99,5.15,5.06,5.22,5.20,5.28,5.29,5.09,5.12,4.99,4.96,4.89,4.78,4.85,4.77,4.67,4.66]
+    const scaleY = d3.scaleLinear().domain(d3.extent(rate)).range([180,20]);
+    const scaleX = d3.scaleLinear().domain([0,rate.length]).range([20,280])
+
+    console.log(rate.length)
+
+    const svg = d3.select("body").append("svg").attr("height",200).attr("width",300);
+    const title = d3.select("body").append("h1");
+
+    svg.append("path").attr("class","original")
+        .datum(rate)
+        .style("stroke","black")
+        .style("fill","none")
+        .attr("d", d3.line().y(d => scaleY(d)).x((d,i) => scaleX(i)));
+    title.text("Original data");
+
+    svg.append("path").attr("class","blurred").style("fill","none");
+
+    function draw(datum, color, delay) {
+        svg.select(".blurred")
+            .datum(datum)
+            .transition().duration(2000).delay(delay*1000)
+            .style("stroke",color)
+            .attr("d", d3.line().y(d => scaleY(d)).x((d,i) => scaleX(i)))
+    }
+
+    draw(rate, "black", 0)
+    draw(d3.blur(rate, 0.2), "green", 2)
+    title.transition().delay(2000).text(`Original data + blur(0.2)`);
+    draw(d3.blur(rate, 0.2), "blue", 4)
+    title.transition().delay(4000).text(`Original data + 2 x blur(0.2)`);
+    draw(d3.blur(rate, 0.2), "orange", 6)
+    title.transition().delay(6000).text(`Original data + 3 x blur(0.2)`);
+    draw(d3.blur(rate, 0.2), "red", 8)
+    title.transition().delay(8000).text(`Original data + 4 x blur(0.2)`);
+
+</script>
+
+</body>
+</html>

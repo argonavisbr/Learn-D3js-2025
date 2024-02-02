@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>d3-array examples - least, greatest</title>
+    <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+    <style>
+        .comment {color: darkcyan}
+    </style>
+</head>
+<body>
+<script>
+    const numArray = [9,2,12,9,71];
+    const strArray = ['9','2','12','9','71','Y',null];
+
+    const tasks = [
+        {task: 'Debugging', cost: 1.40, priority: 1, date: new Date(2023,2,15)},
+        {task: 'Reviewing', cost: 0.60, priority: 2, date: new Date(2023,2,10)},
+        {task: 'Editing', cost: 0.25, priority: 5, date: new Date(2023,3,9)},
+        {task: 'Testing', cost: 0.10, priority: 1, date: new Date(2023,1,27)},
+    ];
+
+    const map = new Map(tasks.map(e => [e.task, e]));
+    const set = new Set(numArray);
+    const str = "953zyx2";
+
+    console.log("Examples with d3.least()");
+    console.log( d3.least(numArray) );
+    console.log( d3.least(numArray, (a,b) => a - b) );
+    console.log( d3.least(strArray) );
+    console.log( d3.least(strArray, (a,b) => a - b) );
+    console.log( d3.least(tasks, (a,b) => a.cost - b.cost) );
+    console.log( d3.least(tasks, (a,b) => a.priority - b.priority) );
+
+    console.log("Examples with d3.greatest()");
+    console.log( d3.greatest(numArray) );
+    console.log( d3.greatest(numArray, (a,b) => a - b) );
+    console.log( d3.greatest(strArray) );
+    console.log( d3.greatest(strArray, (a,b) => a - b) );
+    console.log( d3.greatest(tasks, (a,b) => a.cost - b.cost) );
+    console.log( d3.greatest(tasks, (a,b) => a.priority - b.priority) );
+
+    console.log("Examples with d3.leastIndex() and d3.greatestIndex()");
+    console.log( d3.leastIndex(numArray) );
+    console.log( d3.leastIndex(tasks, (a,b) => a.date - b.date) );
+    console.log( d3.greatestIndex(numArray) );
+    console.log( d3.greatestIndex(strArray) );
+    console.log( d3.greatestIndex(tasks, d => d.cost) );
+
+</script>
+<h2>This file defines the following datasets</h2>
+<pre>
+&lt;script&gt;
+    const numArray = [9,2,12,9,71];
+    const strArray = ['9','2','12','9','71','Y',null];
+
+    const tasks = [
+        {task: 'Debugging', cost: 1.40, priority: 1, date: new Date(2023,2,15)},
+        {task: 'Reviewing', cost: 0.60, priority: 2, date: new Date(2023,2,10)},
+        {task: 'Editing', cost: 0.25, priority: 5, date: new Date(2023,3,9)},
+        {task: 'Testing', cost: 0.10, priority: 1, date: new Date(2023,1,27)},
+    ];
+
+    const map = new Map(tasks.map(e => [e.task, e]));
+    const set = new Set(numArray);
+    const str = "953zyx2";
+&lt;/script&gt;
+</pre>
+
+<h2>Open console to see the results of the following commands</h2>
+
+<h3>Examples with d3.least()</h3>
+<pre>
+d3.least(numArray)
+d3.least(numArray, (a,b) => a - b)
+d3.least(strArray)
+d3.least(strArray, (a,b) => a - b)
+d3.least(tasks, (a,b) => a.cost - b.cost)
+d3.least(tasks, (a,b) => a.priority - b.priority)
+</pre>
+
+<h3>Examples with d3.greatest()</h3>
+<pre>
+d3.greatest(numArray)
+d3.greatest(numArray, (a,b) => a - b)
+d3.greatest(strArray)
+d3.greatest(strArray, (a,b) => a - b)
+d3.greatest(tasks, (a,b) => a.cost - b.cost)
+d3.greatest(tasks, (a,b) => a.priority - b.priority)
+</pre>
+
+<h3>Examples with d3.leastIndex() and d3.greatestIndex()</h3>
+<pre>
+d3.leastIndex(numArray)
+d3.leastIndex(tasks, (a,b) => a.date - b.date)
+d3.greatestIndex(numArray)
+d3.greatestIndex(strArray)
+d3.greatestIndex(tasks, d => d.cost)
+</pre>
+
+</body>
+</html>

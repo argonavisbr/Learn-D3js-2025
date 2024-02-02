@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+    <script src="../js/render-palettes.js"></script>
+    <title>Designed interpolated schemes</title>
+    <link rel="stylesheet" href="../css/render-palletes.css">
+</head>
+<h1>Designed interpolated schemes</h1>
+<svg width="900" height="500"></svg>
+<script>
+    const schemes = [
+        'interpolateWarm',       // Nicolli's perpetual rainbow 180 deg rotated
+        'interpolateCool',       // Nicolli's perpetual rainbow
+
+        'interpolateViridis',    // matplotlib (Van de Walt & Smith)
+        'interpolateInferno',    // matplotlib
+        'interpolateMagma',      // matplotlib
+        'interpolatePlasma',     // matplotlib
+
+        'interpolateCividis',    // Nuñes, Anderton, Renslow (vision-deficiency optimized)
+        'interpolateTurbo',      // Anton Mikhailov
+
+        'interpolateCubehelixDefault'  // David Green's Cubehelix
+    ].map(d => ({scheme: d, size: 600, step: 5}));
+
+    schemes.forEach((scheme, index) => renderSchemeSequential(scheme, index));
+
+</script>
+
+</body>
+</html>

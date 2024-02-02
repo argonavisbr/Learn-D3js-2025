@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Colors</title>
+    <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+    <style>
+        * {
+            font-family: monospace;
+        }
+        div {
+            display: flex;
+            align-items: center;
+            height: 30px;
+            position: absolute;
+            left: 30px;
+            border: solid 1px gray
+        }
+        .label {
+            width: 200px;
+            justify-content: left;
+        }
+      .color-box {
+          width: 300px;
+          justify-content: center;
+      }
+
+    </style>
+</head>
+<body>
+<script>
+  const components = [ {bg:'Canvas', fg:'CanvasText'},
+                        {bg:'Field', fg:'FieldText'},
+                        {bg:'Highlight', fg:'HighlightText'},
+                        {bg:'Mark', fg:'MarkText'}];
+  const link   = {ac: 'ActiveText', ln: 'LinkText', vs: 'VisitedText'}
+  const button = {bg: 'ButtonFace', fg: 'ButtonText', gr: 'GrayText', bd:'ButtonBorder'};
+
+  const body = d3.select("body");
+  const file = "../css/colors.css";
+  const css = new Map();
+  render();
+
+  function render() {
+      components.forEach( (comp,i) => {
+          body.append("div")
+              .attr("class", "color-box")
+              .style("top", `${30 + i*35}px`)
+              .style("background-color", comp.bg)
+              .style("color", comp.fg)
+              .text(`${comp.bg}/${comp.fg}`);
+      });
+
+      body.append("div")
+          .attr("class", "color-box")
+          .style("top", "30px")
+          .style("left", "400px")
+          .style("background-color", button.bg)
+          .style("border-width", "2px")
+          .style("border-color", button.bd)
+          .style("color", button.fg)
+          .text(`${button.bg}/${button.fg}/${button.bd}`);
+
+      body.append("div")
+          .attr("class", "color-box")
+          .style("top", "65px")
+          .style("left", "400px")
+          .style("background-color", button.bg)
+          .style("border-width", "2px")
+          .style("border-color", button.bd)
+          .style("color", button.gr)
+          .text(`${button.bg}/${button.gr}/${button.bd}`);
+
+      body.append("div")
+          .attr("class", "color-box")
+          .style("top", "135px")
+          .style("left", "400px")
+          .style("background-color", 'white')
+          .each(function() {
+              const panel = d3.select(this);
+              panel.append("span").style("color", link.ln).text(`${link.ln}/`)
+              panel.append("span").style("color", link.ac).text(`${link.ac}/`)
+              panel.append("span").style("color", link.vs).text(link.vs)
+          })
+
+  }
+
+</script>
+
+</body>
+</html>

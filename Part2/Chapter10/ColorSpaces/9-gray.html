@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+    <script src="../js/color-scales.js"></script>
+    <link rel="stylesheet" href="../css/color-spaces.css">
+    <title>LAB gray color channels</title>
+</head>
+<body>
+<h1>LAB gray color space</h1>
+<svg height="100" width="600"></svg>
+<script>
+    // scales
+    const scaleL = d3.scaleLinear().range([50,500]).domain([0,100]);
+
+    // axes
+    const axis1 = d3.axisBottom(scaleL)
+            .tickValues([0,25,50,75,100]);
+    // data
+    const l = d3.range(0,100,.2);
+
+    //drawScale(1, scaleL, axis1, l, d => d3.lab(d,0,0), "gray");
+    drawScale(1, scaleL, axis1, l, d => d3.gray(d), "gray"); // equivalent
+
+</script>
+</body>
+</html>

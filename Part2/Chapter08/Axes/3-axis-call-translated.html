@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Simple Bottom Axis translated 10,10 pixels</title>
+    <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+    <style>
+        svg {
+            border: solid 1px lightblue;
+        }
+    </style>
+</head>
+<body>
+<script>
+    const scale = d3.scaleLinear().range([0,400]);
+    const axis1 = d3.axisBottom(scale);
+
+    const svg = d3.select("body").append("svg")
+                  .attr("width", 500).attr("height",50);
+
+    svg.append("g")
+        .attr("id", "axis1")
+        .attr("transform", "translate(10,10)")
+        .call(axis1);
+</script>
+</body>
+</html>

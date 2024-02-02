@@ -1,0 +1,11 @@
+text,h1 {
+    font-family: sans-serif;
+}
+h1 {
+    font-size: 16pt;
+    font-weight: normal;
+}
+text {
+    font-size: 10pt;
+    font-family: monospace;
+}

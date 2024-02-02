@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>d3-array examples - max, min, extent</title>
+    <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+    <style>
+        .comment {color: darkcyan}
+    </style>
+</head>
+<body>
+<script>
+    const numArray = [9,2,12,9,71];
+    const strArray = ['9','2','12','9','71','Y',null];
+
+    const tasks = [
+        {task: 'Debugging', cost: 1.40, priority: 1, date: new Date(2023,2,15)},
+        {task: 'Reviewing', cost: 0.60, priority: 2, date: new Date(2023,2,10)},
+        {task: 'Editing', cost: 0.25, priority: 5, date: new Date(2023,3,9)},
+        {task: 'Testing', cost: 0.10, priority: 1, date: new Date(2023,1,27)},
+    ];
+
+    const map = new Map(tasks.map(e => [e.task, e]));
+    const set = new Set(numArray);
+    const str = "953zyx2";
+
+    console.log("Examples with d3.min()");
+    console.log( d3.min(numArray) );
+    console.log( d3.min(strArray) );
+    console.log( Math.min(strArray) );
+    console.log( d3.min(tasks.map(d => d.date)) );
+    console.log( d3.min(tasks, d => d.date) );
+
+    console.log("Examples with d3.max()");
+    console.log( d3.max(numArray) );
+    console.log( d3.max(strArray) );
+    console.log( Math.max(strArray) );
+    console.log( d3.max(tasks.map(d => d.priority)) );
+    console.log( d3.max(tasks, d => d.priority) );
+
+    console.log("Warning about type coercion with +: null -> zero");
+    console.log( d3.min(strArray) );
+    console.log( d3.min(strArray, d => +d) );
+    console.log( d3.min(strArray, d => (d == null) ? null : +d) );
+
+    console.log("Examples with d3.extent()");
+    console.log( d3.extent(numArray) );
+    console.log( d3.extent(strArray) );
+    console.log( d3.extent(tasks, d => d.cost) );
+    console.log( d3.extent(map, d => d[1].priority) );
+    console.log( d3.extent(set) );
+    console.log( d3.extent(str) );
+    console.log( d3.extent(str, s => +s) );
+
+    console.log("Examples with d3.minIndex() and d3.maxIndex()");
+    console.log( d3.minIndex(numArray) );
+    console.log( d3.minIndex(strArray) );
+    console.log( d3.minIndex(tasks, d => d.priority) );
+    console.log( d3.maxIndex(numArray) );
+    console.log( d3.maxIndex(strArray) );
+    console.log( d3.maxIndex(tasks, d => d.priority) );
+
+</script>
+<h2>This file defines the following datasets</h2>
+<pre>
+&lt;script&gt;
+    const numArray = [9,2,12,9,71];
+    const strArray = ['9','2','12','9','71','Y',null];
+
+    const tasks = [
+        {task: 'Debugging', cost: 1.40, priority: 1, date: new Date(2023,2,15)},
+        {task: 'Reviewing', cost: 0.60, priority: 2, date: new Date(2023,2,10)},
+        {task: 'Editing', cost: 0.25, priority: 5, date: new Date(2023,3,9)},
+        {task: 'Testing', cost: 0.10, priority: 1, date: new Date(2023,1,27)},
+    ];
+
+    const map = new Map(tasks.map(e => [e.task, e]));
+    const set = new Set(numArray);
+    const str = "953zyx2";
+&lt;/script&gt;
+</pre>
+
+<h2>Open console to see the results of the following commands</h2>
+
+<h3>Examples with d3.min()</h3>
+<pre>d3.<b>min</b>(numArray)
+d3.<b>min</b>(strArray)
+Math.min(strArray)
+d3.<b>min</b>(tasks.map(d => d.date))
+d3.<b>min</b>(tasks, d => d.date)
+</pre>
+<h3>Examples with d3.max()</h3>
+<pre>d3.<b>max</b>(numArray)
+d3.<b>max</b>(strArray)
+Math.max(strArray)
+d3.<b>max</b>(tasks.map(d => d.priority))
+d3.<b>max</b>(tasks, d => d.priority)
+</pre>
+<h3>Warning about type coercion with +null</h3>
+<pre>d3.<b>min</b>(strArray)
+d3.<b>min</b>(strArray, d => +d)
+d3.<b>min</b>(strArray, d => (d == null) ? null : +d)
+</pre>
+<h3>Examples with d3.extent()</h3>
+<pre>d3.<b>extent</b>(numArray)
+d3.<b>extent</b>(strArray)
+d3.<b>extent</b>(tasks, d => d.cost)
+d3.<b>extent</b>(map, d => d[1])
+d3.<b>extent</b>(set)
+d3.<b>extent</b>(str)
+d3.<b>extent</b>(str, s => +s)
+</pre>
+<h3>Examples with d3.minIndex() and d3.maxIndex()</h3>
+<pre>d3.<b>minIndex</b>(numArray)
+d3.<b>minIndex</b>(strArray)
+d3.<b>minIndex</b>(tasks, d => d.priority)
+d3.<b>maxIndex</b>(numArray)
+d3.<b>maxIndex</b>(strArray)
+d3.<b>maxIndex</b>(tasks, d => d.priority)
+</pre>
+
+</body>
+</html>

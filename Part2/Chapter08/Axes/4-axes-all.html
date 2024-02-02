@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>All Axes in Default positions (shifted 50,50)</title>
+    <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+    <!-- Using free Yanone Kaffeesatz fonts: https://www.yanone.de/fonts/kaffeesatz/ -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz">
+    <style>
+        * {
+            font-family: 'Yanone Kaffeesatz', sans-serif;
+        }
+        svg {
+            border: solid 1px lightblue;
+        }
+    </style>
+</head>
+<body>
+<script>
+    const scale = d3.scaleLinear().range([0,250]);
+
+    const axis1 = d3.axisBottom(scale);
+    const axis2 = d3.axisTop(scale);
+    const axis4 = d3.axisRight(scale);
+    const axis3 = d3.axisLeft(scale);
+
+    const svg = d3.select("body").append("svg").attr("width", 500).attr("height",350);
+
+    svg.append("g").attr("class","ax").call(axis1).style("color", "red");
+    svg.append("g").attr("class","ax").call(axis2).style("color", "blue");
+    svg.append("g").attr("class","ax").call(axis3).style("color", "green");
+    svg.append("g").attr("class","ax").call(axis4).style("color", "orange");
+
+    svg.append("text")
+        .attr("class", "pos")
+        .attr("transform", "translate(150,150)")
+        .text("With origin at (0,0)");
+
+    svg.append("text")
+        .attr("transform", "translate(150,240)")
+        .text("axisTop").style("fill", "blue")
+    svg.append("text")
+        .attr("transform", "translate(150,220)")
+        .text("axisBottom").style("fill", "red")
+
+    svg.append("text")
+        .attr("transform", "translate(150,260)")
+        .text("axisLeft").style("fill", "green")
+    svg.append("text")
+        .attr("transform", "translate(150,280)")
+        .text("axisRight").style("fill", "orange")
+
+    move();
+
+    const fmt = d3.format(".0s");
+
+    function move() {
+        svg.selectAll("g.ax")
+            .transition()
+            .delay(2000)
+            .attr("transform", "translate(50,50)");
+
+        svg.select(".pos")
+            .transition()
+            .delay(2000)
+            .attrTween("text", () => function(t) {d3.select(this).text(`With origin at (${[fmt(t*50),fmt(t*50)]})`)})
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+    <script src="../js/color-picker.js"></script>
+    <link rel="stylesheet" href="../css/color-picker.css">
+    <title>LAB color picker</title>
+    <style>
+        svg {
+            border: solid 0.5px gray;
+        }
+    </style>
+</head>
+<body>
+<script>
+
+    cs.create = d3.lab;
+    cs.keys = ["l", "a", "b"];
+    cs.domains = [[0,100],[-100,100],[-100,100]];
+    cs.ticks =   [[0,25,50,75,100],[-100,-50,0,50,100],[-100,-50,0,50,100]];
+    cs.init = [50,0,0];
+    cs.data = [d3.range(0,100,.25), d3.range(-100,100,.5), d3.range(-100,100,.5)];
+    cs.formats = ['d','d','d'];
+    cs.depends = [[],['l'],['l']]; // L uses A and B
+
+    init();
+
+</script>
+</body>
+</html>

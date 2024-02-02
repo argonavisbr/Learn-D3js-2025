@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Point scale</title>
+    <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+    <style>
+        circle {
+            stroke-width: .3;
+            stroke: black
+        }
+        .tick line {
+            stroke: #ccc;
+        }
+    </style>
+</head>
+<body>
+<h1>d3.scalePoint()</h1>
+<div>
+<p><code>domain()</code> <code id="domain"></code>
+<br/><code>range()</code> <code id="range"></code></p>
+<p/><code>padding()</code> <input id="padding" type="range" value="0" min="0" max="10" step=".1"> <code id="paddingv"></code>
+<br/><code>align()</code> <input id="align" type="range" value="0.5" min="0" max="1" step=".01"> <code id="alignv"></code>
+<br/><code>step()</code> <code id="step"></code>
+</div>
+<script>
+    // data
+    const data = d3.range(0,100,10);
+
+    // scale
+    const scale = d3.scalePoint()
+                    .domain(data)
+                    .range([0,800]);
+
+    // format percent
+    const per = d3.format(".0%");
+    const fmt = d3.format(".2f");
+
+    // display
+    d3.select("#domain").text(`[${scale.domain()}]`);
+    d3.select("#range").text(`[${scale.range()}]`);
+    d3.select("#padding").text(`${scale.padding()}`);
+    d3.select("#alignv").text(`${scale.align()}`);
+    d3.select("#step").text(`${fmt(scale.step())}`);
+
+    d3.select("#padding").node().addEventListener("input", function() {
+        scale.padding(this.value);
+        d3.select("#paddingv").text(`${scale.padding()} step(s)`);
+        d3.select("#step").text(`${fmt(scale.step())}`);
+        update();
+    });
+
+    d3.select("#align").node().addEventListener("input", function() {
+        scale.align(this.value);
+        d3.select("#alignv").text(`${scale.align()}  (${per(scale.align())})`);
+        update();
+    });
+
+    const colorScale = d3.scaleSequential(d3.interpolatePlasma).domain([0,800]);
+
+    d3.select("body").append("svg").attr("height", 650).attr("width", 850);
+
+    d3.select("svg").append("g").attr("transform", "translate(10,0)")
+      .selectAll("circle")
+        .data(data)
+          .join("circle")
+            .attr("cy", d3.randomInt(20,100))
+            .attr("r", 5)
+            .style("fill", d => colorScale(scale(d)));
+
+    d3.select("svg").append("g").attr("id", "x-axis").attr("transform", "translate(10,20)")
+    const xAxis = d3.axisBottom(scale)
+                    .tickSize(100)
+                    .tickSizeOuter(10);
+
+    update();
+    d3.selectAll("input").dispatch('input');
+
+    function update() {
+        d3.select("svg").selectAll("circle")
+            .attr("cx", scale);
+
+        d3.select("#x-axis").call(xAxis);
+    }
+    
+</script>
+
+</body>
+</html>

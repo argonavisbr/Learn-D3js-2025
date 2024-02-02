@@ -1,0 +1,16 @@
+#c_name {background-color: orangered}
+#c_hex {background-color: #ff4500}
+#c_rgb {background-color: rgb(255 69 0)}
+#c_hsl {background-color: hsl(16 100% 50%)}  /* hue (angle), saturation (%), lightness (%) */
+#c_hwb {background-color: hwb(16 0% 0%)}     /* hue (angle), whiteness (%), blackness (%) */
+#c_lab {background-color: lab(62% 60% 100%)} /* lightness (%), a axis (%), b axis (%) */
+#c_lch {background-color: lch(62% 100% 60)}  /* lightness (%), chroma (%), hue (angle) */
+#c_oklch {background-color: oklch(66% 58% 35)}
+
+#a_hex {background-color: #ff4500c0}
+#a_rgb {background-color: rgb(255 69 0/75%)}
+#a_hsl {background-color: hsl(16 100% 50%/75%)}
+#a_hwb {background-color: hwb(16 0% 0%/75%)}
+#a_lab {background-color: lab(58% 55% 56%/75%)}
+#a_lch {background-color: lch(58% 65% 45/75%)}
+#a_oklch {background-color: oklch(66% 58% 35/75%)}

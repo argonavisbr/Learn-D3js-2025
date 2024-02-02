@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Examples with color scales</title>
+    <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+    <style>
+        text.label {
+            fill: black;
+            text-anchor: start;
+            font-family: monospace;
+        }
+    </style>
+</head>
+<body>
+
+<svg height="500" width="800"></svg>
+<script>
+
+    const scale1 = d3.scaleLinear().range([50,500]).domain([-10,10]);
+    const scale2 = d3.scaleLinear().range([50,500]);
+
+    const axis1 = d3.axisBottom(scale1).ticks(10);
+    const axis2 = d3.axisBottom(scale2).ticks(10);
+
+    const colorScale1 = d3.scaleLinear()
+        .domain(scale1.domain())
+        .range(["red", "navy"])
+        .interpolate(d3.interpolateHsl); // takes the factory as input
+
+    const colorScale2 = d3.scaleSequential(d3.interpolateHsl("red", "navy")); // takes the interpolator as input
+
+    d3.select("svg")
+        .append("g")
+          .call(axis1)
+          .attr("transform",`translate(0,50)`)
+          .selectAll("rect")
+            .data(d3.range(-10,10,.1))
+              .join("rect")
+                .attr("width",5)
+                .attr("height",20)
+                .attr("x", scale1)
+                .attr("y",-25)
+                .style("fill", colorScale1)
+
+    d3.select("svg")
+        .append("g")
+          .call(axis2)
+          .attr("transform",`translate(0,100)`)
+          .selectAll("rect")
+            .data(d3.range(0,1,.01))
+              .join("rect")
+                .attr("width",5)
+                .attr("height",20)
+                .attr("x", scale2)
+                .attr("y",-25)
+                .style("fill", colorScale2)
+
+
+</script>
+
+
+</body>
+</html>

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Linear scales - example using clamp</title>
+    <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+    <style>
+        circle {
+            fill-opacity: 1;
+            fill: red;
+        }
+        line, path {
+            stroke: #ccc;
+        }
+    </style>
+</head>
+<body>
+<h1>See console for results</h1>
+<script>
+    const scale = d3.scaleLinear()
+            .domain([-10,10])
+            .range([0,1000]);
+
+    // Without clamp
+    const result1 = scale(64);  // returns 3700
+    console.log("no clamp - above", result1);
+
+    const result2 = scale(-20); // returns -500
+    console.log("no clamp - below", result2);
+
+    // With clamp
+    scale.clamp(true);
+    const result3 = scale(64);  // returns 1000
+    console.log("clamp above", result3);
+
+    const result4 = scale(-20); // returns 0
+    console.log("clamp below", result4);
+
+</script>
+
+</body>
+</html>

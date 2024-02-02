@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+    <title>Color scheme inspector</title>
+    <link rel="stylesheet" href="../css/render-palletes.css">
+    <style>
+        text {
+            text-anchor: middle;
+            font-size: 8px;
+        }
+        svg {
+            border: solid lightgray 1px
+        }
+        p {font-size: 10pt}
+        code, pre {font-size: 80%}
+    </style>
+</head>
+<body>
+<h1>Color scheme inspector</h1>
+<p>Use the JavaScript console prompt to ssign a D3 discrete color scheme to the <code>palette</code> variable. For example:</p>
+<pre>palette = d3.schemeTableau10
+palette = d3.schemeOranges[5]
+palette = d3.schemeSpectral[11]
+</pre>
+<p></p>
+<svg width="100%" height="100%" viewBox="0 0 530 230"></svg>
+
+<script>
+    const size = 9;
+
+    barHeight = 200;
+    barWidth  = 40;
+
+    let palette = d3.schemeGreys[9];
+
+    const svg = d3.select("svg");
+    const svgW = svg.attr("viewBox").split(" ")[2];
+    const svgH = svg.attr("viewBox").split(" ")[3];
+
+    svg.append("rect")
+        .attr("x", 1).attr("y",1)
+        .attr("width", svgW-2).attr("height", svgH/2-2)
+
+    const g = d3.select("svg")
+        .append("g")
+        .attr("transform", "translate(20,5)");
+
+    refresh();
+
+    function refresh() {
+        try {
+            const scale = d3.scaleOrdinal(palette);
+            const data = d3.range(0,palette.length);
+
+            d3.select("g");
+            g.selectAll("rect")
+              .data(data)
+                .join(e => e.append("rect").attr("height", barHeight).attr("width", barWidth))
+                  .attr("x", d => d*(barWidth+5))
+                  .style("fill", d => scale(d));
+            g.selectAll("text")
+              .data(data)
+                .join(e => e.append("text").attr("y", barHeight + 15))
+                  .attr("x", d => d*(barWidth+5) + barWidth/2)
+                  .text(d => d3.color(palette[d]).formatHex());
+        } catch(e) {
+            console.log('Invalid palette.');
+            palette = d3.schemeGreys[9];
+        } finally {
+            setTimeout(refresh, 1000)
+        }
+    }
+
+</script>
+
+</body>
+</html>

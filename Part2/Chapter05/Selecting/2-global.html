@@ -2,8 +2,11 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Template file for Chapter05/Selecting</title>
+    <title>Global selections</title>
     <script src="https://d3js.org/d3.v7.min.js"></script>
+    <style>
+        div {width: 200px}
+    </style>
 </head>
 <body>
 <h1>Use JavaScript console to follow examples</h1>
@@ -22,7 +25,23 @@
 
 <canvas></canvas>
 
-<script></script>
+<script>
+    const allp = d3.selectAll("p");
+    console.log('allp', allp);
+
+    const code = d3.selectAll("code");
+    console.log('code', code);
+
+    const divOne = d3.select("div");
+    console.log('div', divOne);
+
+    const divAll = d3.selectAll("div");
+    console.log('divAll', divAll);
+
+    const pAir = d3.selectAll(".air p");
+    console.log('pAir', pAir);
+
+</script>
 
 </body>
 </html>

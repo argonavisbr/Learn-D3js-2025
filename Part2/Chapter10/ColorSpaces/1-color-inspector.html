@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+    <title>Color inspector</title>
+    <style>
+        text{
+            fill: black;
+            text-anchor: middle;
+            font-size: 120%;
+            font-family: monospace;
+        }
+        svg {
+            border: solid lightgray 1px
+        }
+        p {font-size: 10pt}
+        code, pre {font-size: 80%}
+        h1 {
+            font-family: sans-serif;
+            font-size: 16pt;
+            font-weight: normal;
+        }
+    </style>
+</head>
+<body>
+<h1>Color space inspector</h1>
+<p>Use the JavaScript console prompt to assign a color specifier or color object to the <code>color</code> variable and see the results in this page. For example:</p>
+<pre>color = "#f789c3"
+color = d3.hsl(0, 1, 0.75)
+color = color.darker()
+color.h = color.h + 180
+</pre>
+<p></p>
+<svg height="100%" width="100%" viewBox="0 0 150 140"></svg>
+<script>
+        let color = d3.color("black"); // Use console to change this value and wait 1 second for an update
+
+        // Color display
+        const circle = d3.select("svg")
+            .append("g")
+            .attr("class", "color")
+            .attr("transform", "translate(50,10)")
+        circle.append("circle")
+            .attr("r", 50)
+            .attr("cx", 25)
+            .attr("cy", 50)
+            .style("fill", color);
+        circle.append("text")
+            .attr("y",120)
+            .attr("x", 25)
+            .text(d3.color(color).formatHex());
+
+        // Initial refresh()
+        refresh();
+
+        /**
+         * Refresh function - called every second
+         */
+        function refresh() {
+            try {
+                d3.select("circle").style("fill", color);
+                d3.select("text").text(d3.color(color).formatHex());
+            } catch(e) {
+                console.log('Invalid color.');
+                color = '#000000'
+            }
+            setTimeout(refresh, 1000)
+        }
+
+</script>
+</body>
+</html>

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Linear scale generator</title>
+    <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+    <style>
+        svg {
+            border: solid 1px;
+        }
+        circle {
+            fill-opacity: 1;
+        }
+        line, path {
+            stroke: black;
+            stroke-width: 2px;
+        }
+    </style>
+</head>
+<body>
+
+<script>
+
+    // Example linear scale function generator
+    // f(x) = ax + b
+    // This is just provided as a classroom example. Use d3.scaleLinear() instead.
+
+    function createLinearScale(domain, range) {
+        const a = (range[1]-range[0])/(domain[1]-domain[0]); // slope
+        const b = - a * domain[0] + range[0]; // constant
+        return x => a*x + b;
+    }
+    const scale = createLinearScale([0,1], [25,675]);
+
+    // Test
+    console.log('(0)',  scale(0));
+    console.log('(0.1)',  scale(0.1));
+    console.log('(0.5)',  scale(0.5));
+    console.log('(1)',  scale(1));
+
+    const rand = d3.randomUniform(0,1);
+
+    // Generate some random data from 0 to 1
+    const data = d3.range(0,1,0.02).map(() => rand());
+
+    console.log(data)
+
+    // Plot the data
+    const svg = d3.select("body")
+        .append("svg")
+        .attr("height", 100)
+        .attr("width", 700);
+
+    svg.append("g")
+        .selectAll("circle")
+        .data(data)
+        .join("line")
+        .attr("x1", d => scale(d))
+        .attr("x2", d => scale(d))
+        .attr("y1", 25)
+        .attr("y2", 75);
+
+</script>
+
+</body>
+</html>

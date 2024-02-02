@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Simple Bottom Axis Using call()</title>
+    <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+    <style>
+        svg {
+            border: solid 1px lightblue;
+        }
+        .domain {
+            stroke-width: 2;
+        }
+        code {font-weight: bold;}
+    </style>
+</head>
+<body>
+<h1>Use JavaScript console to configure the axes</h1>
+<p>Axis functions: <code>axisB</code> and <code>axisL</code></p>
+<p>Selection objects (&lt;g>): <code>horz</code> and <code>vert</code></p>
+<script>
+    const w = 500, h = 500;
+    const scale = d3.scaleLinear()
+                    .range([0, w/2]);
+    const axisB = d3.axisBottom(scale);
+    const axisL = d3.axisLeft(scale);
+
+    const svg = d3.select("body")
+                  .append("svg")
+                  .attr("width", w)
+                  .attr("height",h);
+
+    const horz = svg.append("g")
+                    .call(axisB)
+                    .attr("transform", `translate(${w/4},${w-100})`);
+    const vert  = svg.append("g")
+                    .call(axisL)
+                    .attr("transform", `translate(${h/4-50},${h/4-50})`);
+</script>
+</body>
+</html>

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+    <script src="../js/color-scales.js"></script>
+    <link rel="stylesheet" href="../css/color-spaces.css">
+    <title>Brighter / darker controls</title>
+</head>
+<body>
+<h1>Brighter / darker controls</h1>
+<svg height="150" width="600"></svg>
+<script>
+    // scales
+    const scaleB = d3.scaleLinear().range([50,500]).domain([0,1])
+    const scaleD = d3.scaleLinear().range([50,500]).domain([0,1])
+
+    // color
+    const color = 'green';
+
+    // axes
+    const axis1 = d3.axisBottom(scaleB)
+            .tickValues([0,.25,.50,.75,1]);
+    const axis2 = d3.axisBottom(scaleD)
+            .tickValues([0,.25,.50,.75,1]);
+
+    // data
+    const b = d3.range(0,1,.0025),
+          d = d3.range(0,1,.0025);
+
+    drawScale(1, scaleB, axis1, b, d => d3.rgb(color).brighter(d), "Brighter");
+    drawScale(2, scaleD, axis2, d, d => d3.rgb(color).darker(d), "Darker");
+
+</script>
+</body>
+</html>

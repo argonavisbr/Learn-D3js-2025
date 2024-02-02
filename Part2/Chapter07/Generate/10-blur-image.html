@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>d3-array examples</title>
+    <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+    <!-- Using free Yanone Kaffeesatz fonts: https://www.yanone.de/fonts/kaffeesatz/ -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz">
+    <style>
+        svg, canvas { border: solid 1px gray; }
+        * { font-family: 'Yanone Kaffeesatz', sans-serif;
+            font-size: 14pt;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+<script>
+
+    const contexts = [];
+    const w = 100, h = 50;
+
+    d3.image("blur.png")
+        .then(image => {
+            display(image);
+            for(let i = 0; i < 4; i++) {
+                blur(contexts[i], i);
+            }
+            blur(contexts[4], 2, 0);
+            blur(contexts[5], 0, 2);
+        });
+
+    function display(image) {
+        const table = d3.select("body").append("table");
+        const canv = table.append("tr");
+        const text = table.append("tr");
+        for(let i = 0; i < 4; i++) {
+            draw(image, `radius = ${i}`, canv, text);
+        }
+        draw(image, `rx = 2, ry = 0`, canv, text);
+        draw(image, `rx = 0, ry = 2`, canv, text);
+    }
+
+    function draw(image, label, canv, text) {
+        const canvas = canv.append("td").append("canvas").attr("height", h).attr("width", w);
+        const context = canvas.node().getContext("2d");
+        context.drawImage(image, 0, 0);
+        contexts.push(context);
+        text.append("td").text(label);
+    }
+
+    function blur(context, rx, ry) {
+        const data = context.getImageData(0, 0, w, h);
+        d3.blurImage(data, rx, ry);
+        context.putImageData(data, 0, 0);
+    }
+
+</script>
+
+</body>
+</html>

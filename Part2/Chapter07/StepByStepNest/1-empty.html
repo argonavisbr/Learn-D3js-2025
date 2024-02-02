@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Step-by-step: creating a heatmap</title>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <style>
+        * {
+            font-family: "Yanone Kaffeesatz", "Arial Narrow", sans-serif;
+            font-size: 10pt;
+        }
+        h1 {
+            font-size: 16pt;
+        }
+        p {
+            text-align: right;
+        }
+        table {
+            border-collapse: collapse;
+        }
+        td, th {
+            border: solid 1px darkslategray;
+            text-align: center;
+            padding: 5px;
+        }
+    </style>
+</head>
+<body>
+<h1>Rainfall in São Paulo, Brazil (in mm) from 1984 to 2017</h1>
+<table></table>
+<p>source: inmet.gov.br</p>
+<script>
+
+    // REVIEW - Use k, m, y for arrow func variables
+
+    const dataFile = "../data/rain_sao_paulo.csv"; // check file location
+
+    d3.csv(dataFile)
+            .then(function(data) {
+                console.log(data);
+                process(data);
+            });
+
+    function process(data) {
+        // nest by month, then year
+        const nested = d3.rollups(data,
+                                 v => +v[0].Rain_mm, // reduce function
+                                 d => +d.Month,      // first key
+                                 d => +d.Year);      // second key
+
+        console.log(nested);
+    }
+
+</script>
+</body>
+</html>

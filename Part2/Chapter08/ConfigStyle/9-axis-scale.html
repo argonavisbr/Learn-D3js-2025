@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Changing scales in axes</title>
+    <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+    <style>
+        svg {
+            border: solid 1px lightblue;
+        }
+        text {
+            font-family: sans-serif;
+            font-size: 10px;
+        }
+    </style>
+</head>
+<body>
+<script>
+    //TODO - remove duplication and eternal loop
+
+    const scale1 = d3.scaleLinear().range([0,250]).domain([0,400]);
+    const axis1 = d3.axisBottom(scale1);
+
+    const svg = d3.select("body").append("svg")
+                  .attr("width", 500).attr("height",50);
+
+    // Changing domains
+    const ax = svg.append("g").call(axis1).attr("transform", "translate(50,25)");
+    const tx = svg.append("text").text("Linear domain [0,400]")
+                  .attr("transform", "translate(350,30)");
+    ax.transition().delay(1000).duration(1000)
+        .call(axis1.scale(scale1.domain([0,1000])))
+    tx.transition().delay(1000).text("Linear domain [0,1000]")
+    ax.transition().delay(3000).duration(1000)
+        .call(axis1.scale(scale1.domain([250,750])))
+    tx.transition().delay(3000).text("Linear domain [250,750]")
+    ax.transition().delay(5000).duration(1000)
+        .call(axis1.scale(scale1.domain([0,500])))
+    tx.transition().delay(5000).text("Linear domain [0,500]")
+    ax.transition().delay(7000).duration(1000)
+        .call(axis1.scale(scale1.domain([-250,250])))
+    tx.transition().delay(7000).text("Linear domain [-250,250]")
+
+    // Using different scales
+    const scale2 = d3.scaleLog().range([0,250]).domain([1,50]);
+    ax.transition().delay(9000).duration(1000)
+        .call(axis1.scale(scale2))
+    tx.transition().delay(9000).text("Log domain [1,50]")
+
+    const scale3 = d3.scalePow().exponent(2).range([0,250]).domain([1,10]);
+    ax.transition().delay(11000).duration(1000)
+        .call(axis1.scale(scale3))
+    tx.transition().delay(11000).text("Exponential domain [1,10]")
+
+    const scale4 = d3.scaleSqrt().range([0,250]).domain([1,10]);
+    ax.transition().delay(13000).duration(1000)
+        .call(axis1.scale(scale4))
+    tx.transition().delay(13000).text("Sqrt domain [1,10]")
+</script>
+</body>
+</html>

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+    <script src="../js/render-palettes.js"></script>
+    <title>Single-hue interpolated schemes</title>
+    <link rel="stylesheet" href="../css/render-palletes.css">
+</head>
+<h1>Single-hue interpolated schemes</h1>
+<svg width="900" height="200"></svg>
+<script>
+    const schemes = [
+        'interpolateBlues',
+        'interpolateGreens',
+        'interpolateGreys',
+        'interpolateOranges',
+        'interpolatePurples',
+        'interpolateReds'
+    ].map(d => ({scheme: d, size: 600, step: 5}));
+
+    schemes.forEach((scheme, index) => renderSchemeSequential(scheme, index));
+
+</script>
+
+</body>
+</html>

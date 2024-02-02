@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Axis for an ordinal scale</title>
+    <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+    <style>
+        svg {
+            border: solid 1px lightblue;
+        }
+    </style>
+</head>
+<body>
+<script>
+    const w = 500, h = 50;
+    const scale = d3.scaleLinear()
+                    .range([0, w/2]);
+    const axisB = d3.axisBottom(scale);
+
+    const svg = d3.select("body")
+                  .append("svg")
+                  .attr("width", w)
+                  .attr("height",h);
+
+    const horz = svg.append("g")
+                    .call(axisB)
+                    .attr("transform", `translate(50,10)`);
+
+    const categorical = d3.scaleOrdinal()
+        .domain(['a','b','c','d','e','f','g'])
+        .range(d3.range(0,7*w/8,w/8))
+
+    axisB.scale(categorical);
+    horz.call(axisB)
+</script>
+</body>
+</html>

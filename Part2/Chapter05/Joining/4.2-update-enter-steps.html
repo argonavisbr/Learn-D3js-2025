@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>The exit selection, in detail</title>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <style>
+        svg { border: solid gray 1px }
+    </style>
+</head>
+<body>
+<h1>The exit selection, printing each step</h1>
+<h3>See comments in code and results in the console</h3>
+<svg height="400" width="800"></svg>
+
+<script>
+    const svg = d3.select("svg");
+
+    step1();  // This is the initial update and join (see 2.2-update-selection-steps.html)
+    step2();  // This is the exit selection (see 3.2-update-exit-steps.html)
+
+    // Step 3: a new join (with more data): it will append 3 more elements
+    const updateSel3 = svg.selectAll("circle").data([18,15,9,3,15,18]);
+
+    // 1. Selection containing all existing elements (3) + data in the enter selection (_enter array)
+    console.log("Adding update", updateSel3);
+
+    // Joins data from the enter selection (_enter array) and adds 3 new <circle> elements
+    const joinedSel3 = updateSel3.join("circle");
+
+    // Update <circle> attributes using the joined selection data
+    update();
+
+    // 3. The final selection after committing the join selection
+    console.log("Joined selection", joinedSel3);
+
+    function update() {
+        svg.selectAll("circle")
+            .attr("cy", 200)
+            .transition()
+            .attr("cx", (d,i) => (i+1)*100)
+            .attr("r", d => d);
+    }
+
+    function step1() {
+        svg.selectAll("circle")
+            .data([5,10,15,20,25])
+            .join("circle");
+        update();
+    }
+
+    function step2() {
+        svg.selectAll("circle")
+            .data([7,15,26])
+            .join("circle");
+        update();
+    }
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Quantile scales</title>
+    <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+    <style>
+        rect {
+            stroke: white;
+            stroke-width: 3px;
+            fill-opacity: 20%;
+        }
+        svg {border: solid 1px lightgray}
+
+    </style>
+</head>
+<body>
+<h1>d3.scaleQuantile()</h1>
+<p>Input data: <code id="data"></code></p>
+<p>Output colors: <code id="output"></code></p>
+<p>Sample (used to compute thresholds): <code id="sample"></code></p>
+<p>Computed thresholds: <code id="ql"></code></p>
+<svg id="quantile" height="60" width="1020"></svg>
+<script src="../js/threshold-compare.js"></script>
+<script>
+
+
+    // OUTPUT: discrete range data
+    const colors = ['blue', 'red', 'green', 'orange'];
+    d3.select("#output").text(`[${colors}]`);
+
+    const fmt = d3.format(' .2f');
+    const scaleAxis = d3.scaleLinear().range([0,1000]).domain([0,100])
+    const axis = d3.axisBottom().scale(scaleAxis);
+
+    // Render quantile scale
+    const ql = d3.select("#quantile").append("g").attr("transform","translate(5,5)");
+    const sample = [1,3,4,  8,9,20,  30,36,41,  45,48,96];
+    const scaleQl = d3.scaleQuantile().domain(sample).range(colors);
+    const qlThresholds = scaleQl.quantiles();
+
+    const sampleColors = sample.map(d => {
+        let index = qlThresholds.findIndex(threshold => d < threshold);
+        if (index === -1) index = colors.length - 1;
+        return colors[index];
+    });
+    d3.select("#sample")
+        .selectAll("span")
+        .data(sample)
+        .join("span")
+        .text((d,i) => i == 0 ? `[${d},`: i == sample.length -1 ? `${d}]`: `${d},`)
+        .style("color", (d,i) => sampleColors[i])
+
+    // INPUT: continuous domain data
+    const data  = [1,9,14,17,20,29,31, 45,49,51,56,62, 80,89,99];
+    d3.select("#data").text(`[${data}]`);
+
+    d3.select("#ql").text(`[${qlThresholds.map(d => fmt(d))}]`);
+    plot(ql, scaleQl, d3.pairs(d3.merge([[0],qlThresholds,[100]])));
+</script>
+</body>
+</html>

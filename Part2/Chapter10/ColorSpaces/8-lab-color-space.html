@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+    <!-- Using free Yanone Kaffeesatz fonts: https://www.yanone.de/fonts/kaffeesatz/ -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz">
+    <title>LAB color space</title>
+    <style>
+        text {
+            fill: black;
+            font-size: 200%;
+            font-family: 'Yanone Kaffeesatz', sans-serif;
+        }
+        text.label {
+            text-anchor: middle;
+        }
+        svg {border: solid 1px lightgray}
+    </style>
+</head>
+<body>
+<svg height="700" width="700" viewBox="-400 -400 800 800"></svg>
+<script>
+    const height=800, width=800;
+    const size = 250;
+    const hueTicks = [-100,-75,-50,-25,0,25,50,75,100];
+    const lightnessTicks = [0,25,50,75,100];
+
+    // Chart data
+    const lightness = d3.range(0,100);
+    const hue = d3.cross(d3.range(-100,100),d3.range(-100,100));
+
+    // Lightness scale and axis
+    const scaleL = d3.scaleLinear().range([100,size*2+100]).domain([0,100]);
+    const axisL = d3.axisTop(scaleL).tickValues(lightnessTicks);
+
+    // Hue scale and axes
+    const scaleHue = d3.scaleLinear().range([-size,size]).domain([-100,100]);
+    const axisA = d3.axisBottom(scaleHue)
+            .tickValues(hueTicks)
+            .tickSizeOuter(0)
+    const axisB = d3.axisLeft(scaleHue)
+            .tickValues(hueTicks)
+            .tickSizeOuter(0)
+
+    // Chart container
+    const svg = d3.select("svg").append("g").attr("transform",`translate(0,30)`);
+
+    // Lightness chart
+    const light = svg.append("g").attr("transform",`translate(-350,-350)`);
+
+    // Lightness data
+    light.selectAll("rect").data(lightness).join("rect")
+           .attr("width",8).attr("height",20)
+           .attr("x", scaleL).attr("y",5)
+           .style("fill", d => d3.lab(d,0,0))
+
+    // Linear axis
+    light.call(axisL)
+         .append("text").attr("class","label")
+           .text("Lightness channel")
+           .attr("transform", `translate(350,60)`);
+
+    // Hue data (10.000 rectangles)
+    svg.append("g")
+      .selectAll("rect").data(hue).join("rect")
+        .attr("height",4).attr("width",4)
+        .attr("x",d => scaleHue(d[0]))
+        .attr("y",d => scaleHue(d[1]))
+        .style("fill", d => d3.lab(50,d[0],d[1])) ;
+
+    // Cartesian axes
+    svg.append("g")
+          .call(axisA)
+          .attr("transform",`translate(0,260)`)
+          .append("text").attr("class","label")
+            .text("Hue channel A")
+            .attr("transform", `translate(0,50)`);
+    svg.append("g")
+          .call(axisB)
+          .attr("transform",`translate(-260,0)`)
+          .append("text").attr("class","label")
+            .text("Hue channel B")
+            .attr("transform", `rotate(-90) translate(0,-50)`);
+
+    // Zero reference axis
+    svg.append("g").call(axisA.tickValues([])).attr("color",'white');
+    svg.append("g").call(axisB.tickValues([])).attr("color",'white');
+
+
+</script>
+</body>
+</html>

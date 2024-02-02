@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+    <script src="../js/color-scales.js"></script>
+    <link rel="stylesheet" href="../css/color-spaces.css">
+    <title>RGB color channels</title>
+</head>
+<body>
+<h1>RGB color space</h1>
+<svg height="200" width="600"></svg>
+<script>
+    // scales
+    const scale = d3.scaleLinear().range([50,500]).domain([0,255]);
+
+    // axes
+    const ticks = [0,64,128,192,255];
+    const axis1 = d3.axisBottom(scale).tickValues(ticks);
+    const axis2 = d3.axisBottom(scale).tickValues(ticks);
+    const axis3 = d3.axisBottom(scale).tickValues(ticks);
+
+    // data
+    const r = d3.range(0,256),
+          g = d3.range(0,256),
+          b = d3.range(0,256);
+
+    // This function is in ../js/color-scales.js
+    drawScale(1, scale, axis1, r, d => d3.rgb(d,0,0), "R (red)");
+    drawScale(2, scale, axis2, g, d => d3.rgb(0,d,0), "G (green)");
+    drawScale(3, scale, axis3, b, d => d3.rgb(0,0,d), "B (blue)");
+
+</script>
+</body>
+</html>

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+    <script src="../js/color-picker.js"></script>
+    <link rel="stylesheet" href="../css/color-picker.css">
+    <title>HSL color picker</title>
+    <style>
+        svg {
+            border: solid 0.5px gray;
+        }
+    </style>
+</head>
+<body>
+<script>
+    // HSL config
+
+    cs.create = d3.hsl;
+    cs.keys = ["h", "s", "l"];
+    cs.domains = [[0,360],[0,1],[0,1]];
+    cs.ticks =   [[0,30,60,90,120,150,180,210,240,270,300,330,360],[0,.25,.50,.75,1],[0,.25,.50,.75,1]];
+    cs.init = [0,1,0.5];
+    cs.data = [d3.range(0,360), d3.range(0,1,0.0025), d3.range(0,1,0.0025)];
+    cs.formats = ['d','.2f','.2f'];
+    cs.depends = [['s','l'],[],[]]; // S and L use current H
+
+    init();
+
+</script>
+</body>
+</html>

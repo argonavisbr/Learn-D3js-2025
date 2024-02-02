@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Symlog and Log</title>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+</head>
+<body>
+
+<script>
+  // Define the dimensions for the chart
+  const width = 600;
+  const height = 400;
+  const margin = { top: 20, right: 20, bottom: 40, left: 40 };
+
+  // Create SVG container
+  const svg = d3.select("body")
+          .append("svg")
+          .attr("width", width)
+          .attr("height", height);
+
+  // Define the data
+  const data = d3.range(1, 100);
+
+  // Define the domains and ranges
+  const domain = [1, d3.max(data)];
+  const range = [margin.left, width - margin.right];
+
+  const log10Scale = d3.scaleLog().domain(domain).range(range);
+  const log2Scale = d3.scaleLog().base(2).domain(domain).range(range);
+  const naturalLogScale = d3.scaleLog().base(Math.E).domain(domain).range(range);
+  const symlogScale = d3.scaleSymlog().domain(domain).range(range);
+
+  const color = d3.scaleOrdinal()
+                  .domain(['log10','log2','logE','symlog'])
+                  .range(["blue", "green", "red", "purple"]);
+
+  plot('log10', log10Scale, 100);
+  plot('log2', log2Scale, 150);
+  plot('logE', naturalLogScale, 200);
+  plot('symlog', symlogScale, 250);
+
+  function plot(type, scale, y) {
+      svg.selectAll(`.${type}`)
+          .data(data)
+          .join("circle")
+          .attr("class", type)
+          .attr("cx", scale)
+          .attr("cy", y)
+          .attr("r", 2)
+          .style("fill", color(type));
+  }
+
+</script>
+
+
+</body>
+</html>

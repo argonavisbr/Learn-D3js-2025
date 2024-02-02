@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Exercise</title>
+    <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+</head>
+<body>
+<script>
+
+    const data = d3.range(0,255);
+
+    const svg = d3.select("body")
+        .append("svg")
+        .attr("width", 400)
+        .attr("height", 300);
+svg.append("circle")
+    svg.selectAll("circle")
+        .data(data)
+        .join("circle")
+        //.lower()
+        //.sort((a,b)=> d3.descending(a,b))
+        .attr("cx", d => d+75)
+        .attr("cy", 150)
+        .attr("r", 50)
+        .attr("fill", d => `hsl(${d},100%,50%)`)
+
+
+
+
+
+
+</script>
+
+</body>
+</html>

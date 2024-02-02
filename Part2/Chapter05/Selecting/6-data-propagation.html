@@ -2,8 +2,11 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Template file for Chapter05/Selecting</title>
+    <title>Data propagation</title>
     <script src="https://d3js.org/d3.v7.min.js"></script>
+    <style>
+        div {width: 200px}
+    </style>
 </head>
 <body>
 <h1>Use JavaScript console to follow examples</h1>
@@ -22,7 +25,19 @@
 
 <canvas></canvas>
 
-<script></script>
+<script>
+
+    const div = d3.select("div").data([5]);
+    console.log('div', div);
+    console.log('div.data()', div.data());
+
+    const divp = div.selectAll("p");
+    console.log('divp.data()', divp.data());
+
+    div.select("p:nth-child(2)");
+    console.log('divp.data() after select', divp.data());
+
+</script>
 
 </body>
 </html>
