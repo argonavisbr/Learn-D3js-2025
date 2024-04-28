@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Cartesian axes template</title>
+    <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+    <script src="../js/chart-utils.js"></script>
+    <link rel="stylesheet" href="../css/chart-utils.css">
+    <style>
+        path.line {
+            stroke-width: 2px;
+            fill: none;
+            opacity: .85
+        }
+        h1, p {
+            font-family: sans-serif;
+        }
+        h1 {
+            font-size: 16pt;
+            text-align: center;
+        }
+        p {
+            font-size: 10px;
+            text-align: center;
+        }
+        text.label {
+            font-size: 12px;
+        }
+        svg {border: 1px solid #ccc;}
+    </style>
+</head>
+<body>
+<h1>GDP share 1960 to 2022 in US$</h1>
+<p>Source: World Bank</p>
+<script>
+
+    const file = "../data/gdp-world-bank-2022.csv";
+
+    const limit = 7;
+
+    d3.csv(file, d3.autoType)
+      .then(csv => {
+          plot(csv);
+    });
+
+
+    function plot(rawData) {
+        const height  = 500, width   = 800;
+        const marginL = 75, marginR = 150, marginT = 20, marginB = 60;
+
+        const scaleX = d3.scaleTime()
+            .range([marginL, width - marginR]);
+
+        const scaleY = d3.scaleLinear()
+            .range([height - marginB, marginT]);
+
+        const svg = d3.select("body")
+            .append("svg")
+            .attr("width", width)
+            .attr("height",height);
+
+        // DATA
+
+        const data = rawData.map(obj => [obj['Country'],
+                                               Object.entries(obj)
+                                                     .filter(d => d[0] !== 'Country')]);
+
+        const data1 = data.map(d => d[1].map(v => ({country: d[0], year: +v[0], share: v[1]?v[1]:0}))).flat();
+
+        const groupByYear = d3.group(data1, d => d.year);
+
+
+        const sortedBySharePerYear = d3.map([...groupByYear].filter(d => d[0] >= 1960), y => [y[0],y[1].sort((a,b) => d3.descending(a.share, b.share))]);
+
+        const series = sortedBySharePerYear.map(d => {
+            const top2 = d[1].slice(0,limit);
+            const rest = d[1].slice(limit);
+            const sumRest = rest.reduce((acc, cur) => acc + cur.share, 0);
+            return [d[0], top2.concat({country: 'Rest of the world', year: d[0], share: sumRest})];
+        });
+
+        const years = rawData.columns.filter(d => (d !== 'Country' && d !== 'Code')).map(d => +d);
+        const countries = new Set(series.map(d => d[1].map(v => v.country)).flat());
+
+        countries.delete('Rest of the world');
+        countries.add('Rest of the world');
+
+        // if flag is missing from a series for a flag, add it with share zero
+        series.forEach(s => {
+            countries.forEach(c => {
+                if (!s[1].some(d => d.country === c)) {
+                    s[1].push({country: c, year: s[0], share: 0});
+                }
+            });
+        });
+
+        // stack
+        const stack = d3.stack()
+                        .keys(countries)
+            .order(d3.stackOrderDescending)
+            .offset(d3.stackOffsetExpand);
+
+        const datasets = series.map(d => {
+            const obj = {year: d[0]};
+            countries.forEach(c => obj[c] = d[1].filter(f => f.country === c)
+                                                .map(v => v.share)[0]);
+            return obj;
+        });
+
+        const stackedData = stack(datasets);
+
+        // RENDERING
+
+        scaleX.domain([new Date().setFullYear(d3.min(years)), new Date().setFullYear(d3.max(years))]);
+        scaleY.domain([0, d3.max(d3.merge(d3.merge(stackedData)))]);
+
+        const area = d3.area()
+                       .x((d,i) => scaleX(new Date().setFullYear(years[i])))
+                       .y0(d => scaleY(d[0]))
+                       .y1(d => scaleY(d[1]))
+                       .curve(d3.curveBasis);
+
+        const color = d3.scaleOrdinal(d3.schemeCategory10.concat(['blue','gold','#444']))
+                        .domain(countries);
+
+        svg.selectAll("path")
+            .data(stackedData)
+            .join("path")
+            .attr("d", area)
+            .style("fill", d => color(d.key));
+
+        // Render Cartesian axes
+        const yAxis = pkt.cartesianAxes()
+                         .container(svg)
+                         .xScale(scaleX)
+                         .yScale(scaleY)
+                         .xLabel('Years')
+                         .yLabel('GDP per capita (current US$)')
+                         .showHorizontalGrid(true)();
+        yAxis.tickFormat(d3.format(".0%"));
+        d3.select("g.y-axis").call(yAxis);
+
+        // add legend at right
+        const legend = svg.append("g")
+            .attr("transform", `translate(${[width - marginR + 20, marginT]})`)
+
+        pkt.legend()
+            .container(legend)
+            .data(countries)
+            .color(color)();
+    }
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Anti-pattern: a line using a data array in a non-default format</title>
+    <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+    <style>
+        path {
+            stroke: red;
+            fill: none;
+        }
+    </style>
+
+</head>
+<body>
+<script>
+    const width  = 500;
+    const height = 400;
+
+    // This data array is in a non-default format
+    const xValues = [0,100,200,300,400];
+    const yValues = [0,200,50,150,100];
+
+    // It would be best to map our data to the default format, but let's see a different approach.
+    const data = d3.range(0,xValues.length); // This is a dummy array - it just needs to be as long as the data
+
+    // Since we are not using the default format, you will need to configure the function using the x() and y()
+    // methods so that they select the correct values.
+    // The actual contents of the dummy array are irrelevant. Only the number of elements is important,
+    // since each element is used to trigger a call.
+    // Note that this is an ANTI-PATTERN, but it's useful to understand how the x() and y() methods work.
+    // Don't use it in your normal code. Always prefer to convert your data to the default format.
+    const line = d3.line()
+                   .x((d,i) => xValues[i])
+                   .y((d,i) => yValues[i])
+
+    // Check to see if the path data is generated correctly
+    const pathData = line(data);
+    console.log("Generated path data", pathData);
+
+    // Render the SVG context and the line
+    const svg = d3.select("body")
+                  .append("svg")
+                    .attr("height",height)
+                    .attr("width",width);
+
+    svg.append("path")
+       .attr("d", pathData);
+
+</script>
+</body>
+</html>

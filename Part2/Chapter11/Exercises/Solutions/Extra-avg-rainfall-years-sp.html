@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Exercise 4: An area chart displaying max and min values for each point and an average</title>
+    <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+    <script src="../../js/chart-utils.js"></script>
+    <link rel="stylesheet" href="../../css/chart-utils.css">
+    <style>
+        path.line {fill: none; stroke-width: 2px}
+        path.area {fill: rgb(70%,95%,95%)}
+        h1, p, text {
+            font-family: sans-serif;
+        }
+        p {font-size: 10pt}
+        h1 {font-size: 16pt}
+    </style>
+</head>
+<body>
+<h1>Rainfall in São Paulo, Brazil (1984-2017)</h1>
+<p>Source: inmet.gov.br</p>
+<script>
+    const width  = 800;
+    const height = 400;
+    const margin = {top: 0, left: 50, bottom: 50, right: 150};
+
+    const file = "../../data/rain_sao_paulo.csv";
+
+    d3.csv(file, d3.autoType)
+        .then(csv => {
+            console.log('csv', csv);
+
+            // 1) group by month
+            const byMonth = d3.rollup(csv, v => v.map(o => ({Year: o.Year, Value: o.Rain_mm})), d => d.Month);
+            console.log('byMonth', byMonth);
+
+            // 2) group by year
+            const byYear = d3.rollup(csv, v => v.map(o => ({Month: o.Month, Value: o.Rain_mm})), d => d.Year);
+            console.log('byYear', byYear);
+
+            // 3) compute max, min, and average (mean or median) for each year
+            const statsByYear = Array.from(byYear, ([key, value]) => {
+                const max = d3.max(value, d => d.Value);
+                const min = d3.min(value, d => d.Value);
+                const avg = d3.median(value, d => d.Value);
+                return {year: key, max: max, min: min, avg: avg};
+            });
+
+
+            plot(statsByYear);
+        });
+
+    function plot(data) {
+
+        const scaleX = d3.scaleTime()
+            .domain(d3.extent(data, d => d3.isoParse(`${d.year}-7-15`)))
+            .range([margin.left, width - margin.right]);
+
+        const scaleY = d3.scaleLinear()
+            .domain([0, d3.max(data, d => d.max) + 100])
+            .range([height - margin.bottom, margin.top]);
+
+        const area = d3.area()
+                       .x(d => scaleX(d3.isoParse(`${d.year}-7-15`)))
+                       .y1(d => scaleY(d.max))
+                       .y0(d => scaleY(d.min))
+                       .curve(d3.curveNatural);
+
+        const topline = area.lineY1();
+        const baseline = area.lineY0();
+
+        const avgline = d3.line()
+                          .x(d => scaleX(d3.isoParse(`${d.year}-7-15`)))
+                          .y(d => scaleY(d.avg))
+                          .curve(d3.curveNatural);
+
+        const svg = d3.select("body").append("svg").attr("height", height).attr("width", width);
+        const chart = svg.append("g");
+        initGradient(svg);
+
+        const colors = d3.scaleOrdinal(["brown", "navy", "blue"]);
+
+        chart.append("path")
+            .datum(data)
+            .attr("class", "area")
+            .attr("d", area)
+            .style("fill", "url(#area-gradient)");
+
+        chart.append("path")
+            .datum(data)
+            .attr("class", "line")
+            .attr("d", baseline)
+            .style("stroke", colors(0));
+
+        chart.append("path")
+            .datum(data)
+            .attr("class", "line")
+            .attr("d", avgline)
+            .style("stroke", colors(1));
+
+        chart.append("path")
+            .datum(data)
+            .attr("class", "line")
+            .attr("d", topline)
+            .style("stroke", colors(2));
+
+        pkt.cartesianAxes()
+            .container(chart)
+            .xScale(scaleX)
+            .yScale(scaleY)
+            .xLabel("Year")
+            .yLabel("Rainfall (mm)")
+            .showHorizontalGrid(true)();
+
+        const legend = svg.append("g")
+                          .attr("transform", `translate(${width - margin.right}, ${margin.top})`);
+        pkt.legend()
+           .container(legend)
+           .color(colors)
+           .data(["Record minimum", "Median", "Record maximum"])();
+    }
+
+    function initGradient(svg) {
+        const gradient = svg.append("defs")
+                            .append("linearGradient")
+                            .attr("id", "area-gradient")
+                            .attr("y2", 1)
+                            .attr("x2", 0);
+
+        gradient.append("stop")
+                .attr("offset", "50%")
+                .attr("stop-color", "rgb(60%,95%,95%)");
+
+        gradient.append("stop")
+                .attr("offset", "100%")
+                .attr("stop-color", "rgb(95%,95%,70%)");
+    }
+
+</script>
+</body>
+</html>

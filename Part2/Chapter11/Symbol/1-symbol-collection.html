@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Symbols</title>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <style>
+        text {
+            font-family: monospace;
+            font-size: 10px;
+        }
+        path {
+            fill: none;
+        }
+        .title {
+            font-weight: bold;
+            font-size: 12px;
+            text-anchor: middle;
+        }
+    </style>
+</head>
+<body>
+<script>
+    const width  = 850;
+    const height = 400;
+
+    // Symbols from the d3.symbolsFill array
+    const fillSymbols = [
+        'symbolCircle',
+        'symbolCross',
+        'symbolDiamond',
+        'symbolSquare',
+        'symbolStar',
+        'symbolTriangle',
+        'symbolWye'
+    ];
+
+    // Symbols from the d3.symbolsStroke array
+    const strokeSymbols = [
+        'symbolCircle',
+        'symbolPlus',
+        'symbolTimes',
+        'symbolTriangle2',
+        'symbolAsterisk',
+        'symbolSquare2',
+        'symbolDiamond2',
+    ];
+
+    const colorScale = d3.scaleOrdinal(d3.schemeCategory10)
+                         .domain([0,fillSymbols.length]);
+
+    function draw(symbol, index, position, style) {
+        const pathData = d3.symbol().type(d3[symbol]).size(200);
+
+        const g = svg.append("g")
+                     .attr("transform", `translate(${index * 120 + 70},${position})`);
+
+        g.append("path")
+            .attr("d", pathData)
+            .style(style.toLowerCase(), colorScale(symbol));
+
+        g.append("text")
+            .text("d3."+symbol)
+            .style("text-anchor", "middle")
+            .attr("x", 0)
+            .attr("y", 30);
+    }
+
+    const svg = d3.select("body")
+            .append("svg")
+            .attr("height",400)
+            .attr("width",width);
+
+    svg.append("text").text("d3.symbolsFill").attr("class", "title")
+        .attr("x", width/2)
+        .attr("y", 30);
+    svg.append("line").attr("x1", 0).attr("x2", width).attr("y1", 40).attr("y2", 40).attr("stroke", "black");
+    fillSymbols.forEach((s,i) => draw(s, i, 60, "fill"));
+
+    svg.append("text").text("d3.symbolsStroke").attr("class", "title")
+        .attr("x", width/2)
+        .attr("y", 140);
+    svg.append("line").attr("x1", 0).attr("x2", width).attr("y1", 150).attr("y2", 150).attr("stroke", "black");
+    strokeSymbols.forEach((s,i) => draw(s, i, 170, "stroke"));
+
+</script>
+</body>
+</html>

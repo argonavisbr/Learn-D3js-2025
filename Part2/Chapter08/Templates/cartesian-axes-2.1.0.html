@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Cartesian axes template, version 2.1</title>
+    <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+    <script src="../js/cartesian-axes-2.1.0.js"></script>
+    <link rel="stylesheet" href="../css/cartesian-axes-2.1.0.css">
+    <style>
+        path.line {
+            stroke: red;
+            fill: none;
+        }
+    </style>
+</head>
+<body>
+<h1>This file is an example using chart-utils.js</h1>
+<script>
+    const height  = 500, width   = 800;
+    const marginX = 50, marginY = 50;
+
+    const scaleX = d3.scaleLinear()
+                     .range([marginX, width - marginX]);
+
+    const scaleY = d3.scaleLinear()
+                     .range([height - marginY, marginY]);
+
+    const svg = d3.select("body")
+                  .append("svg")
+                    .attr("width", width)
+                    .attr("height",height);
+
+    // Sample data
+    const yValues = d3.range(0, 12).map(d => Math.floor(Math.random() * 80) + 20);
+    const xValues = d3.range(0, yValues.length, 1);
+    const data = xValues.map((d,i) => [d, yValues[i]]);
+
+    scaleX.domain([0, d3.max(xValues)]);
+    scaleY.domain([0, d3.max(yValues)]);
+
+
+    // Render Cartesian axes
+    const axes = dvj.cartesianAxes().context(svg)
+                                    .xScale(scaleX).yScale(scaleY)
+                                    .xLabel('X values').yLabel('Y values')
+                                    .showHorizontalGrid(true)
+                                    .showVerticalGrid(true);
+    axes();
+
+
+    // Line function
+    const line = d3.line()
+        .x(d => scaleX(d[0]))
+        .y(d => scaleY(d[1]));
+
+    // Render the line
+    svg.append("path")
+        .datum(data)
+        .attr("class", "line")
+        .attr("d", line);
+
+
+</script>
+
+</body>
+</html>

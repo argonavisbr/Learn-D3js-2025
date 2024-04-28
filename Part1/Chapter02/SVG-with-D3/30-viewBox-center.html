@@ -6,8 +6,16 @@
     <script src="https://cdn.jsdelivr.net/npm/d3-selection@3"></script>
 </head>
 <style>
-    svg { border: solid 1px lightgray; }
-    line {stroke: black; stroke-width: 4; opacity: .5}
+    circle {
+        stroke: black;
+        stroke-width: 4;
+        fill: orange;
+        opacity: .5;}
+    line {
+        stroke: blue;
+        stroke-width: 10;
+        stroke-linecap: round;
+    }
 </style>
 <body>
 <h1>SVG viewBox using D3</h1>
@@ -17,45 +25,13 @@
         .attr('width', 400)
         .attr('height', 300)
         .attr('viewBox', '-200 -150 400 300');
-    
+
+    svg.append('circle')
+        .attr('r', 100);
     svg.append('line')
-        .attr('x1', 0)
-        .attr('y1',-300)
-        .attr('x2', 0)
-        .attr('y2', 300);
+        .attr('y2', 90);
     svg.append('line')
-        .attr('y1', 0)
-        .attr('x1',-400)
-        .attr('y2', 0)
-        .attr('x2', 400);
-
-    svg.append('rect')
-        .attr('x', -130)
-        .attr('y',-130)
-        .attr('height', 20)
-        .attr('width', 215)
-        .attr('fill', 'red');
-
-    svg.append('rect')
-        .attr('x', 130)
-        .attr('y',-130)
-        .attr('height', 200)
-        .attr('width', 20)
-        .attr('fill', 'blue');
-
-    svg.append('rect')
-        .attr('x', -65)
-        .attr('y',110)
-        .attr('height', 20)
-        .attr('width', 215)
-        .attr('fill', 'green');
-
-    svg.append('rect')
-        .attr('x', -130)
-        .attr('y',-65)
-        .attr('height', 200)
-        .attr('width', 20)
-        .attr('fill', 'orange');
+        .attr('x2', 90);
 
 </script>
 

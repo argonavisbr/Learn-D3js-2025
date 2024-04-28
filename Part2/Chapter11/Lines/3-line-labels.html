@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Simple line with labels at each point</title>
+    <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+    <style>
+        path {
+            stroke: red;
+            fill: none;
+        }
+        text {
+            font-family: monospace;
+            font-size: 7pt;
+            alignment-baseline: hanging;
+        }
+    </style>
+</head>
+<body>
+<script>
+    const width  = 500;
+    const height = 400;
+
+    const svg = d3.select("body").append("svg").attr("height",height).attr("width",width);
+
+    const g = svg.append("g")
+                 .datum([[0,0], [100,200], [200,50], [300,150], [400,100]]);
+
+    // Render the line using the inherited datum (the entire data array)
+    g.append("path")
+        .attr("d", d3.line());      // same as d => d3.line()(d)
+
+    // Join a selection of <text> elements to the inherited data array, rendering a label near each point
+    // CSS styles (font-size, family and baseline) were added in the head
+    g.selectAll("text")
+     .data(d => d)                  // d = the entire dataset (inherited)
+       .join("text")
+         .text(p => p)              // p = each [x,y] point in the dataset
+           .attr("x", p => p[0] + 10)  // positions the text 10 pixels to the right of the x-coordinate
+           .attr("y", p => p[1]);
+
+
+</script>
+</body>
+</html>

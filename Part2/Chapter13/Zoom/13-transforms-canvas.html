@@ -26,7 +26,7 @@
     const exes = d3.range(0,chartWidth+1,50).map(d => [[d,0],[d,chartHeight]]);
     const wyes = d3.range(0,chartHeight+1,50).map(d => [[0,d],[chartWidth,d]]);
 
-    const line = d3.line().context(ctx);
+    const line = d3.line().container(ctx);
 
     const extent = [[0,0],[chartWidth,chartHeight]];
     const zoomBehavior = d3.zoom()

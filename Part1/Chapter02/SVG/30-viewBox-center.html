@@ -6,19 +6,23 @@
 </head>
 <style>
     svg { border: solid 1px lightgray; }
-    line {stroke: black; stroke-width: 4; opacity: .5}
+    circle {
+        stroke: black;
+        stroke-width: 4;
+        fill: orange;
+        opacity: .5;}
+    line {
+        stroke: blue;
+        stroke-width: 10;
+        stroke-linecap: round;
+    }
 </style>
 <body>
 <h1>SVG ViewBox</h1>
 <svg width="400" height="300" viewBox="-200 -150 400 300">
-
-    <line x1="0" y1="-300" x2="0" y2="300"/>
-    <line y1="0" x1="-400" y2="0" x2="400"/>
-    <rect x="-130" y="-130" height="20" width="215" fill="red"></rect>
-    <rect x="130" y="-130" height="200" width="20" fill="blue"></rect>
-    <rect x="-65" y="110" height="20" width="215" fill="green"></rect>
-    <rect x="-130" y="-70" height="200" width="20" fill="orange"></rect>
-
+    <circle cx="0" cy="0" r="100"/>
+    <line y2="90"/>
+    <line x2="90"/>
 </svg>
 </body>
 </html>

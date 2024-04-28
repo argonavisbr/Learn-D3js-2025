@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Average monthly temperature in selected cities</title>
+    <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+    <script src="../../js/chart-utils.js"></script>
+    <link rel="stylesheet" href="../../css/chart-utils.css">
+    <style>
+        path.months {
+            stroke-width: 3px;
+            fill: none;
+            opacity: .75;
+        }
+        h1, p, text {
+            font-family: sans-serif;
+        }
+        p {font-size: 10pt}
+        h1 {font-size: 16pt}
+        text.city {
+            font-size: 11px;
+            font-weight: bold;
+            text-anchor: start;
+            alignment-baseline: middle;
+            pointer-events: none;
+        }
+        .chart line, .chart path {
+            stroke: darkslategray;
+            opacity: .5;
+            stroke-width: 1px;
+        }
+        .tick text {
+            text-transform: capitalize;
+        }
+    </style>
+</head>
+<body>
+<h1>Average monthly temperature (ºC) in selected cities</h1>
+<script>
+  // Temperature data (Source: Wikipedia)
+  const file = "../data/temperatures.csv";
+
+  // Load, parse and prepare data
+  d3.text(file)
+    .then(text => {
+        // Each array in set contains city and average temperature for each month [[city, t1, t2, ..., t12], ...]
+        const rawData = d3.csvParseRows(text, d3.autoType);
+
+        const valueRows = rawData.filter((d,i) => i > 0) // all except first row
+        const months = rawData.filter((d,i) => i === 0)  // get first row
+            .map(d => d.slice(1))[0]   // just the month names
+
+        // Each array in set contains city and array of temperature in ºC [[city, [t1, t2, ..., t12]], ... ]
+        const dataByCity = valueRows.map(d => [d[0], d.slice(1)]);
+
+        // Plots a graph of temperatures in ºC per city, sorted by name
+        plot(dataByCity.sort((a,b) => d3.ascending(a[0], b[0])), months);
+
+  });
+
+  function plot(data, months) {
+      const height = 500, width = 800, marginL = 50, marginR = 150, marginT = 10, marginB = 50;
+
+      const scaleX = d3.scalePoint()
+                       .range([marginL, width - marginR])
+                       .domain(months);
+
+      const scaleY = d3.scaleLinear()
+                       .range([height - marginB, marginT])
+                       .domain([d3.min(data.map(d => d[1]).flat()) - 5,
+                                d3.max(data.map(d => d[1]).flat()) + 5]);
+
+      const color = d3.scaleOrdinal(d3.schemeCategory10);
+
+      // Line functions
+      const tempLine = d3.line()
+                         .x((d,i) => scaleX(months[i]))
+                         .y(d => scaleY(d))
+                         .curve(d3.curveCatmullRom);
+
+      // Render chart
+      const svg = d3.select("body")
+                    .append("svg")
+                      .attr("width", width)
+                      .attr("height", height);
+
+      // Render temperature lines
+      svg.selectAll("g.line")
+          .data(data)
+            .join("g")
+              .attr("class", "line")
+              .append("path")
+                .datum(d => d[1])
+                  .attr("class", "months")
+                  .attr("d", tempLine)
+                  .style("stroke", (d,i) => color(i));
+
+      // Draw cartesian axes
+      pkt.cartesianAxes()
+         .container(svg)
+         .xScale(scaleX)
+         .yScale(scaleY)
+         .xLabel("Months")
+         .yLabel("Temperature in ºC")
+         .showHorizontalGrid(true)();
+
+      const legend = svg.append("g")
+                        .attr("transform", `translate(${[width - marginR + 10, marginT]})`);
+      pkt.__displayLegend(legend, data.map(d => d[0]), color);
+  }
+
+</script>
+
+</body>
+</html>

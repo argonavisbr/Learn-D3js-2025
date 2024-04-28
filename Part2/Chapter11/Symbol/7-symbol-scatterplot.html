@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Scatter plot using symbols</title>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <style>
+        svg {
+            font-size: 10px;
+        }
+        text {
+            font-family: sans-serif;
+            font-size: 60%;
+        }
+        .legend text {
+            font-size: 60%;
+            alignment-baseline: hanging;
+        }
+        .domain {
+            opacity: 0;
+        }
+        .y-axis line, .x-axis line {
+            stroke-width: .25;
+            stroke: rgba(114, 138, 74, 0.3);
+        }
+        .label {
+            font-size: 90%;
+            text-anchor: middle;
+        }
+        .tooltip, svg {
+            pointer-events: none;
+        }
+        .dot, .item {
+            pointer-events: visible;
+        }
+        .tooltip rect {
+            fill: #eee;
+            fill-opacity: 0.9;
+            stroke: #888;
+            stroke-opacity: .9;
+        }
+        .show {
+            stroke: black !important;
+            stroke-width: 1.5;
+        }
+        .fade {
+            opacity: .5;
+        }
+        path {
+            fill: none;
+        }
+    </style>
+</head>
+<body>
+<svg width="100%" height="100%" viewBox="0 0 500 300"/>
+<script>
+    const file = "../data/un_regions_2017.csv";
+
+    const w = 500, h = 300;
+    const margin = {top: 5, left: 50, bottom: 40, right: 10};
+
+    const scaleX = d3.scaleLinear().range([margin.left, w - margin.right]);
+    const scaleY = d3.scaleLog().range([h-margin.bottom, margin.top]);
+    const color  = d3.scaleOrdinal(d3.schemeDark2);
+
+    const axisX = d3.axisBottom(scaleX)
+        .tickSize(h - margin.bottom)
+        .tickPadding(2);
+    const axisY = d3.axisLeft(scaleY)
+        .tickSize(w - margin.left)
+        .tickPadding(2)
+        .ticks(8, ',');
+
+    const format = d3.format("$,.0f");
+
+    const data = {
+        continents: new Set()
+    }
+
+    // Select symbols to use
+    const symbols = [
+        'symbolCircle',
+        'symbolPlus',
+        'symbolDiamond2',
+        'symbolSquare2',
+        'symbolTriangle2',
+        'symbolTimes'];
+
+    const symbolScale = d3.scaleOrdinal(symbols);
+
+    d3.csv(file, function(row) {
+        if(row.HDI_2017 >0 && row.GDP_PPP_2017 >0) {
+            data.continents.add(row.Continent);
+            return {
+                name: row.Country,
+                code: row.Code,
+                continent: row.Continent,
+                population: +row.Pop_2016,
+                hdi: +row.HDI_2017,
+                gdp: +row.GDP_PPP_2017
+            }
+        }
+    })
+    .then(function(dataset) {
+        data.continents = d3.sort(data.continents, (a,b,) => d3.ascending(a,b));
+        data.countries = dataset;
+        scaleY.domain(d3.extent(dataset, d => d.gdp));
+        scaleX.domain(d3.extent(dataset, d => d.hdi));
+
+        drawAxes();
+        draw();
+        drawTooltips();
+    });
+
+    function drawTooltips() {
+        const tooltip = d3.select("svg")
+                          .append("g")
+                            .attr("class", "tooltip")
+                            .attr("opacity", 0);
+
+        tooltip.append("rect")
+                .attr("width", 80)
+                .attr("height", 45)
+                .attr("rx", 3).attr("ry", 3)
+                .attr("x", -3).attr("y", -10);
+
+        tooltip.append("text")
+                .attr("class", "name");
+        tooltip.append("text")
+                .attr("class", "hdi")
+                .attr("y", 15);
+        tooltip.append("text")
+                .attr("class", "gdp")
+                .attr("y", 30);
+    }
+
+    function drawAxes() {
+        d3.select("svg")
+          .append("g")
+            .attr("class", "x-axis")
+            .attr("transform", `translate(${[0,margin.top]})`)
+            .call(axisX);
+
+        d3.select("svg")
+          .append("g")
+            .attr("class", "y-axis")
+            .attr("transform", `translate(${[w-margin.right,0]})`)
+            .call(axisY);
+
+        d3.select("svg")
+          .append("text")
+            .attr("class","label")
+            .text("Human Development Index (HDI)")
+            .attr("transform", `translate(${[w/2,h-3]})`)
+
+        d3.select("svg")
+          .append("text")
+            .attr("class","label")
+            .text("Annual GDP per capita (International USD)")
+            .attr("transform", `translate(${[3,h/2]}) rotate(90)`)
+    }
+
+    function draw() {
+        d3.select("svg")
+          .selectAll("circle.dot")
+            .data(data.countries)
+              .join("path").attr("class", "dot")
+                .attr("d", d => d3.symbol().type(d3[symbolScale(d.continent)]).size(12)(d))
+                .attr("transform", d => `translate(${[scaleX(d.hdi), scaleY(d.gdp)]})`)
+                .style("stroke", d => color(d.continent))
+                .on("mouseenter", showDetails)              // added event handlers
+                .on("mouseleave", clearDetails);            // added event handlers
+
+        const legend = d3.select("svg")
+                         .append("g")
+                            .attr("class", "legend")
+                            .attr("transform", `translate(${[margin.left + 20, margin.top + 20]})`);
+
+        legend.selectAll("g.item")
+              .data(data.continents)
+                .join("g").attr("class", "item")
+                  .on("mouseenter", showContinents)         // added event handlers
+                  .on("mouseleave", clearContinents)        // added event handlers
+                  .each(function(d, i) {
+                      d3.select(this)
+                        .append("path")
+                          .attr("d", d => d3.symbol().type(d3[symbolScale(d)]).size(25)(d))
+                          .attr("transform", `translate(${[0, 4+i * 10]})`)
+                          .style("stroke", color(d));
+                      d3.select(this)
+                        .append("text")
+                          .attr("y", 2 + i * 10)
+                          .attr("x", 24)
+                          .text(d);
+                  });
+    }
+
+    // Event handler functions for legend
+
+    function showContinents(event, d) {
+        d3.selectAll(".item")
+            .classed("fade", k => k !== d)              // fade all legend items except selected item
+        d3.selectAll(".dot")
+            .classed("fade", k => k.continent !== d);   // fade all dots except those from selected continent
+        d3.selectAll(".dot")
+            .classed("show", k => k.continent === d);   // highlight dots from selected continent
+    }
+
+    function clearContinents() {
+        d3.selectAll(".item, .dot")
+            .classed("fade", false)        // remove fade class from all items and dots (make all opaque again)
+        d3.selectAll(".dot")
+            .classed("show", false);       // remove show class from all dots (remove highlight)
+    }
+
+    // Event handler functions for tooltips
+
+    function showDetails(event,d) {
+        d3.select(event.target)             // select the object (dot) that triggered the event
+            .attr("transform", `${d3.select(this).attr("transform")} scale(2)`);  // scale the object
+
+        // Update the text in the tooltip
+        const text1 = d3.select(".tooltip .name")
+                        .text(d.name);
+        const text2 = d3.select(".tooltip .gdp")
+                        .text("GDP: " + format(d.gdp));
+        const text3 = d3.select(".tooltip .hdi")
+                        .text("HDI: " + d.hdi);
+
+        // Compute the width of the tooltip box based on the text length
+        const boxWidth = 6 + d3.max([text1.node().getComputedTextLength(),
+                                     text2.node().getComputedTextLength(),
+                                     text3.node().getComputedTextLength()]);
+        const boxHeight = d3.select(".tooltip rect").attr("height");
+
+        // Compute where to place the tooltip so that it isn't cropped off the screen
+        const dx =  scaleX.range()[1] - scaleX(d.hdi);
+        const xPos = dx < boxWidth ?
+                            scaleX(d.hdi) - boxWidth - 5:
+                            scaleX(d.hdi) + 10;
+
+        const dy = scaleY(d.gdp) - scaleY.range()[1];
+        const yPos = scaleY(d.gdp) > boxHeight/2 ?
+                                       scaleY(d.gdp) - boxHeight/4 :
+                                       boxHeight/4 + scaleY(d.gdp) - dy;
+
+        // Place the tooltip near the object
+        d3.select(".tooltip")
+            .attr("opacity", 1)
+            .attr("transform", `translate(${[xPos, yPos]})`)
+
+        d3.select(".tooltip rect")
+            .attr("width", boxWidth);    // adjust the width of the tooltip box to fit the text
+    }
+
+    function clearDetails(event) {
+        d3.select(event.target)
+            .attr("transform", `${d3.select(this).attr("transform")} scale(.5)`);  // scale the object back to normal size
+        d3.select(".tooltip")
+            .attr("opacity", 0)         // hide the tooltip
+    }
+</script>
+</body>
+</html>

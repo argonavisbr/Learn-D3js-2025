@@ -1,0 +1,30 @@
+/* @version 1.2.1 2024-04-02 */
+
+.blank text, .tick:first-of-type {
+    display: none
+}
+
+.tick rect {
+    fill: white;
+}
+
+.tick text {
+    font-size: 10px;
+}
+
+.grid {
+    fill: none;
+    stroke: gray;
+    stroke-dasharray: 5 5;
+}
+
+.grid.zero {
+    stroke: black;
+    stroke-dasharray: 0;
+}
+
+.angle.label {
+    font-size: 12px;
+    text-anchor: middle;
+    alignment-baseline: middle;
+}

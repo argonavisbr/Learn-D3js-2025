@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Curve controls for Basis, Catmull-Rom and Cardinal curves</title>
+    <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+    <style>
+        text {
+            font-family: monospace;
+            font-size: 10pt;
+        }
+        path {
+            fill: none;
+        }
+        text {
+            text-anchor: start;
+            alignment-baseline: middle;
+        }
+    </style>
+</head>
+<body>
+<script>
+    const width  = 1000;
+    const height = 500;
+    const cols = 3;
+    const rows = 3;
+    const margin = 30;
+
+    const parameter = [0, .5, 1];
+
+    const data = [[1,0],[2,8],[3,2],[4,6],[5,0],[6,4]];
+
+    const scaleX = d3.scaleLinear()
+                     .domain(d3.extent(data, d => d[0]))
+                     .range([margin,width/cols - margin]);
+
+    const scaleY = d3.scaleLinear()
+                     .domain(d3.extent(data, d => d[1]))
+                     .range([height/rows - margin, margin/2]); // invert - place 0 at bottom
+
+    const color = d3.scaleLinear()
+                    .domain([0,1])
+                    .range(['orange', 'blue']);
+
+    const point = d3.symbol().type(d3.symbolCircle).size(25);
+
+    const svg = d3.select("body").append("svg").attr("height",height).attr("width",width);
+
+    parameter.forEach((d,i) => draw('curveCardinal', 'tension', d, i, 0, 0));
+    parameter.forEach((d,i) => draw('curveCatmullRom', 'alpha', d, i, 1, 0));
+    parameter.forEach((d,i) => draw('curveBundle', 'beta', d, i, 2, 0));
+
+    parameter.forEach((d,i) => draw('curveCardinalClosed', 'tension', d, i, 0, 1));
+    parameter.forEach((d,i) => draw('curveCatmullRomClosed', 'alpha', d, i, 1, 1));
+
+    parameter.forEach((d,i) => draw('curveCardinalOpen', 'tension', d, i, 0, 2));
+    parameter.forEach((d,i) => draw('curveCatmullRomOpen', 'alpha', d, i, 1, 2));
+
+    drawLegend();
+
+    function draw(curve, paramName, paramValue, position, row, column) {
+
+        const g = svg.append("g")
+                .attr("transform", `translate(${[column * width/cols, row * height/rows]})`);
+
+        const line = d3.line()
+                        .x(d => scaleX(d[0]))
+                        .y(d => scaleY(d[1]));
+
+        g.append("path")
+                .attr("d", line(data))
+                .style("stroke", "gray")
+                .style("stroke-dasharray", "5 5")
+
+        line.curve(d3[curve][paramName](paramValue));
+
+        g.append("path")
+                .attr("d", line(data))
+                .style("stroke", color(paramValue));
+
+        if(position === 0) {
+            g.append("text")
+                    .text("d3." + curve + "." + paramName)
+                    .style("text-anchor", "middle")
+                    .attr("x", width/(cols*2))
+                    .attr("y", height/rows - margin/2  + 10);
+        }
+
+        g.selectAll(".point")
+                .data(data)
+                .join("path").attr("class", "point")
+                .attr("d", point)
+                .style("fill", 'red')
+                .attr("transform", d => "translate("+[scaleX(d[0]), scaleY(d[1])]+")");
+    }
+
+    function drawLegend() {
+
+        const g = svg.append("g")
+            .attr("transform", `translate(${[2 * width/cols, 2 * height/rows + 60]})`);
+
+        g.selectAll("rect")
+                .data(parameter)
+                .join("rect")
+                .attr("x", -20)
+                .attr("y", (d,i) => i * 30 - 6)
+                .attr("height", 20)
+                .attr("width", 20)
+                .style("fill", d => color(d));
+
+        g.selectAll("text")
+                .data(parameter)
+                .join("text")
+                .text(d => d)
+                .attr("x", 10)
+                .attr("y", (d,i) => i * 30 + 5);
+
+        g.append("text")
+            .text("tension | alpha | beta = ")
+            .attr("x", -width/cols + 100)
+            .attr("y", (d,i) => i * 30 + 35);
+    }
+
+
+</script>
+</body>
+</html>

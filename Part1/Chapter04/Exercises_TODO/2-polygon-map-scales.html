@@ -39,7 +39,7 @@
             .each(function(d,i) {
                 let points = [];
 
-                // If country has islands, merge (flatten) all polygons in a single array
+                // If flag has islands, merge (flatten) all polygons in a single array
                 // Then get the coordinates: an array of [longitude, latitude] points.
                 if(d.geometry.type === 'MultiPolygon') {
                     points = d3.merge(d.geometry.coordinates);

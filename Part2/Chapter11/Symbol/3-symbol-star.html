@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Symbols</title>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <style>
+        svg { border: solid 1px gray}
+        path {fill: #cc5522}
+    </style>
+</head>
+<body>
+<script>
+    const width  = 600;
+    const height = 200;
+
+    const svg = d3.select("body")
+        .append("svg")
+        .attr("height",height)
+        .attr("width",width);
+
+    const h = 80;
+
+    const star1 = d3.symbol().type(d3.symbolStar).size(5000).digits(0);
+    const star2 = d3.symbol(d3.symbolStar, 5000);
+    const star3 = d3.symbol(d3.symbolsFill[4]).size(5000);
+
+    svg.append("path").attr("d", star1)
+            .attr("transform", "translate(100,100)");
+    svg.append("path").attr("d", star2)
+            .attr("transform", "translate(300,100)");
+    svg.append("path").attr("d", star3)
+            .attr("transform", "translate(500,100)");
+
+</script>
+</body>
+</html>

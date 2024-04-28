@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Symbols</title>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <style>
+        text {
+            font-family: monospace;
+            font-size: 8pt;
+        }
+        path {
+            fill: none;
+        }
+    </style>
+</head>
+<body>
+<script>
+    const width  = 1000;
+    const height = 400;
+
+    const fillSymbols = [
+        'symbolCircle',
+        'symbolTriangle',
+        'symbolSquare',
+        'symbolDiamond',
+
+        'symbolCross',
+        'symbolStar',
+        'symbolWye'];
+
+    const strokeSymbols = [
+        'symbolCircle',
+        'symbolTriangle2',
+        'symbolSquare2',
+        'symbolDiamond2',
+
+        'symbolPlus',
+        'symbolAsterisk',
+        'symbolTimes',
+        ];
+
+    const colorScale = d3.scaleOrdinal(d3.schemeCategory10)
+                         .domain([0,fillSymbols.length]);
+
+    const svg = d3.select("body")
+        .append("svg")
+        .attr("height",400)
+        .attr("width",width);
+
+    // d3.symbols
+    d3.symbolsFill.forEach((s,i) => draw(s, i, 30, "fill"));   // d3.symbolsFill == d3.symbols
+    d3.symbolsStroke.forEach((s,i) => draw(s, i, 80, "stroke"));
+
+    function draw(symbol, index, position, style) {
+
+        const pathData = d3.symbol().type(symbol).size(200);
+
+        const g = svg.append("g")
+                     .attr("transform", `translate(${index * 60 + 70},${position})`);
+
+        g.append("path")
+            .attr("d", pathData)
+            .style(style, colorScale(symbol));
+
+    }
+
+</script>
+</body>
+</html>

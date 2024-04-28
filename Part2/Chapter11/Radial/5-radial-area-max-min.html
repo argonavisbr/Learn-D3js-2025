@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Radial axes template</title>
+    <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+    <script src="../js/chart-utils.js"></script>
+    <link rel="stylesheet" href="../css/chart-utils.css">
+    <style>
+        path {
+            fill: none;
+        }
+        .area {
+            stroke: none;
+            fill: rgb(100%, 50%, 0%, 0.3);
+        }
+        .outer.line  {
+            stroke: blue;
+        }
+        .inner.line {
+            stroke: red;
+        }
+        .outer.point  {
+            fill: blue
+        }
+        .inner.point {
+            fill: red
+        }
+    </style>
+</head>
+<body>
+<script>
+    const width  = 500, height = 400, margin = 100;
+
+    // Sample data
+    const outer = d3.range(0, 12).map(() => d3.randomInt(60,120)());
+    const inner = d3.range(0, 12).map(() => d3.randomInt(15,60)());
+    const angles  = d3.range(0, outer.length, 1);
+    const data = angles.map((d,i) => [d, outer[i], inner[i]]);
+
+    // SVG view port
+    const svg = d3.select("body")
+                  .append("svg")
+                    .attr("height", height)
+                    .attr("width", width)
+                    .attr("viewBox", `${-width/2} ${-height/2} ${width} ${height}`);
+
+    // Scales
+    const scaleAngle = d3.scaleLinear()
+                         .domain([0, angles.length])
+                         .range([0, 2*Math.PI]);
+    const scaleRadius = d3.scaleLinear()
+                          .domain([0, d3.max(outer)])
+                          .range([0, width/2 - margin]);
+
+    // Draw radial axes with grid - see radial-chart-utils.js
+    pkt.radialAxes().container(svg).aScale(scaleAngle).rScale(scaleRadius).angularData(angles).numTicks(6).useGrid(true)();
+
+    // Radial area function
+    const area = d3.areaRadial()
+                   .angle(d => scaleAngle(d[0]))
+                   .outerRadius(d => scaleRadius(d[1]))
+                   .innerRadius(d => scaleRadius(d[2]));
+
+    // get lines
+    const topline = area.lineOuterRadius();
+    const baseline = area.lineInnerRadius();
+
+    // Render the area
+    svg.append("path")
+        .datum(data)
+        .attr("class", "area")
+        .attr("d", area);
+
+    // Render lines
+    drawLine(data, topline, "outer");
+    drawLine(data, baseline, "inner");
+
+    /**
+     * Draws a line and its points.
+     * @param data the data array [[angle, outer, inner], ...]
+     * @param line the line function
+     * @param className CSS class name
+     *
+     * Uses pkt.p2c() from radial-chart-utils.js
+     */
+    function drawLine(data, line, className, color) {
+        const index = className === "outer" ? 1 : 2;
+
+        svg.append("path")
+            .datum(data)
+            .attr("class", `${className} line`)
+            .attr("d", line);
+
+        svg.selectAll(`circle.${className}.point`)
+            .data(data)
+            .join("circle")
+              .attr("class", `${className} point`)
+              .attr("cx", d => pkt.p2c(scaleAngle(d[0]), scaleRadius(d[index]))[0])
+              .attr("cy", d => pkt.p2c(scaleAngle(d[0]), scaleRadius(d[index]))[1])
+              .attr("r", 4);
+    }
+
+</script>
+</body>
+</html>

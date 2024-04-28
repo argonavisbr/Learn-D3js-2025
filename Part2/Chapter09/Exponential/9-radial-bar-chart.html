@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Radial bar chart - Uses arcs and stacks (Chapter 11)</title>
+    <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+    <script src="../js/radial-axes-2.0.0.js"></script>
+    <link rel="stylesheet" href="../css/radial-axes-2.0.0.css" type="text/css">
+    <style>
+        text, .tick text{
+            font: 10px sans-serif;
+        }
+        .layer path {
+            opacity: .8;
+        }
+        .tick line, .domain {
+            stroke: #2e9182;
+            stroke-width: 1px;
+        }
+    </style>
+</head>
+<body>
+
+<script>
+    const width  = 500, height = 400, margin = 100, innerRadius = 55;
+
+    const scaleAngle = d3.scaleLinear().range([0, 2*Math.PI]);
+    const scaleRadius = d3.scaleRadial().range([innerRadius, width/2 - margin]);
+
+    const svg = d3.select("body")
+                  .append("svg")
+                    .attr("width", width)
+                    .attr("height",height)
+                    .attr("viewBox", `${-width/2} ${-height/2} ${width} ${height}`);
+
+    // A sample dataset
+    const sleep = [
+        {day: 'Sun', hours: [ 5.5, 0.9, 1.6 ]},
+        {day: 'Mon', hours: [ 4.9, 1.5, 1.1 ]},
+        {day: 'Tue', hours: [ 5.1, 1.2, 1 ]},
+        {day: 'Wed', hours: [ 3.9, 0.7, 1.1 ]},
+        {day: 'Thu', hours: [ 4.6, 1.8, 1.2 ]},
+        {day: 'Fri', hours: [ 3.1, 0.5, 0.4 ]},
+        {day: 'Sat', hours: [ 6.1, 1.2, 1.2 ]}
+    ];
+    const stages = ['Light (N1/N2)', 'Deep (N3)', 'REM'];
+    const colors = ['#00eeff', '#0088ff', '#0044ff'];
+
+    scaleAngle.domain([0, sleep.length]);
+    scaleRadius.domain([0, d3.max(sleep, d => d3.sum(d.hours))]);
+
+    // Generate stacked data
+    const stack = d3.stack()
+                    .keys(stages.map((d,i) => i))
+                    .order(d3.stackOrderReverse);
+
+    const stackedData = stack(sleep.map(d => d.hours));
+
+    const gapAngle = 0.1 * Math.PI;
+
+    const arc = d3.arc()
+                  .innerRadius(d => scaleRadius(d[0]))
+                  .outerRadius(d => scaleRadius(d[1]))
+                  .startAngle((d, i) => scaleAngle(i) + gapAngle/2)
+                  .endAngle((d, i) => scaleAngle(i+1) - gapAngle/2);
+
+    const fmt = d3.format("0.1f");
+
+    // display day of week: total hours in format hh:mm above the center of each bar
+    svg.selectAll("text")
+       .data(sleep)
+         .join("text")
+           .attr("x", (d, i) => polarToCartesian(scaleAngle(i + 0.5), scaleRadius(d3.sum(d.hours))+40)[0])
+           .attr("y", (d, i) => polarToCartesian(scaleAngle(i + 0.5), scaleRadius(d3.sum(d.hours))+20)[1])
+           .attr("dy", "0.35em")
+           .attr("text-anchor", "middle")
+        .text(d => `${d.day}: ${fmt(d3.sum(d.hours))} h`);
+
+    // Draw radial axes
+    radialAxes().context(svg).aScale(scaleAngle).rScale(scaleRadius).angularData(sleep.map(d => d.day)).numTicks(6)();
+
+    // render the stacked bar chart on the radial scales
+    svg.selectAll("g.layer")
+        .data(stackedData)
+        .join("g")
+        .attr("class", "layer")
+        .attr("fill", (d, i) => colors[i])
+        .selectAll("path")
+        .data(d => d)
+        .join("path")
+        .attr("d", arc);
+
+    // Legend
+    const legend = svg.append("g").attr("class", "legend");
+    legend.selectAll("rect")
+        .data(stages.map((d,i) => i))
+        .join("rect")
+        .attr("width", 10)
+        .attr("height", 10)
+        .attr("x", -35)
+        .attr("y", (d,i) => i*20 -25)
+        .attr("fill", (i, j) => colors[j]);
+
+    legend.selectAll("text")
+        .data(stages.map((d,i) => i))
+        .join("text")
+        .attr("x", -20)
+        .attr("y", (d,i) => i*20 -16)
+        .text(i => stages[i]);
+
+
+
+
+</script>
+
+</body>
+</html>

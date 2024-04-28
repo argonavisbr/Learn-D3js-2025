@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Symbols</title>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <style>
+        text {
+            font-family: 'courier new', monospace;
+            font-size: 12px;
+        }
+    </style>
+</head>
+<body>
+<h1>Symbols</h1>
+<p><code>fillSymbols</code> are designed for filling, and <code>strikeSymbols</code> are designed for stroking, but you can also fill them if you wish.</p>
+<script>
+    const width  = 800;
+    const height = 400;
+
+    const svg = d3.select("body").append("svg").attr("height",400).attr("width",width);
+
+    // Placing similar symbols side by side (not following array order)
+    showSymbols("symbolCircle", "symbolCircle", 50);
+    showSymbols("symbolTriangle", "symbolTriangle2", 100);
+    showSymbols("symbolSquare", "symbolSquare2", 150);
+    showSymbols("symbolDiamond", "symbolDiamond2", 200);
+    showSymbols("symbolCross", "symbolPlus", 250);
+    showSymbols("symbolStar", "symbolAsterisk", 300);
+    showSymbols("symbolWye", "symbolTimes", 350);
+
+    function showSymbols(toFill, toStroke, pos) {
+        const f = d3.symbol().type(d3[toFill]).size(200);
+        const s = d3.symbol().type(d3[toStroke]).size(200);
+        render(f, s, pos);
+    }
+
+    function render(fillSymbol, strokeSymbol, position) {
+        const attributes = [
+            ["black", "red", "fillSymbol:"],
+            ["red", "none", ""],
+            ["none","none",""],
+            ["black", "red", "strokeSymbol:"],
+            ["red", "none", ""]
+        ];
+
+        attributes.forEach((a, i) => {
+            svg.append("path")
+                .attr("d", a[2].indexOf('fill') === 0 ? fillSymbol : strokeSymbol)
+                .style("stroke", a[0])
+                .style("fill", a[1])
+                .attr("transform", `translate(${[position+90,i * 30 + 50]})`);
+
+            svg.append("text")
+                .text(a[2])
+                .style("text-anchor", "left")
+                .attr("x", 25)
+                .attr("y", i * 30 + 55);
+        });
+    }
+
+</script>
+</body>
+</html>
