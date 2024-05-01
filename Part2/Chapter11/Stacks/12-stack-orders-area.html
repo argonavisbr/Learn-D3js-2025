@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Stack offsets - Areas</title>
+    <title>Stack offset - Areas</title>
     <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
     <style>
         text {
@@ -19,12 +19,13 @@
     const height = 600;
     const margin = 250;
 
-    const stackOffset = [
-        'stackOffsetNone',
-        'stackOffsetExpand',
-        'stackOffsetDiverging',
-        'stackOffsetSilhouette',
-        'stackOffsetWiggle'
+    const stackOrder = [
+        'stackOrderNone',
+        'stackOrderAscending',
+        'stackOrderDescending',
+        'stackOrderInsideOut',
+        'stackOrderReverse',
+        'stackOrderAppearance'
     ];
 
     const data = [
@@ -37,7 +38,7 @@
     ];
 
     // absolute values for stackOffsetExpand
-    const absData = data.map(d => Object.fromEntries(Object.entries(d).map(([k,v]) => [k, Math.abs(v)])));
+    const absData = JSON.parse(JSON.stringify(data));
     absData.forEach(d => Object.keys(d).forEach(k => d[k] = Math.abs(d[k])));
 
     const stack = d3.stack()
@@ -50,8 +51,8 @@
 
     const svg = d3.select("body")
             .append("svg")
-            .attr("height",height)
-            .attr("width", width)
+            .attr("height","100%")
+            .attr("width", "100%")
             .attr("viewBox", -100 + " 0 " + width + " " + height);
 
     const area = d3.area()
@@ -62,30 +63,24 @@
             .ticks(6);
     const yAxis = d3.axisLeft();
 
-    stackOffset.forEach((d,i) => draw(d, i));
+    stackOrder.forEach((d,i) => draw(d, i));
 
-    function draw(offset, index) {
+    function draw(order, index) {
         const j = Math.floor(index / 3);
-        const i = j > 0 ? (index % 2 + .25) * 1.25 : index % 3;
+        const i = index % 3;
         const min = j > 0 ? -50 : 0
         const max = j > 0 ? 50 : 100;
 
         yAxis.scale(d3.scaleIdentity().domain([min,max]));
         let datasets = data;
-        let text = offset;
+        let text = order;
 
-        if(index === 1) {
-            scale.domain([0,1]);
-            datasets = absData;
-            text = offset + " (values >= 0)"
-        } else {
-            scale.domain([0,100]);
-        }
+        scale.domain([0,100]);
 
         area.y0(d => scale(d[0]))
             .y1(d => scale(d[1]))
 
-        stack.offset(d3[offset]);
+        stack.order(d3[order]);
         const stackedData = stack(datasets);
 
         const g = svg.append("g")

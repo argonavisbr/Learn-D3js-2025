@@ -11,39 +11,40 @@
 <p>See results in JavaScript console</p>
 <script src="js/stack-examples.js"></script>
 <script>
-    // Loading a test CSV file in wide format - this file flipped the rows and columns compared to test.csv
-    d3.csv("../data/test-transposed.csv")
-      .then(data => {
+    // Loading a test CSV file in wide format
+    d3.csv("../data/test.csv")
+      .then(data5 => {
           // Inspect the data
-          console.log(data);
+          console.log(data5);
 
           // The keys are the column headers
-          // You can also use Object.keys(data[0]).filter(d => d !== "type")
-          const keys = data.columns.filter(d => d !== "type")
+          // You can also use Object.keys(data[0]).filter(d => d !== "day")
+          const keys = data5.columns.filter(d => d !== "day")
           const stack = d3.stack()
-                          .keys(keys); // Note that the keys now are the days!!
-          console.log('keys', keys);
+                          .keys(keys);
 
-          // Stack the data - You are stacking the days, not the types!!
-          const stackedData = stack(data);
+          // Stack the data
+          const stackedData = stack(data5);
 
           // Inspect the stacked data
           console.log(JSON.stringify(stackedData));
 
-          /* Result is now a 4x3 array of pairs, since keys are 3 days
+
+          /* Result is a 3x4 array of pairs
            [
-             [[  0,213], [  0,100], [  0,200], [  0,300]],
-             [[213,334], [100,250], [200,450], [300,650]],
-             [[334,971], [250,260], [450,470], [650,680]]
+             [ [  0,213], [  0,121], [  0,637] ],
+             [ [213,313], [121,271], [637,647] ],
+             [ [313,513], [271,521], [647,667] ],
+             [ [513,813], [521,871], [667,697] ]
            ]
            */
 
           // See the results!
           // Renders bar and area chart with the stack (uses ../js/chart-utils.js and js/stack-examples.js)
           const g1 = svg.append("g").attr("transform", `translate(0, 0)`);
-          drawBarChart(g1, stackedData, keys, data.map(d => d.type));
+          drawBarChart(g1, stackedData, keys, data5.map(d => d.day));
           const g2 = svg.append("g").attr("transform", `translate(${dim.width/2}, 0)`);
-          drawAreaChart(g2, stackedData, keys, data.map(d => d.type));
+          drawAreaChart(g2, stackedData, keys, data5.map(d => d.day));
       });
 
 </script>

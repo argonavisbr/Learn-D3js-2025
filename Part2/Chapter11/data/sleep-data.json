@@ -1,0 +1,38 @@
+[
+  {
+    "day": "Sun",
+    "hours": {
+      "light": 5.5, "deep": 0.9, "rem": 1.6
+    }
+  },{
+    "day": "Mon",
+    "hours": {
+      "light": 4.9, "deep": 1.5, "rem": 1.1
+    }
+  },{
+    "day": "Tue",
+    "hours": {
+      "light": 5.1, "deep": 1.2, "rem": 1
+    }
+  },{
+    "day": "Wed",
+    "hours": {
+      "light": 3.9, "deep": 0.7, "rem": 1.1
+    }
+  },{
+    "day": "Thu",
+    "hours": {
+      "light": 4.6, "deep": 1.8, "rem": 1.2
+    }
+  },{
+    "day": "Fri",
+    "hours": {
+      "light": 3.1, "deep": 0.5, "rem": 0.4
+    }
+  },{
+    "day": "Sat",
+    "hours": {
+      "light": 6.1, "deep": 1.2, "rem": 1.2
+    }
+  }
+]

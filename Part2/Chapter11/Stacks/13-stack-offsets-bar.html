@@ -24,8 +24,8 @@
 
     const svg = d3.select("body")
                   .append("svg")
-                     .attr("height", dim.height)
-                     .attr("width", dim.width)
+                     .attr("height", "100%")
+                     .attr("width", "100%")
                      .attr("viewBox", `${-dim.width*.4} 0 ${dim.width} ${dim.height}`);
 
     const stackOffset = [
@@ -36,25 +36,28 @@
         'stackOffsetWiggle'
     ];
 
-    const populations = [
-        {year: 1960, "A": 38174, "B": 17917, "C": 186808},
-        {year: 1980, "A": 69361, "B": 24537, "C": 229763},
-        {year: 2000, "A": 101720, "B": 30736, "C": 281983}
+    const data = [
+        {year: 1960, "A": 5, "B": 100, "C": 10},
+        {year: 1980, "A": 25, "B": 75, "C": 50},
+        {year: 2000, "A": 10, "B": 50, "C": 75},
+        {year: 2020, "A": 15, "B": 25, "C": 5},
     ];
 
+    const keys = Object.keys(data[0]).filter(k => k !== 'year');
+
     // absolute values for stackOffsetExpand
-    const absData = populations.map(d => Object.fromEntries(Object.entries(d).map(([k,v]) => [k, Math.abs(v)])));
+    const absData = data.map(d => Object.fromEntries(Object.entries(d).map(([k,v]) => [k, Math.abs(v)])));
     absData.forEach(d => Object.keys(d).forEach(k => d[k] = Math.abs(d[k])));
 
     const scale = d3.scaleLinear()
             .range([dim.margin.left, dim.width - dim.margin.right]);
     const stack = d3.stack()
-            .keys(['C', 'A', 'B']);
+            .keys(keys);
 
     const colorScale = d3.scaleOrdinal(d3.schemeCategory10)
-            .domain([0,populations.length]);
+            .domain([0,keys.length]);
 
-    stackOffset.forEach((d,i) => draw(d, i));
+    stackOffset.forEach((d,i) => drawBar(d, i));
 
     // draw a line at zero
     svg.append("line")
@@ -70,10 +73,10 @@
         .attr("x", scale(0) - 15)
         .attr("y", dim.margin.top);
 
-    function draw(offset, index) {
+    function drawBar(offset, index) {
         stack.offset(d3[offset]);
 
-        const stacked = stack(populations);
+        const stacked = stack(data);
 
         scale.domain([0, d3.max(d3.merge(d3.merge(stacked)))]);
 

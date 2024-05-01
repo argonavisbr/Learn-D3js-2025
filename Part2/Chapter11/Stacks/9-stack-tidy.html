@@ -11,11 +11,13 @@
 <p>See results in JavaScript console</p>
 <script src="js/stack-examples.js"></script>
 <script>
-    // Tidy data (long format) - each row contains a single observation
+    // Another example that stacks data in tidy (long) format, using less code.
+
+    // Tidy data (long format) - each row contains a single observation.
     // Much harder to stack and to use than the wide format, although the documentation recommends it.
     // (it's best to follow the Keep-it-Simple principle and transform the data to wide format)
     // But let's see it anyway...
-    const data = [
+    const data7 = [
         {day: "Monday", type: 'a', val: 213},
         {day: "Monday", type: 'b', val: 100},
         {day: "Monday", type: 'c', val: 200},
@@ -32,31 +34,25 @@
 
     // Prepare the data for stacking
     // 1) Get the unique keys
-    const keys = d3.union(data.map(d => d.type)); // ['a', 'b', 'c', 'd'];
+    const keys = d3.union(data7.map(d => d.type));
     console.log('keys', keys);
 
-    // 2) Transform the dataset. Here is one way to do it.
+    // 2) Transform the dataset. This example (from the documentation) uses d3.index()
+    //    and, although still complex, requires less code. (See also other example using d3.rollup())
 
-    // a) First group by name, then by type (the key)
-    const data2 = d3.rollup(data,
-                            ([d]) => d,
-                            d => d.day, d => d.type);
-    console.log('data2', data2);
+    // Create unique keys by grouping by name and type
+    const dataMap = d3.index(data7, d => d.day, d => d.type);
+    console.log('data2', dataMap)
 
-    // b) Then get a map of objects by type, so the stack function can retrieve by key.
-    const data3 = Array.from(data2)
-                       .map(([nameKey, typeMap]) => typeMap);
-    console.log('data3', data3)
-
-    // 3) Configure the stack. The value() method must provide the value to be used.
+    // 3) Configure the stack.
     const stack = d3.stack()
                     .keys(keys)
-                    .value((group, key) => group.get(key).val);
+                    .value(([dayMap, typeMap],key) => typeMap.get(key).val);
 
     // The rest is easy!
 
     // Stack the data
-    const stackedData = stack(data3);
+    const stackedData = stack(dataMap);
 
     // Inspect the stacked data
     console.log('stackedData', stackedData);
@@ -74,9 +70,9 @@
     // See the results!
     // Renders bar and area chart with the stack (uses ../js/chart-utils.js and js/stack-examples.js)
     const g1 = svg.append("g").attr("transform", `translate(0, 0)`);
-    drawBarChart(g1, stackedData, keys, [...d3.union(data.map(d => d.day))]);
+    drawBarChart(g1, stackedData, keys, [...d3.union(data7.map(d => d.day))]);
     const g2 = svg.append("g").attr("transform", `translate(${dim.width/2}, 0)`);
-    drawAreaChart(g2, stackedData, keys, [...d3.union(data.map(d => d.day))]);
+    drawAreaChart(g2, stackedData, keys, [...d3.union(data7.map(d => d.day))]);
 
 </script>
 </body>

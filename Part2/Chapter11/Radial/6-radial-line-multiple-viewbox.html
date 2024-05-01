@@ -19,7 +19,15 @@
 </head>
 <body>
 <script>
-    const width  = 500, height = 400, margin = 100;
+    const dim = {width: 500, height: 400, margin: 100};
+
+    // SVG view port
+    const svg = d3.select("body")
+                  .append("svg")
+                    .attr("height", dim.height)
+                    .attr("width", dim.width)
+                    .attr("viewBox", `${-dim.width/2} ${-dim.height/2}
+                                      ${dim.width} ${dim.height}`); // moves origin to center
 
     // Sample data
     const series = 3;
@@ -31,14 +39,9 @@
         data.push(steps.map(d => [d, 20 + Math.random() * 80]));
     }
 
-    // SVG view port
-    const svg = d3.select("body")
-                  .append("svg")
-                    .attr("height", height)
-                    .attr("width", width);
-
-    // A container for the chart, moving the origin to the center of the SVG viewport
-    const container = svg.append("g").attr("transform", `translate(${width/2},${height/2})`);
+    // A container for the chart. No transform.
+    // The origin is already at the center because of the viewBox for SVG.
+    const container = svg.append("g");
 
     // Scales
     const scaleAngle = d3.scaleLinear()
@@ -46,13 +49,13 @@
                          .range([0, 2*Math.PI]);
     const scaleRadius = d3.scaleLinear()
                           .domain([0, 100])
-                          .range([0, width/2 - margin]);
+                          .range([0, dim.width/2 - dim.margin]);
 
     const colorScale = d3.scaleOrdinal(d3.schemeCategory10).domain([0,data.length]);
 
     // Draw radial axes with grid
     pkt.radialAxes()
-        .container(container)  // use the container for the axes
+        .container(container)
         .aScale(scaleAngle)
         .rScale(scaleRadius)
         .angularData(steps)
@@ -65,27 +68,27 @@
                    .radius(d => scaleRadius(d[1]))
                    .curve(d3.curveCatmullRom);
 
-    // Render the line in the container
+    // Render the line
     container.selectAll("path.dataset")
-       .data(data)
-         .join("path")
-            .attr("class", "dataset")
-            .attr("d", line)
-            .style("stroke", colorScale);
+               .data(data)
+                 .join("path")
+                    .attr("class", "dataset")
+                    .attr("d", line)
+                    .style("stroke", colorScale);
 
-    // Draw dots at each point in the container
+    // Draw dots at each point
     container.selectAll("g.dataset")
-       .data(data)
-         .join("g")
-           .attr("class", "dataset")
-           .style("fill", colorScale)
-           .selectAll("circle.point")
-           .data(d => d)
-             .join("circle")
-               .attr("class", "point")
-               .attr("cx", d => pkt.p2c(scaleAngle(d[0]), scaleRadius(d[1]))[0])
-               .attr("cy", d => pkt.p2c(scaleAngle(d[0]), scaleRadius(d[1]))[1])
-               .attr("r", 4);
+               .data(data)
+                 .join("g")
+                   .attr("class", "dataset")
+                   .style("fill", colorScale)
+                   .selectAll("circle.point")
+                   .data(d => d)
+                     .join("circle")
+                       .attr("class", "point")
+                       .attr("cx", d => d3.pointRadial(scaleAngle(d[0]), scaleRadius(d[1]))[0])
+                       .attr("cy", d => d3.pointRadial(scaleAngle(d[0]), scaleRadius(d[1]))[1])
+                       .attr("r", 4);
 
 </script>
 </body>

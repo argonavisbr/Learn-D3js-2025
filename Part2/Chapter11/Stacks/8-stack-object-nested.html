@@ -14,7 +14,7 @@
 
     // If your data values are nested in arrays or objects, it's best to transform your data.
     // Flattening the data array so that the keys are top-level properties in each object is a good approach.
-    const data = [
+    const data4 = [
         {day: "Monday",
          series: [{type: 'a', val: 213},
                   {type: 'b', val: 100},
@@ -33,24 +33,23 @@
     ];
 
     // Get the keys
-    const keys = data[0].series.map(k => k.type);
+    const keys = data4[0].series.map(k => k.type);
     console.log('keys', keys);
 
-    // Flatten the data
-    const flatData = data.map(obj => obj.series.map(s => obj[s.type] = s.val)
-                                               .map(() => ({name: obj.name,
-                                                            a: obj.a,
-                                                            b: obj.b,
-                                                            c: obj.c,
-                                                            d: obj.d}))[0]);
+    // Flatten and widen the data
+    const flat = data4.map(obj => {
+        obj.series.forEach(s => obj[s.type] = s.val)
+        delete obj.series;
+        return obj;
+    });
 
-    // Inspect the flattened data - Now it's like the data in 2-stack-object-array-wide.html
-    console.log(JSON.stringify(flatData));
+    // Inspect the flattened data - Now it's like the data in 3-stack-object-array-wide.html
+    console.log(flat)
 
     // Configure the stack and stack the data
     const stack = d3.stack()
                     .keys(keys);
-    const stackedData = stack(flatData);
+    const stackedData = stack(flat);
 
     // Inspect the results
     console.log(JSON.stringify(stackedData));
@@ -67,9 +66,9 @@
     // See the results!
     // Renders bar and area chart with the stack (uses ../js/chart-utils.js and js/stack-examples.js)
     const g1 = svg.append("g").attr("transform", `translate(0, 0)`);
-    drawBarChart(g1, stackedData, keys, data.map(d => d.day));
+    drawBarChart(g1, stackedData, keys, flat.map(d => d.day));
     const g2 = svg.append("g").attr("transform", `translate(${dim.width/2}, 0)`);
-    drawAreaChart(g2, stackedData, keys, data.map(d => d.day));
+    drawAreaChart(g2, stackedData, keys, flat.map(d => d.day));
 
 </script>
 </body>

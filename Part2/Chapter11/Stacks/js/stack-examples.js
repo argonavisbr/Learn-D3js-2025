@@ -54,7 +54,7 @@ function showAxes(container, keys) {
 function drawBarChart(container, stackedData, keys, observations = d3.range(stackedData[0].length)) {
 
     // Finish setting up the y-scale and color scale
-    scaleY.domain([0, d3.max(d3.merge(d3.merge(stackedData)))]);
+    scaleY.domain([0, d3.max(stackedData.flat(2))]);
     colors.domain([0, stackedData.length-1]);
 
     // Use a band scale for the x-axis, so that the bars are spaced evenly
@@ -68,11 +68,13 @@ function drawBarChart(container, stackedData, keys, observations = d3.range(stac
     axes.xScale(scaleX);
 
     // render the stacked bars
-    container.selectAll("g.layer")    // each group represents a layer
-       .data(stackedData)
-         .join("g").attr("class", "layer")
-         .attr("fill", (d, i) => colors(i))   // assign a color to each layer
-          .selectAll("rect")
+    const layers =
+        container.selectAll("g.layer")    // each group represents a layer
+                 .data(stackedData)
+                   .join("g").attr("class", "layer")
+                     .style("fill", (d, i) => colors(i));   // assign a color to each layer
+
+    layers.selectAll("rect")
             .data(d => d)        // each layer is an array of 2 values: [bottom, top] of a bar in the stack
               .join("rect")
                 .attr("y", d => scaleY(d[1]))    // linear scale: top of bar is the top of the layer
@@ -96,7 +98,8 @@ function drawAreaChart(container, stackedData, keys, observations = d3.range(sta
     scaleY.domain([0, d3.max(d3.merge(d3.merge(stackedData)))]);
     colors.domain([0, stackedData.length-1]);
 
-    // Use a band scale for the x-axis, so that the bars are spaced evenly
+    // Use a point scale for the x-axis, so that the points are spaced evenly
+    // This could be a time scale, if values were dates, or a linear scale, if values were numbers
     const scaleX = d3.scalePoint()
                      .range([dim.margin.left, dim.width/2 - dim.margin.right])
                      .domain(observations);

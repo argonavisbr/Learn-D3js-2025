@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Stack with simple array</title>
+    <title>Stack with object array, using table in wide data format</title>
     <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
     <script src="../js/chart-utils.js"></script>
     <link rel="stylesheet" href="../css/chart-utils.css">
@@ -11,26 +11,24 @@
 <p>See results in JavaScript console</p>
 <script src="js/stack-examples.js"></script>
 <script>
-
-    // Simple 4x3 array of values - row values will be added to create the stack
-    const data = [
-        [213, 100, 200, 300],
-        [121, 150, 250, 350],
-        [637, 10, 20, 30]
+    // Wide data format - each row contains multiple values for each observation identifier (day)
+    // Types a, b, c and d are column names
+    const data2 = [
+        {day: "Monday", a: 213, b: 100, c: 200, d: 300},
+        {day: "Friday", a: 121, b: 150, c: 250, d: 350},
+        {day: "Sunday", a: 637, b: 10, c: 20, d: 30}
     ];
 
-    // Configure the stack function. The default order is the order of the keys.
-    const keys = [3, 0, 2, 1];
+    // This time the keys are the properties that contain the values to be used
+    const keys = Object.keys(data2[0]).filter(k => k !== 'day'); // ['a', 'b', 'c', 'd'];
     const stack = d3.stack()
-        .keys(keys);
-    console.log('keys', keys);
+                    .keys(keys);
 
     // Stack the data
-    const stackedData = stack(data);
+    const stackedData = stack(data2);
 
     // Inspect the stacked data
-    console.log(stackedData);
-    console.log(JSON.stringify(stackedData))
+    console.log(JSON.stringify(stackedData));
 
     /* Result is a 3x4 array of pairs
      [
@@ -41,12 +39,15 @@
      ]
      */
 
+    // Get the observation identifiers
+    const days = stackedData.map(d => d[0].data.day);
+
     // See the results!
     // Renders bar and area chart with the stack (uses ../js/chart-utils.js and js/stack-examples.js)
     const g1 = svg.append("g").attr("transform", `translate(0, 0)`);
-    drawBarChart(g1, stackedData, keys);
+    drawBarChart(g1, stackedData, keys, data2.map(d => d.day));
     const g2 = svg.append("g").attr("transform", `translate(${dim.width/2}, 0)`);
-    drawAreaChart(g2, stackedData, keys);
+    drawAreaChart(g2, stackedData, keys, data2.map(d => d.day));
 
 </script>
 </body>

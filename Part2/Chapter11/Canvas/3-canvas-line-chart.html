@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+    <script src="../js/chart-utils.js"></script>
+    <link rel="stylesheet" href="../css/chart-utils.css">
+    <title>Canvas and SVG charts</title>
+    <style>
+        #svg-chart {
+            border: 1px solid #fcc;
+            position: absolute;
+            top: 5px;
+            left: 5px;
+        }
+        #svg-layer, #canvas-chart {
+            position: absolute;
+            top: 5px;
+            left: 410px;
+        }
+        canvas {
+            border: 1px solid #ccf;
+        }
+        path.line {
+            stroke-width: 2px;
+        }
+    </style>
+</head>
+<body>
+<script src="js/canvas-chart.js"></script>
+<script>
+    const data = randomDataSeries(3,5);
+
+    // View and scales configuration
+    const dim = {width: 400, height: 300,
+                 margin: {top: 20, right: 10, bottom: 20, left: 30}};
+
+    const scaleX = d3.scaleLinear()
+                     .range([dim.margin.left, dim.width - dim.margin.right])
+                     .domain(d3.extent(data.flat().map(d => d[0])));
+    const scaleY = d3.scaleLinear()
+                     .range([dim.height - dim.margin.bottom, dim.margin.top])
+                     .domain([0, d3.max(data.flat().map(d => d[1]))]);
+
+    // Render SVG chart
+    const svg = createView("svg", dim, "body", "svg-chart");
+    const canvas = createView("canvas", dim, "body", "canvas-chart");
+    const svgLayer = createView("svg", dim, "body", "svg-layer");
+
+    pkt.cartesianAxes().container(svg).xScale(scaleX).yScale(scaleY)();
+    pkt.cartesianAxes().container(svgLayer).xScale(scaleX).yScale(scaleY)();
+
+    // Line function
+    const line = d3.line()
+        .x(d => scaleX(d[0]))
+        .y(d => scaleY(d[1]));
+
+    renderLineChart(svg, line, data, d3.schemeCategory10);
+    renderLineChart(canvas, line, data, d3.schemeCategory10);
+
+</script>
+</body>
+</html>

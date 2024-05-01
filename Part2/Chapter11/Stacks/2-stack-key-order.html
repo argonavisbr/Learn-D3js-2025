@@ -19,21 +19,20 @@
         [637, 10, 20, 30]
     ];
 
-    // Configure the stack function. The keys are the columns.
-    const keys = [0, 1, 2, 3];
+    // Configure the stack function. The default order is the order of the keys.
+    const keys = [3, 0, 2, 1];
     const stack = d3.stack()
-                    .keys(keys);
+        .keys(keys);
     console.log('keys', keys);
 
     // Stack the data
     const stackedData = stack(data1);
 
     // Inspect the stacked data
-    console.log('stackedData', stackedData);
+    console.log(stackedData);
+    console.log(JSON.stringify(stackedData))
 
-    /*
-    Result is a 3x4 array of pairs. Each pair also has a "data" property containing the original data.
-    Each cell from the first column contains data: data1[0]. From the second: data: data1[1], and so on.
+    /* Result is a 3x4 array of pairs
      [
        [ [  0,213], [  0,121], [  0,637] ],
        [ [213,313], [121,271], [637,647] ],

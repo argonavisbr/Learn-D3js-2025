@@ -33,7 +33,7 @@
     const fmt = d3.timeFormat("%b");
     const color = d3.scalePow().exponent(.75); // color function for the heatmap
 
-    d3.csv("../data/rain_sao_paulo.csv")
+    d3.csv("../../data/rain_sao_paulo.csv")
             .then(function(data) {
                 process(data)
             });

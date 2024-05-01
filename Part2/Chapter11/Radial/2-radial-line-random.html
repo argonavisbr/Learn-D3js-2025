@@ -15,7 +15,14 @@
 </head>
 <body>
 <script>
-    const width  = 500, height = 400, margin = 100;
+    const dim = {width: 500, height: 400, margin: 100};
+
+    // SVG view port
+    const svg = d3.select("body")
+                  .append("svg")
+                    .attr("height", dim.height)
+                    .attr("width", dim.width);
+
 
     const samples = d3.range(0, 12)
                       .map(() => d3.randomInt(20,100)());
@@ -24,24 +31,21 @@
     // Dataset
     const data = months.map((d,i) => [d, samples[i]]);
 
-    // SVG view port
-    const svg = d3.select("body")
-                  .append("svg")
-                    .attr("height", height)
-                    .attr("width", width)
-                    .attr("viewBox", `${-width/2} ${-height/2} ${width} ${height}`);
-
     // Scales
     const scaleAngle = d3.scaleLinear()
                          .domain([0, samples.length])
                          .range([0, 2*Math.PI]);
     const scaleRadius = d3.scaleLinear()
                           .domain([0, d3.max(samples)])
-                          .range([0, width/2 - margin]);
+                          .range([0, dim.width/2 - dim.margin]);
+
+    // A container for the chart, moving the origin to the center of the SVG viewport
+    const container = svg.append("g")
+                         .attr("transform", `translate(${dim.width/2},${dim.height/2})`);
 
     // Draw radial axes
     pkt.radialAxes()
-        .container(svg)
+        .container(container)
         .aScale(scaleAngle)
         .rScale(scaleRadius)
         .angularData(months.map(d => d+1))();
@@ -52,20 +56,20 @@
                    .radius(d => scaleRadius(d[1]));
 
     // Render the line
-    svg.append("path")
-        .datum(data)
-        .attr("class", "line")
-        .attr("d", line);
+    container.append("path")
+             .datum(data)
+                .attr("class", "line")
+                .attr("d", line);
 
     // Draw dots at each point
-    svg.selectAll("circle.point")
-        .data(data)
-        .join("circle")
-          .attr("class", "point")
-          .attr("cx", d => pkt.p2c(scaleAngle(d[0]), scaleRadius(d[1]))[0])
-          .attr("cy", d => pkt.p2c(scaleAngle(d[0]), scaleRadius(d[1]))[1])
-          .attr("r", 4)
-          .attr("fill", "red");
+    container.selectAll("circle.point")
+             .data(data)
+               .join("circle")
+                  .attr("class", "point")
+                  .attr("cx", d => d3.pointRadial(scaleAngle(d[0]), scaleRadius(d[1]))[0])
+                  .attr("cy", d => d3.pointRadial(scaleAngle(d[0]), scaleRadius(d[1]))[1])
+                  .attr("r", 4)
+                  .style("fill", "red");
 
 </script>
 </body>
