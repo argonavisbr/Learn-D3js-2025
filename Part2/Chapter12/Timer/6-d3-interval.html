@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Interval - run in equal intervals until stop is called</title>
+    <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+    <link rel="stylesheet" href="css/timer-utils.css">
+    <style>
+        h1 {font-family: sans-serif}
+    </style>
+</head>
+<body>
+<h1>d3.interval(): wait for 2 seconds and then run every <span id="interval"></span> ms (<span id="fps"></span> fps)...</h1>
+<p>Same code as <i>native-interval.html</i>, but using <code>d3.interval()</code></p>
+<script src="js/timer-utils.js"></script>
+<script>
+    // Configure maxValue and scale in timer-utils.js
+
+    const easeDim = {width: 1100, height: 200, margin: 50}
+    const svg = d3.select("body").append("svg").attr("width", 1100).attr("height", 200);
+
+    let interval = 100;
+    const delay = 2000;
+
+    function updateDisplay(value) {
+        d3.select("#interval").text(fmt(value));
+        d3.select("#fps").text(fmt(1000/value));
+    }
+    updateDisplay(interval);
+
+    display(svg, dim, "Waiting for 2 seconds before starting...");
+    let timer = null;
+
+    function callback(elapsed) {
+        d3.select("#count").text(`${fmt(elapsed)} ms`);
+        drawBar(svg, elapsed, 4);
+        if(elapsed >= maxValue) {
+            timer.stop();
+        }
+    }
+
+    d3.timeout(function() { console.log("timeout")
+        timer = d3.interval(callback, interval); // call the timer every 100ms
+    }, delay); // will run code in 2 seconds
+
+
+    // A control panel to stop and restart
+    const controls = d3.select("body").append("div").attr("id", "controls");
+
+    controls.append("button")
+            .text("Stop")
+            .on("click", () => timer.stop());
+
+    controls.append("button")
+            .text("Restart faster")
+            .on("click", () => {
+                timer.stop();
+                timer = d3.interval(callback, interval /= 2);
+                updateDisplay(interval);
+            });
+
+    controls.append("button")
+            .text("Restart slower")
+            .on("click", () => {
+                timer.stop();
+                timer = d3.interval(callback, interval *= 2);
+                updateDisplay(interval);
+            });
+
+    controls.append("button")
+        .text("Clear")
+        .on("click", () => d3.selectAll("rect").remove());
+
+</script>
+</body>
+</html>

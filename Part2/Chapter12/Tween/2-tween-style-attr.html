@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Tweening several attributes</title>
+    <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+    <style>
+        circle {
+            fill: red;
+        }
+        .data {
+            border: solid 1px black;
+        }
+    </style>
+</head>
+<body>
+<script src="js/transition-display.js"></script>
+<script>
+    const svg1 = d3.select("body")
+        .append("svg")
+        .attr("width", 800)
+        .attr("height", 100);
+    createTransitionPanel(svg1);
+</script>
+<script>
+
+ const svg = d3.select("body").append("svg").attr("class", "data").attr("width", 800).attr("height", 600);
+ const t = svg.append("circle")
+      .attr("r", 30) // initial value
+      .attr("transform", `translate(${[600,50]})`) // initial value
+      .transition()
+         .delay(1000)
+         .duration(3000)
+         .ease(d3.easeBounceOut)
+         .style("fill", "blue") // final value
+         .attr("r", 100) // final value
+         .attr("transform", `translate(${[100,500]})`) // final value
+
+ monitorTransition(t, delay, duration);
+
+</script>
+</body>
+</html>

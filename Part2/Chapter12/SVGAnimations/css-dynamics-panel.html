@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Transition panel</title>
+    <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+  <style>
+     svg {border: solid 1px black;}
+     h1 {
+         color: black; /* initial color */
+         display: inline;
+         font-size: 24pt;
+         text-align: center;
+     }
+  </style>
+    <style>
+        #arrow-steps {
+            transition: transform 5000ms cubic-bezier(.667,0,.333,1);
+            fill: red;
+        }
+        #arrow-duration {
+            transition: transform 5000ms linear;
+            fill: blue;
+        }
+        #arrow-steps.running {transform: translate(690px,70px)}
+        #arrow-duration.running {transform: translate(690px,110px)}
+    </style>
+</head>
+<body>
+<h1>This text will transition from black to red after delay</h1>
+<br>
+<script src="js/transition-display.js"></script>
+
+<script>
+    const svg = d3.select("body")
+                  .append("svg")
+                  .attr("width", 800)
+                  .attr("height", 120);
+
+    createTransitionPanel(svg);
+
+    const delay = 5000;
+    const duration = 5000;
+
+    // 1) Creating a transition object and applying to a selection to transition from black to red
+    const t = d3.transition()
+                .on("start", function() {
+                    d3.selectAll(".arrow").classed("running", true);
+                })
+                .delay(delay)        // configure transition - wait delay1 milliseconds before starting
+                .duration(duration)  // the transition will last duration1 milliseconds
+                .selectAll("h1")  // obtain a selection to apply transition
+                   .style("color", "red") // final attributes and styles of selection;
+
+
+    monitorTransition(t, delay, duration);
+
+    svg.append("path")
+         .attr("class", "arrow")
+         .attr("id", "arrow-steps")
+         .attr("transform", "translate(90,70)")
+         .attr("d", d3.symbol().type(d3.symbolTriangle).size(75));
+
+    svg.append("path")
+        .attr("class", "arrow")
+        .attr("id", "arrow-duration")
+        .attr("transform", "translate(90,110)")
+        .attr("d", d3.symbol().type(d3.symbolTriangle).size(75));
+
+</script>
+
+</body>
+</html>

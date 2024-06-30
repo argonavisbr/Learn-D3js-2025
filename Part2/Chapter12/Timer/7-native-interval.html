@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Native setInterval - run in equal intervals until stop is called</title>
+    <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+    <link rel="stylesheet" href="css/timer-utils.css">
+    <style>
+        h1 {font-family: sans-serif}
+    </style>
+</head>
+<body>
+<h1>setInterval(): wait for 2 seconds and then run every <span id="interval"></span> ms...</h1>
+<p>Same code as <i>d3-interval.html</i>, but using JavaScript <code>setInterval()</code></p>
+<script src="js/timer-utils.js"></script>
+<script>
+    // Configure maxValue and scale in timer-utils.js
+
+    const easeDim = {width: 1100, height: 200, margin: 50}
+    const svg = d3.select("body").append("svg").attr("width", 1100).attr("height", 200);
+
+    let interval = 100;
+    const delay = 2000;
+
+    d3.select("#interval").text(interval);
+
+    display(svg, dim, "Waiting for 2 seconds before starting...");
+    let timer = null;
+
+    let startTime = null;
+
+    function callback(timeStamp) {
+        const elapsed = performance.now() - startTime;
+        d3.select("#count").text(`${fmt(elapsed)} ms`);
+        drawBar(svg, elapsed, 2);
+        if(elapsed >= maxValue) {
+            console.log("Finished!");
+            clearInterval(timer);
+        }
+    }
+
+    setTimeout(function() {
+        startTime = d3.now();
+        timer = setInterval(callback, interval); // call the timer every 100ms
+    }, delay); // will run code in 2 seconds
+
+
+    // A control panel to stop and restart
+    const controls = d3.select("body").append("div").attr("id", "controls");
+
+    controls.append("button")
+            .text("Stop")
+            .on("click", () => clearInterval(timer));
+
+    controls.append("button")
+            .text("Restart faster")
+            .on("click", () => {
+                clearInterval(timer);
+                timer = setInterval(callback, interval /= 2);
+                d3.select("#interval").text(interval);
+            });
+
+    controls.append("button")
+            .text("Restart slower")
+            .on("click", () => {
+                clearInterval(timer);
+                timer = setInterval(callback, interval *= 2);
+                d3.select("#interval").text(interval);
+            });
+
+</script>
+</body>
+</html>

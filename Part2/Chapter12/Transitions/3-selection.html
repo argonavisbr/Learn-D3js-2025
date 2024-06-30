@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Using the selection() method in a transition</title>
+    <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+    <style>
+        g {
+            fill: aquamarine;
+            stroke-width: 3;
+        }
+        g:first-of-type {
+            fill: coral;
+        }
+        g:last-of-type {
+            fill: orange;
+        }
+    </style>
+</head>
+<body>
+<svg width="600" height="200">
+    <g transform="translate(50,10)"></g>
+    <g transform="translate(225,10)"></g>
+    <g transform="translate(400,10)"></g>
+</svg>
+<script>
+    // Using selection methods in a transition
+
+    /* // THIS WILL NOT WORK
+    d3.selectAll("g")  // creates a selection object
+      .transition()    // obtains a transition object from selection
+         .delay(1000)  // from here on, all methods are applied to the transition object
+         .attr("stroke", "black")
+            .append("rect") // this WILL NOT work (transition does not support append())
+     */
+
+    // THIS WILL WORK
+    d3.selectAll("g")   // creates a selection object with 2 container elements
+      .transition()     // obtains a transition object from selection
+         .delay(2000)   // from here on, all methods are applied to the transition object
+         .duration(2000)
+         .style("opacity", 0)   // attribute change will be applied AFTER the transition delay
+         .remove()              // this will remove the rectangle AFTER the transition ends
+         .selection()           // get the selection object from the transition
+            .append("rect")     // this WILL work (but will be appended BEFORE the transition delay)
+
+    d3.selectAll("rect")
+        .attr("height", 150)
+        .attr("width", 150);
+
+</script>
+</body>
+</html>

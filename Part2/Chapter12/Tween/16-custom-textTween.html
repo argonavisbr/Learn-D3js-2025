@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Custom tweens</title>
+    <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+    <style>
+        circle {
+            fill: red;
+        }
+        svg:last-of-type text {
+            font-size: 72pt;
+        }
+    </style>
+</head>
+<body>
+<script src="js/transition-display.js"></script>
+<script>
+    const svg1 = d3.select("body")
+                    .append("svg")
+                    .attr("width", 800)
+                    .attr("height", 100);
+    createTransitionPanel(svg1);
+</script>
+<script>
+
+    const svg = d3.select("body").append("svg").attr("width", 800).attr("height", 200);
+
+    const fmt = d3.format("d");
+
+    const t =
+        svg.append("text").text("").attr("transform", "translate(50,100)")
+           .text("Waiting...")
+           .transition()
+               .delay(500)
+               .duration(2000)
+               .ease(d3.easeLinear)
+               .textTween(() => t => `part ${fmt(1+t*9)} / ${fmt(1+t*99)} / ${fmt(1+t*999)}`);
+                // do not set text() here, as it will be called when the transition starts ignoring the tween
+
+    monitorTransition(t, delay, duration);
+
+</script>
+</body>
+</html>

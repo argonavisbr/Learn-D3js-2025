@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Radial axes template</title>
+    <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+    <script src="../js/chart-utils.js"></script>
+    <link rel="stylesheet" href="../css/chart-utils.css">
+    <style>
+        path {
+            fill: none;
+        }
+        path.area {
+            stroke: none;
+            fill: rgb(100%, 0%, 0%, 0.3);
+        }
+        path.dataset {stroke-width: 2px;}
+        text.anim {
+            font-family: sans-serif;
+            font-size: 12px;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+    </style>
+</head>
+<body>
+<script>
+    const easeDim = {width: 800, height: 800, margin: 100};
+
+    // SVG view port
+    const svg = d3.select("body")
+                  .append("svg")
+                    .attr("height", dim.height)
+                    .attr("width", dim.width)
+                    .attr("viewBox", `-0 0 800 800`);
+
+
+    // Sample data
+    const series = 3;
+    const data = [];
+
+    const steps = d3.range(0,10,1); // 10 steps
+
+    for (let i = 0; i < series; i++) {
+        data.push(steps.map(d => [d, 20 + Math.random() * 80]));
+
+    }
+    data.forEach((d,i) => {
+        d.push([10, d[0][1]])
+    });
+
+    // A container for the chart, moving the origin to the center of the SVG viewport
+    const container = svg.append("g").attr("transform", `translate(${dim.width/2},${dim.height/2})`);
+
+    // Scales
+    const scaleAngle = d3.scaleLinear()
+                         .domain([0, steps.length])
+                         .range([0, 2*Math.PI]);
+    const scaleRadius = d3.scaleLinear()
+                          .domain([0, 100])
+                          .range([0, dim.width/2 - dim.margin]);
+
+    const colorScale = d3.scaleOrdinal(d3.schemeCategory10).domain([0,data.length]);
+
+    // Draw radial axes with grid
+    pkt.radialAxes()
+        .container(container)  // use the container for the axes
+        .aScale(scaleAngle)
+        .rScale(scaleRadius)
+        .angularData(steps)
+        .numTicks(6)
+        .useGrid(true)();
+
+    // Radial line function
+    const line = d3.lineRadial()
+                   .angle(d => scaleAngle(d[0]))
+                   .radius(d => scaleRadius(d[1]))
+                   .curve(d3.curveCatmullRom);
+
+    // Render the line in the container
+    container.selectAll("path.dataset")
+       .data(data)
+         .join("path")
+            .attr("class", "dataset")
+            .attr("id", (d,i) => `line-${i}`)
+            .attr("d", line)
+            .style("opacity", 0);
+
+
+    animateText(container, data, colorScale);
+
+    function createText(index) {
+        return new Array(40).fill(`dataset ${index+1}  *  `).join("");
+    }
+
+    function animateText(container, data, color) {
+        container.selectAll("text.anim")
+            .data(data)
+            .join("text") // <text>
+            .attr("class", "anim")
+            .style("fill", colorScale)
+            .append("textPath")
+            .attr("startOffset", "0%")
+            .attr("spacing", "exact")
+            .attr("textLength", d3.select(`#line-${0}`).node().getTotalLength()*3)
+            .attr("xlink:href", (d,i) => `#line-${i}`)
+            .text((d,i) => createText(i))
+
+            .append("animate") // <animate>
+            .attr("attributeName", "startOffset")
+            .attr("from", "-100%")
+            .attr("to", "0%")
+            .attr("dur", "20s")
+            .attr("repeatCount", "indefinite");
+
+    }
+
+</script>
+</body>
+</html>

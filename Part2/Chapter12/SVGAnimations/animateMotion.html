@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Example with animateMotion</title>
+    <style>
+      path {
+        fill: none;
+        stroke: blue;
+        stroke-width: 2px;
+      }
+      rect {
+        fill: red;
+      }
+      svg {
+        border: solid 1px black;
+      }
+    </style>
+</head>
+<body>
+
+<svg width="800" height="400">
+    <path id="road" d="M50,350L79,348C108,346,167,342,225,302C283,263,342,188,400,186C458,183,517,253,575,285C633,317,692,311,721,308L750,305"></path>
+    <rect height="10" width="50" rx="5" ry="5" transform="translate(-25,-15)">
+        <animateMotion dur="5s" rotate="auto" repeatCount="indefinite">
+            <mpath xlink:href="#road"></mpath>
+        </animateMotion>
+    </rect>
+</svg>
+
+</body>
+</html>

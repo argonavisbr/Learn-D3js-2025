@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Average monthly temperature in selected cities</title>
+    <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+    <script src="../js/chart-utils.js"></script>
+    <link rel="stylesheet" href="../css/chart-utils.css">
+    <style>
+        path.steps {
+            stroke-width: 3px;
+            fill: none;
+            opacity: .75;
+        }
+        h1, p, text {
+            font-family: sans-serif;
+        }
+        p {font-size: 10pt}
+        h1 {font-size: 16pt}
+        text.city, text.anim {
+            font-size: 11px;
+            font-weight: bold;
+            text-anchor: middle;
+            alignment-baseline: hanging;
+            pointer-events: none;
+        }
+        .chart line, .chart path {
+            stroke: darkslategray;
+            opacity: .5;
+            stroke-width: 1px;
+        }
+        .tick text {
+            text-transform: capitalize;
+        }
+    </style>
+</head>
+<body>
+<h1>Average monthly temperature (ºC) in selected cities</h1>
+<script src="js/line-point-plot.js"></script>
+<script>
+  // Temperature data (Source: Wikipedia)
+  const file = "../data/temperatures.csv";
+
+  const easeDim = {width: 800, height: 500, margin: {top: 10, right: 150, bottom: 50, left: 50}};
+  const svg = d3.select("body")
+                .append("svg")
+                  .attr("width", dim.width)
+                  .attr("height", dim.height);
+
+  // Load, parse and prepare data
+  d3.text(file)
+    .then(text => {
+        // Each array in set contains city and average temperature for each month [[city, t1, t2, ..., t12], ...]
+        const rawData = d3.csvParseRows(text, d3.autoType);
+
+        const valueRows = rawData.filter((d,i) => i > 0) // all except first row
+        const months = rawData.filter((d,i) => i === 0)  // get first row
+            .map(d => d.slice(1))[0]   // just the month names
+
+        // Each array in set contains city and array of temperature in ºC [[city, [t1, t2, ..., t12]], ... ]
+        const dataByCity = valueRows.map(d => [d[0], d.slice(1)]);
+
+        const labels = {x: "Months", y: "Temperature in ºC"};
+
+        // Plots a graph of temperatures in ºC per city, sorted by name
+        plotCartesian(svg, dim, dataByCity.sort((a,b) => d3.ascending(a[0], b[0])), months, labels, true);
+
+  });
+
+</script>
+
+</body>
+</html>

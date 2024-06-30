@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Attribute tweening</title>
+    <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+    <style>
+        circle {
+            fill: red;
+        }
+        .data {
+            border: solid 1px black;
+        }
+    </style>
+</head>
+<body>
+<script src="js/transition-display.js"></script>
+<script>
+    const svg1 = d3.select("body")
+        .append("svg")
+        .attr("width", 800)
+        .attr("height", 100);
+    createTransitionPanel(svg1);
+</script>
+<script>
+ // This script will tween a circle's radius from 30 to 100
+ const svg = d3.select("body").append("svg").attr("class", "data").attr("width", 800).attr("height", 600);
+ const t = svg.append("circle")
+      .attr("r", 30) // initial value
+      .attr("transform", `translate(${[400,300]})`) // initial value (not animated)
+      .transition("c")
+         .delay(1000)
+         .duration(2000)
+         .attr("r", 200); // final value
+
+ monitorTransition(t);
+
+</script>
+</body>
+</html>

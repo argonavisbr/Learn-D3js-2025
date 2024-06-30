@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Text replacement with transition</title>
+    <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+    <style>
+        text.test {
+            font-size: 48pt;
+            font-family: sans-serif;
+            font-weight: bold;
+        }
+        .data {
+            border: solid 1px black;
+        }
+    </style>
+</head>
+<body>
+<script src="js/transition-display.js"></script>
+<script>
+    const svg1 = d3.select("body")
+        .append("svg")
+        .attr("width", 800)
+        .attr("height", 100);
+    createTransitionPanel(svg1);
+</script>
+<script>
+    // This script will simply replace the text content of a text element
+    // with another value as soon as the transition starts (after a delay)
+    const svg = d3.select("body").append("svg").attr("class", "data").attr("width", 800).attr("height", 600);
+
+    const t = svg.append("text").attr("class", "test")
+        .attr("transform", `translate(70,70)`) // initial valua
+        .text("abc 10:30") // initial value
+        .transition()
+            .delay(1000)
+            .duration(4000)
+        .ease(d3.easeElasticInOut)
+            .text("xyz 12:30") // value after delay (when transition STARTS)
+            .attr("transform", `translate(500,400)`) // final value
+            .style("font-size", "24pt") // final value (initialized in <style> block)
+            .style("fill", "red"); // final value (initial value is default)
+
+    monitorTransition(t, delay, duration);
+</script>
+</body>
+</html>

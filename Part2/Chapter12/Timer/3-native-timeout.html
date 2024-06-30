@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>JavaScript setTimeout(): run once after a delay and stop</title>
+    <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+    <link rel="stylesheet" href="css/timer-utils.css">
+    <style>
+        h1 {font-family: sans-serif}
+    </style>
+</head>
+<body>
+<h1>Native setTimeout(): print elapsed time and bar after 2s, 3s, and <span id="max"></span>s...</h1>
+<p>Same code as <i>d3-timeout.html</i>, but using native JavaScript <code>setTimeout()</code></p>
+<script src="js/timer-utils.js"></script>
+<script>
+    // Configure maxValue and scale in timer-utils.js
+
+    const easeDim = {width: 1100, height: 200, margin: 50}
+    const svg = d3.select("body").append("svg").attr("width", 1100).attr("height", 200);
+
+    d3.select("#max").text(maxValue/1000);
+
+    const delay1 = 2000,
+        delay2 = 3000,
+        delay3 = maxValue;
+
+    display(svg, dim, "...");
+
+    const timers = [];
+
+    timers[0] = setTimeout(function() {
+        drawBar(svg, delay1, 4);
+        d3.select("#count").text(`${fmt(delay1)} ms`);
+    }, delay1); // will run code in 2 seconds
+
+    timers[1] = setTimeout(function() {
+        drawBar(svg, delay2, 4);
+        d3.select("#count").text(`${fmt(delay2)} ms`);
+    }, delay2); // will run code in 3 seconds
+
+    timers[2] = setTimeout(function() {
+        drawBar(svg, delay3, 4);
+        d3.select("#count").text(`${fmt(delay3)} ms`);
+    }, delay3); // will run code in 5 seconds
+
+    const controls = d3.select("body").append("div").attr("id", "controls");
+
+    controls.append("button")
+        .text("Stop")
+        .on("click", () => timers.forEach(t => clearTimeout(t)));
+
+</script>
+</body>
+</html>

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Attribute tweening with functions</title>
+    <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+    <style>
+        circle {
+            fill: red;
+        }
+        .data {
+            border: solid 1px black;
+        }
+    </style>
+</head>
+<body>
+
+<script>
+ // This script will tween a circle's radius from 30 to 100
+ const svg = d3.select("body").append("svg").attr("class", "data").attr("width", 800).attr("height", 600);
+
+ const data = [10, 2, 35];
+ const scale = d3.scaleSqrt().domain([0,d3.max(data)]).range([10, 150]);
+
+ svg.selectAll("circle")
+   .data(data)
+     .join("circle")
+       .attr("r", 10)
+        .attr("transform", (d,i) => `translate(${i * 200 + 150},300)`)
+        .transition()
+          .delay(1000)
+          .duration(2000)
+          .attr("r", d => scale(d));
+
+</script>
+</body>
+</html>

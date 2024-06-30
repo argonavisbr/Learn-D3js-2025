@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Simple transitions</title>
+    <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+    <style>
+        h1 {
+            color: black; /* initial color */
+            display: inline;
+            font-size: 96pt;
+        }
+    </style>
+</head>
+<body>
+
+<!-- These three <h1> elements will be transitioned -->
+<h1>A</h1>
+<h1>B</h1>
+<h1>C</h1>
+
+<script>
+
+// Two ways to create transitions
+
+// 1) Creating a transition object and applying to a selection to transition from black to red
+d3.transition()
+  .delay(5000)     // wait 2 seconds before starting
+  .duration(5000)  // the transition will last another 5 seconds
+  .selectAll("h1")  // obtain selection object to apply transition
+     .style("color", "red"); // final attributes and styles of selection
+
+// 2) Obtaining a transition from an existing selection object to transition from red to blue
+d3.selectAll("h1")    // select all <h1>
+  .transition()       // obtain a transition object from selection
+     .delay(10000)     // configure transition
+     .duration(5000)
+     .style("color", "blue");   // set final styles and attributes
+
+</script>
+</body>
+</html>

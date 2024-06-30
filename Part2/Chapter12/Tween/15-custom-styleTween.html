@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Custom tweens</title>
+    <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+    <style>
+        circle {
+            fill: red;
+        }
+        text.test {
+            font-size: 24pt;
+        }
+    </style>
+</head>
+<body>
+<script src="js/transition-display.js"></script>
+<script>
+    const svg1 = d3.select("body")
+        .append("svg")
+        .attr("width", 800)
+        .attr("height", 100);
+    createTransitionPanel(svg1);
+</script>
+<script>
+
+    const svg = d3.select("body").append("svg").attr("width", 800).attr("height", 600);
+
+    svg.append("text")
+        .attr("class", "test")
+        .attr("transform", "translate(200,50)");
+
+    const t =
+        svg.append("circle")
+        .attr("transform", "translate(100,100)")
+        .attr("r", 80) // initial value
+        .transition().delay(1000).duration(3000)
+            .ease(d3.easeLinear)
+        .styleTween("fill", function() {    // same effect as .style("fill", "blue")
+            const currentFill = d3.select(this).style("fill")
+            const interpolator = d3.interpolate(currentFill, "blue");
+            return t => {
+                d3.select(".test").text("t: " + t)
+                return interpolator(t);
+            }
+        });
+
+    monitorTransition(t, delay, duration);
+
+</script>
+</body>
+</html>

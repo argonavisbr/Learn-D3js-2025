@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Chained transitions</title>
+    <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+    <style>
+        ul {
+            list-style-type: none;
+        }
+        li {
+            margin-bottom: 10px;
+        }
+        span {
+            font-weight: bold;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            font-size: 120%
+        }
+    </style>
+</head>
+<body>
+<h1>Chained transitions</h1>
+<p>These transitions are chained. Each transition runs after the previous one is done.
+   Durations are inherited, delays are not.</p>
+<p><code>d3.select("ul")</code></p>
+<ul>
+    <li><code>.transition().delay(2000).duration(1000)</code>: <span id="t1">...</span>ms</li>
+    <li><code>&nbsp;.transition().delay(0)</code>: <span id="t2">...</span>ms</li>
+    <li><code>&nbsp;&nbsp;.transition().delay(0)</code>: <span id="t3">...</span>ms</li>
+    <li><code>&nbsp;&nbsp;&nbsp;.transition().delay(1000).duration(0)</code>: <span id="t4">...</span>ms</li>
+    <li><code>&nbsp;&nbsp;&nbsp;&nbsp;.transition().delay(1000)</code>: <span id="t5">...</span>ms</li>
+    <li><code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.transition().delay(1000)</code>: <span id="t6">...</span>ms</li>
+</ul>
+<script>
+    const fmt = d3.format("d")
+    // Save the start time
+    const start =  d3.now();
+
+    // Chained transitions applied to the <ul> element
+    d3.select("ul")
+        .transition().delay(2000).duration(1000)
+            .tween("", d => t => d3.select("#t1").text(fmt(d3.now() - start)))
+            .style("color", "red")
+
+            .transition().delay(0)
+                .tween("", d => t => d3.select("#t2").text(fmt(d3.now() - start)))
+                .style("color", "orange")
+
+                .transition().delay(0)
+                    .tween("", d => t => d3.select("#t3").text(fmt(d3.now() - start)))
+                    .style("color", "green")
+
+                    .transition().delay(1000).duration(0)
+                        .tween("", d => t => d3.select("#t4").text(fmt(d3.now() - start)))
+                        .style("color", "blue")
+
+                        .transition().delay(1000)
+                            .tween("", d => t => d3.select("#t5").text(fmt(d3.now() - start)))
+                            .style("color", "violet")
+
+                            .transition().delay(1000)
+                                .tween("", d => t => d3.select("#t6").text(fmt(d3.now() - start)))
+                                .style("color", "black")
+
+
+</script>
+</body>
+</html>
