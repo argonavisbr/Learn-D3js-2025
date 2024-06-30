@@ -42,11 +42,11 @@
     // Load the data and reorganize the data structure so that it becomes an array of {Decade, Flag, Value} objects.
     // This "tidy" format will make it easier to group by flag or decade, compute extents, but will make it
     // more complex to compute the stack.
-    d3.dsv(";", file, row => {
+    d3.csv(file, row => {
         const rowData = [];
-        const decade = +row.Year.split('-')[0] - 1; // get first year of decade
+        const decade = +row.Decade.split('-')[0] - 1; // get first year of decade
         Object.entries(row).forEach(d => {
-            if (d[0] !== 'Year' && d[0] !== 'Decade' && d[0] !== 'Totals') {
+            if (d[0] !== 'Decade') {
                 rowData.push({Decade: decade, Flag: d[0], Value: +d[1]});
 
                 // Add one more entry for the last year of the last decade (zero for all)

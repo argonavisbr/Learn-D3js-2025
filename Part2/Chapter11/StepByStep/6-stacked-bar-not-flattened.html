@@ -16,8 +16,8 @@
 <body>
 
 <script>
-    // This dataset is in a non-standard format. This example shows how to flatten it
-    // before attempting to stack it. The code is much simpler. See step (3) below.
+    // This dataset is in a non-standard format. This example attempts to stack
+    // the data without transforming it. The code is more complex. See step (2) below.
     const sleep = [
         {day: 'Sun', hours: {light: 5.5, deep: 0.9, rem: 1.6}},
         {day: 'Mon', hours: {light: 4.9, deep: 1.5, rem: 1.1}},
@@ -27,12 +27,12 @@
         {day: 'Fri', hours: {light: 3.1, deep: 0.5, rem: 0.4}},
         {day: 'Sat', hours: {light: 6.1, deep: 1.2, rem: 1.2}}
     ];
-    console.log(JSON.stringify(sleep))
 
     // 1) SETUP
-    const dim = {
+
+    const easeDim = {
         height: 400,
-        width: 500,
+        width: 700,
         margin: {top: 50, right: 100, bottom: 50, left: 50}
     };
 
@@ -53,27 +53,22 @@
     const colors = ['#00eeff', '#0088ff', '#0044ff'];
     const keys = Object.keys(sleep[0].hours);
 
-    // 2) TRANSFORM THE DATA
-    // Flatten the dataset, to make it easier to stack.
-    // Transform {day, hours: {light, deep, rem}} ==> {day, light, deep, rem}
-    const flatSleep = sleep.map(obj => {
-        const newObj = Object.assign({}, obj, obj.hours);
-        delete newObj.hours;
-        return newObj;
-    });
-
-    // 3) STACK THE DATA
-    // create a stacked layout generator for 3 (keys) layers of data
+    // 2) STACK THE DATA
+    // Create a stacked layout generator for 3 (keys) layers of data
+    // Note that the value() method must be used, as the keys don't
+    // directly provide values.
     const stack = d3.stack()
-                    .keys(keys);
-                    // uses default .value(d => d[key])
+                    .keys(keys)
+                    .value((d, key) => Object.entries(d.hours)
+                                             .filter(e => e[0] === key)
+                                             .map(e => e[1]));
 
     // Apply the generator and obtain the stacked data
-    const stackedData = stack(flatSleep);
+    const stackedData = stack(sleep);
 
-    // 4) RENDER THE CHART
+    // 3) RENDER THE CHART
     // set the domains of the scales
-    scaleX.domain(flatSleep.map(d => d.day));
+    scaleX.domain(sleep.map(d => d.day));
     scaleY.domain([0, d3.max(stackedData[stackedData.length - 1][1])]);
 
     // render Cartesian axes - this function is from the file chart-utils.js

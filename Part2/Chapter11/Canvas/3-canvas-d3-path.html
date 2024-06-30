@@ -36,7 +36,7 @@
 <script src="js/canvas-chart.js"></script>
 <script>
     // View and scales configuration
-    const dim = {width: 350, height: 250,
+    const easeDim = {width: 350, height: 350,
                  margin: {top: 20, right: 10, bottom: 20, left: 30}};
 
     // Render SVG chart
@@ -45,27 +45,38 @@
 
     // Drawing with SVG
     const path = d3.path();
-    draw(path);
+       draw(path);
     console.log(path.toString())
     svg.append("path")
         .attr("d", path.toString())
         .attr("stroke", "black")
-        .attr("fill", "yellow");
+        .attr("fill", "yellow")
+        .attr("transform", "translate(0,15)");
 
     // Drawing with canvas
+    ctx.translate(0,15);
     ctx.beginPath();
-    draw(ctx);
+       draw(ctx);
     ctx.strokeStyle = "black";
     ctx.fillStyle = "yellow";
     ctx.fill();
     ctx.stroke();
 
     function draw(context) {
-        context.moveTo(50,20);
-        context.lineTo(200,200);
-        context.lineTo(200,140);
-        context.lineTo(270,140);
-        context.closePath(200,210);
+        context.moveTo(280,160);
+        context.lineTo(170,130);
+        context.lineTo(280,0);
+        context.lineTo(40,160);
+        context.lineTo(150,190);
+        context.lineTo(40,320);
+        context.closePath();
+    }
+
+    function draw2(context) {
+        context.arc(180,200,100,-Math.PI*.2,Math.PI*1.2);
+        context.lineTo(180,20);
+        context.lineTo(180,20);
+        context.closePath();
     }
 
 </script>

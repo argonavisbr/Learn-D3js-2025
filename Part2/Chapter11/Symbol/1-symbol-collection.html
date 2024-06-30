@@ -20,6 +20,7 @@
     </style>
 </head>
 <body>
+<script src="js/symbol-utils.js"></script>
 <script>
     const width  = 850;
     const height = 400;
@@ -49,23 +50,6 @@
     const colorScale = d3.scaleOrdinal(d3.schemeCategory10)
                          .domain([0,fillSymbols.length]);
 
-    function draw(symbol, index, position, style) {
-        const pathData = d3.symbol().type(d3[symbol]).size(200);
-
-        const g = svg.append("g")
-                     .attr("transform", `translate(${index * 120 + 70},${position})`);
-
-        g.append("path")
-            .attr("d", pathData)
-            .style(style.toLowerCase(), colorScale(symbol));
-
-        g.append("text")
-            .text("d3."+symbol)
-            .style("text-anchor", "middle")
-            .attr("x", 0)
-            .attr("y", 30);
-    }
-
     const svg = d3.select("body")
             .append("svg")
             .attr("height",400)
@@ -75,13 +59,13 @@
         .attr("x", width/2)
         .attr("y", 30);
     svg.append("line").attr("x1", 0).attr("x2", width).attr("y1", 40).attr("y2", 40).attr("stroke", "black");
-    fillSymbols.forEach((s,i) => draw(s, i, 60, "fill"));
+    fillSymbols.forEach((s,i) => display(d3[s], i, 60, "fill", 120, 70, colorScale, true));
 
     svg.append("text").text("d3.symbolsStroke").attr("class", "title")
         .attr("x", width/2)
         .attr("y", 140);
     svg.append("line").attr("x1", 0).attr("x2", width).attr("y1", 150).attr("y2", 150).attr("stroke", "black");
-    strokeSymbols.forEach((s,i) => draw(s, i, 170, "stroke"));
+    strokeSymbols.forEach((s,i) => display(d3[s], i, 170, "stroke", 120, 70, colorScale, true));
 
 </script>
 </body>

@@ -10,14 +10,35 @@
 <script>
     const svg = d3.select("body")
                   .append("svg")
-                  .attr("width", "800")
-                  .attr("height", "300");
+                  .attr("width", "1000")
+                  .attr("height", "400")
+                  .attr("viewBox", "0 0 2000 800");
 
     svg.append("path")
-            .attr("d", "M50,20 L200,200 L200,140 L270,140 Z")
-            .attr("fill","yellow")
-            .attr("stroke","red")
-            .attr("stroke-width","3");
+        .attr("d", "M280,160 L170,130 280,0 40,160 150,190 40,320 z")
+        .attr("fill","gold")
+        .attr("stroke","red")
+        .attr("stroke-width",4);
+
+    svg.append("path")
+        .attr("d", "M261,141 A100,100,0,1,1,100,141 L180,20 180,20 z")
+        .attr("fill","cyan")
+        .attr("stroke","blue")
+        .attr("transform", "translate(300,0)");
+
+    svg.append("path")
+        .attr("d", "M100,-75 A100,100,0,1,1,-100,-75 A100,100,0,1,1,100,-75 M-75,100 L75,100 M0,175 L0,25")
+        .attr("fill","none")
+        .attr("stroke","red")
+        .attr("stroke-width", 10)
+        .attr("transform", "translate(800,180)");
+
+    svg.append("path")
+        .attr("d", "M62.5,37.5 A100,100,0,1,1,-137.5,37.5 A100,100,0,1,1,62.5,37.5 M31.25,-31.25 L137.5,-137.5 M12.5,-137.5 L137.5,-137.5 L137.5,-12.5")
+        .attr("fill","none")
+        .attr("stroke","blue")
+        .attr("stroke-width", 10)
+        .attr("transform", "translate(1200,180)");
 
 </script>
 

@@ -20,7 +20,7 @@
 </head>
 <body>
 <script>
-    const dim = {width: 500, height: 400, margin: 100};
+    const easeDim = {width: 500, height: 400, margin: 100};
 
     // SVG view port
     const svg = d3.select("body")
@@ -62,18 +62,24 @@
 
     const line = area.lineOuterRadius();
 
-    console.log(area(data[0]))
 
     // Render the area
-
     container.selectAll("path.dataset")
        .data(data)
          .join("path")
             .attr("class", "dataset")
             .attr("d", area)
-            .style("stroke", colorScale)
             .style("fill", colorScale)
             .style("fill-opacity", .3);
+
+    // Render the line
+    container.selectAll("path.line")
+        .data(data)
+        .join("path")
+        .attr("class", "line")
+        .attr("d", line)
+        .style("stroke", colorScale)
+        .style("fill", "none");
 
     // Draw dots at each point
     container.selectAll("g.dataset")

@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Cartesian axes template</title>
+    <title>Stacked area chart with GDP data</title>
     <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
-    <script src="../js/chart-utils.js"></script>
-    <link rel="stylesheet" href="../css/chart-utils.css">
+    <script src="../../js/chart-utils.js"></script>
+    <link rel="stylesheet" href="../../css/chart-utils.css">
     <style>
         path.line {
             stroke-width: 2px;
@@ -38,7 +38,7 @@
 <p>Source: World Bank</p>
 <p><input type="range" min="1" max="10" value="7" id="limit"></p>
 <script>
-    const file = "../data/gdp-world-bank-2022.csv";
+    const file = "../../data/gdp-world-bank-2022.csv";
 
     const limit = 7;
 
@@ -106,7 +106,7 @@
                 .xScale(scaleX)
                 .yScale(scaleY)
                 .xLabel('Years')
-                .yLabel('GDP per capita (current US$)')
+                .yLabel('Gross Domestic Product (current US$)')
                 .showHorizontalGrid(true)();
         yAxis.tickFormat(d3.format(".0s"));
         d3.select("g.y-axis").call(yAxis);

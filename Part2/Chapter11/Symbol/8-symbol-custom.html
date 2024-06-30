@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Using custom symbols</title>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <style>
+        svg, canvas { border: solid 1px gray}
+        path.fill {stroke: red; fill: yellow; stroke-width: 2px}
+        path.stroke {stroke: blue; fill: none; stroke-width: 2px}
+    </style>
+</head>
+<body>
+<h1>Custom symbols</h1>
+<script src="js/custom-symbols.js"></script>
+<script src="js/symbol-utils.js"></script>
+<script>
+    const width  = 650;
+    const height = 200;
+
+    const svg = d3.select("body")
+        .append("svg")
+        .attr("height",height)
+        .attr("width",width);
+
+    // Inspecting the SVG strings by custom symbols
+    printPath(d3.path(), "ZigZag", pkt.symbolZigZag);
+    printPath(d3.path(), "Drop", pkt.symbolDrop);
+    printPath(d3.path(), "Venus", pkt.symbolVenus);
+    printPath(d3.path(), "Mars", pkt.symbolMars);
+
+    render(svg, pkt.symbolZigZag, "fill", 5000, 0);
+    render(svg, pkt.symbolDrop, "fill", 5000, 1);
+    render(svg, pkt.symbolVenus, "stroke", 5000, 2);
+    render(svg, pkt.symbolMars, "stroke", 5000, 3);
+
+</script>
+</body>
+</html>

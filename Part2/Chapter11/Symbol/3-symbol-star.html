@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Symbols</title>
+    <title>Three ways to</title>
     <script src="https://d3js.org/d3.v7.min.js"></script>
     <style>
         svg { border: solid 1px gray}
@@ -11,7 +11,7 @@
 </head>
 <body>
 <script>
-    const width  = 600;
+    const width  = 800;
     const height = 200;
 
     const svg = d3.select("body")
@@ -19,11 +19,19 @@
         .attr("height",height)
         .attr("width",width);
 
-    const h = 80;
-
+    // Using type() and size()
     const star1 = d3.symbol().type(d3.symbolStar).size(5000).digits(0);
+
+    // Using function args
     const star2 = d3.symbol(d3.symbolStar, 5000);
+
+    // Using array
     const star3 = d3.symbol(d3.symbolsFill[4]).size(5000);
+
+    // Using d3.path
+    const path = d3.path();
+    d3.symbolStar.draw(path,5000);
+    const star4 = path.toString();
 
     svg.append("path").attr("d", star1)
             .attr("transform", "translate(100,100)");
@@ -31,6 +39,8 @@
             .attr("transform", "translate(300,100)");
     svg.append("path").attr("d", star3)
             .attr("transform", "translate(500,100)");
+    svg.append("path").attr("d", star4)
+        .attr("transform", "translate(700,100)");
 
 </script>
 </body>

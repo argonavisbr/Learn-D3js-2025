@@ -11,7 +11,7 @@
  */
 
 // Namespace prefix for utility functions used in this book
-const pkt = {};
+var pkt = pkt || {};
 
 /**
  * Creates a Cartesian axes generator function.
@@ -384,32 +384,105 @@ pkt.placePieLabels = function(container, arc, property,
     const angle = d => (Math.atan2(cy(d),cx(d)) * 180) / Math.PI;
     const pt = (d,r=1,a=0) => [angle(d)+a, cx(d) * r, cy(d) * r];
 
-    // Creates label selection in container
-    const label = container.append('text');
-
-    const isOuter = radius > 2 - (arc.innerRadius()()*2)/(arc.innerRadius()()+arc.outerRadius()());
-
-    if (isOuter) {
-        label.attr("class", "outer slice label");
+    if(container.canvas) {
+        console.log("Canvas not supported for pie labels");
     } else {
-        label.attr("class", "inner slice label");
-    }
+        // Creates label selection in container
+        const label = container.append('text');
 
-    label.attr("x",d => pt(d, radius)[1])
-         .attr("y",d => pt(d, radius)[2])
-         .style("alignment-baseline", "middle")
-         .text(d => format && !isNaN(d.data[property]) ? format(d.data[property]) : d.data[property]);
+        const isOuter = radius > 2 - (arc.innerRadius()()*2)/(arc.innerRadius()()+arc.outerRadius()());
 
-    if (direction === pkt.direction.RADIAL) {
-        label.style("text-anchor", d => pt(d)[1] > 0 ? "start" : "end")
-             .attr("transform", d => pt(d)[1] > 0 ? `rotate(${pt(d,radius)})` : `rotate(${pt(d,radius,180)})`);
-    } else if (direction === pkt.direction.TANGENTIAL) { // tangential
-        label.style("text-anchor", "middle")
-             .attr("transform", d => `rotate(${pt(d,radius,90)})`);
-    } else { // none
-        label.style("text-anchor", "middle");
+        if (isOuter) {
+            label.attr("class", "outer slice label");
+        } else {
+            label.attr("class", "inner slice label");
+        }
+
+        label.attr("x",d => pt(d, radius)[1])
+            .attr("y",d => pt(d, radius)[2])
+            .style("alignment-baseline", "middle")
+            .text(d => format && !isNaN(d.data[property]) ? format(d.data[property]) : d.data[property]);
+
+        if (direction === pkt.direction.RADIAL) {
+            label.style("text-anchor", d => pt(d)[1] > 0 ? "start" : "end")
+                .attr("transform", d => pt(d)[1] > 0 ? `rotate(${pt(d,radius)})` : `rotate(${pt(d,radius,180)})`);
+        } else if (direction === pkt.direction.TANGENTIAL) { // tangential
+            label.style("text-anchor", "middle")
+                .attr("transform", d => `rotate(${pt(d,radius,90)})`);
+        } else { // none
+            label.style("text-anchor", "middle");
+        }
     }
 }
+
+/**
+ * A custom symbol for a zig-zag line. Can be used with fill, stroke, or both.
+ * @type {{draw: (function(*, number=): null|string)}}
+ */
+pkt.symbolZigZag = {
+    draw: function(context, size = 64) {
+        const side = Math.sqrt(size)/16;
+        context.moveTo(12*side,0);
+        context.lineTo(side,-3*side);
+        context.lineTo(12*side,-16*side);
+        context.lineTo(-12*side,0);
+        context.lineTo(-side,3*side);
+        context.lineTo(-12*side,16*side);
+        context.closePath();
+
+        return context.canvas ? null : context.toString();
+    }
+}
+
+pkt.symbolDrop = {
+    draw: function(context, size = 64) {
+        const side = Math.sqrt(size)/16;
+        context.arc(0,4*side,8*side,-Math.PI*.2,Math.PI*1.2);
+        context.lineTo(0,-12*side);
+        context.lineTo(0,-12*side);
+        context.closePath();
+
+        return context.canvas ? null : context.toString();
+    }
+}
+
+/**
+ * A custom symbol for the Venus symbol. Best for use with stroke and no fill.
+ * @type {{draw: (function(*, number=): null|string)}}
+ */
+pkt.symbolVenus = {
+    draw: function(context, size = 64) {
+        const side = Math.sqrt(size)/16;
+        context.arc(0,-6*side,8*side,0,2*Math.PI);
+        context.moveTo(-6*side,8*side);
+        context.lineTo(6*side,8*side);
+        context.moveTo(0,14*side);
+        context.lineTo(0,2*side);
+
+        return context.canvas ? null : context.toString();
+    }
+}
+
+/**
+ * A custom symbol for the Mars symbol. Best for use with stroke and no fill.
+ * @type {{draw: (function(*, number=): null|string)}}
+ */
+pkt.symbolMars = {
+    draw: function(context, size = 64) {
+        const side = Math.sqrt(size)/16;
+        context.arc(-3*side,3*side,8*side,0,2*Math.PI);
+        context.moveTo(2.5*side,-2.5*side);
+        context.lineTo(11*side,-11*side);
+        context.moveTo(side,-11*side);
+        context.lineTo(11*side,-11*side);
+        context.lineTo(11*side,-side);
+
+        return context.canvas ? null : context.toString();
+    }
+}
+
+pkt.symbolsFill = [pkt.symbolZigZag, pkt.symbolDrop];
+pkt.symbolsStroke = [pkt.symbolVenus, pkt.symbolMars];
 
 
 

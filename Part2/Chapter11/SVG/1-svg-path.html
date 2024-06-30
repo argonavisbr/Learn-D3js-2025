@@ -5,9 +5,19 @@
     <title>SVG Path</title>
 </head>
 <body>
-<svg width="800" height="300">
-    <path d="M50,20 L200,200 L200,140 L270,140 Z"
-          fill="yellow" stroke="red" stroke-width="3" />
+<svg width="1000" height="400" viewBox="0 0 2000 800">
+    <path d="M280,160 L170,130 280,0 40,160 150,190 40,320 z"
+          fill="gold" stroke="red" stroke-width="4"/>
+
+    <path d="M261,141 A100,100,0,1,1,100,141 L180,20 180,20 z"
+          fill="cyan" stroke="blue" transform="translate(300,0)"/>
+
+    <path d="M100,-75 A100,100,0,1,1,-100,-75 A100,100,0,1,1,100,-75 M-75,100 L75,100 M0,175 L0,25"
+          fill="none" stroke="red" stroke-width="10" transform="translate(800,180)"/>
+
+    <path d="M62.5,37.5 A100,100,0,1,1,-137.5,37.5 A100,100,0,1,1,62.5,37.5 M31.25,-31.25 L137.5,-137.5 M12.5,-137.5 L137.5,-137.5 L137.5,-12.5"
+          fill="none" stroke="blue" stroke-width="10" transform="translate(1200,180)"/>
+
 </svg>
 </body>
 </html>
