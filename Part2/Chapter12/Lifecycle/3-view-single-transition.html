@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Single transitions lifecycle view</title>
+    <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+    <link rel="stylesheet" href="css/transition-display.css">
+    <style>
+        button {
+            font-size: 20px;
+        }
+        button[value=Interrupt] {
+            font-weight: bold;
+            background: indianred;
+            color: white;
+        }
+        button[value=Interrupt]:active {
+            font-weight: bold;
+            background: yellow;
+            color: black;
+        }
+        div {
+            width: 800px;
+            text-align: center;
+            padding-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+<h1>Single transitions lifecycle view</h1>
+<p>Click on the <b>Interrupt</b> button any time to generate <code>interrupt</code> and <code>cancel</code> events. </p>
+<div></div>
+<script src="js/transition-display.js"></script>
+<script>
+
+    const speed = 10; // slower transitions and delays = higher number
+    const maxTime = 220 * speed;  // max time to display in the axis
+
+    // Transition data - this is the order the transitions are created!
+    const data = [
+        {name: "T1", delay: 100 * speed, duration: 100 * speed}
+    ];
+
+    const delayEvt = {name: "delay", color: "blue"};
+    evts.pop();
+    evts.push(delayEvt);
+    evtsMap.set(delayEvt.name, delayEvt);
+
+    const spacing = 75 / data.length;  // spacing between transitions (min 15, to display 5 transitions)
+
+    data.forEach((d,i) => d.position = i * spacing * 8);
+
+    //d3.select("#t2").text(200*speed);
+
+    const dim = {width: 700, height: 700, margin: {top: 10, left: 200, bottom: 10, right: 10}};
+
+    const scale = d3.scaleLinear()
+                    .domain([0, maxTime])
+                    .range([dim.margin.left, dim.width - dim.margin.right])
+    const axis = d3.axisBottom()
+                   .tickSize(dim.height - 100 + dim.margin.bottom)
+                   .tickSizeOuter(15)
+                   .scale(scale);
+
+    // SVG container
+    const svg = d3.select("body")
+                  .append("svg")
+                  .attr("width", dim.width)
+                  .attr("height", dim.height)
+        .attr("viewBox", [0, 0, dim.width * 1.2, dim.height * 1.2]);
+
+    // Draw axes and chart guidelines
+    renderChart(svg, 30);
+    drawScheduledTransitions(data);
+
+    // Run transitions
+    const start = d3.now();
+
+    // delay data
+    const timer = d3.interval(function(elapsed) {
+        log("T1", evtsMap.get("delay"), spacing*7)
+        if(elapsed >= data[0].delay) {
+            timer.stop();
+        }
+    }, 15);
+
+    data.forEach(d => {
+        d.transition = svg.transition()                        // main transition
+                .delay(d.delay)
+                .duration(d.duration);
+
+        registerListeners(d);
+    });
+
+    d3.select("div")
+        .append("button")
+        .attr("value", "Interrupt")
+        .text("Interrupt")
+        .on("click", () => {
+            timer.stop();
+            d3.interrupt(svg.node());   // or d3.interrupt(tr1.node())
+        });
+
+    d3.select("div")
+        .append("button")
+        .attr("value", "Reload page")
+        .text("Reload page")
+        .on("click", () => location.reload());
+
+</script>
+</body>
+</html>

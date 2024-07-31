@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Start and end transition lifecycle events</title>
+    <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+    <style>
+        circle {
+            fill: red;
+        }
+        .data {
+            border: solid 1px black;
+        }
+    </style>
+</head>
+<body>
+<script>
+ // This script will tween a circle's radius from 30 to 100
+ const svg = d3.select("body").append("svg")
+               .attr("width", 800).attr("height", 600);
+
+ svg.selectAll("circle")
+      .data([200, 400, 600])
+      .join("circle")
+      .attr("r", 30)
+      .attr("cx", d => d).attr("cy", 300)
+      .transition().delay((d,i) => 500*i).duration(1500)
+         .attr("r", 100)
+         .on("start", function(d, i, nodes) {
+             console.log("Transition started for circle " + i);
+         })
+         .on("end", function(d, i, nodes) {
+             console.log("Transition ended for circle " + i);
+         });
+
+
+</script>
+</body>
+</html>

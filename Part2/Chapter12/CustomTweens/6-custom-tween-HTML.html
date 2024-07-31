@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Custom tweens: tween</title>
+    <script src="https://d3js.org/d3.v5.min.js"></script>
+    <style>
+        h1 {
+            display: inline;
+        }
+        #one {
+            color: red;
+            font-size: 50px;
+        }
+        #two {
+            color: blue;
+            font-size: 200px;
+        }
+        p {
+            font-family: sans-serif;
+            font-size: 12px;
+        }
+        .panel {
+            margin-left: 300px
+        }
+        span {
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+<script src="js/transition-display.js"></script>
+<script>
+    // This script is used to display a panel that shows the current state of the transition
+    const svg = d3.select("body")
+        .append("svg")
+        .attr("width", 800)
+        .attr("height", 100);
+    createTransitionPanel(svg);
+</script>
+
+<div class="panel">
+    <p>Transition step: <span id="step"></span><br>
+        Frame: <span id="frame"></span><br>
+        Font size: <span id="size"></span><br>
+        A color: <span id="a-color"></span><br>
+        B color: <span id="b-color"></span></p>
+</div>
+
+<h1 id="one">A</h1>
+<h1 id="two">B</h1>
+
+<script>
+    // This is the main script that creates a transition with a custom tween
+    let count = 0;
+    const duration = 5000;
+    const delay = 1000;
+    const ease = d3.easeElasticInOut;
+
+    const fmt2 = d3.format(".2f");
+
+    // This example is like the previous one, but manipulates HTML elements and their styles.
+    const trs =
+      d3.select("#one")
+        .transition()
+           .ease(ease)
+           .duration(duration)
+           .delay(delay)
+           .tween("_", function() { // tween name is not used, but required
+
+               const initialSize = d3.select("#one").style("font-size"); // from style sheet
+               const initialColorA = d3.select("#one").style("color");
+               const initialColorB = d3.select("#two").style("color");
+
+               const sizeInterpolator = d3.interpolateString(initialSize, "350px");
+               const hueInterpolator = d3.interpolateNumber(0, 90);
+               const colorInterpolator = (c,t) => d3.hsl(d3.hsl(c).h + hueInterpolator(t), 1, .5);
+
+               return function(t) {
+                  this.style.fontSize = sizeInterpolator(t)
+                  this.style.color = colorInterpolator(initialColorA, t); // #one
+                  d3.select("#two").style("color", colorInterpolator(initialColorB, t));
+
+                  d3.select("#a-color").text(this.style.color);
+                  d3.select("#b-color").text(d3.select("#two").style("color"));
+
+                  d3.select("#step").text(fmt2(t));
+                  d3.select("#frame").text(++count);
+                  d3.select("#size").text(this.style.fontSize);
+              }
+           });
+
+    monitorTransition(trs, delay, duration);
+
+</script>
+</body>
+</html>

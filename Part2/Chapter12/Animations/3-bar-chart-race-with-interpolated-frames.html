@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Bar race: Nominal GDP from 1970 to 2022</title>
+    <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+    <style>
+        h1, text {
+            font-family: sans-serif;
+            font-size: 20px;
+        }
+        text {
+            font-size: 12px;
+            alignment-baseline: middle;
+        }
+        rect {
+            fill: steelblue;
+        }
+    </style>
+</head>
+<body>
+<h1>Nominal GDP in current US$ <span id="year">from 1970 to 2022</span></h1>
+<script>
+
+    const dataFile = "../data/un_gdp.csv";
+
+    const chart = {};      // Global chart data object (will contain the data and some helper functions)
+    const numBars = 10;    // Number of bars to display (you can change this)
+    const dur = 200;       // Duration of the transitions
+    const numFrames = 12;  // Number of extra interpolated frames (multiply by dur to estimate total duration)
+
+    // dimensions
+    const barHeight = 40;
+    const dim = {width: 800,
+                 height: barHeight * numBars - 20,
+                 margin: {top: 15, right: 10, bottom: 5, left: 100}};
+
+    // scales
+    const scaleX = d3.scaleLinear() // domain will be recomputed at each update
+                     .range([dim.margin.left, dim.width - dim.margin.right]);
+
+    const scaleY = d3.scaleBand()
+                     .range([dim.margin.top, dim.height - dim.margin.bottom + dim.height/numBars])
+                     .domain(d3.range(numBars+1)) // + 1 line to display entering/leaving bars at bottom
+                     .padding(0.1);
+
+    const fmt = d3.format(".4s");
+
+    const svg = d3.select("body")
+                  .append("svg")
+                  .attr("class", "chart")
+                  .attr("width", dim.width)
+                  .attr("height", dim.height);
+
+    // Container for all the bars
+    svg.append("g").attr("class", "entries");
+
+    load(dataFile); // loads the data and starts the animation
+
+    function load(file) {
+        d3.csv(file, d3.autoType).then(rawData => {
+            console.log(rawData) // check
+            prepareData(rawData);
+            start();
+        });
+    }
+
+    function prepareData(rawData) {
+        // A map with country names to be used as keys
+        chart.keys = new Set(rawData.map(d => d.country));
+
+        // A nested map of values per year and then by country
+        const byYear = d3.rollup(rawData,
+                                 v => v[0].value,
+                                 d => d.year,
+                                 d => d.country);
+
+        // Convert external map to array and sort by year
+        const byYearArray = Array.from(byYear)
+                                 .sort((a, b) => d3.ascending(a[0], b[0]));
+
+        // Using interpolation to create extra frames between each pair of dates
+        chart.data = interpolateDataFrames(byYearArray, numFrames); // data now contains numFrames more frames per year
+
+        // Returns an array of all data objects for a given country (to compute pairs of adjacent data)
+        const dataMap = d3.groups(chart.data.flatMap(([, data]) => data), d => d.country);
+
+        // A map that returns the data object to be displayed in the next frame
+        // This will be used when exiting (so the bar moves down and shrinks when exiting)
+        const nextMap = new Map(dataMap.flatMap(([_, data]) => d3.pairs(data)));
+        chart.nxt = d => nextMap.get(d) || d;
+
+        // A map that returns the data object to be displayed in the previous frame
+        // This will be used when entering (so the bar moves up and grows when entering)
+        const prevMap = new Map(dataMap.flatMap(([_, data]) => d3.pairs(data).map(([a, b]) => [b, a])));
+        chart.prv = d => prevMap.get(d) || d;
+    }
+
+    function interpolateDataFrames(data, numFrames) {
+        const dataFrames = [];
+        for (let pair of d3.pairs(data)) {
+
+            const [entry1, entry2] = pair;
+            const [year1, dataMap1] = entry1;
+            const [year2, dataMap2] = entry2;
+
+            for (let i = 0; i < numFrames; ++i) {
+                const t = i / numFrames;
+
+                const interpolatedYear = year1 * (1 - t)
+                                       + year2 * t;
+                const getValue = name => dataMap1.get(name) * (1 - t)
+                                       + dataMap2.get(name) * t;
+
+                const interpolatedData = rank(getValue);
+                dataFrames.push([interpolatedYear, interpolatedData]);
+            }
+        }
+        return dataFrames;
+    }
+
+    // Utility function that adds a rank property to each object with its position in the year.
+    // Bars that are not in the top numBars are given a rank of numBars. Used in prepareData()
+    // This version is slightly different because it is using the interpolated data frame
+    function rank(getValue) {
+        const data =
+            [...chart.keys].map(k => ({country: k, value: getValue(k)}))
+                           .sort((a, b) => d3.descending(a.value, b.value));
+        for (let i = 0; i < data.length; ++i) {
+            data[i].rank = Math.min(numBars, i);
+        }
+        return data;
+    }
+
+    function start() {
+        animate(0);
+    }
+
+    function animate(i) {
+        d3.select("svg")
+          .transition(getTransition())
+            .end()
+            .then(() => {
+                updateBars(chart.data[i]); // update function
+                if(i < chart.data.length - 1) {
+                    animate(++i);
+                }
+            })
+    }
+
+    // Utility function used in animate - transition factory
+    function getTransition() {
+        return d3.transition()
+                 .duration(dur)
+                 .ease(d3.easeLinear);
+    }
+
+    // The update function - called at each frame of the animation
+    function updateBars(dataFrame) {
+        const [year, data] = dataFrame;
+
+        // Update the date label
+        d3.select("#year").text(`in ${Math.round(year)}`); // need to round to eliminate intermediate values
+
+        // Short helper functions for previous, next and final width of the bars
+        const pw = d => scaleX(chart.prv(d).value) - scaleX(0); // previous width
+        const nw = d => scaleX(chart.nxt(d).value) - scaleX(0); // next width
+        const fw = d => scaleX(d.value) - scaleX(0); // final width
+
+        // Update the x-scale (first bar always with fixed width on top)
+        scaleX.domain([0, data[0].value * 1.1]);
+
+        // use only the data for the top bars
+        const visible = data.slice(0, numBars);
+
+        // Update the bars
+        const update =
+            d3.select("svg")
+              .select(".entries").selectAll("g.entry")
+                .data(visible, d => d.country) // bars are identified by country
+                .join(
+                    // (1) Enter selection - when the bar is created
+                    enter => {
+                        // The bar container
+                        const enterGrp =
+                            enter.append("g")
+                                .attr("class", "entry")
+                                .attr("transform", d => `translate(${scaleX(0)},${scaleY(chart.prv(d).rank)})`)
+                                .style("opacity", d => chart.prv(d).rank <= numBars - 1 ? 1 : 0);
+
+                        // The bar itself
+                        enterGrp.append("rect")
+                            .attr("class", "bar")
+                            .attr("height", scaleY.bandwidth())
+                            .attr("width", pw)
+
+                        // Text labels at the left of each bar
+                        enterGrp.append("text")
+                            .attr("class", "name label")
+                            .attr("y", scaleY.bandwidth()/2)
+                            .attr("x", -5) // and align right
+                            .style("text-anchor", "end")
+                            .text(d => d.country)
+
+                        // Value labels at the right of each bar
+                        enterGrp.append("text")
+                            .attr("class", "value label")
+                            .attr("y", scaleY.bandwidth()/2)
+                            .attr("x", d => pw(d) + 5)
+                            .text(d => d.value)
+
+                        return enterGrp;
+                    },
+
+                    // Not used - we update after the transition)
+                    update => update,
+
+                    // (3) Exit selection - when the bar is removed
+                    exit => {
+                        // The bar group (update its vertical - y - position and opacity)
+                        const exitGrp =
+                            exit.transition(getTransition())
+                                .attr("transform", d => `translate(${scaleX(0)},${scaleY(chart.nxt(d).rank)})`)
+                                .style("opacity", 0)
+
+                        // The bar itself (update its width towards the next value)
+                        exitGrp.select("rect.bar").attr("width", nw)
+
+                        // The value label (update its position to follow bar width and its text)
+                        exitGrp.select("text.value.label")
+                               .attr("x", d => nw(d) + 5)
+                               .textTween(function(d) {
+                                   const i = d3.interpolateNumber(chart.nxt(d).value, d.value);
+                                   return t => fmt(i(t)).replace("G", 'B');
+                               })
+
+                        // When done, remove the group
+                        return exitGrp.remove();
+                    }
+                );
+
+       // (2) Update selection - when the bar is updated with new data
+       const updateGrp = update.transition(getTransition()) // this is the update section for the bar group - move it to the new position(rank)
+                               .attr("transform", d => `translate(${scaleX(0)},${scaleY(d.rank)})`)
+                               .style("opacity", 1)
+
+        // Adjust the bar's width to the new (final) value
+        updateGrp.select("rect.bar").attr("width", fw)
+
+        // Adjust the value label to follow the bar's width and update its value.
+        updateGrp.select("text.value.label")
+                 .attr("x", d => fw(d) + 5)
+                 .textTween(function(d) {
+                    const i = d3.interpolateNumber(chart.prv(d).value, d.value);
+                    return t => fmt(i(t)).replace("G", 'B');
+                 });
+    }
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Custom tweens: tween</title>
+    <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+    <style>
+        circle {
+            fill: yellow;
+        }
+        .text text {
+            text-anchor: middle;
+            fill: black;
+            font-size: 24pt;
+            font-family: monospace;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+<script src="js/transition-display.js"></script>
+<script>
+    // This script is used to display a panel that shows the current state of the transition
+    const svg1 = d3.select("body")
+        .append("svg")
+        .attr("width", 800)
+        .attr("height", 100);
+    createTransitionPanel(svg1);
+</script>
+<script>
+    // This is the main script that creates a transition with a custom tween
+    let count = 0;
+    const delay = 1000;
+    const dur = 3000;
+    const svg = d3.select("body").append("svg").attr("width", 800).attr("height", 600);
+
+    const finalFill = "blue";
+    const finalR = 130;
+    const fmt = d3.format(".0f");
+
+    const g = svg.append("g").attr("class","all").attr("transform", "translate(700,350)");
+    const circ = g.append("circle");
+    g.append("g").attr("class","text")
+
+    // This example puts everything in a single tween() method. The tween method doesn't have a default
+    // name, so we can't use the return value. We can use the tween method to update multiple attributes
+    // and styles in a single function. This is useful when you want to update multiple properties at once.
+    // Explore the different interpolators that were used in this example.
+
+    const trs = circ.attr("r", 30) // initial value
+                    .transition()
+                    .delay(delay)
+                    .duration(dur)
+                    .ease(d3.easeBounce)
+                    .tween("_", function() {    // name is not used (values aren't returned)
+                        // This part runs once for each element in the selection
+                        const initialFill = d3.select(this).style("fill");
+                        const initialR = d3.select(this).attr("r");
+                        const initialPosition = d3.select(".all").attr("transform");
+
+                        console.log("Updating r, fill and text in one tweening function.");
+
+                        // This is the interpolation function that computes the value for the current frame
+                        const fillInterpolator = d3.interpolate(initialFill, finalFill);
+                        const rInterpolator = d3.interpolate(initialR, finalR);
+                        const positionInterpolator = d3.interpolate(initialPosition, "translate(150,150)");
+
+                        return function(t) { // This function is called for each frame of the transition
+                            // Interpolation functions
+                            const fill = t => fillInterpolator(t);
+                            const r = t => rInterpolator(t);
+                            const position = t => positionInterpolator(t);
+
+                            // Get the luminance to determine the text color for contrast
+                            const luminance = d3.hcl(d3.rgb(fill(t))).l;
+
+                            d3.select(this) // the circle itself
+                                .attr("r", r(t))
+                                .style("fill", fill(t));
+
+                            d3.select(".all") // the circle's container
+                                .attr("transform", position(t));
+
+                            // Get the coordinates of the circle (just for display)
+                            const coords = position(t).substring(position(t).indexOf("(")+1,
+                                                                 position(t).indexOf(")"))
+                                                      .split(",")
+                                                      .map(d => fmt(d))
+                                                      .join(",");
+
+                            svg.select("g.text")
+                               .selectAll("text")
+                                .data([`r: ${fmt(r(t))}`, `fill: ${fill(t)}`, `translate(${coords})`])
+                                 .join("text")
+                                 .attr("dy", (d, i) => `${i*1.25}em`)
+                                 .style("font-size", `${d3.interpolateNumber(3,18)(t)}px`)
+                                 .style("fill", luminance > 50 ? "black" : "white")
+                                 .text(d => d);
+                        }
+                    });
+
+    monitorTransition(trs, delay, dur);
+
+</script>
+</body>
+</html>

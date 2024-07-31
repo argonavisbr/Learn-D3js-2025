@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Bar chart race</title>
+    <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+    <script src="../js/chart-utils.js"></script>
+    <link rel="stylesheet" href="css/bar-chart-race.css">
+    <style>
+        h1 {
+            font-family: sans-serif;
+            font-size: 20px;
+        }
+        svg.chart {
+            background: #dfe6df;
+            float: left;
+            margin-right: 20px;
+        }
+        .name.label { /* names */
+            font-weight: bold;
+        }
+        .legend text {
+            alignment-baseline: baseline;
+        }
+        .legend path  {
+            fill-opacity: .6;
+        }
+    </style>
+</head>
+<body>
+<h1>Nominal GDP in current US$ from 1970 to 2022 (Source: United Nations)</h1>
+<p>Click on chart to pause/resume.</p>
+<script src="js/bar-chart-race.js"></script>
+<script>
+    const file = "../data/un_gdp.csv";
+
+    // Overriding default values (see bar-chart-race-R.js)
+    imgDir = '../data/flags/'; // Directory with the icons
+
+    // Icon settings - this allows you to adjust the image size if necessary
+    // In this example, flags have different proportions so we adjusted all to 3x2.
+    imgSVGAspectRatio = "none";  // Aspect ratio for the icons
+    imgExtraWidth = 2/3;         // Extra width of the image relative to its height
+
+    // Dimensions
+    dim.width = 900;            // We made it wider since most bars are small
+
+    // Bars to show
+    numBars = 12;                  // Number of countries to show
+
+    // Animation settings
+    dur = 200;                     // Duration of the transition
+    numFrames = 12;                // Number of intermediate frames between steps
+
+    // Label formatting
+    formatSpecifier = '.3s';    // Using SI format
+    replaceBillions = true;     // replace G (Giga) with B (Billions) to use SI format
+
+    load(file);
+
+    // This data is already in a tidy format. We just need to load it and
+    // use a row function to convert the header names to the properties
+    // required by the application.
+
+    function load(file) {
+        d3.csv(file, row => {
+            return {
+                name: row.country,
+                date: +row.year,
+                value: +row.value,
+                category: row.continent, // optional - in this example we use it to color the bars
+                icon: row.code // optional - in this example we use it to show a flags for each bar
+            };
+        }).then(data => {
+            console.log(data) // check
+            draw(data)
+        });
+    }
+
+    function draw(data) {
+        if(createChart(data)) { // this will setup the chart
+            const legend = d3.select("body").append("svg");
+            pkt.legend()
+                .container(legend)
+                .color(colorScale)
+                .useDataAsIndex(true)
+                .data(new Set(data.map(d => d.category)))
+            ();
+
+            start();  // this will start the animation
+        }
+    }
+</script>
+
+</body>
+</html>

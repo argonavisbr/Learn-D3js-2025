@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Custom tweens: attrTween</title>
+    <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+    <style>
+        circle {
+            fill: red;
+        }
+        .test {
+            font-size: 24pt;
+        }
+    </style>
+</head>
+<body>
+<script src="js/transition-display.js"></script>
+<script>
+    // This script is used to display a panel that shows the current state of the transition
+    const svg1 = d3.select("body")
+        .append("svg")
+        .attr("width", 800)
+        .attr("height", 100);
+    createTransitionPanel(svg1);
+</script>
+<script>
+    // This is the main script that creates a transition with a custom tween
+    let count = 0;
+    const delay = 1000;
+    const dur = 3000;
+    const svg = d3.select("body")
+                  .append("svg")
+                  .attr("width", 800)
+                  .attr("height", 600);
+
+    // Create a panel to show the current state of the transition
+    svg.append("g")
+       .attr("class", "log")
+       .attr("transform", "translate(50,50)");
+
+    const finalR = 130;
+    const fmt = d3.format(".3f");
+
+    // The custom tweens here were purposefully made verbose to show the process.
+    // You can write the entire tween function in a single line if you prefer.
+    // See 4-custom-multiple.html for some examples.
+
+    const trs = svg.append("circle")
+        .attr("r", 30) // initial value
+        .attr("transform", `translate(${[400,200]})`) // initial value
+        .transition()
+            .delay(delay)
+            .duration(dur)
+            .ease(d3.easeBounce)
+            .attrTween("r", function() {   // same effect as .attr("r", 130)
+                // A) This part runs ONCE for each element in the selection
+                const initialR = +d3.select(this).attr("r"); // initial value
+                console.log("Tweening r " + fmt(initialR) + " to " + fmt(finalR));
+
+                // B) This function is called FOR EACH FRAME of the transition
+                return function(t) {
+                    // This is the value after the last frame
+                    const prevR = +d3.select(this).attr("r"); // previous tweened value
+
+                    // This is the interpolation function that computes the value for the current frame
+                    const newR = initialR * (1 - t) + finalR * t;
+
+                    // Show the values on the screen and in the console
+                    const log = [
+                        `t: ${fmt(t)}`,
+                        `frame: ${++count}`,
+                        `initial r: ${fmt(initialR)}`,
+                        `previous r: ${fmt(prevR)}`,
+                        `new r: ${fmt(newR)}`];
+                    console.log(log.join("\n"));
+                    d3.select(".log").selectAll("text")
+                        .data(log)
+                        .join("text")
+                        .attr("dy", (d, i) => `${i}em`)
+                        .text(d => d);
+
+                    return newR; // return the computed value
+                };
+            });
+
+    // This attaches the transition to the panel so it will show its progress
+    monitorTransition(trs, delay, dur);
+
+</script>
+</body>
+</html>

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Experiment with easing functions</title>
+    <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+    <style>
+        circle {
+            fill: red;
+        }
+    </style>
+</head>
+<body>
+<script>
+
+ const svg = d3.select("body").append("svg").attr("width", 800).attr("height", 600);
+
+ // Try other easing functions and configurations
+ const easing =
+     d3.easeElastic.period(.1);
+     // d3.easeBounce;
+     // d3.easeElastic.amplitude(3).period(.05);
+
+ svg.append("circle")
+     .attr("r", 30)
+     .attr("transform", `translate(${[400,300]})`)
+     .transition()
+         .duration(2000)
+         .delay(500)
+         .ease( easing )
+         .attr("transform", `translate(${[200,500]})`)
+         .attr("r", 15);
+
+</script>
+</body>
+</html>

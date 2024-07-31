@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Example of SVG image clipping used in the racing bars</title>
+    <style>
+        svg {
+            border: solid 1px black;
+        }
+        image {
+            border: solid 1px red;
+        }
+    </style>
+
+</head>
+<body>
+<h1>Example of SVG image clipping used in the racing bars</h1>
+<svg height="170" width="400">
+
+    <defs>
+        <clipPath id="clip-0"><use xlink:href="#bar-0"/></clipPath>
+        <clipPath id="clip-7"><use xlink:href="#bar-7"/></clipPath>
+        <clipPath id="clip-3"><use xlink:href="#bar-3"/></clipPath>
+    </defs>
+
+    <g class="bars">
+        <rect id="bar-0" height="50" x="100" y="10" width="55"></rect>
+        <rect id="bar-7" height="50" x="100" y="62" width="70"></rect>
+        <rect id="bar-3" height="50" x="100" y="114" width="55"></rect>
+
+        <image clip-path="url(#clip-0)" xlink:href="../data/flags/USA.png" height="48" x="55" y="10"></image>
+        <image clip-path="url(#clip-7)" xlink:href="../data/flags/CHN.png" height="48" x="100" y="62"></image>
+        <image clip-path="url(#clip-3)" xlink:href="../data/flags/FRA.png" height="48" x="100" y="114"></image>
+    </g>
+</svg>
+
+</body>
+</html>

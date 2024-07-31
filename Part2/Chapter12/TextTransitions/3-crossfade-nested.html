@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Crossfading using a start event to trigger the effect</title>
+    <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+    <style>
+        h1 {
+            position: absolute;
+            top: 50px;
+            left: 50px;
+            font-size: 100px;
+            font-weight: normal;
+        }
+        text {
+            font-size: 100px;
+            alignment-baseline: hanging;
+        }
+    </style>
+</head>
+<body>
+<h1></h1>
+<script>
+    // Same as 2-crossfade.html using on("start")
+    // This crossfade  is triggered by the start event of the first transition
+    d3.select("h1")
+      .text("HTML before")               // previous text
+      .style("color","navy")        // color = navy, opacity = 1
+      .transition().delay(1000).duration(3000)  // transition 1,5s
+         .style("color", "brown")  // color = brown, opacity = 0
+         .style("opacity", 0)
+         .remove()
+         .on("start", function() {  // will only run when transition starts
+             d3.select("body")
+               .append("h1")                 // append
+               .style("color","navy")        // color = navy, opacity = 1
+               .style("opacity", 0)
+               .text("HTML after")                // final text
+               .transition().duration(3000)
+                   .style("opacity", 1)      // color = brown, opacity = 1
+                   .style("color","brown")
+         });
+
+    // SVG version
+
+    const svg = d3.select("body").append("svg").attr("width", 800).attr("height", 600);
+
+    // starts opaque and disappears
+    svg.append("text")
+        .text("SVG before")
+        .attr("transform", "translate(50,25)")
+        .style("fill","teal")
+        .transition()
+            .duration(3000)
+            .delay(1000)  // transition 1,5s
+            .style("opacity", 0)
+            .style("fill", "orange")
+            .remove()
+        .on("start", function() {
+            svg.append("text")
+                .text("SVG after")
+                .attr("transform", "translate(50,25)")
+                .style("fill","teal")
+                .style("opacity", 0)
+                .transition()
+                    .duration(3000)
+                    .delay(1000)
+                    .style("opacity", 1)
+                    .style("fill","orange")
+        });
+
+</script>
+</body>
+</html>

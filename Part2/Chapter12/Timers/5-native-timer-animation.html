@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Native requestAnimationFrame - run with an optional delay until stop is called</title>
+    <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+    <link rel="stylesheet" href="css/timer-utils.css">
+    <style>
+        h1 {font-family: sans-serif}
+    </style>
+</head>
+<body>
+<h1>Native requestAnimationFrame: wait 2 seconds and then start. Stop after <span id="max"></span>s...</h1>
+<p>Same code as <i>d3-timer-animation.html</i>, but using JavaScript <code>requestAnimationFrame()</code></p>
+<script src="js/timer-utils.js"></script>
+<script>
+    // Configure maxValue and scale in timer-utils.js
+
+    const dim = {width: 1100, height: 200, margin: 50}
+    const svg = d3.select("body").append("svg").attr("width", 1100).attr("height", 200);
+
+    d3.select("#max").text(maxValue/1000);
+
+    const delay = 2000;
+
+    display(svg, dim, "Waiting for 2 seconds before starting...");
+    let STOP = false;
+    let startTime = d3.now();
+
+    function callback(timeStamp) {
+        const elapsed = timeStamp - startTime;
+        d3.select("#count").text(`${fmt(elapsed)} ms`);
+        drawBar(svg, elapsed, 2); console.log(STOP)
+        if(elapsed >= maxValue || STOP) {
+            console.log("Finished!");
+        } else {
+            requestAnimationFrame(callback);
+        }
+    }
+
+    let timer = requestAnimationFrame(callback); // start the timer in 2 seconds
+
+    // A control panel to stop and restart
+    const controls = d3.select("body").append("div").attr("id", "controls");
+
+    controls.append("button")
+        .text("Stop")
+        .on("click", () => STOP = true);
+
+    controls.append("button")
+        .text("Restart")
+        .on("click", () => startTime = d3.now());
+
+</script>
+</body>
+</html>

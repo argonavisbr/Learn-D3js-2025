@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Native events and transition events</title>
+    <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+    <style>
+        rect {
+            fill: orange;
+        }
+        circle {
+            fill: green;
+        }
+    </style>
+</head>
+<body>
+<h3>Native events aand Transition events</h3>
+<p>Clicking interrupts the transition, which is logged with a transition event (see console and code).</p>
+<svg height="300" width="600"></svg>
+<script>
+const data = [{x:50, name:"one"}, {x:300, name:"two"}];
+
+d3.select("svg").selectAll("rect")
+  .data(data)
+    .join("rect")
+    .attr("x", d => d.x).attr("y", 50)
+    .attr("height", 200).attr("width", 200)
+    .style("fill","blue")
+    .on("click", function(evt,d) {
+       console.log(`Click event ${evt} on square ${d.name}`);
+       d3.interrupt(this);
+    })
+    .transition().duration(10000)
+       .style("fill","red")
+       .on("interrupt", function(d) {
+         console.log(`Transition was interrupted on square ${d.name}`);
+       });
+
+</script>
+</body>
+</html>

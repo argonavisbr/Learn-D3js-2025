@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Custom tweens: multiple tweens</title>
+    <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+    <style>
+        circle {
+            fill: red;
+        }
+        .test {
+            font-size: 24pt;
+        }
+    </style>
+</head>
+<body>
+<script src="js/transition-display.js"></script>
+<script>
+    // This script is used to display a panel that shows the current state of the transition
+    const svg1 = d3.select("body")
+        .append("svg")
+        .attr("width", 800)
+        .attr("height", 100);
+    createTransitionPanel(svg1);
+</script>
+<script>
+    // This is the main script that creates a transition with a custom tween
+    let count = 0;
+    const delay = 1000;
+    const dur = 3000;
+    const svg = d3.select("body").append("svg").attr("width", 800).attr("height", 600);
+
+    const finalFill = "blue";
+    const finalR = 130;
+    const finalTransform = "translate(400,150)";
+    const fmt = d3.format(".3f");
+
+    // The data for the log on screen contains two functions
+    const log = [
+        t => `t: ${fmt(t)}`,
+        () => `frame: ${++count}`];
+
+    // Instead of creating a transition for each selection, we will reuse this one
+    // since all changes will occur simultaneously.
+    const trs = d3.transition()
+                  .delay(delay)
+                  .duration(dur)
+                  .ease(d3.easeBounce);
+
+    // This will display the current transition time (from 0 to 1) and frame
+    svg.append("g")
+       .attr("class", "log")
+       .attr("transform", "translate(50,50)")
+       .selectAll("text")
+         .data(log)
+           .join("text")
+               .attr("dy", (d,i) => `${i * 1.2}em`)
+               .transition(trs) // reusing the transition
+               .textTween(function(d,i) {
+                    return t => {
+                        console.log('\n',d(t));
+                        return d(t);
+                    }
+                });
+
+    // This will create a circle that changes its fill, radius and position
+    // These custom tweens are simpler than the previous ones, but they are still written in 2 lines
+    // to show the process. The first line runs once (A), the second one runs for each frame (B).
+    // They can be replaced by single-line attr() or style() methods.
+    svg.append("circle")
+        .attr("r", 30)
+        .attr("transform", `translate(100,400)`)
+        .transition(trs) // reusing the transition
+        .styleTween("fill", function() {    // same effect as .style("fill", finalFill)
+            const initialFill = d3.select(this).style("fill"); // A (runs once)
+            return d3.interpolate(initialFill, finalFill);     // B (returning a function that runs for each frame)
+        })
+        .attrTween("r", function() {   // same effect as .attr("r", finalR)
+            const initialR = +d3.select(this).attr("r");
+            return d3.interpolate(initialR, finalR); // same as (t) => d3.interpolate(initialR, finalR)(t)
+        })
+        .attrTween("transform", function() {   // same effect as .attr("transform", finalTransform)
+            const initialTransform = d3.select(this).attr("transform");
+            return d3.interpolate(initialTransform, finalTransform); // note that this is returning a function!
+        })
+
+    monitorTransition(trs, delay, dur);
+
+</script>
+</body>
+</html>

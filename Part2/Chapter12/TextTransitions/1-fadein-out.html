@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Fade out followed by fade in</title>
+    <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+    <style>
+        h1 {
+            position: absolute;
+            top: 50px;
+            left: 50px;
+            font-size: 100px;
+            font-weight: normal;
+        }
+        text {
+            font-size: 100px;
+            alignment-baseline: hanging;
+        }
+    </style>
+</head>
+<body>
+<h1>T</h1>
+<script>
+
+    // Using HTML
+
+    d3.select("h1")
+      .text("HTML before")
+      .style("color","navy")
+      .transition()
+           .delay(1000)
+           .duration(1000)
+           .style("opacity", 0)
+           .transition()
+              .delay(1000)
+              .duration(1000)
+                 .text("HTML after")  // Note that text is replaced BEFORE second transition starts
+                 .style("opacity", 1)
+                 .style("color","brown")
+
+    // Same effect, this time using SVG
+
+    const svg = d3.select("body").append("svg").attr("width", 800).attr("height", 600);
+
+    svg.append("text")
+       .text("SVG before")
+       .attr("transform", "translate(50,25)")
+       .style("fill","teal")
+       .transition()
+           .delay(1000)
+           .duration(1000)
+           .style("opacity", 0)
+           .transition()
+              .delay(1000)
+              .duration(1000)
+              .style("opacity", 1)
+              .style("fill","orange")
+              .text("SVG after") // Note that text is replaced BEFORE second transition starts
+
+</script>
+</body>
+</html>
