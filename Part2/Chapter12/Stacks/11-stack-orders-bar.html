@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Stack order - Bars</title>
+    <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+    <style>
+        text {
+            font-family: monospace;
+            font-size: 14px;
+        }
+        svg {
+            border: 1px solid #ccc;
+        }
+    </style>
+</head>
+<body>
+<script>
+
+    const easeDim = {
+        width: 1000,
+        height: 600,
+        margin: {top: 20, right: 400, bottom: 20, left: 20}
+    };
+
+    const svg = d3.select("body")
+        .append("svg")
+        .attr("height", "100%")
+        .attr("width", "100%")
+        .attr("viewBox", `0 0 ${dim.width} ${dim.height}`);
+
+    const stackOrder = [
+        'stackOrderNone',
+        'stackOrderReverse',
+        'stackOrderAscending',
+        'stackOrderDescending',
+        'stackOrderInsideOut',
+        'stackOrderAppearance'
+    ];
+
+    const data = [
+        {year: 1960, "A": 5, "B": 100, "C": 10},
+        {year: 1980, "A": 25, "B": 75, "C": 50},
+        {year: 2000, "A": 10, "B": 50, "C": 75},
+        {year: 2020, "A": 15, "B": 25, "C": 5},
+    ];
+
+    const keys = Object.keys(data[0]).filter(k => k !== 'year');
+
+    const scale = d3.scaleLinear()
+                    .range([dim.margin.left, dim.width - dim.margin.right]);
+    const colorScale = d3.scaleOrdinal(d3.schemeCategory10)
+                         .domain([0,keys.length]);
+
+    const stack = d3.stack()
+                    .keys(keys)
+                  //.offset(d3.stackOffsetSilhouette);
+
+    const barHeight = 15;
+
+    stackOrder.forEach((d,i) => draw(d, i));
+
+    function draw(order, index) {
+        stack.order(d3[order]);
+
+        const stacked = stack(data);
+
+        scale.domain([d3.min(stacked.flat(2)), d3.max(stacked.flat(2))]);
+
+        // A group for each set of horizontal bars
+        const g = svg.append("g")
+                     .attr("class", "bars")
+                     .attr("transform", `translate(${[0, 100*index + 18]})`);
+
+        g.selectAll(".label.year")
+           .data(stacked[0])
+             .join("text").attr("class", "label year")
+               .text(d => d.data.year)
+               .attr('x', scale(0) + 95)
+               .attr('y', (d,i) => i * (barHeight+2) + 10)
+               .attr('text-anchor', 'end')
+               .attr('alignment-baseline', 'middle');
+
+
+
+        g.selectAll(".layer")
+          .data(stacked)
+            .join("g").attr("class", "layer")
+              .style("fill", (d,i) => colorScale(i))
+              .selectAll("g.rect")
+                 .data(d => d)
+                 .join("g")
+                 .each(function(d,i) {
+                    d3.select(this).append("rect")
+                        .attr('width', scale(d[1]) - scale(d[0]))
+                        .attr('height', barHeight)
+                        .attr('x', scale(d[0]) + 100)
+                        .attr('y', i * (barHeight+2));
+                    d3.select(this).append("text")
+                        .text(Object.keys(d.data).filter(k => d.data[k] === d[1] - d[0])[0])
+                        .attr('x', scale(d[0]) + 115)
+                        .attr('y', i * (barHeight+2) + 10)
+                        .attr('text-anchor', 'end')
+                        .attr('alignment-baseline', 'middle')
+                        .style('fill', "white")
+                 });
+
+        g.append("text")
+            .text(`d3.${order}`)
+            .attr("x", dim.width - dim.margin.right + 120)
+            .attr("y", 35)
+    }
+
+
+</script>
+</body>
+</html>

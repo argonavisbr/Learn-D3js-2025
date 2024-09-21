@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Configuring a line function for an array of objects</title>
+    <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+    <style>
+        path {
+            stroke: red;
+            fill: none;
+        }
+        text {
+            font-family: monospace;
+            font-size: 7pt;
+            alignment-baseline: hanging;
+        }
+    </style>
+</head>
+<body>
+<script>
+    const width  = 900;
+    const height = 600;
+    const svg = d3.select("body").append("svg").attr("height",height).attr("width",width);
+
+    // Our data is an array of objects. It's length will determine the number of points
+    // (and how many times the line() function will be called)
+    const objects = [
+        {step: 0, value: 0  },
+        {step: 1, value: 200},
+        {step: 2, value: 50 },
+        {step: 3, value: 150},
+        {step: 4, value: 100}
+    ];
+
+    // The line function is configured so that the x and y values are extracted from the objects
+    // Note that the x value was also modified (it would be better to use a scale for that)
+    const line = d3.line()
+                   .x(d => d.step * 100)
+                   .y(d => d.value);
+
+    // Bind the data to a container element
+    const g = svg.append("g")
+                 .datum(objects);
+
+    // Render the line using the inherited datum (the entire data array) and the configured line function
+    g.append("path")
+        .attr("d", line);
+
+    // The text labels inherit the data, but need to provide accessors to the x and y values
+    g.selectAll("text")
+      .data(d => d)
+        .join('text')
+          .text(d => `${d.step},${d.value}`)
+            .attr('x',d => d.step*100 + 10)
+            .attr("y",d => d.value);
+
+</script>
+</body>
+</html>

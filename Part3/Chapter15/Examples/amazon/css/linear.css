@@ -1,0 +1,35 @@
+circle {
+    fill: blue;
+}
+.bifurcation {
+    fill: #41b2ba;
+    stroke: #41b2ba;
+}
+.river {
+    fill: none;
+    stroke: #41b2ba;
+    stroke-linecap: round;
+}
+rect {
+    stroke: blue;
+    fill: none;
+}
+text {
+    font-family: sans-serif;
+    fill: #4a774a;
+    text-anchor: end;
+}
+.node text {
+    font-size: 12px;
+    transform: translate(0px,-20px);
+}
+.leaf {
+    font-size: 12px;
+    transform: translate(-6px,-12px);
+    text-anchor: middle;
+}
+.root {
+    font-size: 16px;
+    font-weight: bold;
+    transform: translate(0,16px);
+}

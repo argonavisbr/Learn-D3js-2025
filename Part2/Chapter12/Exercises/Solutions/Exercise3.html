@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Exercise 3: An area chart displaying max and min values for each point</title>
+    <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+    <script src="../../js/chart-utils.js"></script>
+    <link rel="stylesheet" href="../../css/chart-utils.css">
+    <style>
+        path.line {fill: none; stroke-width: 2px}
+        path.area { fill: rgba(100%,90%,70%) }
+        path.topline  { stroke: blue }
+        path.baseline { stroke: red }
+        h1, p, text {
+            font-family: sans-serif;
+        }
+        p {font-size: 10pt}
+        h1 {font-size: 16pt}
+    </style>
+</head>
+<body>
+<h1>Monthly temperatures in Greenland</h1>
+<p>Source: Wikipedia</p>
+<script>
+    const width  = 800;
+    const height = 400;
+    const margin = 50;
+
+    const file = "../../data/temperatures-greenland.csv";
+
+    // There are many ways to load, parse and prepare the data. Always prefer the simplest.
+    // Here we use d3.text to load the file and d3.csvParseRows to parse it.
+    // d3.csvParseRows returns an array of arrays, where each array is a row of the CSV file.
+    // This is simpler than using d3.csv and d3.rollup, which would require more complex programming.
+    d3.text(file)
+        .then(text => {
+            const csv = d3.csvParseRows(text, d3.autoType);
+            console.log('csv', csv);    // inspect the data
+
+            const months = csv[0].slice(1);  // remove the first element (the header)
+            const high = csv[1].slice(1);
+            const low = csv[2].slice(1);
+
+            // Now convert the data to a standard format you can use to plot the chart
+            const data = months.map((d,i) => [d, high[i], low[i]]);
+            console.log('data', data);  // inspect the data
+
+            plot(data);
+        });
+
+    function plot(data) {
+
+        const scaleX = d3.scalePoint()
+            .domain(data.map(d => d[0]))
+            .range([margin, width - margin]);
+
+        const scaleY = d3.scaleLinear()
+            .domain([d3.min(data, d => d[2]) - 10, d3.max(data, d => d[1]) + 10])
+            .range([height - margin, margin]);
+
+        const area = d3.area()
+            .x(d => scaleX(d[0]))
+            .y1(d => scaleY(d[1]))
+            .y0(d => scaleY(d[2]));
+
+        const topline = area.lineY1();
+        const baseline = area.lineY0();
+
+        const svg = d3.select("body").append("svg").attr("height", height).attr("width", width);
+
+        svg.append("path")
+            .datum(data)
+            .attr("class", "area")
+            .attr("d", area);
+
+        svg.append("path")
+            .datum(data)
+            .attr("class", "line topline")
+            .attr("d", topline)
+
+        svg.append("path")
+            .datum(data)
+            .attr("class", "line baseline")
+            .attr("d", baseline)
+
+        pkt.cartesianAxes()
+            .container(svg)
+            .xScale(scaleX)
+            .yScale(scaleY)
+            .xLabel("Month")
+            .yLabel("Temperature (°C)")
+            .showHorizontalGrid(true)();
+    }
+
+</script>
+</body>
+</html>

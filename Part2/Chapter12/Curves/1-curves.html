@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Curves</title>
+    <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+    <style>
+        text {
+            font-family: monospace;
+            font-size: 10pt;
+        }
+        path {
+            fill: none;
+        }
+    </style>
+</head>
+<body>
+<script>
+    const width  = 1000;
+    const height = 700;
+    const cols = 4;
+    const rows = 7;
+    const margin = 30;
+
+    const curves = [
+        'curveLinear',
+        'curveStep',
+        'curveCardinal',
+        'curveCatmullRom',
+        'curveBasis',
+        'curveBundle',
+        'curveBumpX',
+
+        'curveLinearClosed',
+        'curveStepAfter',
+        'curveCardinalClosed',
+        'curveCatmullRomClosed',
+        'curveBasisClosed',
+        'curveMonotoneY',
+        'curveBumpY',
+
+        'curveNatural',
+        'curveStepBefore',
+        'curveCardinalOpen',
+        'curveCatmullRomOpen',
+        'curveBasisOpen',
+        'curveMonotoneX',
+
+    ]
+
+    // These are the data points for the sample line chart ([x,y])
+    // using a normalized scale (which will be stretched to fit each cell in the grid)
+    const data = [[0,0],
+                  [1,8],
+                  [4,6],
+                  [3,4],
+                  [6,1],
+                  [7,4],
+                  [8,1]];
+
+    // This scale will fit each chart to its cell horizontally.
+    // The width (range) is computed based on the number of columns
+    const scaleX = d3.scaleLinear()
+                     .domain(d3.extent(data, d => d[0]))
+                     .range([margin,width/cols - margin]);
+
+    // This scale will fit each chart to its cell vertically.
+    // The height (range) is computed based on the number of rows
+    const scaleY = d3.scaleLinear()
+            .domain(d3.extent(data, d => d[1]))
+            .range([height/rows - margin, margin/2]); // invert - place 0 at bottom
+
+    // At each point, there will be a circle
+    const point = d3.symbol().type(d3.symbolCircle).size(25);
+
+    // Draw the viewport
+    const svg = d3.select("body").append("svg").attr("height",height).attr("width",width);
+
+    // Render each chart at a different position in the grid
+    curves.forEach((d,i) => draw(d, i));
+
+    function draw(curveType, index) {
+
+        // Compute the position for this chart in the grid
+        const i = index % rows;
+        const j = Math.floor(index / rows);
+
+        // Check the console to see the curve type and its coordinates in the grid
+        console.log(curveType, i, j);
+
+        const g = svg.append("g")
+                .attr("transform", "translate("+[j * width/cols,i * height/rows]+")");
+
+        // Initial setup for the line chart with accessors for points
+        const line = d3.line()
+                        .x(d => scaleX(d[0]))
+                        .y(d => scaleY(d[1]));
+
+        // This is a gray guide line that represents the data plotted with a linear curve (straight lines between points)
+        g.append("path")
+                .attr("d", line(data))
+                .style("stroke", "gray")
+                .style("stroke-dasharray", "5 5");
+
+        // Apply a curve type
+        line.curve(d3[curveType]);
+
+        // This is the red line that represents the data plotted with the curve type
+        g.append("path")
+                .attr("d", line(data))
+                .style("stroke", "blue");
+
+        // The label under each line chart
+        g.append("text")
+                .text("d3."+curveType)
+                .style("text-anchor", "middle")
+                .attr("x", width/(cols * 2))
+                .attr("y", height/rows - margin/2);
+
+        // each point for this line chart (there are 4 points)
+        g.selectAll(".point")
+                .data(data)
+                .join("path").attr("class", "point")
+                .attr("d", point)
+                .style("fill", 'red')
+                .attr("transform", d => "translate("+[scaleX(d[0]), scaleY(d[1])]+")");
+    }
+
+
+</script>
+</body>
+</html>

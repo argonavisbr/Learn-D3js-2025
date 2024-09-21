@@ -22,13 +22,16 @@ __`Chapter10/`__
 Code for Chapter 10 - Colors
 
 __`Chapter11/`__
-Code for Chapter 11 - Shape and layout generators
+Code for Chapter 11 - Shape generators, line and area charts
 
 __`Chapter12/`__
-Code for Chapter 12 - Events and transitions
+Code for Chapter 11 - Layout generators, stacks and pies
 
 __`Chapter13/`__
-Code for Chapter 13 - Interactive behaviors
+Code for Chapter 13 - Transitions and animations
+
+__`Chapter14/`__
+Code for Chapter 14 - Events and interactive behaviors
 
 ## 2) CodePen links to selected examples
 

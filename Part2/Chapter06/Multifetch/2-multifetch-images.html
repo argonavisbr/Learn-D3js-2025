@@ -1,13 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Multifetch</title>
-    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <title>Multifetching images</title>
 </head>
 <body>
 
 <svg height="200" width="600"></svg>
-<script>
+<script type="module">
+    import * as d3 from "https://cdn.jsdelivr.net/npm/d3@7/+esm";
+
     const entries = [
         {name: "Moon"},
         {name: "Phobos"},
@@ -38,9 +39,6 @@
                   .attr("x", (d,i) => 10 + i*50).attr("y", 10)
                   .attr("height", 40).attr("width", 40);
         });
-
-
-
 
 </script>
 

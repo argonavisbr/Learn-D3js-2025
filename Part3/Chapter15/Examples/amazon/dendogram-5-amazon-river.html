@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Hierarchies</title>
+    <script src="https://d3js.org/d3.v5.min.js"></script>
+    <link rel="stylesheet" href="css/linear.css">
+</head>
+<body>
+<script>
+    const file = "../../Data/amazon-river.csv";
+    const height = 800;
+    const width = 1000;
+    const svg   = d3.select("body").append("svg").attr("height", height).attr("width", width);
+    const chart = svg.append("g").attr("transform", `translate(${width - 25},50)`);
+
+    // Configure scale
+    const lengthScale = d3.scaleLinear().range([1,8]);
+
+    // Configure link type
+    const link = d3.linkHorizontal().x(d => -d.y).y(d => d.x);
+
+    // Load data and draw the chart
+    d3.csv(file, d3.autoType)
+      .then(function(result) {
+        // Inspect data
+        console.log("tabular data", result);
+
+        const stratify = d3.stratify()
+                        .id(d => d.Tributary)
+                        .parentId(d => d.Confluence);
+        const root = d3.hierarchy(stratify(result));
+        // Inspect stratified data
+        console.log("root.children", root.children);
+
+        // Configure domain based on loaded data
+        lengthScale.domain(d3.extent(root.children, d => d.data.data.km));
+
+        // Configure tree and generate tree data
+        const tree = d3.cluster()
+                       .size([height-50,width-75])
+                       .separation((a,b) => (a.parent === b.parent ? 1 : 2));
+        const treeData = tree(root.sort((a,b) => b.height - a.height));
+
+        // Inspect tree data
+        console.log("treeData", treeData);
+
+        // Draw the chart
+        draw(chart, treeData);
+
+    });
+
+    function draw(container, data) {
+        drawLinks(container.append("g").attr("class", "links"), data.links());
+        drawNodes(container.append("g").attr("class", "nodes"), data.descendants());
+    }
+
+    function drawNodes(g, data) {
+       g.selectAll("g.node")
+          .data(data)
+             .join('g')
+                .attr('transform', d => `translate(${[-d.y, d.x]})`)
+                .append("text")
+                    .attr('x', 5)
+                        .attr('y', 5)
+                        .attr("class", d => (d.depth === 0) ? "root" : "leaf")
+                        .text(d => d.data.id);
+    }
+
+    function drawLinks(g, data) {
+        g.selectAll(".river")
+         .data(data)
+             .join('path')
+                .attr("class", "river")
+                .attr("d", link)
+                .attr("stroke-width", d => lengthScale(d.target.data.data.km));
+    }
+
+</script>
+</body>
+</html>
+

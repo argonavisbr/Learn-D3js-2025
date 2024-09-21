@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Using symbols without the d3.symbol generator</title>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <style>
+        svg, canvas { border: solid 1px gray}
+        path {stroke: red; fill: orange}
+    </style>
+</head>
+<body>
+<h1>Using symbols without the d3.symbol generator</h1>
+<p>Rendering in SVG and Canvas</p>
+<script src="js/canvas-utils.js"></script>
+<script>
+    const width  = 200;
+    const height = 200;
+
+    // An SVG container
+    const svg = d3.select("body")
+        .append("svg")
+        .attr("height",height)
+        .attr("width",width);
+
+    // A Canvas container
+    const canvas = d3.select("body")
+        .append("canvas")
+        .attr("height",height)
+        .attr("width",width)
+        .style("height",`${height}px`)
+        .style("width",`${width}px`);
+
+
+    // 1) Drawing to a d3.path() context
+    const path = d3.path();
+       d3.symbolCircle.draw(path, 5000); // draws to the path context
+
+    // Serializes the path to an SVG path string
+    const symb = path.toString(); // "M4.514,0A4.514,4.514,0,1,1,-4.514,0A4.514,4.514,0,1,1,4.514,0"
+    console.log(symb);
+
+    // Renders the SVG path
+    svg.append("path").attr("d", symb)
+        .attr("transform", "translate(100,100)");
+
+
+    // 2) Drawing to a Canvas context
+    const context = fixResolution(canvas.node().getContext("2d"));
+
+    // Transforms must be applied to the context before starting the path
+    context.translate(100, 100);
+
+    // Renders the image to the canvas context
+    context.beginPath();
+       d3.symbolCircle.draw(context, 5000, 100, 100); // draws to the canvas context
+    context.strokeStyle = "red";
+    context.fillStyle = "orange";
+    context.stroke();
+    context.fill();
+
+</script>
+</body>
+</html>

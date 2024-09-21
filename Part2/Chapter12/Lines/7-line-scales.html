@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Lines using scale functions</title>
+    <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+    <style>
+        path.line {
+            stroke: red;
+            fill: none;
+        }
+    </style>
+</head>
+<body>
+<script>
+    const width  = 500;
+    const height = 400;
+    const svg = d3.select("body").append("svg").attr("height",height).attr("width",width);
+
+    // Raw data (needs scaling)
+    const data = [
+        [0,0],
+        [1,.2],
+        [2,.05],
+        [3,.15],
+        [4,.1]
+    ];
+
+    // Scale for the x-values
+    const scaleX = d3.scaleLinear()
+                     .domain(d3.extent(data, d => d[0]))
+                     .range([0,width]);
+
+    // Scale for the y-values
+    const scaleY = d3.scaleLinear()
+                     .domain(d3.extent(data, d => d[1]))
+                     .range([height,0]); // invert - place 0 at bottom for Cartesian charts
+
+    // Setting the x() and y() accessors with scales
+    const line = d3.line()
+                   .x(d => scaleX(d[0]))
+                   .y(d => scaleY(d[1]));
+
+    // This is an alternative way of setting the x() and y() accessors
+    // const line = d3.line(d => scaleX(d[0]), d => scaleY(d[1]));
+
+    // Check that the path data is correct and will place the points within the viewport range
+    const pathData = line(data);
+    console.log(pathData);
+
+    // Render the line
+    svg.append("path")
+        .datum(data)
+        .attr("class", "line")  // need this to apply line styles (and not affect other paths, such as the axes)
+        .attr("d", pathData);
+
+</script>
+</body>
+</html>

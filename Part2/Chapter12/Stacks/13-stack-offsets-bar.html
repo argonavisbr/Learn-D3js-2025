@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Stack offsets - Bars</title>
+    <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+    <style>
+        text {
+            font-family: monospace;
+            font-size: 14px;
+        }
+        svg {
+            border: 1px solid #ccc;
+        }
+    </style>
+</head>
+<body>
+<script>
+    const easeDim = {
+        width: 1000,
+        height: 500,
+        margin: {top: 20, right: 650, bottom: 20, left: 20}
+    };
+
+    const svg = d3.select("body")
+                  .append("svg")
+                     .attr("height", "100%")
+                     .attr("width", "100%")
+                     .attr("viewBox", `${-dim.width*.4} 0 ${dim.width} ${dim.height}`);
+
+    const stackOffset = [
+        'stackOffsetNone',
+        'stackOffsetExpand',
+        'stackOffsetDiverging',
+        'stackOffsetSilhouette',
+        'stackOffsetWiggle'
+    ];
+
+    const data = [
+        {year: 1960, "A": 5, "B": 100, "C": 10},
+        {year: 1980, "A": 25, "B": 75, "C": 50},
+        {year: 2000, "A": 10, "B": 50, "C": 75},
+        {year: 2020, "A": 15, "B": 25, "C": 5},
+    ];
+
+    const keys = Object.keys(data[0]).filter(k => k !== 'year');
+
+    // absolute values for stackOffsetExpand
+    const absData = data.map(d => Object.fromEntries(Object.entries(d).map(([k,v]) => [k, Math.abs(v)])));
+    absData.forEach(d => Object.keys(d).forEach(k => d[k] = Math.abs(d[k])));
+
+    const scale = d3.scaleLinear()
+            .range([dim.margin.left, dim.width - dim.margin.right]);
+    const stack = d3.stack()
+            .keys(keys);
+
+    const colorScale = d3.scaleOrdinal(d3.schemeCategory10)
+            .domain([0,keys.length]);
+
+    stackOffset.forEach((d,i) => drawBar(d, i));
+
+    // draw a line at zero
+    svg.append("line")
+        .attr("x1", scale(0))
+        .attr("x2", scale(0))
+        .attr("y1", 0)
+        .attr("y2", dim.height)
+        .style("stroke", "black")
+        .attr("stroke-width", 2);
+
+    svg.append("text")
+        .text('0')
+        .attr("x", scale(0) - 15)
+        .attr("y", dim.margin.top);
+
+    function drawBar(offset, index) {
+        stack.offset(d3[offset]);
+
+        const stacked = stack(data);
+
+        scale.domain([0, d3.max(d3.merge(d3.merge(stacked)))]);
+
+        if(index === 1) {
+            scale.domain([0,1]);
+            datasets = absData;
+            text = offset + " (values >= 0)"
+        }
+
+        // A group for each set of stacked bars
+        const g = svg.append("g")
+                     .attr("transform", `translate(${[0, 100*index + 18]})`);
+
+        g.selectAll(".year")
+         .data(stacked)
+            .join("g").attr("class", "year")
+               .style("fill", (d,i) => colorScale(i))
+               .each(function(d) {
+                    d3.select(this)
+                      .selectAll(".country")
+                        .data(d => d)
+                          .join("rect").attr("class", "country")
+                             .attr('width', d => scale(d[1]) - scale(d[0]))
+                             .attr('height', 20)
+                             .attr('x', d => scale(d[0]))
+                             .attr('y', (d,i) => i * 22);
+               });
+
+        g.append("text")
+         .text(`d3.${offset}`)
+                .attr("x", dim.width - dim.margin.right + 20)
+                .attr("y", 35)
+    }
+
+
+</script>
+</body>
+</html>

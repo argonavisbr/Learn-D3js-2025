@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Using a row function to transform a tabular CSV to a tidy format while loading</title>
+</head>
+<body>
+<h1>Using a row function to transform a tabular CSV to a tidy format while loading</h1>
+<p>View source and open JavaScript console to see the results.</p>
+<script type="module">
+  import * as d3 from "https://cdn.jsdelivr.net/npm/d3@7/+esm";
+
+  const dataFile = "../data/Paris2024-Top10.csv";
+
+  // Reorganizing the dataset in "Tidy" format: Country, Medal, Value
+
+  d3.csv(dataFile, (row, i, cols) => { // returns an array of 3 objects, one per medal type
+    const medals = cols.slice(2,5); // 'Gold', 'Silver' and 'Gold' column headers
+    return medals.map(m => ({country: row.Country,
+                             medal: m,
+                             count: +row[m]})); // object per medal type
+  })
+  .then(array => {
+      console.log(array.flat());
+  });
+</script>
+</body>
+</html>

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Fetching and parsing a CSV using a row function</title>
+</head>
+<body>
+<h1>Fetching and parsing a CSV using a row function</h1>
+<p>View source and open JavaScript console to see the results.</p>
+<script type="module">
+  import * as d3 from "https://cdn.jsdelivr.net/npm/d3@7/+esm";
+
+  const dataFile = "../data/Paris2024-Top10.csv";
+
+  d3.text(dataFile)
+      .then(text => {
+          console.log(text);
+          return d3.csvParse(text, d3.autoType);
+      })
+      .then(data => {
+          console.log(data);
+      })
+</script>
+</body>
+</html>

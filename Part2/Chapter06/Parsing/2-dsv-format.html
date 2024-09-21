@@ -2,12 +2,12 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Parsing DSV data structures</title>
-    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <title>Formatting arrays into DSV</title>
 </head>
 <body>
 <h1>Open JavaScript console to see results</h1>
-<script>
+<script type="module">
+    import * as d3 from "https://cdn.jsdelivr.net/npm/d3@7/+esm";
 
     const matrix = [
         ["abc", "def", "ghi"],
@@ -29,24 +29,12 @@
     const semicolonParser = d3.dsvFormat(";"); // the semicolon character
 
     // Create a semicolon-separated dataset with no headers row
-    const dataset = semicolonParser.formatRows(matrix);
-    console.log("formatRows dataset\n--------\n", dataset);
+    const dataset1 = semicolonParser.formatRows(matrix);
+    console.log("formatRows dataset\n--------\n", dataset1);
 
     // Create a semicolon-separated dataset with a headers row (defaults to 1, 2, 3, ...)
     const dataset2 = semicolonParser.format(objects);
     console.log("format dataset\n--------\n", dataset2);
-/*
-    // Parse a semicolon-separated dataset and treat all rows equally
-    // Creates an array of string arrays
-    const data2 = semicolonParser.parseRows(dataset);
-    console.log("parseRows data\n", data2);
-
-    // Parse a semicolon-separated dataset and treat the first row as a headers row
-    // Creates an array of objects
-    const data3 = semicolonParser.parse(dataset2);
-    console.log("parse data\n", data3);
-
- */
 
 </script>
 </body>

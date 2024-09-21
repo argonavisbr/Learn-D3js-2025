@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>GDP pie chart</title>
+    <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+    <script src="../../js/chart-utils.js"></script>
+    <link rel="stylesheet" href="../../css/chart-utils.css">
+    <style>
+        path.line {
+            stroke-width: 2px;
+            fill: none;
+            opacity: .85
+        }
+        h1, p {
+            font-family: sans-serif;
+        }
+        h1 {
+            font-size: 16pt;
+            text-align: center;
+        }
+        p {
+            font-size: 10px;
+            text-align: center;
+        }
+        .legend text.label {
+            font-family: sans-serif;
+            font-size: 10px;
+            text-anchor: start;
+        }
+        text.label {
+            font-family: sans-serif;
+            font-size: 12px;
+        }
+        svg {border: 1px solid #ccc;}
+    </style>
+</head>
+<body>
+<h1>GDP share (US$) of 9 richest countries in 2018</h1>
+<p>Source: World Bank</p>
+<script>
+    const file = "../../data/gdp-world-bank-2022.csv";
+
+    const limit = 7;
+
+    d3.csv(file, row => {
+        // We only need data from 2018
+        return {
+            country: row['Country'],
+            value: +row['2018']
+        }
+    })
+      .then(csv => {
+          const data = prepare(csv, 9);
+          console.log(data)
+          plot(data);
+    });
+
+    function prepare(data, limit) {
+        const richest = data.sort((a,b) => d3.descending(a.value, b.value)).slice(0,limit);
+        const rest = data.filter(d => !richest.includes(d));
+        richest.push({country: 'Rest of the world', value: d3.sum(rest, d => d.value)});
+        return richest;
+    }
+
+    function plot(data) {
+        const height = 500, width = 800;
+        const margin = {left: 75, right: 150, top: 20, bottom: 60};
+
+        const svg = d3.select("body")
+                      .append("svg")
+                      .attr("width", width)
+                      .attr("height",height);
+
+        // Pie configuration
+        // Configuration for the pie chart (half-pie, starting at -90 degrees)
+        const pie = d3.pie()
+            .value(d => d.value)
+            .sort((a,b) => d3.ascending(a.country, b.country))
+            .sortValues(d3.descending) // this has precedence over sort
+            .startAngle(-Math.PI/2)
+            .endAngle(Math.PI/2);
+
+        // Configuration for all slices
+        const arc = d3.arc()
+            .innerRadius(50)
+            .outerRadius(280)
+            .padAngle(4)
+            .padRadius(4);
+
+        // A simple color scale
+        const colorScale = d3.scaleOrdinal(d3.schemeTableau10);
+
+
+        // Bind the data to a container, and place the origin where the chart will fit
+        const g = svg.selectAll("g")
+                     .data( pie(data) )
+                     .join("g")
+                     .attr("transform", `translate(${[width/2-40,height]})`);
+
+        // Render the chart
+        g.append("path").attr("class", "slice")
+                        .attr("d", arc)
+                        .attr("fill", (d,i) => colorScale(i));
+
+        // Place inner labels for the values
+        pkt.pieLabels()
+            .container(g)
+            .arc(arc)
+            .property('value')
+            .radius(1.55)
+            .format(d3.format(",.3s"))();
+
+        // Place outer labels for the flags
+        pkt.pieLabels()
+            .container(g)
+            .arc(arc)
+            .property('country')
+            .radius(1.75)
+            .direction(pkt.direction.RADIAL)
+            ();
+
+        // 3) To use legends (remove if using labels on slices):
+        const legend = svg.append("g")
+            .attr("transform", `translate(${[width-120,30]})`);
+
+        pkt.legend()
+            .container(legend)
+            .color(colorScale)
+            .data(data.map(d => d.country))();
+
+    }
+
+</script>
+
+</body>
+</html>

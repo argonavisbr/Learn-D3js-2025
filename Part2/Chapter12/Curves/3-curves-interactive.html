@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Interactive curves</title>
+    <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+    <style>
+        path {
+            fill: none;
+        }
+        .controls {
+            text-align: center;
+        }
+        svg {
+            border: solid lightgray;
+        }
+        div {
+            width: 600px;
+        }
+        input {
+            margin: 5px 5px;
+            width: 50%;
+        }
+        #tension {
+            font-size: 10pt;
+            font-family: monospace;
+        }
+        p, h1 {
+            font-family: sans-serif;
+        }
+        h1 {
+            font-size: 16pt;
+        }
+        p {
+            font-size: 10pt;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Interactive Cubic Splines</h1>
+<p>Select the desired curve function.</p>
+<script>
+    const width  = 600;
+    const height = 300;
+    const margin = 30;
+
+    // These are the sample data points for the line chart ([x,y])
+    const data = [[0,0],
+                  [1,8],
+                  [4,6],
+                  [3,4],
+                  [6,1],
+                  [7,4],
+                  [8,1]];
+
+    // All curves in d3-shapes (03-2024)
+    const curves = [
+        'curveLinear',
+        'curveLinearClosed',
+
+        'curveBasis',
+        'curveBasisClosed',
+        'curveBasisOpen',
+
+        'curveBundle',
+
+        'curveCardinal',
+        'curveCardinalClosed',
+        'curveCardinalOpen',
+
+        'curveCatmullRom',
+        'curveCatmullRomClosed',
+        'curveCatmullRomOpen',
+
+        'curveMonotoneX',
+        'curveMonotoneY',
+
+        'curveBumpX',
+        'curveBumpY',
+
+        'curveStep',
+        'curveStepBefore',
+        'curveStepAfter',
+
+        'curveNatural'
+
+    ];
+
+    const fmt = d3.format(".2f");
+
+    const scaleX = d3.scaleLinear()
+                     .domain(d3.extent(data, d => d[0]))
+                     .range([margin,width - margin]);
+
+    const scaleY = d3.scaleLinear()
+                     .domain(d3.extent(data, d => d[1]))
+                     .range([height - margin, margin/2]); // invert - place 0 at bottom
+
+    const point = d3.symbol().type(d3.symbolCircle).size(25);
+
+    // Render viewport
+    const svg = d3.select("body").append("svg").attr("height",height).attr("width",width);
+
+    // Current curve
+    let currentCurve = curves[0];
+
+    // Curves that have tension controls
+    const tensionMap = new Map();
+    tensionMap.set("curveCardinal", {name: "tension", default: 0});
+    tensionMap.set("curveCatmullRom", {name: "alpha", default: 0.5});
+    tensionMap.set("curveBundle", {name:"beta", default: 0.85});
+
+    // To drag the points
+    const drag = d3.drag()
+        .on("drag", function(event, d) {
+            [x,y] = d3.pointer(event, svg.node());
+            d[0] = scaleX.invert(x);
+            d[1] = scaleY.invert(y);
+            svg.selectAll("*").remove(); // TODO - use updates instead of redrawing the shapes!
+            draw(currentCurve);
+        });
+
+    renderControls();
+    draw(currentCurve);
+
+    /**
+     * Returns true if curve allows configuration of parameters
+     * @param curve
+     * @returns {boolean|boolean}
+     */
+    function isAdjustableCurve(curve) {
+        return curve.startsWith("curveCardinal") ||
+               curve.startsWith("curveCatmullRom") ||
+               curve === "curveBundle";
+    }
+
+    /**
+     * Renders a control panel to select curves and adjust parameters.
+     */
+    function renderControls() {
+
+        const controls = d3.select("body")
+                           .append("div")
+                             .attr("class", "controls");
+
+        // Create a pull-down menu to select the curve type
+        const select = controls.append("select")
+                                .on("change", function() {
+                                    currentCurve = this.value;
+                                    svg.selectAll("*").remove();
+
+                                    // Show additional controls (slider) if curve is adjustable
+                                    if(isAdjustableCurve(currentCurve)) {
+                                        const curveType = currentCurve.replace(/(Closed|Open)/, "");
+                                        const tension = tensionMap.get(curveType);
+
+                                        const tensionControl = d3.select("div#tension");
+                                        tensionControl.style("visibility", "visible");
+
+                                        const slider = tensionControl.select("input")
+                                        slider.node().value = tension.default;
+
+                                        tensionControl.select("span#tension-label")
+                                                      .text(tension.name);
+                                        tensionControl.select("#tension-value")
+                                                      .text(fmt(tension.default));
+                                    } else {
+                                        d3.select("#tension")
+                                            .style("visibility", "hidden");
+                                    }
+
+                                    draw(currentCurve);
+                                });
+
+        // Populate the <select> pull-down menu with available curves
+        select.selectAll("option")
+              .data(curves)
+                .join("option")
+                  .attr("value", d => d)
+                  .text(d => `d3.${d}`);
+
+        // Parameter tension slider for required curves
+        const tensionCtrl = controls.append("div")
+                                .attr("id", "tension")
+                                .style("visibility", "hidden");
+
+        tensionCtrl.append("span")
+               .attr("id", "tension-label");
+
+        tensionCtrl.append("input")
+               .attr("type", "range")
+               .attr("min", 0)
+               .attr("max", 1)
+               .attr("step", 0.01)
+               .attr("value", 0)
+               .on("input", function(event) {
+                   svg.selectAll("*").remove();
+                   tensionCtrl.select("#tension-value")
+                              .text(fmt(event.target.value));
+                   draw(currentCurve);
+               });
+
+        tensionCtrl.append("span").attr("id", "tension-value");
+
+        // Removes all points from the chart
+        controls.append("button")
+            .text("Clear all points")
+            .on("click", function() {
+                data.splice(0, data.length);
+                svg.selectAll("*").remove();
+                draw(currentCurve);
+            });
+
+        // Resets the chart to its initial state
+        controls.append("button")
+            .text("Refresh")
+            .on("click", () => location.reload());
+
+        controls.append("p")
+            .text("Click to add, click again to remove, or drag existing points.");
+    }
+
+    /**
+     * TODO - use updates instead of redrawing the shapes!
+     * @param curveType
+     */
+    function draw(curveType) {
+
+        const g = svg.append("g")
+                .attr("transform", "translate("+[0,0]+")");
+
+        const line = d3.line()
+                        .x(d => scaleX(d[0]))
+                        .y(d => scaleY(d[1]));
+
+        g.append("path")
+                .attr("d", line(data))
+                .attr("stroke", "lightgray")
+                .attr("fill", "none");
+
+        line.curve(d3[curveType]);
+
+        // if the curve type supports alpha, beta or tension, set it to 0
+        if(isAdjustableCurve(curveType)) {
+            line.curve(d3[curveType]
+                         [tensionMap.get(currentCurve.replace(/(Closed|Open)/, "")).name]
+                         (d3.select("input").node().value));
+        }
+
+        g.append("path")
+                .attr("d", line(data))
+                .style("stroke", "blue")
+
+        g.selectAll(".point")
+                .data(data)
+                .join("path").attr("class", "point")
+                .attr("d", point)
+                .style("fill", 'red')
+                .attr("transform", d => "translate("+[scaleX(d[0]), scaleY(d[1])]+")")
+                .call(drag); // user can drag the point
+    }
+
+    // Add or remove points on click
+    svg.on("click", function(event) {
+        // if there already is a point near the click, remove it
+        const threshold = 5;
+        if(data.some(d => Math.abs(scaleX(d[0]) - d3.pointer(event)[0]) < threshold
+                       && Math.abs(scaleY(d[1]) - d3.pointer(event)[1]) < threshold)) {
+            const [x,y] = d3.pointer(event);
+            const index = data.findIndex(d => Math.abs(scaleX(d[0]) - x) < threshold
+                                           && Math.abs(scaleY(d[1]) - y) < threshold);
+            data.splice(index, 1);  // remove the point
+        } else {
+            const [x,y] = d3.pointer(event);
+            data.push([scaleX.invert(x), scaleY.invert(y)]);
+        }
+        svg.selectAll("*").remove();
+        draw(currentCurve);
+    });
+
+</script>
+</body>
+</html>

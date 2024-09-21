@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Symbols</title>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <style>
+        text {
+            font-family: monospace;
+            font-size: 8pt;
+        }
+        path {
+            fill: none;
+        }
+    </style>
+</head>
+<body>
+<script src="js/symbol-utils.js"></script>
+<script>
+    const width  = 1000;
+    const height = 400;
+
+    const colorScale = d3.scaleOrdinal(d3.schemeCategory10)
+                         .domain([0,d3.symbolsFill.length]);
+
+    const svg = d3.select("body")
+        .append("svg")
+        .attr("height",400)
+        .attr("width",width);
+
+    // d3.symbols
+    d3.symbols.forEach((s,i) => display(s, i, 30, "fill", 60, 70, colorScale, false));   // d3.symbolsFill == d3.symbols
+    d3.symbolsStroke.forEach((s,i) => display(s, i, 80, "stroke", 60, 70, colorScale, false));
+
+</script>
+</body>
+</html>

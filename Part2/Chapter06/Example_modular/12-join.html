@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Moons</title>
+    <!-- Using free Yanone Kaffeesatz fonts: https://www.yanone.de/fonts/kaffeesatz/ -->
+    <style>
+        svg { border: solid 1px grey; }
+        * { font-family: 'Yanone Kaffeesatz', sans-serif; }
+        text { font-size: 11px; }
+
+    </style>
+</head>
+<body>
+
+<h1>The largest moons of <span id="planetName"></span></h1>
+<div id="container" width="500" height="300">
+    <svg height="100%" width="100%" id="moons"></svg>
+</div>
+<form></form>
+
+<script type="module">
+    import * as d3 from "https://cdn.jsdelivr.net/npm/d3@7/+esm";
+    import { app, dim } from "./js/constants.js";
+    import { draw } from "./js/render.js";
+    import { configureView } from "./js/config.js";
+    import { init } from "./js/init.js";
+
+    // GRAPHICS CONTEXT
+
+    // Obtain a handle to the SVG element and set up the view port
+    const svg = d3.select("#moons")
+        .attr("viewBox", `0 0 ${dim.width} ${dim.height}`);
+
+    // All moons will be anchored on this object (the orbital plane)
+    const plane = svg.append("g")
+        .attr("transform", `translate(${[dim.margin.planet, dim.height/2]})`);
+
+
+    // DATA LOADING
+
+    // check if the file is really accessible from this location
+    // and adjust it to your local settings if necessary
+    const datafile = "../data/sol_2019.json";
+
+    // Loads the data file (take a look at it before proceeding)
+    d3.json(datafile)
+        .then(function(data) {
+            // only include planets with moons (p3 to p8)
+            app.planets = data.planets
+                .filter(p => +p.id.substring(1) >= 3
+                    && +p.id.substring(1) <= 8);
+            init(plane);  // initializes the user interface (buttons)
+            configureView(); // sets data and scales for each view
+            draw(plane);  // draws and updates moons and planets
+        });
+
+</script>
+
+
+</body>
+</html>

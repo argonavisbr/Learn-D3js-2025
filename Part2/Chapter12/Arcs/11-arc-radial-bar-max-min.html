@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Radial bar chart</title>
+    <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+    <script src="../js/chart-utils.js"></script>
+    <link rel="stylesheet" href="../css/chart-utils.css">
+    <style>
+        path {
+            fill: none;
+        }
+        .bar {
+            opacity: .9;
+        }
+    </style>
+</head>
+<body>
+<script>
+    const width  = 600, height = 600, margin = 100;
+
+    // Sample data
+    const outer = d3.range(0, 10).map(() => d3.randomInt(60,120)());
+    const inner = d3.range(0, 10).map(() => d3.randomInt(0,50)());
+    const angles  = d3.range(0, outer.length, 1);
+    const data = angles.map((d,i) => [d, outer[i], inner[i]]);
+
+    console.log(data)
+
+    // SVG view port
+    const svg = d3.select("body")
+                  .append("svg")
+                    .attr("height", height)
+                    .attr("width", width)
+                    .attr("viewBox", `${-width/2} ${-height/2} ${width} ${height}`);
+
+    // Scales
+    const scaleAngle = d3.scaleLinear()
+                         .domain([0, angles.length])
+                         .range([0, 2*Math.PI]);
+    const scaleRadius = d3.scaleRadial()
+                          .domain([0, d3.max(outer)])
+                          .range([0, width/2 - margin]);
+    const colorScale = d3.scaleOrdinal(d3.schemeCategory10);
+
+    // Draw radial axes with grid - see radial-chart-utils.js
+    pkt.radialAxes().container(svg).aScale(scaleAngle).rScale(scaleRadius).angularData(angles).numTicks(6).useGrid(true)();
+
+    // arc
+    const arc = d3.arc()
+                  .outerRadius(d => scaleRadius(d[1]))
+                  .innerRadius(d => scaleRadius(d[2]))
+                  .startAngle(d => scaleAngle(d[0]) - 0.25)
+                  .endAngle(d => scaleAngle(d[0]) + 0.25)
+
+    // get lines
+
+    // Render the bars
+
+    svg.selectAll(".bar")
+       .data(data)
+         .join("path")
+           .attr("class", "bar")
+           .attr("d", arc)
+           .style("fill", colorScale);
+
+</script>
+</body>
+</html>

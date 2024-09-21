@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Stacked bar chart</title>
+    <link rel="stylesheet" href="../css/chart-utils.css">
+    <style>
+        .legend text {
+            font-size: 12px !important;
+            font-family: sans-serif;
+            text-transform: capitalize;
+        }
+    </style>
+</head>
+<body>
+
+<script type="module">
+
+    import * as d3 from "https://cdn.jsdelivr.net/npm/d3@7/+esm";
+    import * as pkt from "../js/chart-utils-esm.js";
+
+    // This dataset is in a non-standard format. This example attempts to stack
+    // the data without transforming it. The code is more complex. See step (2) below.
+    const sleep = [
+        {day: 'Sun', hours: {light: 5.5, deep: 0.9, rem: 1.6}},
+        {day: 'Mon', hours: {light: 4.9, deep: 1.5, rem: 1.1}},
+        {day: 'Tue', hours: {light: 5.1, deep: 1.2, rem: 1}},
+        {day: 'Wed', hours: {light: 3.9, deep: 0.7, rem: 1.1}},
+        {day: 'Thu', hours: {light: 4.6, deep: 1.8, rem: 1.2}},
+        {day: 'Fri', hours: {light: 3.1, deep: 0.5, rem: 0.4}},
+        {day: 'Sat', hours: {light: 6.1, deep: 1.2, rem: 1.2}}
+    ];
+
+    // 1) SETUP
+
+    const dim = {
+        height: 400,
+        width: 700,
+        margin: {top: 50, right: 100, bottom: 50, left: 50}
+    };
+
+    const svg = d3.select("body")
+        .append("svg")
+        .attr("width", dim.width)
+        .attr("height", dim.height);
+
+    // Use scaleBand() for the x-axis of bar charts - it's easier to align and space the bars
+    const scaleX = d3.scaleBand()
+                     .range([dim.margin.left, dim.width - dim.margin.right])
+                     .padding(0.2);
+
+    // Use a scaleLinear() for the y-axis, so that the data can be compared
+    const scaleY = d3.scaleLinear()
+                     .range([dim.height - dim.margin.bottom, dim.margin.top]);
+
+    const colors = ['#00eeff', '#0088ff', '#0044ff'];
+    const keys = Object.keys(sleep[0].hours);
+
+    // 2) STACK THE DATA
+    // Create a stacked layout generator for 3 (keys) layers of data
+    // Note that the value() method must be used, as the keys don't
+    // directly provide values.
+    const stack = d3.stack()
+                    .keys(keys)
+                    .value((d, key) => Object.entries(d.hours)
+                                             .filter(e => e[0] === key)
+                                             .map(e => e[1]));
+
+    // Apply the generator and obtain the stacked data
+    const stackedData = stack(sleep);
+
+    // 3) RENDER THE CHART
+    // set the domains of the scales
+    scaleX.domain(sleep.map(d => d.day));
+    scaleY.domain([0, d3.max(stackedData[stackedData.length - 1][1])]);
+
+    // render Cartesian axes - this function is from the file chart-utils.js
+    pkt.cartesianAxes()
+        .container(svg)
+        .xScale(scaleX)
+        .yScale(scaleY)
+        .xLabel('Day of the week')
+        .yLabel('Hours of sleep')
+        .showHorizontalGrid(true)();
+
+    // render the stacked bars
+    svg.selectAll("g.layer")    // each group represents a layer (phase of sleep)
+        .data(stackedData)
+        .join("g")
+          .attr("class", "layer")
+          .attr("fill", (d, i) => colors[i])   // assign a color to each layer
+          .selectAll("rect")
+            .data(d => d)        // each layer is an array of 2 values: [bottom, top] of a bar in the stack
+            .join("rect")
+               .attr("y", d => scaleY(d[1]))    // linear scale: top of bar is the top of the layer
+               .attr("height", d => scaleY(d[0]) - scaleY(d[1])) // linear scale: height of bar is (bottom - top)
+               .attr("x", (d, i) => scaleX(sleep[i].day))   // band scale: x position of the bar
+               .attr("width", scaleX.bandwidth());          // band scale: width of the bar
+
+    // Add legend at right margin
+    const legend = svg.append("g")
+                      .attr("transform", `translate(${[dim.width - dim.margin.right + 10, dim.height/2 - dim.margin.bottom]})`)
+                      .attr("class", "legend");
+
+    const colorFunction = d3.scaleOrdinal()
+                            .domain(keys)
+                            .range(colors);
+
+    pkt.legend()
+        .container(legend)
+        .data(keys.map(d => d === 'rem' ? d.toUpperCase() : d))
+        .color(colorFunction)();
+
+</script>
+
+</body>
+</html>

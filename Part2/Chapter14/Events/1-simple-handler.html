@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>A simple event handler</title>
+    <style>
+        svg {
+            background-color: rgba(0,255,0,0.1);
+            border: green 3px solid;
+        }
+        rect.red {
+            stroke: red;
+            fill: rgba(255,0,0,0.1);
+            stroke-width: 3;
+        }
+        rect.blue {
+            stroke: blue;
+            fill: rgba(0,0,255,0.1);
+            stroke-width: 3;
+        }
+        code:nth-of-type(1) {
+            color: green;
+        }
+        code:nth-of-type(2), code:nth-of-type(3) {
+            color: red;
+        }
+        code:nth-of-type(4) {
+            color: blue;
+        }
+
+    </style>
+</head>
+<body>
+<h3>A single event handler in parent element (SVG)</h3>
+<p>Click in a rectangle and see results in console: <code>&lt;svg></code> / <code>&lt;g></code> / <code>&lt;rect.red></code> and <code>&lt;rect.blue></code></p>
+
+<svg style="position:absolute; left:100px; top:100px"
+     height="500" width="600">
+
+    <g transform="translate(100,400)">
+        <rect class="red"  width="400" height="300" y="-300"/>
+        <rect class="blue" width="200" height="100" x="100" y="-200"/>
+    </g>
+</svg>
+
+<script>
+    document.getElementsByTagName("svg")[0]
+            .addEventListener('click', log);
+
+    function log(evt) {
+        console.log("\n=== EVENT handled by <" + this.localName + attr(this) + ">"
+            +" triggered by <" + evt.target.localName + attr(evt.target) + ">");
+    }
+    const attr = tag => tag.localName === "rect" ? " class=" + tag.getAttribute("class"): "";
+</script>
+
+</body>
+</html>

@@ -1,0 +1,21 @@
+circle {
+    fill: blue;
+}
+
+path {
+    fill: none;
+    stroke: #3e9671;
+    stroke-width: 2px;
+}
+text {
+    font-family: sans-serif;
+    fill: navy;
+}
+.node, .leaf {
+    font-size: 10px;
+    text-anchor: middle;
+}
+.root {
+    font-size: 12px;
+    font-weight: bold;
+}
