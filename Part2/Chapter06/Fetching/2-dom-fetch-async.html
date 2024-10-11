@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>HTML fetching</title>
+</head>
+<body>
+<h1>Using standard JavaScript to fetch a text file</h1>
+<p>Open JavaScript console to see results</p>
+<script type="module">
+    const dataFile = "../data/Paris2024-Top10.csv";
+
+    const response = await fetch(dataFile); // obtains response after fetching the file
+    console.log(await response.text());     // obtains the text (also a promise)
+
+    // You can also use the then() method to obtain the response in a callback function
+    // See 1-dom-fetch.html.
+
+</script>
+</body>
+</html>

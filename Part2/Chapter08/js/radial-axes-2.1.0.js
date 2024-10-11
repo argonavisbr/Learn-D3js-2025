@@ -122,7 +122,7 @@ dvj.drawRadialAxes = function(svg, aScale, rScale,
 }
 
 /**
- * Converts polar coordinates to cartesian coordinates
+ * Converts polar coordinates to Cartesian coordinates
  * @param angle The angle in radians
  * @param radius The radius
  * @returns {number[]} The cartesian coordinates [x,y]
@@ -132,7 +132,7 @@ dvj.p2c = function(angle, radius) {
 }
 
 /**
- * Converts cartesian coordinates to polar coordinates
+ * Converts Cartesian coordinates to polar coordinates
  * @param x The x coordinate
  * @param y The y coordinate
  * @returns {number[]} The polar coordinates [angle, radius]

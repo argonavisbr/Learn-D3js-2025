@@ -3,11 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <title>List of countries from GeoJSON file</title>
-    <script src="https://d3js.org/d3.v7.min.js"></script>
 </head>
 <body>
-<script>
-    const url = "../Data/world-lowres.geojson";
+<script type="module">
+    import * as d3 from "https://cdn.jsdelivr.net/npm/d3@7/+esm";
+
+    const url = "../data/world-lowres.geojson";
 
     d3.json(url)
         .then(function(data) {

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Using attr and style</title>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+</head>
+<body>
+<h1>Use JavaScript console to follow examples</h1>
+
+<p id="a1">Before</p>
+<div class="air">
+    <p id="a2">Hawk</p>
+    <p id="a3">Parrot</p>
+    <p id="a4">Vulture</p>
+</div>
+<div class="water">
+    <p id="a5">Dolphin</p>
+    <p id="a6">Shark</p>
+</div>
+<p id="a7">After</p>
+
+<canvas></canvas>
+
+<script>
+    d3.selectAll("p")
+        .text("paragraph")
+        .style("font-size", "18px");
+
+    d3.selectAll("p")
+        .data([12,24,48])
+          .transition().delay(2000)
+            .text(d => d > 24 ? "Large" : d < 24 ? "Small" : "Medium")
+            .style("font-size", d => d + "px");
+
+    d3.selectAll("p")
+        .data([0,3,6,12,6])
+        .transition().delay(4000)
+        .style("color",
+            (d,i,n) => i === 0 ? "red" : i === n.length - 1 ? "blue" : "black");
+
+
+
+</script>
+
+</body>
+</html>

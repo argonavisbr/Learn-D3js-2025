@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Fetching and parsing a CSV file into an array of objects</title>
+</head>
+<body>
+<h1>Fetching and parsing a CSV file into an array of objects</h1>
+<p>View source and open JavaScript console to see the results.</p>
+<script type="module">
+  import * as d3 from "https://cdn.jsdelivr.net/npm/d3@7/+esm";
+
+  const dataFile = "../data/Paris2024-Top10.csv";
+
+  d3.text(dataFile)
+      .then(text => {
+          console.log(text);
+          return d3.csvParse(text);
+      })
+      .then(data => {
+          drawTable(data);
+      })
+
+  function drawTable(data) {
+
+      const table = d3.select("body").append("table");
+
+      table.append("thead").append("tr")
+           .selectAll("th")
+              .data(data.columns.slice(0,2))
+              .join("th")
+                  .text(d => d);
+
+      const rows = table.append("tbody")
+                        .selectAll("tr")
+                           .data(data)
+                           .join("tr");
+      rows.append("td").text(d => d.Rank);
+      rows.append("td").text(d => d.Country);
+  }
+</script>
+</body>
+</html>

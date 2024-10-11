@@ -8,7 +8,7 @@ __`Helloworld/`__
 
 A simple example to get started with D3.
 
-__`Module-frontend/`__
+__`Imports/`__
 
-Simple examples showing how to load the D3 library in a frontend environment (without node/NPM).
+Simple examples showing how to load and use the D3 library in a frontend environment, using ESM and legacy techniques.
 

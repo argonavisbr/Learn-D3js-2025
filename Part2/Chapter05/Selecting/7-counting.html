@@ -33,9 +33,12 @@
     const newsel1 = divp.filter(d => d);
     console.log('newsel1.empty()', newsel1.empty());
 
-    const newsel2 = divp.data(["a","b","c","d"]);
-    console.log('newsel2.size()', newsel2.size());
-    console.log('newsel2.empty()', newsel2.empty());
+    const newsel2 = divp.select(d => d);
+    console.log('newsel1.empty()', newsel2.empty());
+
+    const newsel3 = divp.data(["a","b","c","d"]);
+    console.log('newsel2.size()', newsel3.size());
+    console.log('newsel2.empty()', newsel3.empty());
 
 </script>
 

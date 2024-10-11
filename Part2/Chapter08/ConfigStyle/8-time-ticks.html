@@ -17,7 +17,7 @@
                     .domain([new Date(2024,0,1), new Date(2025,0,1)])
                     .range([0,w-100]);
     const axisB = d3.axisBottom(scale)
-                    .ticks(6, "%b %Y");
+                    .ticks(1, "%b %Y");
 
     const svg = d3.select("body")
                   .append("svg")

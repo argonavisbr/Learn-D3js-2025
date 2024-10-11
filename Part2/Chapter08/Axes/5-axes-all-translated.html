@@ -14,28 +14,28 @@
 <script>
     const scale = d3.scaleLinear().range([0,250]);
 
-    const axis1 = d3.axisBottom(scale);
-    const axis2 = d3.axisTop(scale);
-    const axis3 = d3.axisLeft(scale);
-    const axis4 = d3.axisRight(scale);
+    const axisB = d3.axisBottom(scale);
+    const axisT = d3.axisTop(scale);
+    const axisR = d3.axisRight(scale);
+    const axisL = d3.axisLeft(scale);
 
     const svg = d3.select("body").append("svg").attr("width", 500).attr("height",350);
 
     svg.append("g")
             .attr("transform", "translate(10,100)")
-            .call(axis1);
+            .call(axisB);
 
     svg.append("g")
             .attr("transform", "translate(10,250)")
-            .call(axis2);
+            .call(axisT);
 
     svg.append("g")
             .attr("transform", "translate(350,50)")
-            .call(axis3);
+            .call(axisL);
 
     svg.append("g")
             .attr("transform", "translate(400,50)")
-            .call(axis4);
+            .call(axisR);
 </script>
 </body>
 </html>

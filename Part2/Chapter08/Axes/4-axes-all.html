@@ -19,17 +19,18 @@
 <script>
     const scale = d3.scaleLinear().range([0,250]);
 
-    const axis1 = d3.axisBottom(scale);
-    const axis2 = d3.axisTop(scale);
-    const axis4 = d3.axisRight(scale);
-    const axis3 = d3.axisLeft(scale);
+    const axisB = d3.axisBottom(scale);
+    const axisT = d3.axisTop(scale);
+    const axisR = d3.axisRight(scale);
+    const axisL = d3.axisLeft(scale);
 
     const svg = d3.select("body").append("svg").attr("width", 500).attr("height",350);
 
-    svg.append("g").attr("class","ax").call(axis1).style("color", "red");
-    svg.append("g").attr("class","ax").call(axis2).style("color", "blue");
-    svg.append("g").attr("class","ax").call(axis3).style("color", "green");
-    svg.append("g").attr("class","ax").call(axis4).style("color", "orange");
+    svg.append("g").attr("class","ax").call(axisB).style("color", "red");
+    svg.append("g").attr("class","ax").call(axisT).style("color", "blue");
+    svg.append("g").attr("class","ax").call(axisR).style("color", "green");
+    svg.append("g").attr("class","ax").call(axisL).style("color", "orange");
+
 
     svg.append("text")
         .attr("class", "pos")

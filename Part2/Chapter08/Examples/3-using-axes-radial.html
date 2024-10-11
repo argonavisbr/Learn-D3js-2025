@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Using a simple axis</title>
+    <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+    <style>
+        svg {
+            border: solid 1px lightblue;
+        }
+        .blank text, .tick:first-of-type {display: none}
+    </style>
+</head>
+<body>
+<script>
+    const dim = {width: 600, height: 600, margin: 20};
+
+    const svg = d3.select("body").append("svg")
+                  .attr("width", dim.width).attr("height",dim.height);
+
+    // A container for the chart, centered in the SVG
+    const chart = svg.append("g")
+                     .attr("transform",`translate(${[dim.width/2, dim.height/2]})`);
+
+
+    const scale = d3.scaleLinear()
+                    .range([0, dim.width/2 - dim.margin]);
+
+    const axis = d3.axisBottom(scale)
+                   .ticks(5).tickSizeOuter(0);
+
+    const n = 12;
+    const steps = d3.range(0, n);  // [0, 1, 2, ..., 11]
+
+    chart.selectAll("g.axis")
+         .data(steps).join("g").attr("class", "axis")
+           .classed("blank",(d,i) => i != 0)
+           .call(axis)
+           .attr("transform", (d,i) => `rotate(${i * 360/n})`);
+
+    d3.selectAll(".tick line").attr("y1", -3).attr("y2", 4);
+
+    // Adding data
+    const dataSize = d3.randomInt(10,100)();
+    const data = d3.range(dataSize).map(() => ({angle: d3.randomInt(0,360)(), radius: d3.randomInt(0,100)()}));
+    scale.domain([0, d3.max(data.map(d => d.radius))]);
+    d3.selectAll(".axis").call(axis);
+
+    const point = p => d3.pointRadial(p.angle * (Math.PI / 180), scale(p.radius));
+
+    chart.selectAll("circle")
+       .data(data)
+         .join("circle")
+           .attr("cx", d => point(d)[0])
+           .attr("cy", d => point(d)[1])
+           .attr("r", 3)
+           .style("fill", "violet");
+
+</script>
+</body>
+</html>

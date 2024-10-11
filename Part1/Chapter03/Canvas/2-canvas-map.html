@@ -2,36 +2,22 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
-    <script src="../js/canvasmap.js" ></script>
+    <title>A map using Canvas</title>
 </head>
 <body>
 
 <canvas id="map" width="1000" height="500"></canvas>
 
-<script>
-    const canvas = document.getElementById("map");
-    const ctx = canvas.getContext("2d");
-
-    // Map ocean background
-    ctx.fillStyle = 'white';
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-    // countries border and background
-    ctx.lineWidth = .25;
-    ctx.strokeStyle = 'white';
-    ctx.fillStyle = 'rgb(50,100,150)';
+<script type="module">
+    import {drawMap} from './js/canvasmap.js';
 
     // load and draw map
     fetch('../data/world-lowres.geojson')
-    .then(response => response.text())
-    .then((jsonData) => {
-        let object = JSON.parse(jsonData);
-        drawMap(object.features); // see JavaScript/canvasmap.js
-    });
-
-
-
+        .then(response => response.text())
+        .then((jsonData) => {
+            let object = JSON.parse(jsonData);
+            drawMap(object.features);
+        });
 </script>
 
 </body>

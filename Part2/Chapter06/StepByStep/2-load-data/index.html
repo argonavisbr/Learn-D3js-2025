@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Moons: Step 2 - Loading the data</title>
+    <link rel="stylesheet" href="css/main.css">
+</head>
+<body>
+
+<h1>The largest moons</h1>
+<div id="container" width="500" height="300">
+    <svg height="100%" width="100%" id="moons"></svg>
+</div>
+<form></form>
+
+<script type="module">
+    // Step 2 - Page loading - refer to code in constants.js and new code in load-1.1.js
+    import * as d3 from "https://cdn.jsdelivr.net/npm/d3@7/+esm";
+    import { app, dim } from "./js/constants.js";
+
+    // Import the load function
+    import { load } from "./js/load-1.0.js";
+
+
+    // GRAPHICS CONTEXT
+    const svg = d3.select("#moons")
+                  .attr("viewBox", `0 0 ${dim.width} ${dim.height}`);
+    const plane = svg.append("g")
+                     .attr("transform", `translate(${[dim.margin.planet, dim.height/2]})`);
+
+    // DATA LOADING
+    // Loads the data file (see load-1.1.js for details)
+    load().then(() => {
+        console.log(app.planets);
+    });
+
+</script>
+
+
+</body>
+</html>

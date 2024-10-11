@@ -6,3 +6,5 @@ Temporary repository for files used in D3 books, courses and workshops
 __`Part1/`__
 
 __`Part2/`__
+
+__`Part3/`__

@@ -13,15 +13,15 @@
 <body>
 <script>
     const scale = d3.scaleLinear().range([0,400]);
-    const axis1 = d3.axisBottom(scale);
+    const axisB = d3.axisBottom(scale);
 
     const svg = d3.select("body").append("svg")
                   .attr("width", 500).attr("height",50);
 
     svg.append("g")
-        .attr("id", "axis1")
+        .attr("id", "bottom-axis")
         .attr("transform", "translate(10,10)")
-        .call(axis1);
+        .call(axisB);
 </script>
 </body>
 </html>

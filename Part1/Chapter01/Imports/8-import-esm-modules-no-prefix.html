@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>D3: Module import - CDN library</title>
+</head>
+<body>
+<svg id="chart" width="600" height="200"></svg>
+<script type="module">
+    // Import individual modules
+
+    import {transition} from "https://cdn.skypack.dev/d3-transition@3"; // required to use transition (as a function)
+    import {select} from "https://cdn.skypack.dev/d3-selection@3"; // required to call select (as a function)
+
+    const array = [100, 200, 300, 350, 375, 400, 500];
+
+    select("#chart")
+        .selectAll("circle")
+        .data(array).join("circle")
+        .attr("r", "10").attr("cy", 100).attr("cx", d => d);
+
+    function update(dataset) {
+        const tr = transition().duration(1000);
+        select("#chart").selectAll("circle")
+            .data(dataset)
+            .transition(tr)
+            .attr("r", 5)
+            .attr("cx", d => d)
+            .style("fill", "red")
+    }
+
+    const newArray = [225, 425, 125, 50, 450, 75, 325];
+    setTimeout(update, 2000, newArray);
+</script>
+</body>
+</html>

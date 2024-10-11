@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Using a simple axis</title>
+    <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+    <style>
+        svg {
+            border: solid 1px lightblue;
+        }
+    </style>
+</head>
+<body>
+<script>
+    const dim = {width: 450, height: 100, margin: 25};
+
+    const svg = d3.select("body").append("svg")
+                  .attr("width", dim.width).attr("height",dim.height);
+
+    const scale = d3.scaleLinear()
+                    .range([dim.margin, dim.width - dim.margin * 2]);
+    const axisB = d3.axisBottom(scale);
+
+    const dataSize = d3.randomInt(5,20)();
+    const data = d3.range(dataSize).map(() => d3.randomInt(1,100)());
+    scale.domain([0, d3.max(data)]);
+
+    svg.selectAll("circle")
+       .data(data)
+         .join("circle")
+           .attr("cx", d => scale(d))
+           .attr("cy", dim.height/2)
+           .attr("r", 3)
+           .style("fill", "steelblue");
+
+    svg.append("g")
+        .attr("transform", `translate(${[0, dim.height - dim.margin]})`)
+        .call(axisB);
+</script>
+</body>
+</html>

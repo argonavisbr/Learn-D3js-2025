@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Formatting arrays into DSV - using a parser instance</title>
+</head>
+<body>
+<h1>Open JavaScript console to see results</h1>
+<script type="module">
+    import * as d3 from "https://cdn.jsdelivr.net/npm/d3@7/+esm";
+
+    const matrix = [
+        ["abc", "def", "ghi"],
+        ["jkl", "mno", "pqr"],
+        ["stu", "vwx", "yz"],
+    ];
+
+    const objects = [
+        {"name":"Mercury","distance":0.387},
+        {"name":"Venus","distance":0.723},
+        {"name":"Earth","distance":1},
+        {"name":"Mars","distance":1.52},
+        {"name":"Jupiter","distance":5.2},
+        {"name":"Saturn","distance":9.54},
+        {"name":"Uranus","distance":19.2},
+        {"name":"Neptune","distance":30.1},
+    ]
+
+    const semicolonParser = d3.dsvFormat(";"); // the semicolon character
+
+    // Create a semicolon-separated dataset with no headers row
+    const dataset1 = semicolonParser.formatRows(matrix);
+    console.log("formatRows SCSV dataset\n--------\n", dataset1);
+
+    // Create a semicolon-separated dataset with a headers row (defaults to 1, 2, 3, ...)
+    const dataset2 = semicolonParser.format(objects);
+    console.log("format SCSV dataset\n--------\n", dataset2);
+
+    // Generate a CSV string
+    const dataset3 = d3.csvFormat(objects);
+    console.log("format CSV dataset\n--------\n", dataset3);
+
+</script>
+</body>
+</html>

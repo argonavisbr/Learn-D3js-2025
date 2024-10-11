@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>D3: Module import - ESM library</title>
+
+</head>
+<body>
+<svg id="chart" width="600" height="200"></svg>
+<script type="module">
+
+    import "https://cdn.skypack.dev/d3-selection-multi@1";  // automatically imports d3-transition
+    import * as d3 from "https://cdn.skypack.dev/d3-selection@1";
+
+    const array = [100, 200, 300, 350, 375, 400, 500];
+
+    d3.select("#chart")
+        .selectAll("circle")
+        .data(array).join("circle")
+        .attrs({"r": 10, "cy": 100, "cx": d => d});
+        //.attr("r", "10").attr("cy", 100).attr("cx", d => d);
+
+    function update(dataset) {
+        d3.select("#chart").selectAll("circle")
+          .data(dataset)
+            .transition().duration(1000)
+              .attr("r", 5)
+              .attr("cx", d => d)
+              .style("fill", "red")
+    }
+
+    const newArray = [225, 425, 125, 50, 450, 75, 325];
+    setTimeout(update, 2000, newArray);
+</script>
+</body>
+</html>
