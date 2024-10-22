@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>d3-array grouping examples</title>
+    <style>
+        .comment {color: darkcyan}
+    </style>
+</head>
+<body>
+<script type="module">
+    import * as d3 from "https://cdn.skypack.dev/d3@7";
+
+    // Use these datasets to experiment with grouping functions
+
+    // (1) Rainfall database - loaded from a wide CSV
+    const file = "../data/rain_sao_paulo_wide.csv";
+
+    const tidyRows = await d3.csv(file, makeTidyRow);
+    const rainfall = tidyRows.flat();
+    console.log(rainfall);
+
+    function makeTidyRow(row, index, headers) {
+        const year = [];
+        headers.slice(1).forEach(h => {
+            year.push({
+                Year: +row.Year,
+                Month: h,
+                Rain: +row[h]
+            });
+        });
+        return year;
+    }
+
+    // (2) Movies database (from IMDB) (try using the same functions with this dataset)
+    const movies = [
+        {title: 'Arrival', director: 'Villeneuve', year: 2016},
+        {title: 'Interstellar', director: 'Nolan', year: 2014},
+        {title: 'Rogue One', director: 'Edwards', year: 2016},
+        {title: 'The Shining', director: 'Kubrick', year: 1980},
+        {title: 'A Clockwork Orange', director: 'Kubrick', year: 1972},
+        {title: 'Dunkirk', director: 'Nolan', year: 2017},
+        {title: 'Solyaris', director: 'Tarkovsky', year: 1972},
+        {title: 'Stalker', director: 'Tarkovsky', year: 1979},
+        {title: 'Wonder Woman', director: 'Jenkins', year: 2017},
+        {title: '2001', director: 'Kubrick', year: 1968}
+    ];
+
+    // (3) Solar eclipse data (try using the same functions with this dataset)
+    const eclipses = [
+        {type: 'solar', saros: 144, month: 10, year: 2024},
+        {type: 'lunar', saros: 123, month: 3, year: 2025},
+        {type: 'lunar', saros: 128, month: 9, year: 2025},
+        {type: 'solar', saros: 121, month: 2, year: 2026},
+        {type: 'lunar', saros: 133, month: 3, year: 2026},
+        {type: 'solar', saros: 126, month: 8, year: 2026},
+        {type: 'lunar', saros: 138, month: 8, year: 2026},
+        {type: 'solar', saros: 131, month: 2, year: 2027},
+        {type: 'solar', saros: 136, month: 8, year: 2027},
+        {type: 'solar', saros: 141, month: 1, year: 2028},
+        {type: 'solar', saros: 146, month: 7, year: 2028},
+        {type: 'lunar', saros: 125, month: 12, year: 2028}
+    ];
+
+
+    // Using the rainfall dataset
+
+    // a) Group by year
+    const yearMap = d3.group(rainfall, k => k.Year);
+    console.log("Grouped by year", yearMap);
+
+    const data2012 = yearMap.get(2012);
+    console.log("2012 data", data2012);
+
+    const data2012_8 = yearMap.get(2012)[8];		// {Year: 2012, Month: 'Sep', Rain: 19.2}
+    console.log("2012 data for September", data2012_8);
+
+    // b) Group by month
+    const monMap = d3.group(rainfall, k => k.Month);
+    console.log("Grouped by month", monMap);
+
+    const dataDec = monMap.get('Dec');              // all decembers
+    console.log("December data", dataDec);
+
+    // c) Group by month and year
+    const yearMonMap = d3.group(rainfall, k => k.Year, k => k.Month);
+    console.log("Grouped by year and month", yearMonMap);
+
+    const sep2012m = yearMonMap.get(2012).get('Sep')[0] 	// {Year: 2012, Month: 'Sep', Rain: 19.2}
+    console.log("2012 September data", sep2012m);
+
+    // d) Group by year - using groups
+    const yearArr = d3.groups(rainfall, k => k.Year);
+    console.log("Grouped by year - using groups", yearArr);
+
+    const data2012a = yearArr[28][1];
+    console.log("2012 data - using groups", data2012a);
+
+    const data2012_8a = yearArr[28][1][8];		// {Year: 2012, Month: 'Sep', Rain: 19.2}
+    console.log("2012 data for September - using groups", data2012_8a);
+
+    // e) Group by year and month - using groups
+    const yearMonArr = d3.groups(rainfall, k => k.Year, k => k.Month);
+    console.log("Grouped by year and month - using groups", yearMonArr);
+
+    const sep2012a = yearMonArr[28][1][8][1][0] 	// {Year: 2012, Month: 'Sep', Rain: 19.2}
+    console.log("2012 September data - using groups", sep2012a);
+
+    // f) Using flatgroups
+    const yearMonFlat = d3.flatGroup(rainfall, k => k.Year, k => k.Month);
+    console.log("Grouped by year and month - using flatgroups", yearMonFlat);
+
+    const sep2012f = yearMonFlat[344][2][0] 	// {Year: 2012, Month: 'Sep', Rain: 19.2}
+    console.log("2012 September data - using flatgroups", sep2012f);
+
+
+
+
+    // Copy constants and d3 object to global scope for use in console
+    window.rainfall = rainfall;
+    window.movies = movies;
+    window.eclipses = eclipses;
+    window.d3 = d3;
+
+</script>
+
+<h2>This file defines the following datasets</h2>
+<h3>Use the JavaScript console to experiment with them</h3>
+<pre>
+&lt;script&gt;
+
+    // Rainfall database - 408 rows - loaded from an external file
+    const rainfall = [
+        {Year: 1984, Month: 'Jan', Rain: 259.3},
+        {Year: 1984, Month: 'Feb', Rain: 32.5},
+        {Year: 1984, Month: 'Mar', Rain: 54},
+        /* .. +404 rows ... */
+        {Year: 2017, Month: 'Dec', Rain: 96.8},
+    ]
+
+    // Movie database - 10 rows (fragment)
+    const movies = [
+        {title: 'Arrival', director: 'Villeneuve', year: 2016},
+        {title: 'Interstellar', director: 'Nolan', year: 2014},
+        {title: 'Rogue One', director: 'Edwards', year: 2016},
+        {title: 'The Shining', director: 'Kubrick', year: 1980},
+        {title: 'A Clockwork Orange', director: 'Kubrick', year: 1972},
+        {title: 'Dunkirk', director: 'Nolan', year: 2017},
+        {title: 'Solyaris', director: 'Tarkovsky', year: 1972},
+        {title: 'Stalker', director: 'Tarkovsky', year: 1979},
+        {title: 'Wonder Woman', director: 'Jenkins', year: 2017},
+        {title: '2001', director: 'Kubrick', year: 1968}
+    ];
+
+    // Eclipse database - 12 rows (fragment)
+    const eclipses = [
+        {type: 'solar', saros: 144, month: 10, year: 2024},
+        {type: 'lunar', saros: 123, month: 3, year: 2025},
+        {type: 'lunar', saros: 128, month: 9, year: 2025},
+        {type: 'solar', saros: 121, month: 2, year: 2026},
+        {type: 'lunar', saros: 133, month: 3, year: 2026},
+        {type: 'solar', saros: 126, month: 8, year: 2026},
+        {type: 'lunar', saros: 138, month: 8, year: 2026},
+        {type: 'solar', saros: 131, month: 2, year: 2027},
+        {type: 'solar', saros: 136, month: 8, year: 2027},
+        {type: 'solar', saros: 141, month: 1, year: 2028},
+        {type: 'solar', saros: 146, month: 7, year: 2028},
+        {type: 'lunar', saros: 125, month: 12, year: 2028}
+    ];
+
+&lt;/script&gt;
+</pre>
+
+</body>
+</html>

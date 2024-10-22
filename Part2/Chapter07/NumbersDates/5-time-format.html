@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        table {
+            border-collapse: collapse;
+        }
+        td {
+            border: solid 1px black;
+            padding: 2px;
+        }
+        thead {
+            font-weight: bold
+        }
+    </style>
+</head>
+<body>
+<p>See source for code examples.</p>
+<table>
+    <thead><tr><td>Format</td><td>Result</td></tr></thead>
+    <tbody></tbody>
+</table>
+<script type="module">
+    import * as d3 from 'https://cdn.skypack.dev/d3@7';
+
+    const height=500, width=700;
+
+    const formats = [
+        "%c",
+        "%x",
+        "%X",
+        "%A, %B, %d, %Y",
+        "%A","%a","%d","%e","%j","%B","%b","%m","%Y","%y","%u","%w",
+        "%H","%I","%M","%S","%L","%f","%p","%Z"
+    ];
+    const date = new Date();
+
+    formats.forEach(function(d) {
+        const formatTime = d3.timeFormat(d);
+        const tr = d3.select("tbody").append("tr")
+        tr.append("td").text(d)
+        tr.append("td").text(formatTime(date))
+    });
+
+    // For access via the console prompt
+    window.d3 = d3;
+</script>
+</body>
+</html>

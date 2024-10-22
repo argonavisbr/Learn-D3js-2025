@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>d3-array examples</title>
+    <style>
+        .comment {color: darkcyan}
+    </style>
+</head>
+<body>
+<script type="module">
+    import * as d3 from 'https://cdn.skypack.dev/d3@7';
+
+    const numArray = [9,2,12,9,71];
+    const strArray = ['9','2','12','9','71','Y',null];
+
+    const tasks = [
+        {task: 'Debugging', cost: 1.40, priority: 1, date: new Date(2023,2,15)},
+        {task: 'Reviewing', cost: 0.60, priority: 2, date: new Date(2023,2,10)},
+        {task: 'Editing', cost: 0.25, priority: 5, date: new Date(2023,3,9)},
+        {task: 'Testing', cost: 0.10, priority: 1, date: new Date(2023,1,27)},
+    ];
+
+    const taskmap = new Map(tasks.map(e => [e.task, e]));
+    const numset = new Set(numArray);
+    const str = "953zyx2";
+
+    // Bypass to allow console prompt access (don't use in production code)
+    window.d3 = d3;
+    window.numArray = numArray;
+    window.strArray = strArray;
+    window.tasks = tasks;
+    window.taskmap = taskmap;
+    window.numset = numset;
+    window.str = str;
+    // End of bypass
+
+    console.log('Sorting and filtering iterables that are not arrays in D3:');
+    d3.filter("+5(9)12-3", t => t>=0 && t<=9)  	// ['5','9','1','2','3']
+    d3.map(taskmap, d => d[1].cost) 			// [1.4, 0.6, 0.25, 0.1]
+
+    console.log('Sorting and filtering iterables that are not arrays in native JavaScript:');
+    Array.from("+5(9)12-3").filter(t => t>=0 && t<=9)
+    Array.from(taskmap).map(d => d[1].cost)
+
+    console.log('Examples using D3 methods:');
+    const array_d3 = [8,2,3,5];
+    console.log('array (before): ', array_d3);
+    const sorted_d3 = d3.sort(array_d3)		    // array: [8,2,3,5], sorted: [2,3,5,8]
+    console.log('sorted = d3.sort(array): ', sorted_d3);
+    const reversed_d3 = d3.reverse(array_d3) 	// array: [8,2,3,5], reversed: [5,3,2,8]
+    console.log('reversed = d3.reverse(array): ', reversed_d3);
+    console.log('array (after): ', array_d3);
+
+    console.log('Examples using native JavaScript functions:');
+    const array_js = [8,2,3,5];
+    console.log('array (before): ', array_js);
+    const sorted_js = array_js.sort()		    // array & sorted: [2,3,5,8]
+    console.log('sorted = array.sort(): ', sorted_js);
+    const reversed_js = array_js.reverse() 	    // array & reversed: [8,5,3,2]
+    console.log('reversed = array.reverse(): ', reversed_js);
+    console.log('array (after): ', array_js);
+
+    console.log('Examples using d3.sort() and native sort() method:');
+    const a = numArray.sort()		// [12, 2, 71, 9, 9]
+    console.log('numArray.sort(): ', a)
+    const b = d3.sort(numArray)		// [2, 9, 9, 12, 71]
+    console.log('d3.sort(numArray): ', b)
+
+</script>
+
+<h2>This file defines the following datasets</h2>
+<h3>Use the JavaScript console to experiment with them using D3</h3>
+<pre>
+&lt;script&gt;
+    const numArray = [9,2,12,9,71];
+    const strArray = ['9','2','12','9','71','Y',null];
+
+    const tasks = [
+        {task: 'Debugging', cost: 1.40, priority: 1, date: new Date(2023,2,15)},
+        {task: 'Reviewing', cost: 0.60, priority: 2, date: new Date(2023,2,10)},
+        {task: 'Editing', cost: 0.25, priority: 5, date: new Date(2023,3,9)},
+        {task: 'Testing', cost: 0.10, priority: 1, date: new Date(2023,1,27)},
+    ];
+
+    const taskmap = new Map(tasks.map(e => [e.task, e]));
+    const numset = new Set(numArray);
+    const str = "953zyx2";
+&lt;/script&gt;
+</pre>
+
+<h2>Open console to experiment with d3-array's functions</h2>
+
+<h3>Sorting and filtering iterables that are not arrays in D3</h3>
+<pre>
+d3.filter("+5(9)12-3", t => t>=0 && t<=9)  	// ['5','9','1','2','3']
+d3.map(taskmap, d => d[1].cost) 			// [1.4, 0.6, 0.25, 0.1]
+</pre>
+<h3>Sorting and filtering iterables that are not arrays in native JavaScript</h3>
+<pre>
+Array.from("+5(9)12-3").filter(t => t>=0 && t<=9)
+Array.from(taskmap).map(d => d[1].cost)
+</pre>
+<h3>Examples using D3 methods</h3>
+<pre>
+array = [8,2,3,5]
+sorted = d3.sort(array)		    // array: [8,2,3,5], sorted: [2,3,5,8]
+reversed = d3.reverse(array) 	// array: [8,2,3,5], reversed: [5,3,2,8]
+</pre>
+<h3>Examples using native JavaScript functions</h3>
+<pre>
+array = [8,2,3,5]
+sorted = array.sort()		    // array & sorted: [2,3,5,8]
+reversed = array.reverse() 	    // array & reversed: [8,5,3,2]
+</pre>
+<h3>Examples using d3.sort() and native sort() method</h3>
+<pre>
+a = numArray.sort()			    // [12, 2, 71, 9, 9]
+b = d3.sort(numArray)		    // [2, 9, 9, 12, 71]
+</pre>
+
+
+</body>
+</html>

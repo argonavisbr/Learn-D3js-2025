@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>d3-array examples</title>
+    <style>
+        .comment {color: darkcyan}
+    </style>
+</head>
+<body>
+<script type="module">
+    import * as d3 from 'https://cdn.skypack.dev/d3@7';
+
+    const numArray = [9,2,12,9,71];
+    const strArray = ['9','2','12','9','71','Y',null];
+
+    const tasks = [
+        {task: 'Debugging', cost: 1.40, priority: 1, date: new Date(2023,2,15)},
+        {task: 'Reviewing', cost: 0.60, priority: 2, date: new Date(2023,2,10)},
+        {task: 'Editing', cost: 0.25, priority: 5, date: new Date(2023,3,9)},
+        {task: 'Testing', cost: 0.10, priority: 1, date: new Date(2023,1,27)},
+    ];
+
+    const taskmap = new Map(tasks.map(e => [e.task, e]));
+    const numset = new Set(numArray);
+    const str = "953zyx2";
+
+    // Bypass to allow console prompt access (don't use in production code)
+    window.d3 = d3;
+    window.numArray = numArray;
+    window.strArray = strArray;
+    window.tasks = tasks;
+    window.taskmap = taskmap;
+    window.numset = numset;
+    window.str = str;
+    // End of bypass
+
+    console.log("Obtaining an insertion index with d3.bisect() functions (and using it):")
+    const sorted1 = d3.sort(numArray)	// [2,9,9,12,71]
+    console.log(d3.bisectLeft(sorted1, 8));		    // 1
+    console.log(d3.bisectRight(sorted1, 8));		    // 1
+    console.log(d3.bisectLeft(sorted1, 9));		    // 1
+    console.log(d3.bisectRight(sorted1, 9));		    // 3
+    sorted1.splice(3,0,9) 		        // [2, 9, 9, 9, 12, 71]
+    console.log(sorted1);
+
+    console.log("Obtaining an insertion index with d3.bisectCenter():")
+    console.log(d3.bisectCenter(sorted1, 41)); 	    // 3 (closer to 12)
+    console.log(d3.bisectCenter(sorted1, 42)); 	    // 4 (closer to 71)
+
+    // If you are working with objects, you can bisect using the object’s properties.
+    // You can either use the JavaScript map() method to obtain an array of values to work on:
+    console.log("Using a map to access the value to perform a bisection:")
+    const sortedTasks = d3.sort(tasks, d => d.priority);
+    console.log(d3.bisect(sortedTasks.map(d => d.priority),3)); 	// 3
+
+    // Or create a bisector object declaring an accessor to the desired property.
+    // Then you can use its bisection methods passing the object iterable directly.
+    console.log("Using a bisector object with an accessor to do the same thing:")
+    const bisector1 = d3.bisector(d => d.priority);
+    console.log(bisector1.left(sortedTasks,3));			        // 3
+
+    console.log("Using d3.quantile() to obtain quartiles of an array:")
+    const sorted2 = [2,19,24,67,69,72,81,88,91,94,98,99];
+    console.log(d3.quantile(sorted2, 0.25));		// 56.25
+    console.log(d3.quantile(sorted2, 0.50));		// 76.5 (this is the median)
+    console.log(d3.quantile(sorted2, 0.75));		// 91.75
+
+</script>
+
+<h2>This file defines the following datasets</h2>
+<h3>Use the JavaScript console to experiment with them using D3</h3>
+<pre>
+&lt;script&gt;
+    const numArray = [9,2,12,9,71];
+    const strArray = ['9','2','12','9','71','Y',null];
+
+    const tasks = [
+        {task: 'Debugging', cost: 1.40, priority: 1, date: new Date(2023,2,15)},
+        {task: 'Reviewing', cost: 0.60, priority: 2, date: new Date(2023,2,10)},
+        {task: 'Editing', cost: 0.25, priority: 5, date: new Date(2023,3,9)},
+        {task: 'Testing', cost: 0.10, priority: 1, date: new Date(2023,1,27)},
+    ];
+
+    const taskmap = new Map(tasks.map(e => [e.task, e]));
+    const numset = new Set(numArray);
+    const str = "953zyx2";
+&lt;/script&gt;
+</pre>
+
+<h2>Open console to experiment with d3-array's functions</h2>
+
+<h3>Obtaining an insertion index with d3.bisect() functions (and using it)</h3>
+<pre>
+const sorted1 = d3.sort(numArray)	// [2,9,9,12,71]
+d3.bisectLeft(sorted1, 8)		    // 1
+d3.bisectRight(sorted1, 8)		    // 1
+d3.bisectLeft(sorted1, 9)		    // 1
+d3.bisectRight(sorted1, 9)		    // 3
+sorted1.splice(3,0,9) 		        // [2, 9, 9, 9, 12, 71]
+</pre>
+
+<h3>Obtaining an insertion index with d3.bisectCenter()</h3>
+<pre>
+d3.bisectCenter(sorted1, 41) 	    // 3 (closer to 12)
+d3.bisectCenter(sorted1, 42) 	    // 4 (closer to 71)
+</pre>
+
+<h3>Using a map to access the value to perform a bisection</h3>
+<pre>
+const sortedTasks = d3.sort(tasks, d => d.priority)
+d3.bisect(sortedTasks.map(d => d.priority, 3)  	// 3
+</pre>
+
+<h3>Using a bisector object with an accessor to do the same thing</h3>
+<pre>
+const bisector1 = d3.bisector(d => d.priority)
+bisector1.left(sortedTasks,3)			        // 3
+</pre>
+
+<h3>Using d3.quantile() to obtain quartiles of an array</h3>
+<pre>
+const sorted2 = [2,19,24,67,69,72,81,88,91,94,98,99]
+d3.quantile(sorted2, 0.25)		// 56.25
+d3.quantile(sorted2, 0.50)		// 76.5 (this is the median)
+d3.quantile(sorted2, 0.75)		// 91.75
+</pre>
+
+</body>
+</html>

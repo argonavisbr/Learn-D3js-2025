@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>d3-array examples</title>
+    <style>
+        .comment {color: darkcyan}
+    </style>
+</head>
+<body>
+<script type="module">
+    import * as d3 from 'https://cdn.skypack.dev/d3@7';
+
+    const numArray = [9,2,12,9,71];
+    const strArray = ['9','2','12','9','71','Y',null];
+
+    const tasks = [
+        {task: 'Debugging', cost: 1.40, priority: 1, date: new Date(2023,2,15)},
+        {task: 'Reviewing', cost: 0.60, priority: 2, date: new Date(2023,2,10)},
+        {task: 'Editing', cost: 0.25, priority: 5, date: new Date(2023,3,9)},
+        {task: 'Testing', cost: 0.10, priority: 1, date: new Date(2023,1,27)},
+    ];
+
+    const taskmap = new Map(tasks.map(e => [e.task, e]));
+    const numset = new Set(numArray);
+    const str = "953zyx2";
+
+    // Bypass to allow console prompt access (don't use in production code)
+    window.d3 = d3;
+    window.numArray = numArray;
+    window.strArray = strArray;
+    window.tasks = tasks;
+    window.taskmap = taskmap;
+    window.numset = numset;
+    window.str = str;
+    // End of bypass
+
+    console.log("Examples with d3.count()");
+    console.log(d3.count(numArray));
+    console.log(d3.count(strArray));
+    console.log(d3.count(tasks));
+    console.log(d3.count(tasks, d => d.cost));
+
+    console.log("Examples with d3.mode()");
+    console.log(d3.mode(tasks, d => d.priority));
+    console.log(d3.mode("aardvark"));
+
+    console.log("Examples with d3.mean(), d3.median(), d3.variance(), d3.deviation()");
+    console.log(d3.mean(numArray));
+    console.log(d3.median(numArray));
+    console.log(d3.variance(numArray));
+    console.log(d3.deviation(numArray));
+
+</script>
+
+<h2>This file defines the following datasets</h2>
+<h3>Use the JavaScript console to experiment with them using D3</h3>
+<pre>
+&lt;script&gt;
+    const numArray = [9,2,12,9,71];
+    const strArray = ['9','2','12','9','71','Y',null];
+
+    const tasks = [
+        {task: 'Debugging', cost: 1.40, priority: 1, date: new Date(2023,2,15)},
+        {task: 'Reviewing', cost: 0.60, priority: 2, date: new Date(2023,2,10)},
+        {task: 'Editing', cost: 0.25, priority: 5, date: new Date(2023,3,9)},
+        {task: 'Testing', cost: 0.10, priority: 1, date: new Date(2023,1,27)},
+    ];
+
+    const taskmap = new Map(tasks.map(e => [e.task, e]));
+    const numset = new Set(numArray);
+    const str = "953zyx2";
+&lt;/script&gt;
+</pre>
+
+<h2>Open console to experiment with d3-array's functions</h2>
+
+<h3>Examples with functions used for statistics</h3>
+<pre>
+d3.count(numArray)
+d3.count(strArray)
+d3.count(tasks)
+d3.count(tasks, d => d.cost)
+
+d3.mode(tasks, d => d.priority)
+d3.mode("aardvark")
+
+d3.mean(numArray)
+d3.median(numArray)
+d3.variance(numArray)
+d3.deviation(numArray)
+</pre>
+
+</body>
+</html>

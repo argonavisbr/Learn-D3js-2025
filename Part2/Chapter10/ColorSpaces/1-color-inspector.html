@@ -2,7 +2,6 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
     <title>Color inspector</title>
     <style>
         text{
@@ -33,8 +32,10 @@ color.h = color.h + 180
 </pre>
 <p></p>
 <svg height="100%" width="100%" viewBox="0 0 150 140"></svg>
-<script>
-        let color = d3.color("black"); // Use console to change this value and wait 1 second for an update
+<script type="module">
+    import * as d3 from "https://cdn.jsdelivr.net/npm/d3@7/+esm";
+
+        window.color = d3.color("black"); // Use console to change this value and wait 1 second for an update
 
         // Color display
         const circle = d3.select("svg")
@@ -45,11 +46,11 @@ color.h = color.h + 180
             .attr("r", 50)
             .attr("cx", 25)
             .attr("cy", 50)
-            .style("fill", color);
+            .style("fill", window.color);
         circle.append("text")
             .attr("y",120)
             .attr("x", 25)
-            .text(d3.color(color).formatHex());
+            .text(d3.color(window.color).formatHex());
 
         // Initial refresh()
         refresh();
@@ -59,14 +60,17 @@ color.h = color.h + 180
          */
         function refresh() {
             try {
-                d3.select("circle").style("fill", color);
-                d3.select("text").text(d3.color(color).formatHex());
+                d3.select("circle").style("fill", window.color);
+                d3.select("text").text(d3.color(window.color).formatHex());
             } catch(e) {
                 console.log('Invalid color.');
-                color = '#000000'
+                window.color = '#000000'
             }
             setTimeout(refresh, 1000)
         }
+
+        // Expose d3 and color to the console
+        window.d3 = d3;
 
 </script>
 </body>

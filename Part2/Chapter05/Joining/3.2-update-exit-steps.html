@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <title>The exit selection, in detail</title>
-    <script src="https://d3js.org/d3.v7.min.js"></script>
     <style>
         svg { border: solid gray 1px }
     </style>
@@ -13,7 +12,9 @@
 <h3>See comments in code and results in the console</h3>
 <svg height="400" width="800"></svg>
 
-<script>
+<script type="module">
+    import * as d3 from "https://cdn.jsdelivr.net/npm/d3@7/+esm";
+
     const svg = d3.select("svg");
 
     step1();  // This is the initial update and join (see 2.2-update-selection-steps.html)
@@ -47,6 +48,15 @@
             .join("circle");
         update();
     }
+
+
+    // This will allow update() and step1 to be called from the console.
+    window.update = update;
+    window.step1 = step1;
+
+    // This will allow D3 functions to be called from the console.
+    window.d3 = d3;
+</script>
 
 </script>
 

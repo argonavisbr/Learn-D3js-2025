@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1>See console for results</h1>
+<script type="module">
+    // Example fetching JSON string and then parsing it into an object
+    const response = await fetch('../data/continents.json')
+    const text = await response.text();             // You can use response.json() to parse to object in one step
+
+    console.log("json", text);                      // text is a JSON string
+
+    const object = JSON.parse(text);                // object is a JavaScript object
+
+    object.forEach(function(item) {
+        console.log(item.continent, item.population, item.areakm2);
+    })
+</script>
+</body>
+</html>

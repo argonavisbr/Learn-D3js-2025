@@ -27,15 +27,6 @@ Updating the data and forcing the circles to be immediately repositioned accordi
 __`6-transition.html`__
     
 Animating the update so that the circles take one second to move to their new places.
-
-__`7-multiple-updates.html`__ [EXTRA EXAMPLE]
-    
-Using a single function for many updates, allowing the amount of data to change.
-
-__`8-enter-exit.html`__ [EXTRA EXAMPLE]
-    
-Same as previous example, breaking down the general update pattern (enter, exit and merge selections).
-
     
 
 ## 2) How to run these examples
@@ -43,7 +34,7 @@ Same as previous example, breaking down the general update pattern (enter, exit 
 Any IDE or code editor that you use to edit HTML files can be used.
 
 You need to be connected to the Internet, since all examples download the D3 library from a CDN (see other ways to
-load the library in the `/Module-frontend` folder).
+load the library in the `/Imports` folder).
 
 You also need to serve the files through a local web server. Most examples won't work if you simply open the file in a
 browser. You can get one automatically if you use an IDE such as Visual Studio Code (with the Live Preview extension),

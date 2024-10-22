@@ -4,23 +4,39 @@ Files and exercises for chapter 7.
 
 ## 1) Description of each subfolder in this folder
 
-__`TODO/`__
+__`Manipulate/`__
 
 Description.
 
-__`TODO/`__
+__`Grouping/`__
 
 Description.
 
-__`TODO/`__
+__`Heatmap/`__
 
 Description.
 
-__`TODO/`__
+__`Generate/`__
 
 Description.
 
-__`TODO/`__
+__`NumbersDates/`__
+
+Description.
+
+__`Bins/`__
+
+Description.
+
+__`Histogram/`__
+
+Description.
+
+__`Exercises/`__
+
+Description.
+
+__`Examples/`__
 
 Description.
 

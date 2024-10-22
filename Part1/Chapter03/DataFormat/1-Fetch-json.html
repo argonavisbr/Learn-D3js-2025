@@ -32,7 +32,11 @@
 
 <div id="data"></div>
 
-<script>
+<script type="module">
+
+    fetch('../data/PlanetDay.json')
+        .then(response => response.json())
+        .then(object   => showData(object));
 
     function showData(dataArray) {
         let dataDiv = document.getElementById("data");
@@ -55,9 +59,7 @@
         }
     }
 
-    fetch('../data/PlanetDay.json')
-            .then(response => response.json())
-            .then(object   => showData(object));
+
 
 </script>
 

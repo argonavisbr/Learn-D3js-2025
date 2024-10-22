@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>d3-array grouping examples</title>
+    <style>
+        .comment {color: darkcyan}
+    </style>
+</head>
+<body>
+<script type="module">
+    import * as d3 from "https://cdn.skypack.dev/d3@7";
+
+    // Use these datasets to experiment with grouping functions
+
+    // (1) Rainfall database - loaded from a wide CSV
+    const file = "../data/rain_sao_paulo_wide.csv";
+
+    const tidyRows = await d3.csv(file, makeTidyRow);
+    const rainfall = tidyRows.flat();
+    console.log(rainfall);
+
+    function makeTidyRow(row, index, headers) {
+        const year = [];
+        headers.slice(1).forEach(h => {
+            year.push({
+                Year: +row.Year,
+                Month: h,
+                Rain: +row[h]
+            });
+        });
+        return year;
+    }
+
+    // (2) Movies database (from IMDB) (try using the same functions with this dataset)
+    const movies = [
+        {title: 'Arrival', director: 'Villeneuve', year: 2016},
+        {title: 'Interstellar', director: 'Nolan', year: 2014},
+        {title: 'Rogue One', director: 'Edwards', year: 2016},
+        {title: 'The Shining', director: 'Kubrick', year: 1980},
+        {title: 'A Clockwork Orange', director: 'Kubrick', year: 1972},
+        {title: 'Dunkirk', director: 'Nolan', year: 2017},
+        {title: 'Solyaris', director: 'Tarkovsky', year: 1972},
+        {title: 'Stalker', director: 'Tarkovsky', year: 1979},
+        {title: 'Wonder Woman', director: 'Jenkins', year: 2017},
+        {title: '2001', director: 'Kubrick', year: 1968}
+    ];
+
+    // (3) Solar eclipse data (try using the same functions with this dataset)
+    const eclipses = [
+        {type: 'solar', saros: 144, month: 10, year: 2024},
+        {type: 'lunar', saros: 123, month: 3, year: 2025},
+        {type: 'lunar', saros: 128, month: 9, year: 2025},
+        {type: 'solar', saros: 121, month: 2, year: 2026},
+        {type: 'lunar', saros: 133, month: 3, year: 2026},
+        {type: 'solar', saros: 126, month: 8, year: 2026},
+        {type: 'lunar', saros: 138, month: 8, year: 2026},
+        {type: 'solar', saros: 131, month: 2, year: 2027},
+        {type: 'solar', saros: 136, month: 8, year: 2027},
+        {type: 'solar', saros: 141, month: 1, year: 2028},
+        {type: 'solar', saros: 146, month: 7, year: 2028},
+        {type: 'lunar', saros: 125, month: 12, year: 2028}
+    ];
+
+
+    // Using the rainfall dataset
+
+    // a) Group by year and month using index
+    const idxMap = d3.index(rainfall, k => k.Year, k => k.Month);
+    console.log("Grouped by year and month - using indexes", idxMap);
+
+    const sep2012m = idxMap.get(2012).get('Sep') 	// {Year: 2012, Month: 'Sep', Rain: 19.2}
+    console.log("2012 September data - using indexes", sep2012m);
+
+
+    // b) Group by year and month using indexes (array)
+    const idxArr = d3.indexes(rainfall, k => k.Year, k => k.Month);
+    console.log("Grouped by year and month - using indexes", idxArr);
+
+    const sep2012a = idxArr[28][1][8][1] 	// {Year: 2012, Month: 'Sep', Rain: 19.2}
+    console.log("2012 September data - using indexes", sep2012a);
+
+
+
+
+    // Copy constants and d3 object to global scope for use in console
+    window.rainfall = rainfall;
+    window.movies = movies;
+    window.eclipses = eclipses;
+    window.d3 = d3;
+
+</script>
+
+<h2>This file defines the following datasets</h2>
+<h3>Use the JavaScript console to experiment with them</h3>
+<pre>
+&lt;script&gt;
+
+    // Rainfall database - 408 rows - loaded from an external file
+    const rainfall = [
+        {Year: 1984, Month: 'Jan', Rain: 259.3},
+        {Year: 1984, Month: 'Feb', Rain: 32.5},
+        {Year: 1984, Month: 'Mar', Rain: 54},
+        /* .. +404 rows ... */
+        {Year: 2017, Month: 'Dec', Rain: 96.8},
+    ]
+
+    // Movie database - 10 rows (fragment)
+    const movies = [
+        {title: 'Arrival', director: 'Villeneuve', year: 2016},
+        {title: 'Interstellar', director: 'Nolan', year: 2014},
+        {title: 'Rogue One', director: 'Edwards', year: 2016},
+        {title: 'The Shining', director: 'Kubrick', year: 1980},
+        {title: 'A Clockwork Orange', director: 'Kubrick', year: 1972},
+        {title: 'Dunkirk', director: 'Nolan', year: 2017},
+        {title: 'Solyaris', director: 'Tarkovsky', year: 1972},
+        {title: 'Stalker', director: 'Tarkovsky', year: 1979},
+        {title: 'Wonder Woman', director: 'Jenkins', year: 2017},
+        {title: '2001', director: 'Kubrick', year: 1968}
+    ];
+
+    // Eclipse database - 12 rows (fragment)
+    const eclipses = [
+        {type: 'solar', saros: 144, month: 10, year: 2024},
+        {type: 'lunar', saros: 123, month: 3, year: 2025},
+        {type: 'lunar', saros: 128, month: 9, year: 2025},
+        {type: 'solar', saros: 121, month: 2, year: 2026},
+        {type: 'lunar', saros: 133, month: 3, year: 2026},
+        {type: 'solar', saros: 126, month: 8, year: 2026},
+        {type: 'lunar', saros: 138, month: 8, year: 2026},
+        {type: 'solar', saros: 131, month: 2, year: 2027},
+        {type: 'solar', saros: 136, month: 8, year: 2027},
+        {type: 'solar', saros: 141, month: 1, year: 2028},
+        {type: 'solar', saros: 146, month: 7, year: 2028},
+        {type: 'lunar', saros: 125, month: 12, year: 2028}
+    ];
+
+&lt;/script&gt;
+</pre>
+
+</body>
+</html>

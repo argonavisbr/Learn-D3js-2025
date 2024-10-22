@@ -12,13 +12,11 @@
 
     d3.json(url)
         .then(function(data) {
-            const countries = [];
-
-            data.features.forEach(function(obj) {
-                countries.push({
+            const countries = data.features.map(obj => {
+                return {
                     name: obj.properties.name,
                     id: obj.id
-                });
+                };
             });
             draw(countries);
         });

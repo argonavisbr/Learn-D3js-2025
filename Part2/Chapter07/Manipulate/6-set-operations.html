@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>d3-array examples</title>
+    <style>
+        .comment {color: darkcyan}
+    </style>
+</head>
+<body>
+<script type="module">
+    import * as d3 from 'https://cdn.skypack.dev/d3@7';
+
+    const numArray = [9,2,12,9,71];
+    const strArray = ['9','2','12','9','71','Y',null];
+
+    const tasks = [
+        {task: 'Debugging', cost: 1.40, priority: 1, date: new Date(2023,2,15)},
+        {task: 'Reviewing', cost: 0.60, priority: 2, date: new Date(2023,2,10)},
+        {task: 'Editing', cost: 0.25, priority: 5, date: new Date(2023,3,9)},
+        {task: 'Testing', cost: 0.10, priority: 1, date: new Date(2023,1,27)},
+    ];
+
+    const taskmap = new Map(tasks.map(e => [e.task, e]));
+    const numset = new Set(numArray);
+    const str = "953zyx2";
+
+    // Bypass to allow console prompt access (don't use in production code)
+    window.d3 = d3;
+    window.numArray = numArray;
+    window.strArray = strArray;
+    window.tasks = tasks;
+    window.taskmap = taskmap;
+    window.numset = numset;
+    window.str = str;
+    // End of bypass
+
+    console.log("Examples with d3.difference(), d3.union() and d3.intersection()");
+    console.log(d3.difference([3,6,9], [2,4,6,8,10]));
+    console.log( d3.difference([5,10], [2,4,6,8,10]));
+    console.log(d3.difference([2,4,6,8,10], [5,10], [3,6,9]));
+    console.log(d3.union([5,10], [3,6,9], [2,4,6,8,10]));
+    console.log(d3.intersection([2,4,6,8,10], [3,6,9]));
+    console.log(d3.intersection([5,10], [3,6,9]));
+
+    console.log("Examples with d3.disjoint(), d3.superset() and d3.subset()");
+    console.log(d3.disjoint([5,10], [3,6,9]));
+    console.log(d3.superset([1,2,3,4,5,6], [2,4,6]));
+    console.log(d3.subset([3,6], [1,2,3,4,5,6]));
+
+    console.log("Examples with d3.difference() and d3.intersection() using strings");
+    console.log(d3.difference("dinosaur", "pterosaur"));
+    console.log(d3.intersection("dinosaur", "pterosaur"));
+
+    console.log("Examples with d3.some() and d3.every()");
+    console.log(d3.some('abc-def',  ch => ch >= 'a' && ch < 'z'));
+    console.log(d3.every('abc-def', ch => ch >= 'a' && ch < 'z'));
+
+</script>
+
+<h2>This file defines the following datasets</h2>
+<h3>Use the JavaScript console to experiment with them using D3</h3>
+<pre>
+&lt;script&gt;
+    const numArray = [9,2,12,9,71];
+    const strArray = ['9','2','12','9','71','Y',null];
+
+    const tasks = [
+        {task: 'Debugging', cost: 1.40, priority: 1, date: new Date(2023,2,15)},
+        {task: 'Reviewing', cost: 0.60, priority: 2, date: new Date(2023,2,10)},
+        {task: 'Editing', cost: 0.25, priority: 5, date: new Date(2023,3,9)},
+        {task: 'Testing', cost: 0.10, priority: 1, date: new Date(2023,1,27)},
+    ];
+
+    const taskmap = new Map(tasks.map(e => [e.task, e]));
+    const numset = new Set(numArray);
+    const str = "953zyx2";
+&lt;/script&gt;
+</pre>
+
+<h2>Open console to experiment with d3-array's functions</h2>
+
+<h3>Operations that return sets</h3>
+<pre>
+    d3.difference([3,6,9], [2,4,6,8,10])
+    d3.difference([5,10], [2,4,6,8,10])
+    d3.difference([2,4,6,8,10], [5,10], [3,6,9])
+    d3.union([5,10], [3,6,9], [2,4,6,8,10])
+    d3.intersection([2,4,6,8,10], [3,6,9])
+    d3.intersection([5,10], [3,6,9])
+</pre>
+
+<h3>Operations that return Boolean values</h3>
+<pre>
+    d3.disjoint([5,10], [3,6,9])
+    d3.superset([1,2,3,4,5,6], [2,4,6])
+    d3.subset([3,6], [1,2,3,4,5,6])
+</pre>
+
+<h3>Set operations with strings</h3>
+<pre>
+    d3.difference("dinosaur", "pterosaur")
+    d3.intersection("dinosaur", "pterosaur")
+</pre>
+
+<h3>D3 versions of JavaScript functions that accept iterables</h3>
+<pre>
+    d3.some('abc-def',  ch => ch >= 'a' && ch < 'z')
+    d3.every('abc-def', ch => ch >= 'a' && ch < 'z')
+</pre>
+
+</body>
+</html>

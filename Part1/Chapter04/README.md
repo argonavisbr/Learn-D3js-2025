@@ -4,21 +4,21 @@ Files and exercises for chapter 4.
 
 ## 1) Description of each subfolder in this folder
 
-__`StepByStep_BarChart/`__
+__`StaticBar/`__
 
-Description.
+This folder contains 12 steps to create a static bar chart. 
 
-__`Updating_BarChart/`__
+__`DynamicBar/`__
 
-Description.
+This folder contains 5 additional steps showing how to update the bar chart with new data, adding interactive events that switch views and data, and animated transitions.
 
 __`WorldMap/`__
 
-Description.
+How to render the map of the world in SVG using D3 and a GeoJSON file containing the shapes of the countries.
 
 __`Exercises/`__
 
-Description.
+Templates and solutions for the exercises suggested for this chapter.
 
 __`data/`__
 

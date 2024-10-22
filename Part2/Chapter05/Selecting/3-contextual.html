@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <title>Contextual selections</title>
-    <script src="https://d3js.org/d3.v7.min.js"></script>
     <style>
         div {width: 200px}
     </style>
@@ -25,13 +24,16 @@
 
 <canvas></canvas>
 
-<script>
+<script type="module">
+    import * as d3 from "https://cdn.jsdelivr.net/npm/d3@7/+esm";
 
     const divp = d3.select("div")
                    .selectAll("p");
 
     console.log('divp', divp);
 
+    // Uncomment to allow access to the D3 functions via the console
+    window.d3 = d3;
 </script>
 
 </body>

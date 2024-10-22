@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Time intervals</title>
+</head>
+<body>
+<h1>Using d3-time intervals</h1>
+<p>See source code for examples and use console to experiment.</p>
+<p>The <code>d3</code> object and the following constants
+    (<code>Date</code> objects) are accessible using the console:
+    <code>now</code>, <code>pm</code>, <code>am</code>, <code>aYearFromNow</code>, <code>inTwoHours</code>,
+    <code>lastMonth</code>, <code>inHalfAnHour</code></p>.
+<script type="module">
+    import * as d3 from 'https://cdn.skypack.dev/d3@7';
+
+    // Dates for testing
+    const now = new Date();
+    const pm = new Date('2024-10-18T18:00:00Z');
+    const am   = new Date('2024-10-18T06:00:00Z');
+
+    // Using offset()
+    const aYearFromNow = d3.timeYear.offset(now, 1);
+    const inTwoHours = d3.timeHour.offset(now, 2);
+    const lastMonth = d3.timeMonth.offset(now, -1);
+    const inHalfAnHour = d3.timeMinute.offset(now, 30);
+
+    // Using count()
+    const daysSinceNYD = d3.timeDay.count(d3.timeYear(now), now);  // number of days since the beginning of the year
+    const weeksSinceNYD = d3.timeWeek.count(d3.timeYear(now), now); // number of weeks since the beginning of the year
+    const hoursSinceNYD = d3.timeHour.count(d3.timeYear(now), now); // number of hours since the beginning of the year
+
+    const daysSinceWeek = d3.timeDay.count(d3.timeWeek(now), now);     // number of days since the beginning of the week
+    const daysSinceSunday = d3.timeDay.count(d3.timeSunday(now), now); // same as daysSinceWeek
+    const daysSinceWednesday = d3.timeDay.count(d3.timeWednesday(now), now);   // number of days since last Wednesday
+    const minutesSinceDay = d3.timeMinute.count(d3.timeDay(now), now); // number of minutes since the beginning of the day
+
+    // number of days since the beginning of the century
+    const daysSinceCentury = d3.timeDay.count(d3.timeYear(new Date('2001-01-01')), now);
+
+    // Using range()
+    // return an array containing a floored date for each day since last month
+    const daysSinceLastMonth = d3.timeDay.range(lastMonth, now);
+
+    // using every()
+    // return an array containing every three days since last month
+    const every3d = d3.timeDay.every(3).range(lastMonth, now); // 10 days
+    // return an array containing every 4 hours in last 5 days
+    const every2h5d = d3.timeHour.every(4).range(now, d3.timeDay.offset(now,5));
+
+    // using filter()
+    // return an array of every work hour (from 9 to 17) during 3 days
+    const workHours3d = d3.timeHour.filter(d => d.getHours() < 17 && d.getHours() > 9).range(now, d3.timeDay.offset(now,3))
+
+    // using round(), ceil() and floor()
+    const latest = d3.timeDay.ceil(am);         // Sat Oct 19 2024 00:00:00 Local time (if > UTC-06)
+    const earliest = d3.timeDay.floor(pm);      // Fri Oct 18 2024 00:00:00 Local time (if < UTC+06)
+    const round1 = d3.timeDay.round(am);        // Fri Oct 18 2024 00:00:00 Local time (if < UTC+06)
+    const round2 = d3.timeDay.round(pm);        // Sat Oct 19 2024 00:00:00 Local time (if > UTC-06)
+
+
+    // Provides global access to d3 object for use in console (don't use in production)
+    window.d3 = d3;
+    window.now = now;
+    window.pm = pm;
+    window.am = am;
+    window.aYearFromNow = aYearFromNow;
+    window.inTwoHours = inTwoHours;
+    window.lastMonth = lastMonth;
+    window.inHalfAnHour = inHalfAnHour;
+
+</script>
+
+</body>
+</html>

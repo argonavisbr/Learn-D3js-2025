@@ -34,6 +34,24 @@
 
 <script>
 
+    let dataArray = [];
+    fetch('../data/PlanetDay.csv')
+        .then(response => response.text())
+        .then(function(text) {
+            parse(text);
+            showData(dataArray);
+    });
+
+    // A very simple and limited parser: will fail if there are commas in the strings
+    function parse(text) {
+        let headers = text.split("\n")[0].split(",");
+        let values = text.split("\n")[1].split(",");
+        for(let i = 0; i < headers.length; i++) {
+            let dataObject = { "Location": headers[i], "Duration": +values[i] };
+            dataArray.push(dataObject);
+        }
+    }
+
     function showData(dataArray) {
         let dataDiv = document.getElementById("data");
         if (dataArray.length == 0) {
@@ -52,22 +70,6 @@
                             +"<span style='left: " +(90 + barSize)+"px'>" + dataArray[i].Duration + "</span>"
                         +"</div>";
             }
-        }
-    }
-
-    let dataArray = [];
-    fetch('../data/PlanetDay.csv').then(response => response.text()).then(function(text) {
-        parse(text);
-        showData(dataArray);
-    });
-
-    // A very simple and limited parser: will fail if there are commas in the strings
-    function parse(text) {
-        let headers = text.split("\n")[0].split(",");
-        let values = text.split("\n")[1].split(",");
-        for(let i = 0; i < headers.length; i++) {
-            let dataObject = { "Location": headers[i], "Duration": +values[i] };
-            dataArray.push(dataObject);
         }
     }
 

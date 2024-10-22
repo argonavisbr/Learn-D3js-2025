@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <title>Filters</title>
-    <script src="https://d3js.org/d3.v7.min.js"></script>
     <style>
         div {width: 200px}
     </style>
@@ -25,7 +24,8 @@
 
 <canvas></canvas>
 
-<script>
+<script type="module">
+    import * as d3 from "https://cdn.jsdelivr.net/npm/d3@7/+esm";
 
     const f1 = d3.selectAll("p")
                  .data([9,6,5,4,3,2,1])
@@ -51,6 +51,8 @@
                  });
     console.log('f4', f5);
 
+    // Uncomment to allow access to the D3 functions via the console
+    window.d3 = d3;
 </script>
 
 </body>

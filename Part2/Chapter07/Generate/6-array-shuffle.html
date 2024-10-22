@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <title>Random number generators</title>
-    <script src="https://d3js.org/d3.v7.min.js"></script>
     <style>
         text {
             font-family: 'Yanone Kaffeesatz', sans-serif;
@@ -14,8 +13,19 @@
 </head>
 <body>
 
-<script>
+<script type="module">
+    import * as d3 from 'https://cdn.skypack.dev/d3@7';
 
+    // Shuffling
+    const array1 = [1,2,3,4,5,6,7,8,9];
+    d3.shuffle(array1); 			// [6,8,5,9,4,3,2,1,7]
+    console.log(array1);
+
+    // Using a seed
+    const array2 = [1,2,3,4,5,6,7,8,9];
+    const shuf1 = d3.shuffler(d3.randomLcg(42));
+    shuf1(array2); 		// [9,4,7,8,6,2,5,1,3]
+    console.log(array2);
 
 </script>
 

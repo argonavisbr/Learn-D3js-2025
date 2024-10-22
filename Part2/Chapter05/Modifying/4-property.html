@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <title>Using property</title>
-    <script src="https://d3js.org/d3.v7.min.js"></script>
     <style>
         div p {
             font-family: sans-serif;
@@ -28,8 +27,10 @@
 <p id="a7">After</p>
 
 <canvas></canvas>
-<!-- NEEDS UPDATE -->
-<script>
+
+<script type="module">
+    import * as d3 from "https://cdn.jsdelivr.net/npm/d3@7/+esm";
+
     d3.selectAll("div")
       .style("border", "solid 1px black")
       .selectAll("p")
@@ -40,6 +41,8 @@
            .property("hidden", d => d < 2)
            .text((d,i,n) => d3.select(n[i]).text() + " " + d);
 
+    // Uncomment to allow access to the D3 functions via the console
+    window.d3 = d3;
 </script>
 
 </body>

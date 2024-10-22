@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <title>Converting selections to nodes</title>
-    <script src="https://d3js.org/d3.v7.min.js"></script>
     <style>
         div {width: 200px}
     </style>
@@ -25,7 +24,8 @@
 
 <canvas></canvas>
 
-<script>
+<script type="module">
+    import * as d3 from "https://cdn.jsdelivr.net/npm/d3@7/+esm";
 
     const nodelist = d3.selectAll("p").nodes();
     console.log('nodelist[2]', nodelist[2]);
@@ -37,6 +37,8 @@
     const ctx = canvD3.node().getContext('2d');		                // a DOM node
     ctx.fillRect(10,10,50,50);	                                    // using Canvas API
 
+    // Uncomment to allow access to the D3 functions via the console
+    window.d3 = d3;
 </script>
 
 </body>

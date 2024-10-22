@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>d3-array grouping examples</title>
+</head>
+<body>
+<h1>Use console to see output and interact with the data.</h1>
+<script type="module">
+    import * as d3 from "https://cdn.skypack.dev/d3@7";
+
+    const file = "../data/rain_sao_paulo_wide.csv";
+
+    const tidyRows = await d3.csv(file, makeTidyRow);
+    const rainfall = tidyRows.flat();
+
+    console.log(rainfall);
+
+    function makeTidyRow(row, index, headers) {
+        const year = [];
+        headers.slice(1).forEach(h => {
+            year.push({
+                Year: +row.Year,
+                Month: h,
+                Rain: +row[h]
+            });
+        });
+        return year;
+    }
+
+    window.d3 = d3;
+    window.rainfall = rainfall;
+
+</script>
+
+</body>
+</html>

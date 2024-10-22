@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <title>Interpolation</title>
-    <script src="https://d3js.org/d3.v7.min.js"></script>
     <style>
         text {
             font-family: 'Yanone Kaffeesatz', sans-serif;
@@ -14,20 +13,36 @@
 </head>
 <body>
 
-<script>
-// Number interpolation
+<script type="module">
+    import * as d3 from 'https://cdn.skypack.dev/d3@7';
 
-// Color interpolation
+    // Basic interpolation
+    const interpolate1 = d3.interpolate(23, 123)  // creates interpolate1(t)
+    interpolate1(0.25)		// 49.5
+    interpolate1(0.5)		// 74
+    interpolate1(0.75)		// 98.5
 
-// Date interpolation
+    // Interpolation in strings
+    const interpolate2 = d3.interpolate("Part 0 of 100","Part 100 of 100")
+    interpolate2(0.02) 		// 'Part 2 of 100'
+    interpolate2(0.25) 		// 'Part 25 of 100'
 
-// String interpolation
+    // Date interpolation
+    const interpolate3 = d3.interpolate(new Date(2023,10,14), new Date(2024,4,8))
+    interpolate3(0.5)		// '2024-02-10'
 
-// Path interpolation (discrete, basis)
+    // Array interpolation
+    const interpolate4 = d3.interpolate([3,10,100],[30,100,0])
+    interpolate4(0.5) 			// [16.5, 55, 50]
 
-// piecewise
+    // Color interpolation
+    const interpolate4 = d3.interpolate ("red", "blue")
+    interpolate4(0.25) 		// 'rgb(191, 0, 64)'
+    interpolate4(0.75) 		// 'rgb(64, 0, 191)'
 
-// quantize
+    // Object interpolation
+    const interpolate5 = d3.interpolate({a:-30, b:'red'}, {a:50, b:'blue'})
+    interpolate5(0.5)
 
 </script>
 

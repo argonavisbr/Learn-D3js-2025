@@ -2,12 +2,13 @@
 <html lang="en">
 <head>
     <title>Hello World D3: binding data to SVG</title>
-    <script type="module" src="https://d3js.org/d3.v7.min.js"></script>
 </head>
 
 <body>
 <svg id="chart" width="600" height="200"></svg>
 <script type="module">
+    import * as d3 from "https://cdn.jsdelivr.net/npm/d3@7/+esm";
+
     // array with different x coordinate values for the SVG <circle>
     const array = [100, 200, 300, 350, 375, 400, 500];
 

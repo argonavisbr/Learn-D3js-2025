@@ -56,6 +56,12 @@
             .styles(shapeStyles)
             .attrs(rectData);
 
+    // Uncomment to allow access to arrays, objects and D3 functions via the console
+    window.d3 = d3;
+    window.rectData = rectData;
+    window.circleData = circleData;
+    window.shapeStyles = shapeStyles;
+    window.data = data;
 </script>
 </body>
 </html>

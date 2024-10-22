@@ -28,15 +28,15 @@
 
     function drawMap(countries) {
         const shapes = d3.select("#world-map")
-            .selectAll(".country")
-            .data(countries) // many countries
-            .join("g")
-            .attr("class", "country");
+                         .selectAll(".country")
+                            .data(countries) // many countries
+                                .join("g")
+                                    .attr("class", "country");
 
         shapes.selectAll("polygon")
-            .data(s => s.geometry.coordinates) // many points
-            .join("polygon")
-            .attr("points", d => d);
+              .data(s => s.geometry.coordinates) // many points
+                  .join("polygon")
+                        .attr("points", d => d);
     }
 </script>
 

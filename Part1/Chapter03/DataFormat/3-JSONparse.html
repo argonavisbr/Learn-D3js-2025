@@ -8,7 +8,7 @@
 <h1>See console for results</h1>
 <script>
     // Example fetching JSON string and then parsing it into an object
-    fetch('../data/sample.json')
+    fetch('../data/continents.json')
             .then(response => response.text())  // You can use response.json() to parse to object in one step
             .then(function(text) {
                 console.log("json", text);        // text is a JSON string

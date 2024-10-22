@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <title>Data propagation</title>
-    <script src="https://d3js.org/d3.v7.min.js"></script>
     <style>
         div {width: 200px}
     </style>
@@ -25,7 +24,8 @@
 
 <canvas></canvas>
 
-<script>
+<script type="module">
+    import * as d3 from "https://cdn.jsdelivr.net/npm/d3@7/+esm";
 
     const div = d3.select("div").data([5]);
     console.log('div', div);
@@ -37,6 +37,8 @@
     div.select("p:nth-child(2)");
     console.log('divp.data() after select', divp.data());
 
+    // Uncomment to allow access to the D3 functions via the console
+    window.d3 = d3;
 </script>
 
 </body>

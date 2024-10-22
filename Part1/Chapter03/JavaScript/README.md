@@ -16,4 +16,6 @@ __`9-Functions.html`__
 __`10-Generators.html`__
 __`11-Promises.html`__
 __`12-Promise-all.html`__
+__`13-Async-await.html`__
+__`12-Modules.html`__
 

@@ -2,7 +2,6 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
     <title>Color scheme inspector</title>
     <link rel="stylesheet" href="../css/render-palletes.css">
     <style>
@@ -19,7 +18,7 @@
 </head>
 <body>
 <h1>Color scheme inspector</h1>
-<p>Use the JavaScript console prompt to ssign a D3 discrete color scheme to the <code>palette</code> variable. For example:</p>
+<p>Use the JavaScript console prompt to assign a D3 discrete color scheme to the <code>palette</code> variable. For example:</p>
 <pre>palette = d3.schemeTableau10
 palette = d3.schemeOranges[5]
 palette = d3.schemeSpectral[11]
@@ -27,13 +26,15 @@ palette = d3.schemeSpectral[11]
 <p></p>
 <svg width="100%" height="100%" viewBox="0 0 530 230"></svg>
 
-<script>
+<script type="module">
+    import * as d3 from "https://cdn.jsdelivr.net/npm/d3@7/+esm";
+
     const size = 9;
 
-    barHeight = 200;
-    barWidth  = 40;
+    const barHeight = 200;
+    const barWidth  = 40;
 
-    let palette = d3.schemeGreys[9];
+    window.palette = d3.schemeGreys[9];
 
     const svg = d3.select("svg");
     const svgW = svg.attr("viewBox").split(" ")[2];
@@ -51,8 +52,8 @@ palette = d3.schemeSpectral[11]
 
     function refresh() {
         try {
-            const scale = d3.scaleOrdinal(palette);
-            const data = d3.range(0,palette.length);
+            const scale = d3.scaleOrdinal(window.palette);
+            const data = d3.range(0,window.palette.length);
 
             d3.select("g");
             g.selectAll("rect")
@@ -64,14 +65,17 @@ palette = d3.schemeSpectral[11]
               .data(data)
                 .join(e => e.append("text").attr("y", barHeight + 15))
                   .attr("x", d => d*(barWidth+5) + barWidth/2)
-                  .text(d => d3.color(palette[d]).formatHex());
+                  .text(d => d3.color(window.palette[d]).formatHex());
         } catch(e) {
             console.log('Invalid palette.');
-            palette = d3.schemeGreys[9];
+            window.palette = d3.schemeGreys[9];
         } finally {
             setTimeout(refresh, 1000)
         }
     }
+
+    // Expose d3 to the console for testing
+    window.d3 = d3;
 
 </script>
 

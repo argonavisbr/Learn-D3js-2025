@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        table {
+            border-collapse: collapse;
+        }
+        td {
+            border: solid 1px black;
+            padding: 2px;
+        }
+        thead {
+            font-weight: bold
+        }
+    </style>
+</head>
+<body>
+<p>See source for code examples.</p>
+<table>
+    <thead><tr><td>Format</td><td>Result</td></tr></thead>
+    <tbody></tbody>
+</table>
+<script type="module">
+    import * as d3 from 'https://cdn.skypack.dev/d3@7';
+
+    const height=500, width=700;
+    const formats = [
+        "%c",
+        "%x",
+        "%X",
+        "%A, %B, %_d, %Y",
+        "%A","%a","%d","%e","%j","%B","%b","%m","%Y","%y","%u","%w",
+        "%H","%I","%M","%S","%L","%f","%p","%Z",
+        "Padding","%_e","%-e","%0e"
+    ];
+    const date = new Date("2024-05-05");
+
+    const pt_BR = {
+        "dateTime": "%A, %e de %B de %Y. %X",
+        "date": "%d/%m/%Y",
+        "time": "%H:%M:%S",
+        "periods": ["AM", "PM"],
+        "days": ["Domingo", "Segunda", "Terça", "Quarta", "Quinta", "Sexta", "Sábado"],
+        "shortDays": ["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sáb"],
+        "months": ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"],
+        "shortMonths": ["Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul", "Ago", "Set", "Out", "Nov", "Dez"]
+    };
+
+    d3.timeFormatDefaultLocale(pt_BR);
+
+    formats.forEach(function(d) {
+        const formatTime = d3.timeFormat(d);
+        const tr = d3.select("tbody").append("tr")
+        if(d === "Padding") {
+            tr.append("td").text(d).style("font-weight", "bold").attr("colspan", 2);
+        } else {
+            tr.append("td").text(d)
+            tr.append("td").text(formatTime(date));
+        }
+    });
+
+    // For access via the console prompt
+    window.d3 = d3;
+</script>
+</body>
+</html>
