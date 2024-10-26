@@ -43,7 +43,7 @@
 
     const planetScale = d3.scaleLinear().range([1,40]);
 
-    d3.json("../Data/planets.json").then(function(result) {
+    d3.json("../data/planets.json").then(function(result) {
         console.log("Loaded hierarachy", result);
 
         // convert existing hierarchy to standard format

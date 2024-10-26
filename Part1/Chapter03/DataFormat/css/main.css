@@ -1,0 +1,20 @@
+#data {
+    width: 800px;
+}
+#data div {
+    margin-top: 2px;
+}
+#data div span {
+    display: inline-block;
+}
+#data div span:nth-child(1) {
+    position: absolute;
+}
+#data div span:nth-child(2) {
+    position: absolute;
+    background: orange;
+    left: 90px;
+}
+#data div span:nth-child(3) {
+    position: relative;
+}

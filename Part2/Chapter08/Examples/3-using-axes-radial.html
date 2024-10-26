@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <title>Using a simple axis</title>
-    <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
     <style>
         svg {
             border: solid 1px lightblue;
@@ -12,7 +11,9 @@
     </style>
 </head>
 <body>
-<script>
+<script type="module">
+    import * as d3 from 'https://cdn.skypack.dev/d3@7';
+
     const dim = {width: 600, height: 600, margin: 20};
 
     const svg = d3.select("body").append("svg")
@@ -34,7 +35,7 @@
 
     chart.selectAll("g.axis")
          .data(steps).join("g").attr("class", "axis")
-           .classed("blank",(d,i) => i != 0)
+           .classed("blank",(d,i) => i !== 0)
            .call(axis)
            .attr("transform", (d,i) => `rotate(${i * 360/n})`);
 

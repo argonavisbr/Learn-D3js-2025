@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <title>Cartesian grid</title>
-    <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
     <style>
         .label {
             fill: black;
@@ -23,41 +22,49 @@
     </style>
 </head>
 <body>
-<script>
-    const height = 500, width = 800, marginX = 50, marginY = 50;
-    const bleed = 10;
+<script type="module">
+    import * as d3 from 'https://cdn.skypack.dev/d3@7';
 
-    const scaleX = d3.scaleLinear().range([marginX, width - marginX]),
-          scaleY = d3.scaleLinear().range([height - marginY, marginY]);
+    const dim = {height: 500, width: 800, margin: {x: 50, y: 50}, bleed: 10};
+
+    const scaleX = d3.scaleLinear().range([dim.margin.x, dim.width - dim.margin.x]);
+    const scaleY = d3.scaleLinear().range([dim.height - dim.margin.y, dim.margin.y]);
 
     const svg = d3.select("body").append("svg")
-            .attr("width", width).attr("height",height);
+            .attr("width", dim.width).attr("height", dim.height);
 
     const axisX = d3.axisBottom(scaleX)
-                    .tickSize(height - marginY*2 + bleed)
+                    .tickSize(dim.height - dim.margin.y*2 + dim.bleed)
                     .tickPadding(5)
                     .tickSizeOuter(5)
                     .ticks(10, ',%');
     const axisY = d3.axisLeft(scaleY)
-                    .tickSize(width - marginX*2 + bleed)
+                    .tickSize(dim.width - dim.margin.x*2 + dim.bleed)
                     .tickPadding(5)
                     .tickSizeOuter(5);
 
     // move each axis to the opposite side of the chart
     svg.append("g").attr("class", "x-axis")
-            .attr("transform", `translate(0,${marginY})`)
+            .attr("transform", `translate(0,${dim.margin.y})`)
             .call(axisX);
 
     svg.append("g").attr("class", "y-axis")
-            .attr("transform", `translate(${width - marginX},0)`)
+            .attr("transform", `translate(${dim.width - dim.margin.x},0)`)
             .call(axisY);
 
     // move domain lines back to their original places
     d3.select(".y-axis .domain")
-            .attr("transform", `translate(${-width + marginX*2},0)`);
+            .attr("transform", `translate(${-dim.width + dim.margin.x*2},0)`);
     d3.select(".x-axis .domain")
-            .attr("transform", `translate(0,${height - marginY*2})`);
+            .attr("transform", `translate(0,${dim.height - dim.margin.y*2})`);
 
+
+    // For console access (don't use in production)
+    window.d3 = d3;
+    window.axisX = axisX;
+    window.axisY = axisY;
+    window.scaleX = scaleX;
+    window.scaleY = scaleY;
 
 </script>
 </body>

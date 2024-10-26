@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <title>Cartesian axes with 4 quadrants</title>
-    <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
     <style>
         .label {
             fill: black;
@@ -17,42 +16,50 @@
     </style>
 </head>
 <body>
-<script>
-    const height = 500, width = 800, marginX = 50, marginY = 50;
+<script type="module">
+    import * as d3 from 'https://cdn.skypack.dev/d3@7';
+
+    const dim = {height: 500, width: 800,
+                 margin: {x: 50, y: 50}};
 
     const scaleX = d3.scaleLinear()
-                     .range([marginX, width - marginX])
-                     .domain([-20,50]);
+                    .range([dim.margin.x, dim.width - dim.margin.x])
+                    .domain([-1,1]);
     const scaleY = d3.scaleLinear()
-                     .range([height - marginY, marginY])
-                     .domain([-1,1]);
+                    .range([dim.height - dim.margin.y, dim.margin.y])
+                    .domain([-1,1]);
 
-    const axisX = d3.axisBottom(scaleX).ticks(2);
+    const axisX = d3.axisBottom(scaleX);
     const axisY = d3.axisLeft(scaleY);
 
     const svg = d3.select("body")
-            .append("svg")
-            .attr("width", width)
-            .attr("height",height);
+                  .append("svg")
+                  .attr("width", dim.width)
+                  .attr("height", dim.height);
 
     svg.append("g").attr("class", "x-axis")
-            .attr("transform", `translate(0,${height - marginY})`)
-            .call(axisX);
+        .attr("transform", "translate(0,"+(dim.height - dim.margin.y)+")")
+        .call(axisX);
 
     svg.append("g").attr("class", "y-axis")
-            .attr("transform", `translate(${marginX},0)`)
-            .call(axisY);
+        .attr("transform", "translate("+(dim.margin.x)+",0)")
+        .call(axisY);
 
-    svg.selectAll(".x-axis .tick line")
-       .filter(v => v == 0)
-       .attr("y1", -height+marginY*2)
+    // Add long tick lines when the tick value is 0
+    svg.selectAll(".x-axis .tick line").filter(v => v === 0)
+       .attr("y1", -dim.height + dim.margin.y*2)
        .attr("class", "zero")
 
-    svg.selectAll(".y-axis .tick line")
-       .filter(v => v == 0)
-       .attr("x1", width - marginX*2)
+    svg.selectAll(".y-axis .tick line").filter(v => v === 0)
+       .attr("x1", dim.width - dim.margin.x*2)
        .attr("class", "zero")
 
+    // For console access (don't use in production)
+    window.d3 = d3;
+    window.axisX = axisX;
+    window.axisY = axisY;
+    window.scaleX = scaleX;
+    window.scaleY = scaleY;
 
 </script>
 </body>

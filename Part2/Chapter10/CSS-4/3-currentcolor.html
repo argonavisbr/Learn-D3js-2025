@@ -3,18 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <title>Colors</title>
-    <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
     <style>
-        * {
+        svg {
+            border: solid 1px lightgray
+        }
+        text {
             font-family: monospace;
-            font-size: 22pt;
+            font-size: 20pt;
             font-weight: bold;
         }
 
         .labels text {
             alignment-baseline: hanging;
             color: black;
-            font-size: 11pt;
+            font-size: 10pt;
             font-weight: normal;
         }
 
@@ -26,30 +28,50 @@
     </style>
 </head>
 <body>
-    <svg width="600" height="500">
+<p>Changing the <code>currentColor</code> using the <code>color</code> style property:</p>
+<table><tr>
+<td><pre>
+    &lt;style>
+        g { color: darkcyan;}
+        rect {fill: currentColor}
+        text {fill: currentColor}
+        line {stroke: currentColor}
+    &lt;style>
+    &lt;script>
+    d3.select("g")
+      .transition().delay(1000)
+      .style("color", "magenta")
+          .transition().delay(1000)
+          .style("color", "olive")
+              .transition().delay(1000)
+              .style("color", "orange")
+    &lt;/script>
+</pre></td>
+<td><svg width="500" height="250">
         <g>
             <rect x="50" y="50" width="250" height="50"></rect>
             <text x="50" y="150">A line of text</text>
             <line x1="50" y1="180" x2="300" y2="180"></line>
 
             <g class="labels">
-                <text x="350" y="70">fill='currentColor'</text>
-                <text x="350" y="135">fill='currentColor'</text>
-                <text x="350" y="175">stroke='currentColor'</text>
+                <text x="320" y="70">fill='currentColor'</text>
+                <text x="320" y="135">fill='currentColor'</text>
+                <text x="320" y="175">stroke='currentColor'</text>
             </g>
         </g>
-    </svg>
+</svg></td>
+</tr></table>
 
-    <script>
+    <script type="module">
+        import * as d3 from 'https://cdn.skypack.dev/d3@7';
+
         d3.select("g")
-            .transition().delay(500)
-            .style("color", "magenta");
-        d3.select("g")
-            .transition().delay(1500)
-            .style("color", "olive");
-        d3.select("g")
-            .transition().delay(2500)
-            .style("color", "orange")
+          .transition().delay(1000)
+          .style("color", "magenta")
+            .transition().delay(1000)
+            .style("color", "olive")
+              .transition().delay(1000)
+              .style("color", "orange")
     </script>
 </body>
 </html>

@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <title>Axis for an ordinal scale</title>
-    <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
     <style>
         svg {
             border: solid 1px lightblue;
@@ -11,21 +10,31 @@
     </style>
 </head>
 <body>
-<script>
-    const w = 500, h = 50;
+<script type="module">
+    import * as d3 from 'https://cdn.skypack.dev/d3@7';
+
+    const dim = {width: 500, height: 50};
+
     const scale = d3.scaleLinear()
-                    .range([0, w-100]);
+                    .range([0, dim.width - 100]);
     const axisB = d3.axisBottom(scale)
                     .tickValues([0, .05, .1, .15, .2, .5, .8, .85, .9, .95, 1]);
 
     const svg = d3.select("body")
                   .append("svg")
-                  .attr("width", w)
-                  .attr("height",h);
+                  .attr("width", dim.width)
+                  .attr("height",dim.height);
 
     const horz = svg.append("g")
                     .call(axisB)
                     .attr("transform", `translate(50,10)`);
+
+
+    // For console access (don't use in production)
+    window.d3 = d3;
+    window.horz = horz;
+    window.axisB = axisB;
+    window.scale = scale;
 </script>
 </body>
 </html>

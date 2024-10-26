@@ -72,7 +72,7 @@
     });
 
     trs.on("end", (d,i) => { // Event at end of *each* move transition
-        console.log(`on.end: Transition ${i+1} ended after ${format(d3.now()-start)} ms`);
+        console.log(`on.end: Transition ${i+1} ended after ${format(d3.now() - start)} ms`);
     });
 
     const promise = trs.end();

@@ -2,7 +2,6 @@
 <html lang="en">
 <head>
     <title>Threshold scales</title>
-    <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
     <style>
         rect {
             stroke: white;
@@ -20,16 +19,15 @@
 <p>Selected thresholds: <code id="th"></code></p>
 <svg id="threshold" height="60" width="1020"></svg>
 
-<script src="../js/threshold-compare.js"></script>
-<script>
+<script type="module">
+    import * as d3 from "https://cdn.skypack.dev/d3@7";
+    import {plot} from "./js/threshold-compare.js";
 
     // OUTPUT: discrete range data
     const colors = ['blue', 'red', 'green', 'orange'];
     d3.select("#output").text(`[${colors}]`);
 
     const fmt = d3.format(' .2f');
-    const scaleAxis = d3.scaleLinear().range([0,1000]).domain([0,100])
-    const axis = d3.axisBottom().scale(scaleAxis);
 
     // Render threshold scale
     const th = d3.select("#threshold").append("g").attr("transform","translate(5,5)");
@@ -41,7 +39,7 @@
     d3.select("#data").text(`[${data}]`);
 
     d3.select("#th").text(`[${thresholds.map(d => fmt(d))}]`);
-    plot(th, scaleTh, d3.pairs(d3.merge([[0],thresholds,[100]])));
+    plot(data, th, scaleTh, d3.pairs(d3.merge([[0],thresholds,[100]])));
 
 </script>
 </body>

@@ -1,0 +1,19 @@
+circle {
+    fill-opacity: 1;
+    fill: red;
+}
+line, path {
+    stroke: #ccc;
+}
+
+svg {
+    border: solid 1px lightgray;
+}
+
+.chart {
+    margin-top: 30px;
+    font-family: monospace;
+}
+.type {
+    font-weight: bold;
+}

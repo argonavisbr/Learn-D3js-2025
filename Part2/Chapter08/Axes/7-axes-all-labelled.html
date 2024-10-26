@@ -3,12 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <title>All axes labelled</title>
-    <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
-    <!-- Using free Yanone Kaffeesatz fonts: https://www.yanone.de/fonts/kaffeesatz/ -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz">
     <style>
         * {
-            font-family: 'Yanone Kaffeesatz', sans-serif;
+            font-family: sans-serif;
         }
         .label {
             fill: black;
@@ -18,11 +15,12 @@
         svg {
             border: solid 1px lightblue;
         }
-
     </style>
 </head>
 <body>
-<script>
+<script type="module">
+    import * as d3 from 'https://cdn.skypack.dev/d3@7';
+
     const scale = d3.scaleLinear().range([0,250]);
 
     const svg = d3.select("body").append("svg").attr("width", 500).attr("height",270);

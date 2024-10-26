@@ -10,7 +10,10 @@
 <body>
 <h1 style="margin-left: 25px">Multi-hue</h1>
 <svg width="800" height="800"></svg>
-<script>
+<script type="module">
+    import * as d3 from 'https://cdn.skypack.dev/d3@7';
+    import {renderSchemeOrdinal} from '../js/render-palettes.js';
+
     const size = 9;
     const schemes = [
         'schemeBuGn',

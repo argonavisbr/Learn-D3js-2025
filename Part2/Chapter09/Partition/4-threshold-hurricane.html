@@ -2,7 +2,6 @@
 <html lang="en">
 <head>
     <title>Threshold scales</title>
-    <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
     <style>
         :not(.tick) > text {
             font-family: 'Arial Narrow', sans-serif;
@@ -12,7 +11,8 @@
 </head>
 <body>
 <h1>Atlantic storms in 2005</h1>
-<script>
+<script type="module">
+    import * as d3 from "https://cdn.skypack.dev/d3@7";
     // 1) DATA
     // Reference data (for thresholds)
     const speeds = [0,119,154,178,209,252,310];

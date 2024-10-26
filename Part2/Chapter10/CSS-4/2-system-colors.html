@@ -2,8 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Colors</title>
-    <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+    <title>System colors</title>
     <style>
         * {
             font-family: monospace;
@@ -14,7 +13,7 @@
             height: 30px;
             position: absolute;
             left: 30px;
-            border: solid 1px gray
+
         }
         .label {
             width: 200px;
@@ -23,27 +22,32 @@
       .color-box {
           width: 300px;
           justify-content: center;
+          border: solid 1px lightgray;
       }
 
     </style>
 </head>
 <body>
-<script>
-  const components = [ {bg:'Canvas', fg:'CanvasText'},
+<h1>System colors</h1>
+<div id="container"></div>
+<script type="module">
+    import * as d3 from 'https://cdn.skypack.dev/d3@7';
+
+    const components = [ {bg:'Canvas', fg:'CanvasText'},
                         {bg:'Field', fg:'FieldText'},
                         {bg:'Highlight', fg:'HighlightText'},
                         {bg:'Mark', fg:'MarkText'}];
   const link   = {ac: 'ActiveText', ln: 'LinkText', vs: 'VisitedText'}
   const button = {bg: 'ButtonFace', fg: 'ButtonText', gr: 'GrayText', bd:'ButtonBorder'};
 
-  const body = d3.select("body");
+  const container = d3.select("#container");
   const file = "../css/colors.css";
   const css = new Map();
   render();
 
   function render() {
       components.forEach( (comp,i) => {
-          body.append("div")
+          container.append("div")
               .attr("class", "color-box")
               .style("top", `${30 + i*35}px`)
               .style("background-color", comp.bg)
@@ -51,7 +55,7 @@
               .text(`${comp.bg}/${comp.fg}`);
       });
 
-      body.append("div")
+      container.append("div")
           .attr("class", "color-box")
           .style("top", "30px")
           .style("left", "400px")
@@ -61,7 +65,7 @@
           .style("color", button.fg)
           .text(`${button.bg}/${button.fg}/${button.bd}`);
 
-      body.append("div")
+      container.append("div")
           .attr("class", "color-box")
           .style("top", "65px")
           .style("left", "400px")
@@ -71,7 +75,7 @@
           .style("color", button.gr)
           .text(`${button.bg}/${button.gr}/${button.bd}`);
 
-      body.append("div")
+      container.append("div")
           .attr("class", "color-box")
           .style("top", "135px")
           .style("left", "400px")

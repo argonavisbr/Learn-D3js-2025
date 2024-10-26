@@ -9,14 +9,15 @@
 <h1>See console for results</h1>
 <script type="module">
     // Example fetching a CSV text file and parsing it into an object
-    fetch('../data/continents.csv')
-            .then(response => response.text())
-    .then(function(csvText) {
-        const csvData = Papa.parse(csvText, {header: true}).data;
-        csvData.forEach(function(item) {
-            console.log(item.continent, +item.population, +item.areakm2); // The + converts to number!
-        })
+    const response = await fetch('../data/continents.csv');
+    const csvText = await response.text();
+    const csvData = Papa.parse(csvText, {header: true}).data;
+    csvData.forEach(function(item) {
+        console.log(item.continent, +item.population, +item.areakm2); // The + converts to number!
     });
+
+    // For console access only
+    window.csvData = csvData;
 </script>
 </body>
 </html>

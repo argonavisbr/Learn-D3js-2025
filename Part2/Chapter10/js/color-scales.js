@@ -1,3 +1,5 @@
+import * as d3 from 'https://cdn.skypack.dev/d3@7';
+
 /**
  * Draws a simple color channel scale
  * @param order 0, 1, 2 - where the channel will be displayed (first, second or third)
@@ -7,7 +9,7 @@
  * @param func  The function to be used to generate the colors (one variable dimension, two fixed dimensions)
  * @param label The label to be placed at right
  */
-function drawScale(order, scale, axis, data, func, label) {
+export function drawScale(order, scale, axis, data, func, label) {
     // channel axis
     const channel = d3.select("svg")
         .append("g")

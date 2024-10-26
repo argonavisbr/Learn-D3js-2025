@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <title>All axes showing their origin</title>
-    <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
     <style>
         svg {
             border: solid 1px lightblue;
@@ -11,7 +10,9 @@
     </style>
 </head>
 <body>
-<script>
+<script type="module">
+    import * as d3 from 'https://cdn.skypack.dev/d3@7';
+
     const scale = d3.scaleLinear().range([0,250]);
 
     const axisB = d3.axisBottom(scale);
@@ -40,6 +41,16 @@
             .attr("transform", "translate(400,50)")
             .call(axisR)
             .append("circle").attr("r",3).style("fill","red");
+
+
+    // For console access (don't use in production)
+    window.d3 = d3;
+    window.scale = scale;
+    window.axisB = axisB;
+    window.axisT = axisT;
+    window.axisR = axisR;
+    window.axisL = axisL;
+    window.svg = svg;
 
 </script>
 </body>

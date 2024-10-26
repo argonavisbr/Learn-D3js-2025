@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>JavaScript console with D3 access</title>
+</head>
+<body>
+<h1>JavaScript console with D3 access</h1>
+<p>Use the JavaScript console prompt to experiment with any D3 function.</p>
+<svg height="100%" width="100%" viewBox="0 0 150 140"></svg>
+<script type="module">
+    import * as d3 from 'https://cdn.skypack.dev/d3@7';
+    window.d3 = d3;
+</script>
+</body>
+</html>

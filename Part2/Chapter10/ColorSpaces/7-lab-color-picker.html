@@ -2,8 +2,6 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
-    <script src="../js/color-picker.js"></script>
     <link rel="stylesheet" href="../css/color-picker.css">
     <title>LAB color picker</title>
     <style>
@@ -13,7 +11,9 @@
     </style>
 </head>
 <body>
-<script>
+<script type="module">
+    import * as d3 from 'https://cdn.skypack.dev/d3@7';
+    import {init, cs} from '../js/color-picker.js';
 
     cs.create = d3.lab;
     cs.keys = ["l", "a", "b"];

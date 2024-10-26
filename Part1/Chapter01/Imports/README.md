@@ -35,21 +35,25 @@ If you want to use the same d3 prefix to call functions from multiple modules, y
 
 __`7-import-esm-external-script.html`__
 
-Typical Web applications keep most of the JavaScript in external files. This example shows how to import a local external script as an ES module.
+Typical Web applications keep most of the JavaScript in external files. This example shows how to import a local external script as an ES module and start the app from the HTML file.
 
-__`8-import-esm-modules-no-prefix`__
+__`8-import-esm-external-script-full.html`__
+
+You can keep all the code in external scripts. This example imports an external scripts that runs the app.
+
+__`9-import-esm-modules-no-prefix`__
 
 You can use individual functions from different modules without a prefix, or assign different prefixes to them.
 
-__`9-legacy-cdn-modules.html`__
+__`10-legacy-cdn-modules.html`__
 
 If you want to import separate modules without using ESM, you also need to import all the transitive dependencies.
 
-__`10-import-transitive-test.html`__
+__`11-import-transitive-test.html`__
 
 Transitive dependencies (d3-transition, in this case) don't need to be imported (unless you need to call a function from it).
 
-__`11-import-transitive-test-legacy.html`__
+__`12-import-transitive-test-legacy.html`__
 
 In non-ESM code, it's simpler to import the default bundle, to avoid too many script imports in HTML.
 

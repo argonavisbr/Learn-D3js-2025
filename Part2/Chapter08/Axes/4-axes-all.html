@@ -3,12 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <title>All Axes in Default positions (shifted 50,50)</title>
-    <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
-    <!-- Using free Yanone Kaffeesatz fonts: https://www.yanone.de/fonts/kaffeesatz/ -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz">
     <style>
         * {
-            font-family: 'Yanone Kaffeesatz', sans-serif;
+            font-family: sans-serif;
         }
         svg {
             border: solid 1px lightblue;
@@ -16,7 +13,9 @@
     </style>
 </head>
 <body>
-<script>
+<script type="module">
+    import * as d3 from 'https://cdn.skypack.dev/d3@7';
+
     const scale = d3.scaleLinear().range([0,250]);
 
     const axisB = d3.axisBottom(scale);
@@ -66,6 +65,15 @@
             .delay(2000)
             .attrTween("text", () => function(t) {d3.select(this).text(`With origin at (${[fmt(t*50),fmt(t*50)]})`)})
     }
+
+    // For console access (don't use in production)
+    window.d3 = d3;
+    window.scale = scale;
+    window.axisB = axisB;
+    window.axisT = axisT;
+    window.axisR = axisR;
+    window.axisL = axisL;
+    window.svg = svg;
 </script>
 </body>
 </html>

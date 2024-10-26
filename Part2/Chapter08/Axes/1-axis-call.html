@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <title>Simple Bottom Axis Using call()</title>
-    <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
     <style>
         svg {
             border: solid 1px lightblue;
@@ -11,7 +10,9 @@
     </style>
 </head>
 <body>
-<script>
+<script type="module">
+    import * as d3 from 'https://cdn.skypack.dev/d3@7';
+
     const scale = d3.scaleLinear().range([0,400]);
     const axisB = d3.axisBottom(scale);
 
@@ -19,6 +20,12 @@
                   .attr("width", 500).attr("height",50);
 
     svg.append("g").call(axisB);
+
+    // For console access (don't use in production)
+    window.d3 = d3;
+    window.scale = scale;
+    window.axisB = axisB;
+    window.svg = svg;
 </script>
 </body>
 </html>

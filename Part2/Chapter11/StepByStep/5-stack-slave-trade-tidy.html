@@ -93,9 +93,9 @@
         // The keys are the flags, and the value is obtained from the dataMap
         // The larger areas will be on top
         const stack = d3.stack()
-            .keys(flags)
-            .value(([decadeMap,flagMap], key) => flagMap.get(key).Value)
-            .order(d3.stackOrderAscending)
+                        .keys(flags)
+                        .value(([decadeMap,flagMap], key) => flagMap.get(key).Value)
+                        .order(d3.stackOrderAscending)
 
         // The stack generator returns an array of arrays, each representing a stack of values
         // Each array also has a data property, containing the object

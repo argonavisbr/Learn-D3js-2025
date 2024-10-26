@@ -2,7 +2,6 @@
 <html lang="en">
 <head>
     <title>Point scale</title>
-    <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
     <style>
         circle {
             stroke-width: .3;
@@ -22,7 +21,9 @@
 <br/><code>align()</code> <input id="align" type="range" value="0.5" min="0" max="1" step=".01"> <code id="alignv"></code>
 <br/><code>step()</code> <code id="step"></code>
 </div>
-<script>
+<script type="module">
+    import * as d3 from "https://cdn.skypack.dev/d3@7";
+
     // data
     const data = d3.range(0,100,10);
 

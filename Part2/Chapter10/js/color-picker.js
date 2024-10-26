@@ -1,4 +1,6 @@
-/**
+import * as d3 from 'https://cdn.skypack.dev/d3@7';
+
+    /**
  * Override the following defaults and call init() to render
  * cs.create    - the D3 color space generator function to use.
  *                Default: d3.rgb;
@@ -22,7 +24,7 @@
  */
 
 const height=180, width=850, margin = 50;
-const cs = {}
+export const cs = {}
 
 // Color space specific data - Defaults are RGB space
 cs.create = d3.rgb;
@@ -37,7 +39,7 @@ cs.depends = [[],[],[]]; // three independent axes
 /**
  * Initialize
  */
-function init() {
+export function init() {
     d3.select("body").append("svg").attr("width", width).attr("height", height);
 
     cs.functions = [d => cs.create(d,cs.init[1],cs.init[2]),
@@ -153,7 +155,7 @@ function drawScale(scale, axis, data, func, key) {
         .on("mouseover", showComponent)
         .on("mouseout", clearComponent)
         .on("mouseup", toggleSelection)
-        .each(d => d.f = func(d)); // save color
+        //.each(d => {d.f = func(d); console.log(d)}); // save color
 
     g.append("text").attr("class", "label")
         .attr("x", 570).attr("y",-5)

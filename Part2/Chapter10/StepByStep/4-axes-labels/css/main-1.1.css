@@ -1,0 +1,12 @@
+svg {
+    border: solid 1px;
+}
+
+text {
+    font-family: 'Arial Narrow', sans-serif;
+    font-size: 7pt;
+}
+.label {
+    font-size: 8pt;
+    text-anchor: middle;  /* this is critical to rotate the vertical label */
+}

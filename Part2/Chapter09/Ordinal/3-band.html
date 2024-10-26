@@ -2,7 +2,6 @@
 <html lang="en">
 <head>
     <title>Band scale</title>
-    <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
     <style>
         circle {
             fill-opacity: .1;
@@ -25,7 +24,9 @@
 <p><code>step()</code> <code id="step"></code>
 <br/><code>bandwidth()</code> <code id="bandwidth"></code></p>
 </div>
-<script>
+<script type="module">
+    import * as d3 from "https://cdn.skypack.dev/d3@7";
+
     // data
     const data = d3.range(0,100,10);
 

@@ -2,7 +2,6 @@
 <html lang="en">
 <head>
     <title>Partition scales</title>
-    <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
     <style>
         rect {
             stroke: white;
@@ -10,7 +9,6 @@
             fill-opacity: 20%;
         }
         svg {border: solid 1px lightgray}
-
     </style>
 </head>
 <body>
@@ -31,7 +29,10 @@
 <p>Selected thresholds: <code id="th"></code></p>
 <svg id="threshold" height="60" width="1020"></svg>
 
-<script>
+<script type="module">
+    import * as d3 from "https://cdn.skypack.dev/d3@7";
+    import {plot} from "./js/partition-compare.js";
+
     // INPUT: continuous domain data used in all scales
     const data  = [1,9,14,17,20,29,31, 45,49,51,56,62, 80,89,99];
     d3.select("#data").text(`[${data}]`);
@@ -41,17 +42,15 @@
     d3.select("#output").text(`[${colors}]`);
 
     const fmt = d3.format(' .2f');
-    const scaleAxis = d3.scaleLinear().range([0,1000]).domain([0,100])
-    const axis = d3.axisBottom().scale(scaleAxis);
 
-    // Render quantize scale
+    // (1) Render quantize scale
     const qz = d3.select("#quantize").append("g").attr("transform","translate(5,5)");
     const scaleQz = d3.scaleQuantize().domain([0,100]).range(colors);
     const qzThresholds = scaleQz.thresholds();
     d3.select("#qz").text(`[${qzThresholds.map(d => fmt(d))}]`);
-    plot(qz, scaleQz, d3.pairs(d3.merge([[0],qzThresholds,[100]])));
+    plot(data, qz, scaleQz, d3.pairs(d3.merge([[0],qzThresholds,[100]])));
 
-    // Render quantile scale
+    // (2) Render quantile scale
     const ql = d3.select("#quantile").append("g").attr("transform","translate(5,5)");
     const sample = [1,3,4,  8,9,20,  30,36,41,  45,48,96];
     const scaleQl = d3.scaleQuantile().domain(sample).range(colors);
@@ -62,56 +61,24 @@
         if (index === -1) index = colors.length - 1;
         return colors[index];
     });
+
     d3.select("#sample")
         .selectAll("span")
         .data(sample)
         .join("span")
-        .text((d,i) => i == 0 ? `[${d},`: i == sample.length -1 ? `${d}]`: `${d},`)
+        .text((d,i) => i === 0 ? `[${d},`: i === sample.length -1 ? `${d}]`: `${d},`)
         .style("color", (d,i) => sampleColors[i])
 
     d3.select("#ql").text(`[${qlThresholds.map(d => fmt(d))}]`);
-    plot(ql, scaleQl, d3.pairs(d3.merge([[0],qlThresholds,[100]])));
+    plot(data, ql, scaleQl, d3.pairs(d3.merge([[0],qlThresholds,[100]])));
 
-    // Render threshold scale
+    // (3) Render threshold scale
     const th = d3.select("#threshold").append("g").attr("transform","translate(5,5)");
     const thresholds = [10,20,80];
     const scaleTh = d3.scaleThreshold().domain(thresholds).range(colors);
     d3.select("#th").text(`[${thresholds.map(d => fmt(d))}]`);
-    plot(th, scaleTh, d3.pairs(d3.merge([[0],thresholds,[100]])));
+    plot(data, th, scaleTh, d3.pairs(d3.merge([[0],thresholds,[100]])));
 
-    function plot(chart, scale, thresholds) {
-        showIntervals(chart, scale, thresholds);
-        drawAxis(chart);
-        plotData(chart, scale);
-    }
-
-    function drawAxis(chart) {
-        chart.append("g")
-            .attr("transform","translate(0,25)")
-            .call(axis);
-    }
-
-    function showIntervals(chart, scale, thresholds) {
-        chart.append("g")
-            .selectAll("rect")
-            .data(thresholds)
-            .join("rect")
-            .attr("width", d => scaleAxis(d[1] - d[0]))
-            .attr("x", d => scaleAxis(d[0]))
-            .attr("y", 0)
-            .attr("height", 50)
-            .style("fill", d => scale(d[0]));
-    }
-
-    function plotData(chart, scale) {
-        chart.append("g")
-            .selectAll("circle")
-            .data(data).join("circle")
-            .attr("r", 4)
-            .attr("cx", d => scaleAxis(d))
-            .attr("cy", 25)
-            .style("fill", d => scale(d));
-    }
 
 </script>
 </body>

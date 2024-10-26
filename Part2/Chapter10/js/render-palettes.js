@@ -1,3 +1,7 @@
+import * as d3 from 'https://cdn.skypack.dev/d3@7';
+
+export { renderSchemeOrdinal, renderSchemeSequential };
+
 function renderSchemeOrdinal(obj, index) {
 
     const isCategorical = d3[obj.scheme][0] != null; // hue arrays-of-arrays have three initial elements == null

@@ -2,15 +2,17 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
-    <script src="../js/color-scales.js"></script>
     <link rel="stylesheet" href="../css/color-spaces.css">
     <title>HSL color channels</title>
 </head>
 <body>
 <h1>HSL color space</h1>
 <svg height="200" width="700"></svg>
-<script>
+
+<script type="module">
+    import * as d3 from 'https://cdn.skypack.dev/d3@7';
+    import {drawScale} from '../js/color-scales.js';
+
     // scales
     const scaleH = d3.scaleLinear().range([50,500]).domain([0,360]);
     const scaleS = d3.scaleLinear().range([50,500]).domain([0,1])

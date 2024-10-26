@@ -20,17 +20,16 @@
 <p>Sample (used to compute thresholds): <code id="sample"></code></p>
 <p>Computed thresholds: <code id="ql"></code></p>
 <svg id="quantile" height="60" width="1020"></svg>
-<script src="../js/threshold-compare.js"></script>
-<script>
 
+<script type="module">
+    import * as d3 from "https://cdn.skypack.dev/d3@7";
+    import {plot} from "./js/threshold-compare.js";
 
     // OUTPUT: discrete range data
     const colors = ['blue', 'red', 'green', 'orange'];
     d3.select("#output").text(`[${colors}]`);
 
     const fmt = d3.format(' .2f');
-    const scaleAxis = d3.scaleLinear().range([0,1000]).domain([0,100])
-    const axis = d3.axisBottom().scale(scaleAxis);
 
     // Render quantile scale
     const ql = d3.select("#quantile").append("g").attr("transform","translate(5,5)");
@@ -55,7 +54,7 @@
     d3.select("#data").text(`[${data}]`);
 
     d3.select("#ql").text(`[${qlThresholds.map(d => fmt(d))}]`);
-    plot(ql, scaleQl, d3.pairs(d3.merge([[0],qlThresholds,[100]])));
+    plot(data, ql, scaleQl, d3.pairs(d3.merge([[0],qlThresholds,[100]])));
 </script>
 </body>
 </html>

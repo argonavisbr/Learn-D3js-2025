@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <title>Colors</title>
-    <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
     <style>
         @import "../css/colors.css";
 
@@ -38,9 +37,13 @@
     </style>
 </head>
 <body>
-<script>
+<h1>Standard colors</h1>
+<div id="container"></div>
+<script type="module">
+    import * as d3 from 'https://cdn.skypack.dev/d3@7';
+
   const spaces = ["name", "hex", "rgb", "hsl", "hwb", "lab", "lch", "oklch"];
-  const body = d3.select("body");
+  const container = d3.select("#container");
   const file = "../css/colors.css";
   const css = new Map();
 
@@ -59,30 +62,30 @@
       })
 
   function render() {
-      body.append("div")
+      container.append("div")
           .attr("class", "line");
 
       spaces.forEach( (space,i) => {
-          body.append("div")
+          container.append("div")
               .attr("class", "color-box")
               .attr("id", `c_${space}`)
               .style("top", `${30 + i*35}px`)
               .text(space);
 
-          body.append("div")
+          container.append("div")
               .attr("class", "color-box")
               .attr("id", `a_${space}`)
               .style("left", "90px")
               .style("top", `${30 + i*35}px`);
 
-          body.append("div")
+          container.append("div")
               .attr("class", "label")
               .attr("id", `t_${space}`)
               .style("left", "170px")
               .style("top", `${30 + i*35}px`)
               .text(css.get(`c_${space}`))
 
-          body.append("div")
+          container.append("div")
               .attr("class", "label")
               .attr("id", `t_${space}`)
               .style("left", "350px")

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Scatter Chart: Step 2 - page setup</title>
+    <link rel="stylesheet" href="css/main-1.0.css">
+</head>
+<body>
+<div id="chart"></div>
+<script type="module">
+    import * as d3 from 'https://cdn.skypack.dev/d3@7';
+    import {load} from './js/init-1.1.js';
+    import {draw} from './js/render-1.0.js';
+
+    const app = await load();
+    console.log(app.data);  // inspect app.data.countries
+    draw();
+
+    // Use the console to test app.scale.x() and app.scale.y()
+    window.d3 = d3;
+    window.app = app;
+
+</script>
+</body>
+</html>

@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <title>Changing scales in axes</title>
-    <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
     <style>
         svg {
             border: solid 1px lightblue;
@@ -15,14 +14,24 @@
     </style>
 </head>
 <body>
-<script>
-    const svg = d3.select("body").append("svg")
-        .attr("width", 500).attr("height",50);
+<script type="module">
+    import * as d3 from 'https://cdn.skypack.dev/d3@7';
 
-    const scale = d3.scaleLinear().range([0,250]).domain([0,400]);
+    const dim = {width: 500, height: 50, margin: 50};
+
+    const svg = d3.select("body")
+                  .append("svg")
+                  .attr("width", dim.width)
+                  .attr("height",dim.height);
+
+    const scale = d3.scaleLinear()
+                    .range([dim.margin, dim.width - dim.margin])
+                    .domain([0,400]);
+
     const axisB = d3.axisBottom(scale);
     const horz  = d3.select("svg")
                     .append("g")
+                    .attr("transform", `translate(0, 20)`)
                     .call(axisB);
 
     scale.domain([0,1000])
@@ -30,6 +39,13 @@
         .delay(2000)
         .duration(1000)
         .call(axisB);
+
+
+    // For console access (don't use in production)
+    window.d3 = d3;
+    window.horz = horz;
+    window.axisB = axisB;
+    window.scale = scale;
 
 </script>
 </body>

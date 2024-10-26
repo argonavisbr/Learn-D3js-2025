@@ -20,16 +20,15 @@
 <p>Computed thresholds: <code id="qz"></code></p>
 <svg id="quantize" height="60" width="1020"></svg>
 
-<script src="../js/threshold-compare.js"></script>
-<script>
+<script type="module">
+    import * as d3 from "https://cdn.skypack.dev/d3@7";
+    import {plot} from "./js/threshold-compare.js";
 
     // OUTPUT: discrete range data
     const colors = ['blue', 'red', 'green', 'orange'];
     d3.select("#output").text(`[${colors}]`);
 
     const fmt = d3.format(' .2f');
-    const scaleAxis = d3.scaleLinear().range([0,1000]).domain([0,100])
-    const axis = d3.axisBottom().scale(scaleAxis);
 
     // Render quantize scale
     const qz = d3.select("#quantize").append("g").attr("transform","translate(5,5)");
@@ -41,7 +40,7 @@
     const data  = [1,9,14,17,20,29,31, 45,49,51,56,62, 80,89,99];
     d3.select("#data").text(`[${data}]`);
 
-    plot(qz, scale, d3.pairs(d3.merge([[0],qzThresholds,[100]])));
+    plot(data, qz, scale, d3.pairs(d3.merge([[0],qzThresholds,[100]])));
 
     console.log(scale.invertExtent('red'));
     console.log(scale.invertExtent('green'));
