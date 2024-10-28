@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>A simple arc</title>
+    <style>
+        path {
+            fill: rgba(128, 128, 128, 0.22);
+            stroke: red;
+            stroke-width: 2px;
+        }
+    </style>
+</head>
+<body>
+<script type="module">
+    import * as d3 from "https://cdn.skypack.dev/d3@7";
+
+    const width  = 800;
+    const height = 400;
+
+    const arc = d3.arc();
+    const s1 = {
+        innerRadius: 0,
+        outerRadius: 100,
+        startAngle: Math.PI * 45/180,
+        endAngle: Math.PI * 135/180
+    };
+    const slice = arc(s1);
+
+    console.log(slice);
+
+    const svg = d3.select("body").append("svg").attr("height",height).attr("width",width);
+
+    svg.append("path")
+            .datum(slice)
+            .attr("d", d => d)
+            .attr("transform", "translate(120,120)");
+
+</script>
+</body>
+</html>

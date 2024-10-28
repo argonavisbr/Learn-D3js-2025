@@ -2,9 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Average monthly temperature in selected cities</title>
-    <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
-    <script src="../../js/chart-utils.js"></script>
+    <title>Exercise 8: Average monthly temperature in selected cities</title>
     <link rel="stylesheet" href="../../css/chart-utils.css">
     <style>
         path.months {
@@ -34,7 +32,18 @@
 </head>
 <body>
 <h1>Average monthly temperature (ºC) in selected cities</h1>
-<script>
+<script type="module">
+    import * as d3 from "https://cdn.skypack.dev/d3@7";
+    import * as utils from "../../js/chart-utils.js";
+
+
+    const dim = {width: 500, height: 500, margin: {x: 150, y: 30}};
+    const scale = {
+        angle: d3.scaleLinear().range([0, 2*Math.PI]),
+        radius: d3.scaleLinear().range([0, dim.width/2 - dim.margin.y])
+    }
+    const svg = d3.select("body").append("svg").attr("height", dim.height).attr("width", dim.width + dim.margin.x);
+
   // Temperature data (Source: Wikipedia)
   const file = "../../data/temperatures.csv";
 
@@ -57,32 +66,22 @@
   });
 
   function plot(data, months) { console.log(data)
-      const height = 500, width = 500, margin = 30, marginR = 150;
 
-      const scaleAngle = d3.scaleLinear()
-                            .domain([0, months.length])
-                            .range([0, 2*Math.PI]);
+      scale.angle.domain([0, months.length]);
 
       const values = d3.merge(data.map(d => d[1]));
-      const scaleRadius = d3.scaleLinear()
-                            .domain([d3.min(values) - 10, d3.max(values) + 10])
-                            .range([0, width/2 - margin]);
+      scale.radius.domain([d3.min(values) - 10, d3.max(values) + 10]);
+
       const color = d3.scaleOrdinal(d3.schemeTableau10);
 
       // Line functions
       const tempLine = d3.lineRadial()
-                         .angle((d,i) => d ? scaleAngle(i) : scaleAngle(i-1))
-                         .radius(d => scaleRadius(d))
+                         .angle((d,i) => d ? scale.angle(i) : scale.angle(i-1))
+                         .radius(d => scale.radius(d))
                          .curve(d3.curveCatmullRom);
 
-      // Render chart
-      const svg = d3.select("body")
-                    .append("svg")
-                      .attr("width", width + marginR)
-                      .attr("height", height);
-
       const container = svg.append("g")
-                            .attr("transform", `translate(${width/2},${height/2})`);
+                            .attr("transform", `translate(${dim.width/2},${dim.height/2})`);
 
       // Render temperature lines
       container
@@ -97,19 +96,19 @@
                   .style("stroke", (d,i) => color(i));
 
       // Draw radial axes
-      const axis = pkt.radialAxes()
-                      .container(container)
-                      .aScale(scaleAngle)
-                      .rScale(scaleRadius)
-                      .angularData(months)
-                      .numTicks(12)
-                      .useGrid(false)
-                      .backdropOpacity(.9)();
+      utils.radialAxes()
+          .container(container)
+          .aScale(scale.angle)
+          .rScale(scale.radius)
+          .angularData(months)
+          .numTicks(12)
+          .useGrid(false)
+          .backdropOpacity(.9)();
 
       // Display a legend
       const legend = svg.append("g")
-          .attr("transform", `translate(${[width, margin]})`);
-      pkt.legend()
+          .attr("transform", `translate(${[dim.width, dim.margin.y]})`);
+      utils.legend()
           .container(legend)
           .data(data.map(d => d[0]))
           .color(color)();

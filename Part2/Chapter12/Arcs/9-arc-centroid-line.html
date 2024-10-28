@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Arc centroid</title>
+</head>
+<body>
+<script type="module">
+    import * as d3 from "https://cdn.skypack.dev/d3@7";
+
+    const width  = 600;
+    const height = 600;
+
+    // Configuration for all slices
+    const arc = d3.arc()
+                  .innerRadius(20)
+                  .outerRadius(200)
+                  .cornerRadius(10)
+                  .padAngle(.2)
+                  .padRadius(20);
+
+    // Each slice is an arc with a start and end angle
+    const slices = [
+        {startAngle: 0,        endAngle: Math.PI * 120/180},
+        {startAngle: Math.PI * 120/180, endAngle: Math.PI * 210/180},
+        {startAngle: Math.PI * 210/180, endAngle: Math.PI * 270/180},
+        {startAngle: Math.PI * 270/180, endAngle: Math.PI * 300/180},
+        {startAngle: Math.PI * 300/180, endAngle: Math.PI * 330/180},
+        {startAngle: Math.PI * 330/180, endAngle: Math.PI * 350/180},
+        {startAngle: Math.PI * 350/180, endAngle: Math.PI * 2}
+    ];
+
+    // A simple color scale
+    const colorScale = d3.scaleOrdinal(d3.schemeCategory10);
+
+    // The svg container
+    const svg = d3.select("body").append("svg").attr("height",height).attr("width",width);
+
+    // A group container with origin at the center, to contain the pie chart
+    const g = svg.selectAll("g")
+            .data(slices)
+            .join("g")
+            .attr("transform", `translate(${[width/2,height/2]})`);
+
+    // Draw the slices
+    g.append("path")
+            .attr("d", arc)
+            .attr("stroke", 'gray')
+            .attr("fill", (d,i) => colorScale(i))
+            .attr("fill-opacity", .5);
+
+    // Some helper functions to use the centroid of the slices
+    const cx = d => arc.centroid(d)[0];
+    const cy = d => arc.centroid(d)[1];
+
+    // A helper function to convert [x,y] coordinates and obtain the angle for each slice
+    const angle = d => (Math.atan2(cy(d),cx(d)) * 180) / Math.PI;
+
+    // Draw a small circle at the centroid of each slice
+    g.append('circle')
+            .attr("cx",d => cx(d) )
+            .attr("cy",d => cy(d) )
+            .attr("r",3)
+            .attr("fill", "black");
+
+    // Margin for the labels (a factor of the centroid's radius)
+    const dist = 2;
+
+    // A helper function to obtain the angle and point at r times the centroid's radius for each slice
+    const pt = (d,r,a=0) => [angle(d)+a, cx(d) * r, cy(d) * r];
+
+    // Draw a line from the centroid to the edge of the slice
+    g.append('line')
+            .attr("x1", d => pt(d, 1)[1])
+            .attr("y1", d => pt(d, 1)[2])
+            .attr("x2", d => pt(d, dist-.1)[1])
+            .attr("y2", d => pt(d, dist-.1)[2])
+            .attr("stroke","black")
+            .attr("stroke-width",1);
+
+    // Draw a container for the label, and rotate it so that it is parallel to the edge of the slice
+    const label = g.append("g")
+                   .attr("transform", d => `rotate(${pt(d, dist,90)})
+                                            translate(${[pt(d, dist)[1], pt(d, dist)[2]]})`);
+    // Place a text label in the container
+    label.append("text")
+         .attr("text-anchor","middle" )
+         .style("alignment-baseline", "middle" )
+         .text((d,i) => `Slice ${i+1}`);
+
+
+</script>
+</body>
+</html>

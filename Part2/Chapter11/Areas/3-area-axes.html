@@ -3,8 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <title>Area in a Cartesian system</title>
-    <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
-    <script src="../js/chart-utils.js"></script>
     <link rel="stylesheet" href="../css/chart-utils.css">
     <style>
         path.area {
@@ -14,11 +12,18 @@
     </style>
 </head>
 <body>
-<script>
-    const width  = 800;
-    const height = 400;
-    const margin = 50;
+<script type="module">
+    import * as d3 from "https://cdn.skypack.dev/d3@7";
+    import * as utils from "../js/chart-utils.js";
 
+    const dim = { width: 800, height: 400, margin: 50 };
+    const scale = {
+        x: d3.scaleLinear().range([dim.margin, dim.width - dim.margin]),
+        y: d3.scaleLinear().range([dim.height - dim.margin, dim.margin])
+    }
+    const svg = d3.select("body").append("svg").attr("height", dim.height).attr("width", dim.width);
+
+    // Data
     const coords = [
         [0,0],
         [100,200],
@@ -27,35 +32,28 @@
         [400,100],
     ];
 
-    // Scales to fit the area in a Cartesian system
-    const scaleX = d3.scaleLinear()
-                     .domain(d3.extent(coords, d => d[0]))
-                     .range([margin,width - margin]);
-
-    const scaleY = d3.scaleLinear()
-                     .domain(d3.extent(coords, d => d[1]))
-                     .range([height - margin,margin]);
+    // Scale domains
+    scale.x.domain(d3.extent(coords, d => d[0]));
+    scale.y.domain(d3.extent(coords, d => d[1]));
 
     // A default area, scaled to fit the screen
     const area = d3.area()
-                   .x(d => scaleX(d[0]))
-                   .y1(d => scaleY(d[1]))
-                   .y0(d => scaleY(0));  // This is necessary, since the scale inverts the y-axis
+                   .x(d => scale.x(d[0]))
+                   .y1(d => scale.y(d[1]))
+                   .y0(scale.y(0));     // This is necessary, since the scale inverts the y-axis
 
 
     const pathData = area(coords);
-
-    const svg = d3.select("body").append("svg").attr("height",height).attr("width",width);
 
     svg.append("path")
         .attr("class", "area")
         .attr("d", pathData)
 
-    // This renders a Cartesian system (see the file cartesian-axes-2.2.js)
-    pkt.cartesianAxes()
-        .container(svg)
-        .xScale(scaleX)
-        .yScale(scaleY)();
+    // This renders a Cartesian system
+    utils.cartesianAxes()
+         .container(svg)
+         .xScale(scale.x)
+         .yScale(scale.y)();
 
 </script>
 </body>

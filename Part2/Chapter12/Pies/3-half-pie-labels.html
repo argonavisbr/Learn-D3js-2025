@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Pie</title>
+    <link rel="stylesheet" href="../css/chart-utils.css">
+    <style>
+        text {
+            font-family: sans-serif;
+            font-size: 13px;
+        }
+        .slice {
+            fill-opacity: .8;
+        }
+        .legend text {
+            font-size: 13px !important;
+        }
+        h1, p {
+            font-family: sans-serif;
+            width: 800px;
+            text-align: center;
+        }
+        h1 {
+            font-size: 20px;
+        }
+        p {
+            font-size: 13px;
+        }
+    </style>
+</head>
+<body>
+<h1>Estimated population</h1>
+<p>Source: Wikipedia</p>
+<script type="module">
+    import * as d3 from 'https://cdn.skypack.dev/d3@7';
+    import * as utils from '../js/chart-utils.js';
+
+    const dim = {width: 800, height: 350};
+
+    const data = [
+        {"country": "Canada", "population": 30736},
+        {"country": "Mexico", "population": 101720},
+        {"country": "United States", "population": 281983},
+    ]
+
+    // Configuration for the pie chart (half-pie, starting at -90 degrees)
+    const pie = d3.pie()
+            .value(d => d.population)
+            .sortValues(d3.ascending)
+            .startAngle(-Math.PI/2)
+            .endAngle(Math.PI/2);
+
+    // Configuration for all slices
+    const arc = d3.arc()
+                  .innerRadius(50)
+                  .outerRadius(280)
+                  .padAngle(4)
+                  .padRadius(4);
+
+    // A simple color scale
+    const colorScale = d3.scaleOrdinal(d3.schemeTableau10
+                                         .reverse()
+                                         .slice(-data.length));
+
+    // The svg container
+    const svg = d3.select("body").append("svg").attr("height",dim.height).attr("width",dim.width);
+
+    // Bind the data to a container, and place the origin where the chart will fit
+    const g = svg.selectAll("g")
+                 .data( pie(data) )
+                   .join("g")
+                      .attr("transform", `translate(${[dim.width/2-40,dim.height]})`);
+
+    // Render the chart
+    g.append("path").attr("class", "slice")
+            .attr("d", arc)
+            .attr("fill", (d,i) => colorScale(i));
+
+    // Code to render the labels using the centroid
+    // You can reuse these in other charts, importing the chart-utils.js file
+    // and calling the pieLabels() function with the desired configuration
+
+    // Helper functions to use the centroids to place labels
+    const dist = 1.75;
+    const cx = d => arc.centroid(d)[0];
+    const cy = d => arc.centroid(d)[1];
+    const angle = d => (Math.atan2(cy(d),cx(d)) * 180) / Math.PI;
+    const pt = (d,r=1,a=0) => [angle(d)+a, cx(d) * r, cy(d) * r];
+
+    // Places the population label inside the slice
+    g.append('text').attr("class", "inner label")
+        .attr("x",d => cx(d)*1.2)
+        .attr("y",d => cy(d)*1.2)
+        .attr("text-anchor", "middle")
+        .attr("alignment-baseline", "middle")
+        .text(d => d3.format(",.0f")(d.data.population));
+
+    // Places the flag label at the edge of the slice (remove if using legends)
+    g.append('text').attr("class", "outer label")
+        .attr("x",d => pt(d, dist)[1])
+        .attr("y",d => pt(d, dist)[2])
+        .attr("alignment-baseline", "middle")
+        .text(d => d.data.country);
+
+    // Options for labels (choose the desired format)
+    const tangential = true;
+
+    // (1) Place the labels tangentially to the slices...
+    if(tangential) {
+        g.selectAll(".outer.label")
+            .attr("text-anchor", "middle")
+            .attr("transform", d => `rotate(${pt(d,dist,90)})`);
+    } else { // ... or (2) place the labels radially to the slices...
+        g.selectAll(".outer.label")
+            .attr("text-anchor", d => pt(d)[1] > 0 ? "start" : "end")
+            .attr("transform", d => pt(d)[1] > 0 ? `rotate(${pt(d,dist)})` : `rotate(${pt(d,dist,180)})`);
+    }
+
+    // ... or (3) use legends
+    const legend = svg.append("g")
+                      .attr("transform", `translate(${[width-120,30]})`);
+    utils.legend()
+       .container(legend)
+       .color(colorScale)
+       .data(data.map(d => d.country))();
+
+</script>
+</body>
+</html>

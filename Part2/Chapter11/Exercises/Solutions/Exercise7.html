@@ -2,9 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Global temperatures 1880 to 2023</title>
-    <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
-    <script src="../../js/chart-utils.js"></script>
+    <title>Exercise 7: Global temperatures 1880 to 2023</title>
     <link rel="stylesheet" href="../../css/chart-utils.css">
     <style>
         path.median, path.months {
@@ -23,7 +21,20 @@
 <body>
 <h1>Global temperatures from 1880 to 2023</h1>
 <p>Based on the NASA GISS reference (https://data.giss.nasa.gov/gistemp/)</p>
-<script>
+<script type="module">
+    import * as d3 from "https://cdn.skypack.dev/d3@7";
+    import * as utils from "../../js/chart-utils.js";
+
+    const dim = {
+        width: 800, height: 500,
+        margin: {x: 75, y: 50}
+    };
+    const scale = {
+        date: d3.scaleTime().range([dim.margin.x, dim.width - dim.margin.x]),
+        temp: d3.scaleLinear().range([dim.height - dim.margin.y, dim.margin.y])
+    }
+    const svg = d3.select("body").append("svg").attr("height", dim.height).attr("width", dim.width);
+
   // Global temperatures 1880 to 2023 (Source: https://data.giss.nasa.gov/gistemp/)
   const file = "../../data/GLB.Ts.1880.2023.csv";
 
@@ -32,14 +43,15 @@
     .then(text => {
         // Each array in set contains year and temperature anomalies for each month [[year, t1, t2, ..., t12], ...]
         const rawData = d3.csvParseRows(text, d3.autoType)
-                      .filter((d,i) => i > 0); // get rid of header
+                          .filter((d,i) => i > 0); // get rid of header
 
         // Each array in set contains year and array of anomalies [[year, [t1, t2, ..., t12]], ... ]
         const dataByYear = rawData.map(d => [d[0], d.slice(1)]);
 
         // Each array in set contains 12 dates and anomaly [[[date, t1], [date, t2] ..., [date, t12]], ...]
         const isoDateString = (year,month) => `${year}-${month}-27`;
-        const dataByMonth = dataByYear.map(d => d[1].map((v,i) => [isoDateString(d[0], i+1), v]));
+        const dataByMonth = dataByYear.map(d => d[1].map((v,i) => [isoDateString(d[0], i+1), v])
+                                                    .filter(v => v[1] !== null)); // remove null months);
 
         // Each array in set contains year and median anomaly [[year, median], ...]
         const mediansByYear = dataByYear.map(d => [d[0], d3.median(d[1])]);
@@ -49,36 +61,25 @@
   });
 
   function plot(data, medians) {
-      const height = 500, width = 800, marginX = 75, marginY = 50;
 
-      const scaleDate = d3.scaleTime()
-                       .range([marginX, width - marginX])
-                       .domain([d3.isoParse(data[0][0][0]),
-                                d3.isoParse(data[data.length-1][11][0])]);
+      scale.date.domain([d3.isoParse(data[0][0][0]),
+                         d3.isoParse(data[data.length-1][data[data.length-1].length-1][0])]);
 
-      const scaleTemp = d3.scaleLinear()
-                       .range([height - marginY, marginY])
-                       .domain(d3.extent(data.flat(), d => d[1]));
+      scale.temp.domain(d3.extent(data.flat(), d => d[1]));
 
       const color = d3.scaleSequential(d3.interpolateTurbo)
                       .domain(d3.extent(medians, d => d[1]));
 
       // Line functions
       const anomalyLine = d3.line()
-                            .x(d => scaleDate(d3.isoParse(d[0])))
-                            .y(d => scaleTemp(d[1]))
+                            .x(d => scale.date(d3.isoParse(d[0])))
+                            .y(d => scale.temp(d[1]))
                             .defined(d => d && !isNaN(d[1]));
       const medianLine = d3.line()
-                           .x(d => scaleDate(d3.isoParse(`${d[0]}-06-27`))) // uses middle of year
-                           .y(d => scaleTemp(d[1]))
+                           .x(d => scale.date(d3.isoParse(`${d[0]}-06-27`))) // uses middle of year
+                           .y(d => scale.temp(d[1]))
                            .defined(d => d && !isNaN(d[1]))
                            .curve(d3.curveBasis);
-
-      // Render chart
-      const svg = d3.select("body")
-                    .append("svg")
-                      .attr("width", width)
-                      .attr("height", height);
 
       // Render temperature line
       d3.select("svg")
@@ -97,7 +98,12 @@
              .attr("d", medianLine);
 
       // Render axes
-      pkt.cartesianAxes().container(svg).xScale(scaleDate).yScale(scaleTemp).xLabel("Years").yLabel("Anomaly (˚C")();
+      utils.cartesianAxes()
+          .container(svg)
+          .xScale(scale.date)
+          .yScale(scale.temp)
+          .xLabel("Years")
+          .yLabel("Anomaly (˚C")();
 
   }
 

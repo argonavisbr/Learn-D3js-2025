@@ -3,8 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <title>Global temperatures 1880 to 2023 - spiral</title>
-    <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
-    <script src="../js/chart-utils.js"></script>
     <link rel="stylesheet" href="../css/chart-utils.css">
     <style>
         path.months {
@@ -32,7 +30,19 @@
 <body>
 <h1>Global temperatures from 1880 to 2023</h1>
 <p>Source: <a href="https://data.giss.nasa.gov/gistemp/">NASA Godard Institute for Space Studies</a></p>
-<script>
+<script type="module">
+    import * as d3 from "https://cdn.skypack.dev/d3@7";
+    import * as utils from "../js/chart-utils.js";
+
+    const dim = {
+        width: 600, height: 600, margin: 30
+    };
+    const scale = {
+        angle: d3.scaleLinear().range([0, 2*Math.PI]),
+        radius: d3.scaleLinear().range([0, dim.width/2 - dim.margin])
+    }
+    const svg = d3.select("body").append("svg").attr("height", dim.height).attr("width", dim.width);
+
   // Global temperatures 1880 to 2023 (Source: https://data.giss.nasa.gov/gistemp/)
   const file = "../data/GLB.Ts.1880.2023.csv";
 
@@ -58,11 +68,8 @@
       });
 
   function plot(data, months) {
-      const height = 600, width = 600, margin = 30;
 
-      const scaleAngle = d3.scaleLinear()
-                            .domain([0, months.length])
-                            .range([0, 2*Math.PI]);
+      scale.angle.domain([0, months.length]);
 
       const series = data.map( d => d[1].map(v => v[1]) ); // array with arrays of values
       console.log('series', series)
@@ -70,9 +77,7 @@
       const values = d3.merge(series); // flat array with all values
       console.log('values', values)
 
-      const scaleRadius = d3.scaleLinear()
-                            .domain([d3.min(values) - .2, d3.max(values) + .1])
-                            .range([0, width/2 - margin]);
+      scale.radius.domain([d3.min(values) - .2, d3.max(values) + .1]);
 
       const mean = series.map(d => d3.mean(d));
       console.log('mean', mean)
@@ -82,19 +87,14 @@
 
       // Line functions
       const line = d3.lineRadial()
-                     .angle((d,i) => scaleAngle(i))
-                     .radius(d => scaleRadius(d[1]))
+                     .angle((d,i) => scale.angle(i))
+                     .radius(d => scale.radius(d[1]))
                      .defined(d => d[1] && !isNaN(d[1]))  // ignores null and not-a-number
                      .curve(d3.curveCatmullRom);
 
-      // Render chart
-      const svg = d3.select("body")
-                    .append("svg")
-                      .attr("width", width)
-                      .attr("height", height);
       // Chart container - move to center of viewport
       const chart = svg.append("g")
-                       .attr("transform", `translate(${width/2},${height/2})`);
+                       .attr("transform", `translate(${dim.width/2},${dim.height/2})`);
 
       // Render temperature lines in chart container
       chart.selectAll("g.line")
@@ -108,9 +108,9 @@
                    .style("stroke", d => color(d3.mean(d.map(v => v[1]))));
 
       // Draw radial axes in chart container
-      pkt.radialAxes().container(chart)
-                      .aScale(scaleAngle)
-                      .rScale(scaleRadius)
+      utils.radialAxes().container(chart)
+                      .aScale(scale.angle)
+                      .rScale(scale.radius)
                       .angularData(months)
                       .numTicks(10)
                       .useGrid(true)

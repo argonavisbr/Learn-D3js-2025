@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <title>Lines using scale functions</title>
-    <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
     <style>
         path.line {
             stroke: red;
@@ -12,10 +11,11 @@
     </style>
 </head>
 <body>
-<script>
-    const width  = 500;
-    const height = 400;
-    const svg = d3.select("body").append("svg").attr("height",height).attr("width",width);
+<script type="module">
+    import * as d3 from "https://cdn.skypack.dev/d3@7";
+
+    const dim = { width: 500, height: 400, margin: 50 };
+    const svg = d3.select("body").append("svg").attr("height", dim.height).attr("width", dim.width);
 
     // Raw data (needs scaling)
     const data = [
@@ -26,23 +26,24 @@
         [4,.1]
     ];
 
+    const scale  = {};
     // Scale for the x-values
-    const scaleX = d3.scaleLinear()
-                     .domain(d3.extent(data, d => d[0]))
-                     .range([0,width]);
+    scale.x = d3.scaleLinear()
+                .range([0, dim.width])
+                .domain(d3.extent(data, d => d[0]));
 
     // Scale for the y-values
-    const scaleY = d3.scaleLinear()
-                     .domain(d3.extent(data, d => d[1]))
-                     .range([height,0]); // invert - place 0 at bottom for Cartesian charts
+    scale.y = d3.scaleLinear()
+                .range([dim.height, 0])     // invert - place 0 at bottom for Cartesian charts
+                .domain(d3.extent(data, d => d[1]));
 
     // Setting the x() and y() accessors with scales
     const line = d3.line()
-                   .x(d => scaleX(d[0]))
-                   .y(d => scaleY(d[1]));
+                   .x(d => scale.x(d[0]))
+                   .y(d => scale.y(d[1]));
 
     // This is an alternative way of setting the x() and y() accessors
-    // const line = d3.line(d => scaleX(d[0]), d => scaleY(d[1]));
+    // const line = d3.line(d => scale.x(d[0]), d => scale.y(d[1]));
 
     // Check that the path data is correct and will place the points within the viewport range
     const pathData = line(data);

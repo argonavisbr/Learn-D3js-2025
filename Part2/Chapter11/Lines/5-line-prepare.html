@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <title>Preparing a dataset to render as a line</title>
-    <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
     <style>
         path {
             stroke: red;
@@ -17,10 +16,13 @@
     </style>
 </head>
 <body>
-<script>
-    const width  = 500;
-    const height = 400;
-    const svg = d3.select("body").append("svg").attr("height",height).attr("width",width);
+<script type="module">
+    import * as d3 from "https://cdn.skypack.dev/d3@7";
+
+    const dim = { width: 500, height: 400, margin: 50 };
+
+    const svg = d3.select("body").append("svg").attr("height", dim.height).attr("width", dim.width);
+
 
     // The samples are a simple array of values
     const samples = [0, 200, 50, 150, 100];

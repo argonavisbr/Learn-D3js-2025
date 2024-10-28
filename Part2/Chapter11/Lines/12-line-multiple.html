@@ -3,8 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <title>A multi-series line chart</title>
-    <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
-    <script src="../js/chart-utils.js"></script>
     <link rel="stylesheet" href="../css/chart-utils.css">
     <style>
         .dataset {
@@ -14,10 +12,18 @@
     </style>
 </head>
 <body>
-<script>
-    const width  = 800;
-    const height = 400;
-    const margin = 50;
+<script type="module">
+    import * as d3 from "https://cdn.skypack.dev/d3@7";
+    import * as utils from "../js/chart-utils.js";
+
+    const dim = { width: 800, height: 400, margin: 50 };
+    const scale = {
+        x: d3.scaleLinear().range([dim.margin, dim.width - dim.margin]),
+        y: d3.scaleLinear().range([dim.height - dim.margin, dim.margin])
+    }
+    const svg = d3.select("body").append("svg").attr("height", dim.height).attr("width", dim.width);
+
+
 
     // Change this to add more data series
     const series = 3;
@@ -34,13 +40,8 @@
     }
 
     // Scales
-    const scaleX = d3.scaleLinear()
-            .domain(d3.extent(d3.merge(datasets), d => d[0]))
-            .range([margin, width - margin]);
-
-    const scaleY = d3.scaleLinear()
-            .domain(d3.extent(d3.merge(datasets), d => d[1]))
-            .range([height - margin, margin]);
+    scale.x.domain(d3.extent(d3.merge(datasets), d => d[0]));
+    scale.y.domain(d3.extent(d3.merge(datasets), d => d[1]));
 
     // Generates a color for each data series
     const colorScale = d3.scaleOrdinal(d3.schemeCategory10)
@@ -48,10 +49,9 @@
 
     // line function for all lines
     const line = d3.line()
-                   .x(d => scaleX(d[0]))
-                   .y(d => scaleY(d[1]));
+                   .x(d => scale.x(d[0]))
+                   .y(d => scale.y(d[1]));
 
-    const svg = d3.select("body").append("svg").attr("height",height).attr("width",width);
 
     // Bind the data array to a selection of <path> elements. Each <path> will receive a data series.
     svg.selectAll("path.dataset")
@@ -62,10 +62,10 @@
            .style("stroke", colorScale);
 
     // Draw the axes (we are using a utility function from cartesian-chart-utils.js)
-    pkt.cartesianAxes()
+    utils.cartesianAxes()
         .container(svg)
-        .xScale(scaleX)
-        .yScale(scaleY)()
+        .xScale(scale.x)
+        .yScale(scale.y)()
 
 
 </script>

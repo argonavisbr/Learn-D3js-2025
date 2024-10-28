@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Stack with simple array</title>
+    <link rel="stylesheet" href="../css/chart-utils.css">
+</head>
+<body>
+<p>See results in JavaScript console</p>
+<script type="module">
+    import * as d3 from 'https://cdn.skypack.dev/d3@7';
+    import {drawBarChart, drawAreaChart, svg, dim} from './js/stack-examples.js';
+
+    // Simple 4x3 array of values - row values will be added to create the stack
+    const data1 = [
+        [213, 100, 200, 300],
+        [121, 150, 250, 350],
+        [637, 10, 20, 30]
+    ];
+
+    // Configure the stack function. The keys are the columns.
+    const keys = [0, 1, 2, 3];
+    const stack = d3.stack()
+                    .keys(keys);
+    console.log('keys', keys);
+
+    // Stack the data
+    const stackedData = stack(data1);
+
+    // Inspect the stacked data
+    console.log('stackedData', stackedData);
+
+    /*
+    Result is a 3x4 array of pairs. Each pair also has a "data" property containing the original data.
+    Each cell from the first column contains data: data1[0]. From the second: data: data1[1], and so on.
+     [
+       [ [  0,213], [  0,121], [  0,637] ],
+       [ [213,313], [121,271], [637,647] ],
+       [ [313,513], [271,521], [647,667] ],
+       [ [513,813], [521,871], [667,697] ]
+     ]
+     */
+
+    // See the results!
+    // Renders bar and area chart with the stack (uses ../js/chart-utils.js and js/stack-examples.js)
+    const g1 = svg.append("g").attr("transform", `translate(0, 0)`);
+    drawBarChart(g1, stackedData, keys);
+    const g2 = svg.append("g").attr("transform", `translate(${dim.width/2}, 0)`);
+    drawAreaChart(g2, stackedData, keys);
+
+</script>
+</body>
+</html>

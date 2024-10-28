@@ -4,19 +4,27 @@ Files and exercises for chapter 11.
 
 ## 1) Description of each subfolder in this folder
 
-__`TODO/`__
+__`SVG/`__
 
 Description.
 
-__`TODO/`__
+__`Lines/`__
 
 Description.
 
-__`TODO/`__
+__`Areas/`__
 
 Description.
 
-__`TODO/`__
+__`Curves/`__
+
+Description.
+
+__`Radial/`__
+
+Description.
+
+__`Symbol/`__
 
 Description.
 
@@ -25,6 +33,22 @@ __`StepByStep/`__
 Description.
 
 __`data/`__
+
+Description.
+
+__`css/`__
+
+Description.
+
+__`js/`__
+
+Description.
+
+__`Examples/`__
+
+Description.
+
+__`Exercises/`__
 
 Description.
 

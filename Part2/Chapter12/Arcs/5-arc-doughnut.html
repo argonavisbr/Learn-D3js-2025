@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Arc - doughnut chart</title>
+    <style>
+        .arc {
+            stroke: white;
+            stroke-width: 5;
+            fill-opacity: .9;
+        }
+    </style>
+</head>
+<body>
+<script type="module">
+    import * as d3 from "https://cdn.skypack.dev/d3@7";
+
+    const width  = 800;
+    const height = 400;
+
+    const arc = d3.arc()
+                  .innerRadius(40)
+                  .outerRadius(100);
+
+    const slices = [
+        {startAngle: 0,                 endAngle: Math.PI * 90/180},
+        {startAngle: Math.PI * 90/180,  endAngle: Math.PI * 240/180},
+        {startAngle: Math.PI * 240/180, endAngle: Math.PI * 2}
+    ];
+    const slices = arcData.map(d => arc(d));
+
+    const colorScale = d3.scaleOrdinal(d3.schemeCategory10);
+
+    const svg = d3.select("body").append("svg").attr("height",400).attr("width",width);
+
+    svg.selectAll("path.arc")
+            .data(slices)
+            .join("path").attr("class", "arc")
+            .attr("d", d => d)
+            .style("fill", (d,i) => colorScale(i))
+            .attr("transform", "translate(120,120)");
+
+</script>
+</body>
+</html>

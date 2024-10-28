@@ -3,8 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <title>A simple line chart using axes</title>
-    <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
-    <script src="../js/chart-utils.js"></script>
     <link rel="stylesheet" href="../css/chart-utils.css">
     <style>
         path.line {
@@ -14,10 +12,17 @@
     </style>
 </head>
 <body>
-<script>
-    const width  = 800;
-    const height = 400;
-    const margin = 50;
+<script type="module">
+    import * as d3 from "https://cdn.skypack.dev/d3@7";
+    import * as utils from "../js/chart-utils.js";
+
+    const dim = { width: 800, height: 400, margin: 50 };
+    const scale = {
+        x: d3.scaleLinear().range([dim.margin, dim.width - dim.margin]),
+        y: d3.scaleLinear().range([dim.height - dim.margin, dim.margin])
+    }
+    const svg = d3.select("body").append("svg").attr("height", dim.height).attr("width", dim.width);
+
 
     // This dataset has missing values indicated by a negative number outside its domain.
     // You can interpolate the missing values (see 10-line-missing-interpolate.html) or you can hide them.
@@ -36,24 +41,17 @@
         [1000,140],
     ];
 
-    // Scales
-    const scaleX = d3.scaleLinear()
-                     .domain(d3.extent(data, d => d[0]))
-                     .range([margin, width - margin]);
-
+    // Scale domains
     // The domain does not include -999 (marker for missing data)
-    const scaleY = d3.scaleLinear()
-                     .domain([0, d3.max(data, d => d[1])]) // y-domain only includes non-negative numbers
-                     .range([height - margin, margin]);
+    scale.x.domain(d3.extent(data, d => d[0]));
+    scale.y.domain([0, d3.max(data, d => d[1])]); // y-domain only includes non-negative numbers
 
     // The line will not render negative values for y (d[1])
     const line = d3.line()
-                   .x(d => scaleX(d[0]))
-                   .y(d => scaleY(d[1]))
+                   .x(d => scale.x(d[0]))
+                   .y(d => scale.y(d[1]))
                    .defined(d => d[1] >= 0);
 
-    // Render the context
-    const svg = d3.select("body").append("svg").attr("height",height).attr("width",width);
 
     // Render the line
     svg.append("path")
@@ -62,10 +60,10 @@
         .attr("d", line);
 
     // Draw the axes (we are using a utility function from cartesian-chart-utils.js)
-    pkt.cartesianAxes()
+    utils.cartesianAxes()
         .container(svg)
-        .xScale(scaleX)
-        .yScale(scaleY)()
+        .xScale(scale.x)
+        .yScale(scale.y)()
 
 </script>
 </body>

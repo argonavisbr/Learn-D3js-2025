@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <title>Simple line using datum()</title>
-    <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
     <style>
         path {
             stroke: red;
@@ -16,14 +15,15 @@
     </style>
 </head>
 <body>
-<script>
-    const width  = 500;
-    const height = 400;
+<script type="module">
+    import * as d3 from "https://cdn.skypack.dev/d3@7";
+
+    const dim = { width: 500, height: 400 };
 
     const svg = d3.select("body")
                   .append("svg")
-                  .attr("height",height)
-                  .attr("width",width);
+                  .attr("height", dim.height)
+                  .attr("width", dim.width);
 
     // Using datum to bind the data to the path element
     svg.append("path")

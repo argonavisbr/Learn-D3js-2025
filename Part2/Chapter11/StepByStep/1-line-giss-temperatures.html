@@ -3,8 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <title>Global temperatures 1880 to 2023 - one line per year, stacked</title>
-    <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
-    <script src="../js/chart-utils.js"></script>
     <link rel="stylesheet" href="../css/chart-utils.css">
     <style>
         path.months {
@@ -29,7 +27,20 @@
 <body>
 <h1>Global temperatures from 1880 to 2023</h1>
 <p>Based on the NASA GISS reference (https://data.giss.nasa.gov/gistemp/)</p>
-<script>
+<script type="module">
+    import * as d3 from "https://cdn.skypack.dev/d3@7";
+    import * as utils from "../js/chart-utils.js";
+
+    const dim = {
+        width: 800, height: 500,
+        margin: {left: 75, right: 50, top: 50}
+    };
+    const scale = {
+        month: d3.scalePoint().range([dim.margin.left, dim.width - dim.margin.right]),
+        temp: d3.scaleLinear().range([dim.height - dim.margin.top, dim.margin.top])
+    }
+    const svg = d3.select("body").append("svg").attr("height", dim.height).attr("width", dim.width);
+
   // Global temperatures 1880 to 2023 (Source: https://data.giss.nasa.gov/gistemp/)
   const file = "../data/GLB.Ts.1880.2023.csv";
 
@@ -51,30 +62,22 @@
   function plot(data, months) {
       const height = 500, width = 800, marginY = 55, marginL = 75, marginR = 50;
 
-      const scaleMonth = d3.scalePoint()
-                           .range([marginL, width - marginR])
-                           .domain(months);
+      scale.month.domain(months);
 
       const values = d3.merge(data.map( d => d[1].map(v => v[1]) )); // flat array with all values
-      const scaleTemp = d3.scaleLinear()
-                          .range([height - marginY, marginY])
-                          .domain(d3.extent(values));
+      scale.temp.domain(d3.extent(values));
 
       const color = d3.scaleSequential(d3.interpolateTurbo)
-                      .domain(scaleTemp.domain());
+                      .domain(scale.temp.domain());
 
       // Line functions
       const line = d3.line()
-                     .x(d => scaleMonth(d[0]))
-                     .y(d => scaleTemp(d[1]))
+                     .x(d => scale.month(d[0]))
+                     .y(d => scale.temp(d[1]))
                      .defined(d => d[1] && !isNaN(d[1]))  // ignores null and not-a-number
                      .curve(d3.curveCatmullRom);
 
       // Render chart
-      const svg = d3.select("body")
-                    .append("svg")
-                      .attr("width", width)
-                      .attr("height", height);
       const chart = svg.append("g");
 
       // Render temperature lines
@@ -89,10 +92,10 @@
                  .style("stroke", d => color(d3.mean(d.map(v => v[1]))));
 
        // Render axes
-      pkt.cartesianAxes()
+      utils.cartesianAxes()
           .container(chart)
-          .xScale(scaleMonth)
-          .yScale(scaleTemp)
+          .xScale(scale.month)
+          .yScale(scale.temp)
           .xLabel("Months")
           .yLabel("Anomaly (˚C")();
 

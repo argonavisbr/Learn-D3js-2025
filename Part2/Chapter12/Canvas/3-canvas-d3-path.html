@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Canvas and SVG charts</title>
+    <style>
+        #svg-container {
+            position: absolute;
+            top: 5px;
+            left: 5px;
+        }
+        #canvas-container {
+            position: absolute;
+            top: 5px;
+            left: 360px;
+        }
+        canvas {
+            border: 1px solid #ccf;
+        }
+        svg {
+            border: 1px solid #fcc;
+        }
+        h1 {
+            text-align: center;
+            font-size: 18pt;
+            font-family: sans-serif;
+        }
+    </style>
+</head>
+<body>
+<div id="svg-container"><h1>SVG</h1></div>
+<div id="canvas-container"><h1>Canvas</h1></div>
+<script type="module">
+    import * as d3 from "https://cdn.skypack.dev/d3@7";
+    import {createView} from "./js/canvas-chart.js";
+
+    // View and scales configuration
+    const dim = {width: 350, height: 350,
+                 margin: {top: 20, right: 10, bottom: 20, left: 30}};
+
+    // Render SVG chart
+    const svg = createView("svg", dim, "#svg-container", "svg-chart");
+    const ctx = createView("canvas", dim, "#canvas-container", "canvas-chart");
+
+    // Drawing with SVG
+    const path = d3.path();
+       drawDrop(path);
+    console.log(path.toString())
+    svg.append("path")
+        .attr("d", path.toString())
+        .attr("stroke", "black")
+        .attr("fill", "yellow")
+        .attr("transform", "translate(0,15)");
+
+    // Drawing with canvas
+    ctx.translate(0,15);
+    ctx.beginPath();
+       drawDrop(ctx);
+    ctx.strokeStyle = "black";
+    ctx.fillStyle = "yellow";
+    ctx.fill();
+    ctx.stroke();
+
+    function drawLightning(context) {
+        context.moveTo(280,160);
+        context.lineTo(170,130);
+        context.lineTo(280,0);
+        context.lineTo(40,160);
+        context.lineTo(150,190);
+        context.lineTo(40,320);
+        context.closePath();
+    }
+
+    function drawDrop(context) {
+        context.arc(180,200,100,-Math.PI*.2,Math.PI*1.2);
+        context.lineTo(180,20);
+        context.lineTo(180,20);
+        context.closePath();
+    }
+
+</script>
+</body>
+</html>

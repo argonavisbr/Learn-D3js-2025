@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Using custom symbols</title>
+    <style>
+        svg, canvas { border: solid 1px gray}
+        path.fill {stroke: red; fill: yellow; stroke-width: 2px}
+        path.stroke {stroke: blue; fill: none; stroke-width: 2px}
+    </style>
+</head>
+<body>
+<h1>Custom symbols</h1>
+<script type="module">
+    import * as d3 from "https://cdn.skypack.dev/d3@7";
+    import sym from "./js/custom-symbols.js";
+    import {printPath, render} from "./js/symbol-utils.js";
+
+    const width  = 650;
+    const height = 200;
+
+    const svg = d3.select("body")
+        .append("svg")
+        .attr("height",height)
+        .attr("width",width);
+
+    // Inspecting the SVG strings by custom symbols
+    printPath(d3.path(), "ZigZag", sym.symbolZigZag);
+    printPath(d3.path(), "Drop", sym.symbolDrop);
+    printPath(d3.path(), "Venus", sym.symbolVenus);
+    printPath(d3.path(), "Mars", sym.symbolMars);
+
+    render(svg, sym.symbolZigZag, "fill", 5000, 0);
+    render(svg, sym.symbolDrop, "fill", 5000, 1);
+    render(svg, sym.symbolVenus, "stroke", 5000, 2);
+    render(svg, sym.symbolMars, "stroke", 5000, 3);
+
+</script>
+</body>
+</html>

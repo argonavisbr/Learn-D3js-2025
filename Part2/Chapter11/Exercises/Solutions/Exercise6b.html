@@ -2,9 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Average monthly rainfall in selected cities</title>
-    <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
-    <script src="../../js/chart-utils.js"></script>
+    <title>Exercise 6: Average monthly rainfall in selected cities</title>
     <link rel="stylesheet" href="../../css/chart-utils.css">
     <style>
         path.months {
@@ -36,7 +34,21 @@
 </head>
 <body>
 <h1>Average monthly rainfall (mm) in selected cities</h1>
-<script>
+<script type="module">
+    import * as d3 from "https://cdn.skypack.dev/d3@7";
+    import * as utils from "../../js/chart-utils.js";
+
+    const dim = {
+        width: 800, height: 500,
+        margin: {top: 10, left: 50, bottom: 50, right: 150}
+    };
+    const scale = {
+        x: d3.scalePoint().range([dim.margin.left, dim.width - dim.margin.right]),
+        // Using a symlog because the data has a wide range of values and some values are zero
+        y: d3.scaleSymlog().range([dim.height - dim.margin.bottom, dim.margin.top])
+    }
+    const svg = d3.select("body").append("svg").attr("height", dim.height).attr("width", dim.width);
+
     // Rainfall data (Source: Wikipedia)
     const file = "../../data/rainfall.csv";
 
@@ -60,34 +72,18 @@
   });
 
   function plot(data, months) {
-      const height = 500, width = 800,
-            marginL = 50, marginR = 150,
-            marginT = 10, marginB = 50;
 
-      // Create SVG container
-      const svg = d3.select("body")
-                    .append("svg")
-                      .attr("width", width)
-                      .attr("height", height);
-
-      // Using a point scale to place each month name in the x-axis
-      const scaleX = d3.scalePoint()
-                       .range([marginL, width - marginR])
-                       .domain(months); // .tick text names are capitalized via CSS
-
-      // Using a symlog because the data has a wide range of values and some values are zero
-      const scaleY = d3.scaleSymlog()
-                       .range([height - marginB, marginT])
-                       .domain([0, d3.max(data.map(d => d[1]).flat())]);
+      scale.x.domain(months);
+      scale.y.domain([0, d3.max(data.map(d => d[1]).flat())]);
 
       // A simple color scale
       const color = d3.scaleOrdinal(d3.schemeTableau10);
 
       // Line functions
       const line = d3.line()
-                         .x((d,i) => scaleX(months[i]))
-                         .y(d => scaleY(d))
-                       //  .curve(d3.curveCatmullRom);
+                     .x((d,i) => scale.x(months[i]))
+                     .y(d => scale.y(d))
+                 //  .curve(d3.curveCatmullRom);
 
       // Render temperature lines
       svg.selectAll("g.line")
@@ -102,10 +98,10 @@
 
       // These are utility functions to generate axes and legends
       // Draw radial axes
-      const axisY = pkt.cartesianAxes()
+      const axisY = utils.cartesianAxes()
                        .container(svg)
-                       .xScale(scaleX)
-                       .yScale(scaleY)
+                       .xScale(scale.x)
+                       .yScale(scale.y)
                        .xLabel("Months")
                        .yLabel("Rainfall in mm")
                        .showHorizontalGrid(true)();
@@ -116,8 +112,8 @@
 
       // Display a legend
       const legend = svg.append("g")
-                        .attr("transform", `translate(${[width - marginR + 10, marginT]})`);
-      pkt.legend()
+                        .attr("transform", `translate(${[dim.width - dim.margin.right + 10, dim.margin.top]})`);
+      utils.legend()
           .container(legend)
           .data(data.map(d => d[0]))
           .color(color)();

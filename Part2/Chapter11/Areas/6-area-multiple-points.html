@@ -3,8 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <title>A multi-series area chart showing points</title>
-    <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
-    <script src="../js/chart-utils.js"></script>
     <link rel="stylesheet" href="../css/chart-utils.css">
     <style>
         path { fill:none }
@@ -13,10 +11,18 @@
     </style>
 </head>
 <body>
-<script>
-    const width  = 800;
-    const height = 400;
-    const margin = 50;
+<script type="module">
+    import * as d3 from "https://cdn.skypack.dev/d3@7";
+    import * as utils from "../js/chart-utils.js";
+
+    const dim = { width: 800, height: 400, margin: 50 };
+    const scale = {
+        x: d3.scaleLinear().range([dim.margin, dim.width - dim.margin]),
+        y: d3.scaleLinear().range([dim.height - dim.margin, dim.margin])
+    }
+    const svg = d3.select("body").append("svg").attr("height", dim.height).attr("width", dim.width);
+
+
 
     // Change this to add more data series
     const series = 3;
@@ -33,13 +39,8 @@
     }
 
     // Scales
-    const scaleX = d3.scaleLinear()
-            .domain(d3.extent(d3.merge(datasets), d => d[0]))
-            .range([margin, width - margin]);
-
-    const scaleY = d3.scaleLinear()
-            .domain([0,d3.max(d3.merge(datasets), d => d[1])])
-            .range([height - margin, margin]);
+    scale.x.domain(d3.extent(d3.merge(datasets), d => d[0]));
+    scale.y.domain([0,d3.max(d3.merge(datasets), d => d[1])]);
 
     // Generates a color for each data series
     const colorScale = d3.scaleOrdinal(d3.schemeCategory10)
@@ -47,14 +48,12 @@
 
     // area function for all areas
     const area = d3.area()
-                   .x(d => scaleX(d[0]))
-                   .y1(d => scaleY(d[1]))
-                   .y0(scaleY(0));
+                   .x(d => scale.x(d[0]))
+                   .y1(d => scale.y(d[1]))
+                   .y0(scale.y(0));
 
     // line function for all toplines
     const line = area.lineY1();
-
-    const svg = d3.select("body").append("svg").attr("height",height).attr("width",width);
 
     // Bind the data array to a container of <g> element.
     // Each child <path> will render a line and an area from the data series (inherited datum)
@@ -83,17 +82,17 @@
                     .data(d)
                       .join("circle")
                         .attr("class", "point")
-                        .attr("cx", p => scaleX(p[0]))
-                        .attr("cy", p => scaleY(p[1]))
+                        .attr("cx", p => scale.x(p[0]))
+                        .attr("cy", p => scale.y(p[1]))
                         .attr("r", 5)
                         .style("fill", colorScale(d));
             });
 
-    // Draw the axes (we are using a utility function from cartesian-chart-utils.js)
-    pkt.cartesianAxes()
+    // Draw the axes
+    utils.cartesianAxes()
         .container(svg)
-        .xScale(scaleX)
-        .yScale(scaleY)()
+        .xScale(scale.x)
+        .yScale(scale.y)()
 
 </script>
 </body>

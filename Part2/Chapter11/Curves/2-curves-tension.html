@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <title>Curve controls for Basis, Catmull-Rom and Cardinal curves</title>
-    <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
     <style>
         text {
             font-family: monospace;
@@ -19,32 +18,40 @@
     </style>
 </head>
 <body>
-<script>
-    const width  = 1000;
-    const height = 500;
-    const cols = 3;
-    const rows = 3;
-    const margin = 30;
+<script type="module">
+    import * as d3 from "https://cdn.skypack.dev/d3@7";
+
+    const dim = {
+        width: 1000, height: 500,
+        margin: 30,
+        cols: 3,
+        rows: 3
+    };
+
+    const scale = {
+        // This scale will fit each chart to its cell horizontally.
+        // The width (range) is computed based on the number of columns
+        x: d3.scaleLinear().range([dim.margin, dim.width/dim.cols - dim.margin]),
+
+        // This scale will fit each chart to its cell vertically.
+        // The height (range) is computed based on the number of rows
+        y: d3.scaleLinear().range([dim.height/dim.rows - dim.margin, dim.margin/2])
+    }
+
+    const svg = d3.select("body").append("svg").attr("height", dim.height).attr("width", dim.width);
 
     const parameter = [0, .5, 1];
 
     const data = [[1,0],[2,8],[3,2],[4,6],[5,0],[6,4]];
 
-    const scaleX = d3.scaleLinear()
-                     .domain(d3.extent(data, d => d[0]))
-                     .range([margin,width/cols - margin]);
-
-    const scaleY = d3.scaleLinear()
-                     .domain(d3.extent(data, d => d[1]))
-                     .range([height/rows - margin, margin/2]); // invert - place 0 at bottom
+    scale.x.domain(d3.extent(data, d => d[0]));
+    scale.y.domain(d3.extent(data, d => d[1]));
 
     const color = d3.scaleLinear()
                     .domain([0,1])
                     .range(['orange', 'blue']);
 
     const point = d3.symbol().type(d3.symbolCircle).size(25);
-
-    const svg = d3.select("body").append("svg").attr("height",height).attr("width",width);
 
     parameter.forEach((d,i) => draw('curveCardinal', 'tension', d, i, 0, 0));
     parameter.forEach((d,i) => draw('curveCatmullRom', 'alpha', d, i, 1, 0));
@@ -61,11 +68,11 @@
     function draw(curve, paramName, paramValue, position, row, column) {
 
         const g = svg.append("g")
-                .attr("transform", `translate(${[column * width/cols, row * height/rows]})`);
+                .attr("transform", `translate(${[column * dim.width/dim.cols, row * dim.height/dim.rows]})`);
 
         const line = d3.line()
-                        .x(d => scaleX(d[0]))
-                        .y(d => scaleY(d[1]));
+                        .x(d => scale.x(d[0]))
+                        .y(d => scale.y(d[1]));
 
         g.append("path")
                 .attr("d", line(data))
@@ -82,8 +89,8 @@
             g.append("text")
                     .text("d3." + curve + "." + paramName)
                     .style("text-anchor", "middle")
-                    .attr("x", width/(cols*2))
-                    .attr("y", height/rows - margin/2  + 10);
+                    .attr("x", dim.width/(dim.cols*2))
+                    .attr("y", dim.height/dim.rows - dim.margin/2  + 10);
         }
 
         g.selectAll(".point")
@@ -91,13 +98,13 @@
                 .join("path").attr("class", "point")
                 .attr("d", point)
                 .style("fill", 'red')
-                .attr("transform", d => "translate("+[scaleX(d[0]), scaleY(d[1])]+")");
+                .attr("transform", d => "translate("+[scale.x(d[0]), scale.y(d[1])]+")");
     }
 
     function drawLegend() {
 
         const g = svg.append("g")
-            .attr("transform", `translate(${[2 * width/cols, 2 * height/rows + 60]})`);
+            .attr("transform", `translate(${[2 * dim.width/dim.cols, 2 * dim.height/dim.rows + 60]})`);
 
         g.selectAll("rect")
                 .data(parameter)
@@ -117,7 +124,7 @@
 
         g.append("text")
             .text("tension | alpha | beta = ")
-            .attr("x", -width/cols + 100)
+            .attr("x", -dim.width/dim.cols + 100)
             .attr("y", (d,i) => i * 30 + 35);
     }
 

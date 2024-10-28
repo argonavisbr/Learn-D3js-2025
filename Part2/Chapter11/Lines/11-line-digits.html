@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <title>Simple lines</title>
-    <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
     <style>
         path {
             fill: none;
@@ -11,18 +10,26 @@
     </style>
 </head>
 <body>
-<script>
-    // Viewport dimensions
-    const width  = 500;
-    const height = 400;
+<h1>Open JavaScript console to see the difference</h1>
+<p>Path data 2 generates a shorter string, since it truncates after the decimal point.</p>
+<script type="module">
+    import * as d3 from "https://cdn.skypack.dev/d3@7";
+    import * as utils from "../js/chart-utils.js";
+
+    const dim = { width: 500, height: 400, margin: 50 };
 
     // An array of coordinates (x,y data points) for the line
     const coords = [
         [0,0],
         [100,200],
-        [200,50],
-        [300,150],
-        [400,100],
+        [150,50],
+        [200,400],
+        [250,100],
+        [300,50],
+        [350,300],
+        [400,350],
+        [450,150],
+        [500,300],
     ];
 
     // This is the blue line function
@@ -35,21 +42,23 @@
     // It uses the same curve function, but this time, the digits() method is used to round the values
     // which will reduce the length of the path data string
     const line2 = d3.line()
-        .curve(d3.curveCatmullRom)
-        .digits(0);
+                    .curve(d3.curveCatmullRom)
+                    .digits(0);
 
     // A path data strings
     const pathData1 = line1(coords);
     console.log("Path data 1:", pathData1);
+    console.log("Path data 1 length:", pathData1.length);
 
     const pathData2 = line2(coords);
     console.log("Path data 2:", pathData2);
+    console.log("Path data 2 length:", pathData2.length);
 
     // Setup the svg context
     const svg = d3.select("body")
                   .append("svg")
-                    .attr("height",height)
-                    .attr("width",width);
+                    .attr("height", dim.height)
+                    .attr("width", dim.width);
 
     // Render the lines - this will generate longer lines
     svg.append("path")

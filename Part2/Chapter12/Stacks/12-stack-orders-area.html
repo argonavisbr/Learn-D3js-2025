@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Stack offset - Areas</title>
+    <style>
+        text {
+            font-family: monospace;
+            font-size: 13px;
+        }
+        .tick text {display: none}
+    </style>
+</head>
+<body>
+<script type="module">
+    import * as d3 from 'https://cdn.skypack.dev/d3@7';
+
+    const dim = {width: 800, height: 600, margin: 250};
+
+    const stackOrder = [
+        'stackOrderNone',
+        'stackOrderAscending',
+        'stackOrderDescending',
+        'stackOrderInsideOut',
+        'stackOrderReverse',
+        'stackOrderAppearance'
+    ];
+
+    const data = [
+        {"A":-65,"B":7,"C":40},
+        {"A":23,"B":33,"C":36},
+        {"A":25,"B":9,"C":12},
+        {"A":35,"B":12,"C":67},
+        {"A":30,"B":-15,"C":-15},
+        {"A":21,"B":15,"C":78}
+    ];
+
+    // absolute values for stackOffsetExpand
+    const absData = JSON.parse(JSON.stringify(data));
+    absData.forEach(d => Object.keys(d).forEach(k => d[k] = Math.abs(d[k])));
+
+    const stack = d3.stack()
+            .keys(['A', 'B', 'C']);
+
+    const colorScale = d3.scaleOrdinal(d3.schemeCategory10)
+            .domain([0,data.length]);
+    const scale = d3.scaleLinear()
+            .range([100,25]);
+
+    const svg = d3.select("body")
+            .append("svg")
+            .attr("height","100%")
+            .attr("width", "100%")
+            .attr("viewBox", -100 + " 0 " + dim.width + " " + dim.height);
+
+    const area = d3.area()
+                    .x((d,i) => i * 50)
+                    .curve(d3.curveCardinal);
+
+    const xAxis = d3.axisBottom(d3.scaleIdentity().domain([0,250]))
+            .ticks(6);
+    const yAxis = d3.axisLeft();
+
+    stackOrder.forEach((d,i) => draw(d, i));
+
+    function draw(order, index) {
+        const j = Math.floor(index / 3);
+        const i = index % 3;
+        const min = j > 0 ? -50 : 0
+        const max = j > 0 ? 50 : 100;
+
+        yAxis.scale(d3.scaleIdentity().domain([min,max]));
+        let datasets = data;
+        let text = order;
+
+        scale.domain([0,100]);
+
+        area.y0(d => scale(d[0]))
+            .y1(d => scale(d[1]))
+
+        stack.order(d3[order]);
+        const stackedData = stack(datasets);
+
+        const g = svg.append("g")
+                .attr("transform", "translate("+[j * dim.width/2,i * dim.height/3]+")");
+
+        g.selectAll("path")
+                .data(stackedData)
+                .join("path")
+                .attr("d", area)
+                .style("fill", (d, i) => colorScale(i))
+                .style("opacity", .7);
+
+        g.append('g').call(xAxis)
+                .attr("transform", `translate(${[0, 100]})`);
+        g.append('g').call(yAxis)
+                .attr("transform", `translate(${[0, -min*2]})`);
+
+        g.append("text")
+                .text(text)
+                .attr("x", 25)
+                .attr("y", 140 - min)
+    }
+
+</script>
+</body>
+</html>

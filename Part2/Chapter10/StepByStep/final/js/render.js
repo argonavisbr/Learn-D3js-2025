@@ -1,6 +1,6 @@
 import * as d3 from 'https://cdn.skypack.dev/d3@7';
 
-import * as pkt from '../../../js/cartesian-axes-esm.js';
+import * as utils from '../../../js/chart-utils.js';
 
 import {dim, app} from './constants.js';
 import {drawLegend} from './legend.js';
@@ -33,11 +33,15 @@ function drawChart() {
 }
 
 function drawAxes() {
-    pkt.cartesianAxes().context(d3.select("svg"))
-        .xScale(app.scale.x)
-        .yScale(app.scale.y)
-        .xLabel('Human Development Index (HDI)')
-        .yLabel('Annual GDP per capita (International USD)')
-        .showHorizontalGrid(true)
-        .showVerticalGrid(true)();
+    const [xAxis,yAxis] =
+        utils.cartesianAxes().container(d3.select("svg"))
+         .xScale(app.scale.x)
+         .yScale(app.scale.y)
+         .xLabel('Human Development Index (HDI)')
+         .yLabel('Annual GDP per capita (International USD)')
+         .showHorizontalGrid(true)
+         .showVerticalGrid(true)();
+    d3.select(".x-axis .label").attr("dy", "-1em");
+    yAxis.ticks(8, ',');
+    d3.select(".y-axis").call(yAxis);
 }

@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <title>Configuring a line function for an array of objects</title>
-    <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
     <style>
         path {
             stroke: red;
@@ -17,10 +16,13 @@
     </style>
 </head>
 <body>
-<script>
-    const width  = 900;
-    const height = 600;
-    const svg = d3.select("body").append("svg").attr("height",height).attr("width",width);
+<script type="module">
+    import * as d3 from "https://cdn.skypack.dev/d3@7";
+
+    const dim = { width: 900, height: 600, margin: 50 };
+
+    const svg = d3.select("body").append("svg").attr("height", dim.height).attr("width", dim.width);
+
 
     // Our data is an array of objects. It's length will determine the number of points
     // (and how many times the line() function will be called)

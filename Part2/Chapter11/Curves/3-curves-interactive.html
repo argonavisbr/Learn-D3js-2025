@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <title>Interactive curves</title>
-    <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
     <style>
         path {
             fill: none;
@@ -40,10 +39,24 @@
 
 <h1>Interactive Cubic Splines</h1>
 <p>Select the desired curve function.</p>
-<script>
-    const width  = 600;
-    const height = 300;
-    const margin = 30;
+<script type="module">
+    import * as d3 from "https://cdn.skypack.dev/d3@7";
+
+    const dim = {
+        width: 600, height: 300, margin: 30
+    };
+
+    const scale = {
+        // This scale will fit each chart to its cell horizontally.
+        // The width (range) is computed based on the number of columns
+        x: d3.scaleLinear().range([dim.margin, dim.width - dim.margin]),
+
+        // This scale will fit each chart to its cell vertically.
+        // The height (range) is computed based on the number of rows
+        y: d3.scaleLinear().range([dim.height - dim.margin, dim.margin/2])
+    }
+
+    const svg = d3.select("body").append("svg").attr("height", dim.height).attr("width", dim.width);
 
     // These are the sample data points for the line chart ([x,y])
     const data = [[0,0],
@@ -89,18 +102,11 @@
 
     const fmt = d3.format(".2f");
 
-    const scaleX = d3.scaleLinear()
-                     .domain(d3.extent(data, d => d[0]))
-                     .range([margin,width - margin]);
-
-    const scaleY = d3.scaleLinear()
-                     .domain(d3.extent(data, d => d[1]))
-                     .range([height - margin, margin/2]); // invert - place 0 at bottom
+    scale.x.domain(d3.extent(data, d => d[0]));
+    scale.y.domain(d3.extent(data, d => d[1]));
 
     const point = d3.symbol().type(d3.symbolCircle).size(25);
 
-    // Render viewport
-    const svg = d3.select("body").append("svg").attr("height",height).attr("width",width);
 
     // Current curve
     let currentCurve = curves[0];
@@ -114,10 +120,10 @@
     // To drag the points
     const drag = d3.drag()
         .on("drag", function(event, d) {
-            [x,y] = d3.pointer(event, svg.node());
-            d[0] = scaleX.invert(x);
-            d[1] = scaleY.invert(y);
-            svg.selectAll("*").remove(); // TODO - use updates instead of redrawing the shapes!
+            const point = d3.pointer(event, svg.node());
+            d[0] = scale.x.invert(point[0]);
+            d[1] = scale.y.invert(point[1]);
+            svg.selectAll("*").remove(); // TODO - Update instead of redrawing the shapes!
             draw(currentCurve);
         });
 
@@ -186,7 +192,7 @@
                                 .style("visibility", "hidden");
 
         tensionCtrl.append("span")
-               .attr("id", "tension-label");
+                   .attr("id", "tension-label");
 
         tensionCtrl.append("input")
                .attr("type", "range")
@@ -231,8 +237,8 @@
                 .attr("transform", "translate("+[0,0]+")");
 
         const line = d3.line()
-                        .x(d => scaleX(d[0]))
-                        .y(d => scaleY(d[1]));
+                        .x(d => scale.x(d[0]))
+                        .y(d => scale.y(d[1]));
 
         g.append("path")
                 .attr("d", line(data))
@@ -257,7 +263,7 @@
                 .join("path").attr("class", "point")
                 .attr("d", point)
                 .style("fill", 'red')
-                .attr("transform", d => "translate("+[scaleX(d[0]), scaleY(d[1])]+")")
+                .attr("transform", d => "translate("+[scale.x(d[0]), scale.y(d[1])]+")")
                 .call(drag); // user can drag the point
     }
 
@@ -265,15 +271,15 @@
     svg.on("click", function(event) {
         // if there already is a point near the click, remove it
         const threshold = 5;
-        if(data.some(d => Math.abs(scaleX(d[0]) - d3.pointer(event)[0]) < threshold
-                       && Math.abs(scaleY(d[1]) - d3.pointer(event)[1]) < threshold)) {
+        if(data.some(d => Math.abs(scale.x(d[0]) - d3.pointer(event)[0]) < threshold
+                       && Math.abs(scale.y(d[1]) - d3.pointer(event)[1]) < threshold)) {
             const [x,y] = d3.pointer(event);
-            const index = data.findIndex(d => Math.abs(scaleX(d[0]) - x) < threshold
-                                           && Math.abs(scaleY(d[1]) - y) < threshold);
+            const index = data.findIndex(d => Math.abs(scale.x(d[0]) - x) < threshold
+                                           && Math.abs(scale.y(d[1]) - y) < threshold);
             data.splice(index, 1);  // remove the point
         } else {
             const [x,y] = d3.pointer(event);
-            data.push([scaleX.invert(x), scaleY.invert(y)]);
+            data.push([scale.x.invert(x), scale.y.invert(y)]);
         }
         svg.selectAll("*").remove();
         draw(currentCurve);

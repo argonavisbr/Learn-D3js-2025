@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>SVG Path</title>
+    <style>
+        canvas {
+            width: 500px;
+            height: 200px;
+        }
+    </style>
+</head>
+<body>
+
+<script type="module">
+    import * as d3 from "https://cdn.skypack.dev/d3@7";
+
+    const canvas = d3.select("body")
+                     .append("canvas")
+                     .attr("width", "1000")
+                     .attr("height", "400");
+
+    const ctx = canvas.node().getContext("2d");
+
+    ctx.fillStyle = "yellow";
+    ctx.strokeStyle = "red";
+    ctx.lineWidth = 2;
+
+    ctx.beginPath();
+      ctx.moveTo(280,160);
+      ctx.lineTo(170,130);
+      ctx.lineTo(280,0);
+      ctx.lineTo(40,160);
+      ctx.lineTo(150,190);
+      ctx.lineTo(40,320);
+      ctx.closePath();
+    ctx.fill();
+    ctx.stroke();
+
+    ctx.fillStyle = "cyan";
+    ctx.strokeStyle = "blue";
+    ctx.translate(300,0);
+
+    ctx.beginPath();
+      ctx.arc(180,200,100,-Math.PI*.2,Math.PI*1.2);
+      ctx.lineTo(180,20);
+      ctx.lineTo(180,20);
+      ctx.closePath();
+    ctx.fill();
+    ctx.stroke();
+
+</script>
+
+</body>
+</html>

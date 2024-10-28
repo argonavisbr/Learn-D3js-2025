@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <title>Symbols</title>
-    <script src="https://d3js.org/d3.v7.min.js"></script>
     <style>
         text {
             font-family: monospace;
@@ -20,8 +19,10 @@
     </style>
 </head>
 <body>
-<script src="js/symbol-utils.js"></script>
-<script>
+<script type="module">
+    import * as d3 from "https://cdn.skypack.dev/d3@7";
+    import {display} from "./js/symbol-utils.js";
+
     const width  = 850;
     const height = 400;
 
@@ -52,20 +53,20 @@
 
     const svg = d3.select("body")
             .append("svg")
-            .attr("height",400)
+            .attr("height",height)
             .attr("width",width);
 
     svg.append("text").text("d3.symbolsFill").attr("class", "title")
         .attr("x", width/2)
         .attr("y", 30);
     svg.append("line").attr("x1", 0).attr("x2", width).attr("y1", 40).attr("y2", 40).attr("stroke", "black");
-    fillSymbols.forEach((s,i) => display(d3[s], i, 60, "fill", 120, 70, colorScale, true));
+    fillSymbols.forEach((s,i) => display(svg, d3[s], i, 60, "fill", 120, 70, colorScale, true));
 
     svg.append("text").text("d3.symbolsStroke").attr("class", "title")
         .attr("x", width/2)
         .attr("y", 140);
     svg.append("line").attr("x1", 0).attr("x2", width).attr("y1", 150).attr("y2", 150).attr("stroke", "black");
-    strokeSymbols.forEach((s,i) => display(d3[s], i, 170, "stroke", 120, 70, colorScale, true));
+    strokeSymbols.forEach((s,i) => display(svg, d3[s], i, 170, "stroke", 120, 70, colorScale, true));
 
 </script>
 </body>

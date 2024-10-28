@@ -2,8 +2,6 @@
 <html lang="en">
 <head>
     <title>Exercise 2: multi-series line chart</title>
-    <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
-    <script src="../../js/chart-utils.js"></script>
     <link rel="stylesheet" href="../../css/chart-utils.css">
     <style>
         path.line {
@@ -31,11 +29,24 @@
 <body>
 <h1>GDP per capita South America <span id="from"></span> to <span id="to"></span></h1>
 <p>Source: <span id="source"></span></p>
-<script>
+<script type="module">
+    import * as d3 from "https://cdn.skypack.dev/d3@7";
+    import * as utils from "../../js/chart-utils.js";
+
+    const dim = {
+        width: 800, height: 500,
+        margin: {left: 75, right: 100, top: 20, bottom: 60}
+    };
+    const scale = {
+        x: d3.scaleTime().range([dim.margin.left, dim.width - dim.margin.right]),
+        y: d3.scaleLinear().range([dim.height - dim.margin.bottom, dim.margin.top])
+    }
+    const svg = d3.select("body").append("svg").attr("height", dim.height).attr("width", dim.width);
+
 
     // Choose a dataset. They have a similar compatible format
     const dataset =
-    {source: "IMF", file: "../../data/south-america-gdp-imf.csv", from: 1980, to: 2022};
+        {source: "IMF", file: "../../data/south-america-gdp-imf.csv", from: 1980, to: 2022};
     // {source: "World Bank", file: "../../data/south-america-gdp-wb.csv", from: 1989, to: 2022};
 
     // This sets the HTML title of the page with the dataset information
@@ -73,30 +84,19 @@
     });
 
     function plot(data, years) {
-        const height = 500, width = 800;
-        const marginL = 75, marginR = 100, marginT = 20, marginB = 60;
-
-        // Container
-        const svg = d3.select("body")
-                      .append("svg")
-                        .attr("width", width)
-                        .attr("height",height);
 
         // Scales and colors
-        const scaleX = d3.scaleTime()
-                         .range([marginL, width - marginR])
-                         .domain([d3.isoParse(`${d3.min(years)}-1-1`), d3.isoParse(`${d3.max(years)}-1-1`)]);
-        const scaleY = d3.scaleLinear()
-                         .range([height - marginB, marginT])
-                         .domain([0, d3.max(data, d => d3.max(d.data, v => v[1]))]);
+        scale.x.domain([d3.isoParse(`${d3.min(years)}-1-1`), d3.isoParse(`${d3.max(years)}-1-1`)]);
+
+        scale.y.domain([0, d3.max(data, d => d3.max(d.data, v => v[1]))]);
 
         const color = d3.scaleOrdinal(['#444', 'gold'].concat(d3.schemeCategory10)) // add +2 colors
                         .domain(data.map(d => d.country));
 
         // Line function
         const line = d3.line()
-            .x(d => scaleX(d3.isoParse(`${d[0]}-1-1`)))  // isoParse creates a date from ISO date string (YYYY-MM-DD)
-            .y(d => scaleY(d[1]))
+            .x(d => scale.x(d3.isoParse(`${d[0]}-1-1`)))  // isoParse creates a date from ISO date string (YYYY-MM-DD)
+            .y(d => scale.y(d[1]))
             .curve(d3.curveCardinal.tension(.7))
             .defined(d => !isNaN(d[1]));                 // Skip (interpolate) NaN values
 
@@ -109,22 +109,22 @@
                 .style("stroke", (d,i) => color(i));
 
         // Render Cartesian axes (utility function from cartesian-chart-utils.js)
-        const yAxis = pkt.cartesianAxes()
-                         .container(svg)
-                         .xScale(scaleX)
-                         .yScale(scaleY)
-                         .xLabel('Years')
-                         .yLabel('GDP per capita (current US$)')
-                         .showHorizontalGrid(true)
-                         .showVerticalGrid(true)();
+        const yAxis = utils.cartesianAxes()
+                           .container(svg)
+                           .xScale(scale.x)
+                           .yScale(scale.y)
+                           .xLabel('Years')
+                           .yLabel('GDP per capita (current US$)')
+                           .showHorizontalGrid(true)
+                           .showVerticalGrid(true)();
         yAxis.tickFormat(d3.format(".0s"));
         d3.select("g.y-axis").call(yAxis);
 
         // Add legend at right (utility function from cartesian-chart-utils.js)
         const legend = svg.append("g")
-                          .attr("transform", `translate(${width - marginR + 20}, ${marginT})`)
+                          .attr("transform", `translate(${dim.width - dim.margin.right + 20}, ${dim.margin.top})`)
 
-        pkt.legend()
+        utils.legend()
             .container(legend)
             .data(data.map(d => d.country))
             .color(color)();

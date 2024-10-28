@@ -2,9 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Exercise 4: An step chart</title>
-    <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
-    <script src="../../js/chart-utils.js"></script>
+    <title>Exercise 5: A step chart</title>
     <link rel="stylesheet" href="../../css/chart-utils.css">
     <style>
         path {fill: none}
@@ -22,10 +20,18 @@
 <body>
 <h1>Number of earthquakes with magnitude >= 6</h1>
 <p>Source: Wikipedia</p>
-<script>
-    const width  = 800;
-    const height = 400;
-    const margin = 50;
+<script type="module">
+    import * as d3 from "https://cdn.skypack.dev/d3@7";
+    import * as utils from "../../js/chart-utils.js";
+
+    const dim = {
+        width: 800, height: 500, margin: 50
+    };
+    const scale = {
+        x: d3.scalePoint().range([dim.margin, dim.width - dim.margin]),
+        y: d3.scaleLinear().range([dim.height - dim.margin, dim.margin])
+    }
+    const svg = d3.select("body").append("svg").attr("height", dim.height).attr("width", dim.width);
 
     const file = "../../data/earthquakes-6-plus.csv";
 
@@ -44,30 +50,24 @@
 
     function plot(data) {
 
-        const scaleX = d3.scalePoint()
-            .domain(data.map(d => d[0]))
-            .range([margin, width - margin]);
-
-        const scaleY = d3.scaleLinear()
-            .domain([100,d3.max(data, d => d[1])])
-            .range([height - margin, margin]);
+        scale.x.domain(data.map(d => d[0]));
+        scale.y.domain([100,d3.max(data, d => d[1])]);
 
         const line = d3.line()
-            .x(d => scaleX(d[0]))
-            .y(d => scaleY(d[1]))
+            .x(d => scale.x(d[0]))
+            .y(d => scale.y(d[1]))
             .curve(d3.curveStepAfter);
 
-        const svg = d3.select("body").append("svg").attr("height", height).attr("width", width);
 
         svg.append("path")
             .datum(data)
             .attr("class", "line")
             .attr("d", line);
 
-        pkt.cartesianAxes()
+        utils.cartesianAxes()
             .container(svg)
-            .xScale(scaleX)
-            .yScale(scaleY)
+            .xScale(scale.x)
+            .yScale(scale.y)
             .xLabel("Month")
             .yLabel("Temperature (°C)")
             .showHorizontalGrid(true)();

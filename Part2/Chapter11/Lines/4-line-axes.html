@@ -3,8 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <title>A simple line chart using axes</title>
-    <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
-    <script src="../js/chart-utils.js"></script>
     <link rel="stylesheet" href="../css/chart-utils.css">
     <style>
         path.line {
@@ -14,10 +12,11 @@
     </style>
 </head>
 <body>
-<script>
-    const width  = 800;
-    const height = 400;
-    const margin = 50;
+<script type="module">
+    import * as d3 from "https://cdn.skypack.dev/d3@7";
+    import * as utils from "../js/chart-utils.js";
+
+    const dim = { width: 800, height: 400, margin: 50 };
 
     const coords = [
         [0,0],
@@ -28,23 +27,24 @@
     ];
 
     // Scales are necessary to map the data to the screen AND to configure the axes
-    const scaleX = d3.scaleLinear()
-                     .domain(d3.extent(coords, d => d[0]))
-                     .range([margin, width - margin]);
+    const scale  = {};
+    scale.x = d3.scaleLinear()
+                .range([dim.margin, dim.width - dim.margin])
+                .domain(d3.extent(coords, d => d[0]));
 
     // The y-scale should be inverted because the default origin is in the top-left corner
     // but Cartesian charts place it in the bottom-left corner.
-    const scaleY = d3.scaleLinear()
-                     .domain(d3.extent(coords, d => d[1]))
-                     .range([height - margin, margin]);
+    scale.y = d3.scaleLinear()
+                .range([dim.height - dim.margin, dim.margin])
+                .domain(d3.extent(coords, d => d[1]));
 
     // The line function requires scales, which simply receive the default values
     const line = d3.line()
-                   .x(d => scaleX(d[0]))
-                   .y(d => scaleY(d[1]));
+                   .x(d => scale.x(d[0]))
+                   .y(d => scale.y(d[1]));
 
     // Render the context
-    const svg = d3.select("body").append("svg").attr("height",height).attr("width",width);
+    const svg = d3.select("body").append("svg").attr("height", dim.height).attr("width", dim.width);
 
     // Render the line
     svg.append("path")
@@ -52,11 +52,11 @@
         .attr("class", "line")  // need this to apply line styles (and not affect other paths, such as the axes)
         .attr("d", line);       // calls the line function for each datum (same as d => line(d))
 
-    // Draw the axes (we are using a utility function from cartesian-chart-utils.js)
-    pkt.cartesianAxes()
-        .container(svg)
-        .xScale(scaleX)
-        .yScale(scaleY)()
+    // Draw the axes (we are using a utility function from chart-utils.js)
+    utils.cartesianAxes()
+         .container(svg)
+         .xScale(scale.x)
+         .yScale(scale.y)()
 
 </script>
 </body>

@@ -3,8 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <title>Debugging lines</title>
-    <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
-    <script src="../js/chart-utils.js"></script>
     <link rel="stylesheet" href="../css/chart-utils.css">
     <style>
         .dataset {
@@ -14,13 +12,26 @@
     </style>
 </head>
 <body>
-<script>
-    const width  = 420;
-    const height = 420;
-    const topM = 20;
-    const rightM = 20;
-    const bottomM = 70;
-    const leftM = 70;
+<h1>Debugging line charts with the  console</h1>
+<p>Use the console to test the <code>scale.x()</code> and <code>scale.y()</code> functions, and the <code>line()</code>
+    function applying data from the <code>datasets</code> array to it.</code></p>. You can also turn on breakpoints
+    and uncomment the <code>debugger;</code> statement to pause the application and access the module's complete scope.</p>
+
+<script type="module">
+    import * as d3 from "https://cdn.skypack.dev/d3@7";
+    import * as utils from "../js/chart-utils.js";
+
+    const dim = {
+        width: 420, height: 420,
+        margin: {top: 20, right: 20, bottom: 70, left: 70}
+    };
+    const scale = {
+        x: d3.scaleLinear().range([dim.margin.left, dim.width - dim.margin.right]),
+        y: d3.scaleLinear().range([dim.height - dim.margin.bottom, dim.margin.top])
+    }
+    const svg = d3.select("body").append("svg").attr("height", dim.height).attr("width", dim.width);
+
+
 
     // 3 data series, each with 3 points
     const datasets = [
@@ -31,18 +42,13 @@
     console.log('datasets', datasets);
 
     // Scale functions should always return a value (a number) within the range
-    const scaleX = d3.scaleLinear()
-        .domain(d3.extent(d3.merge(datasets), d => d[0]))
-        .range([leftM,width-rightM]);
-
-    const scaleY = d3.scaleLinear()
-        .domain(d3.extent(d3.merge(datasets), d => d[1]))
-        .range([height-bottomM,topM]);
+    scale.x.domain(d3.extent(d3.merge(datasets), d => d[0]));
+    scale.y.domain(d3.extent(d3.merge(datasets), d => d[1]));
 
     // Test the scales
-    console.log('scaleX(1)', scaleX(1));
-    console.log('scaleX(2)', scaleX(2));
-    console.log('scaleY(35)', scaleY(35));
+    console.log('scale.x(1)', scale.x(1));
+    console.log('scale.x(2)', scale.x(2));
+    console.log('scale.y(35)', scale.y(35));
 
     // To paint each line a different color, the domain of the color scale
     // corresponds to the number of data series
@@ -51,38 +57,49 @@
     // The line function is called for each data series and its x() and y() methods
     // are called for each point [x,y] in the series
     const line = d3.line()
-                   .x(d => console.log('d[0], scaleX(d[0])', d[0],scaleX(d[0])) || scaleX(d[0]))
-                   .y(d => console.log('d[1], scaleY(d[0])', d[1],scaleY(d[1])) || scaleY(d[1]));
+                   .x(d => console.log('d[0], scale.x(d[0])', d[0],scale.x(d[0])) || scale.x(d[0]))
+                   .y(d => console.log('d[1], scale.y(d[0])', d[1],scale.y(d[1])) || scale.y(d[1]));
 
     // Test the line function
     console.log('line(datasets[0])', line(datasets[0])); // this should return a valid path string
     console.log('line(datasets)', line(datasets));       // this will return a bad path string
 
-    const svg = d3.select("body")
-                  .append("svg").attr("height",height).attr("width",width);
 
     // Render the full dataset
     svg.selectAll("path.dataset")
-        .data(datasets)
-        .join("path")
-        .attr("class", "dataset")
-        .attr("d", d => console.log('d-datasets',d) || line(d)) // see Console to inspect data used by each line
-        .style("stroke", colorScale);
+       .data(datasets)
+         .join("path")
+           .attr("class", "dataset")
+           .attr("d", d => console.log('d-datasets',d) || line(d)) // see Console to inspect data used by each line
+           .style("stroke", colorScale);
 
     // Render a single series
     svg.append("path")
-        .datum(datasets[0])
-        .attr("class", "single")
-        .attr("d", d => console.log('d-single',d) || line(d)) // see Console to inspect data used by each line
-        .style("stroke", 'gray')
-        .style("fill", 'none')
-        .attr('transform', 'translate(0,25)'); // move it down a bit so it is visible
+       .datum(datasets[0])
+         .attr("class", "single")
+         .attr("d", d => console.log('d-single',d) || line(d)) // see Console to inspect data used by each line
+         .style("stroke", 'gray')
+         .style("fill", 'none')
+         .attr('transform', 'translate(0,25)'); // move it down a bit so it is visible
 
     // Draws Cartesian scales (see cartesian-chart-utils.js)
-    pkt.cartesianAxes()
-        .container(svg)
-        .xScale(scaleX)
-        .yScale(scaleY)()
+    utils.cartesianAxes()
+         .container(svg)
+         .xScale(scale.x)
+         .yScale(scale.y)()
+
+
+    // Debugging tools
+
+    // 1) Debugger:
+    // debugger;  // this pauses the execution (it's a breakpoint) and exposes the module's scope
+
+    // 2) Bypassing local variables by copying their references to the global scope
+    // You can call scale.x, scale.y, line, colorScale and datasets from the console
+    window.datasets = datasets;
+    window.scale = scale;
+    window.line = line;
+    window.colorScale = colorScale;
 
 </script>
 </body>

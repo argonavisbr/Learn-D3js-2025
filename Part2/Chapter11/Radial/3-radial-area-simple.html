@@ -2,9 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Lines</title>
-    <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
-    <script src="../js/chart-utils.js"></script>
+    <title>Radial area</title>
     <link rel="stylesheet" href="../css/chart-utils.css">
     <style>
         path.line {
@@ -18,14 +16,16 @@
     </style>
 </head>
 <body>
-<script>
-    const dim = {width: 500, height: 400, margin: 100};
+<script type="module">
+    import * as d3 from "https://cdn.skypack.dev/d3@7";
+    import * as utils from "../js/chart-utils.js";
 
-    // SVG view port
-    const svg = d3.select("body")
-                  .append("svg")
-                    .attr("height", dim.height)
-                    .attr("width", dim.width);
+    const dim = {width: 500, height: 400, margin: 100};
+    const scale = {
+        angle: d3.scaleLinear().range([0, 2*Math.PI]),
+        radius: d3.scaleLinear().range([0, dim.width/2 - dim.margin])
+    }
+    const svg = d3.select("body").append("svg").attr("height", dim.height).attr("width", dim.width);
 
 
     const samples = [55,41,42,44,49,45,45,49,49,69,59,55];
@@ -38,25 +38,21 @@
     const container = svg.append("g")
                          .attr("transform", `translate(${dim.width/2},${dim.height/2})`);
 
-    // Scales
-    const scaleAngle = d3.scaleLinear()
-                         .domain([0, samples.length])
-                         .range([0, 2*Math.PI]);
-    const scaleRadius = d3.scaleLinear()
-                          .domain([0, d3.max(samples)])
-                          .range([0, dim.width/2 - dim.margin]);
+    // Scale domains
+    scale.angle.domain([0, samples.length]);
+    scale.radius.domain([0, d3.max(samples)]);
 
     // Draw radial axes
-    pkt.radialAxes()
+    utils.radialAxes()
         .container(container)
-        .aScale(scaleAngle)
-        .rScale(scaleRadius)
+        .aScale(scale.angle)
+        .rScale(scale.radius)
         .angularData(months.map(d => d+1))();
 
     // Radial line function
     const area = d3.radialArea()
-                   .angle(d => scaleAngle(d[0]))
-                   .outerRadius(d => scaleRadius(d[1]));
+                   .angle(d => scale.angle(d[0]))
+                   .outerRadius(d => scale.radius(d[1]));
 
     const line = area.lineOuterRadius();
 
@@ -77,8 +73,8 @@
              .data(data)
                 .join("circle")
                   .attr("class", "point")
-                  .attr("cx", d => d3.pointRadial(scaleAngle(d[0]), scaleRadius(d[1]))[0])
-                  .attr("cy", d => d3.pointRadial(scaleAngle(d[0]), scaleRadius(d[1]))[1])
+                  .attr("cx", d => d3.pointRadial(scale.angle(d[0]), scale.radius(d[1]))[0])
+                  .attr("cy", d => d3.pointRadial(scale.angle(d[0]), scale.radius(d[1]))[1])
                   .attr("r", 4)
                   .style("fill", "red");
 

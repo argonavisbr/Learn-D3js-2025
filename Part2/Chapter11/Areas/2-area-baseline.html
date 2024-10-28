@@ -3,20 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <title>An area with a random baseline</title>
-    <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
     <style>
         path {
             stroke: red;
             fill: none;
         }
     </style>
-
 </head>
 <body>
-<script>
+<script type="module">
+    import * as d3 from "https://cdn.skypack.dev/d3@7";
+
     // Viewport dimensions
-    const width  = 500;
-    const height = 400;
+    const dim = { width: 800, height: 400 };
 
     // An array of coordinates (x,y data points) for the line
     const coords = [
@@ -38,8 +37,8 @@
     // Setup the svg context
     const svg = d3.select("body")
                   .append("svg")
-                  .attr("height",height)
-                  .attr("width",width);
+                  .attr("height", dim.height)
+                  .attr("width", dim.width);
 
     // Append a path with the generated path data (CSS styles are defined in the head)
     svg.append("path")

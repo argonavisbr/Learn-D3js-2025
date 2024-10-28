@@ -3,8 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <title>Area with missing data</title>
-    <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
-    <script src="../js/chart-utils.js"></script>
     <link rel="stylesheet" href="../css/chart-utils.css">
     <style>
         .area {
@@ -17,10 +15,17 @@
     </style>
 </head>
 <body>
-<script>
-    const width  = 800;
-    const height = 400;
-    const margin = 50;
+<script type="module">
+    import * as d3 from "https://cdn.skypack.dev/d3@7";
+    import * as utils from "../js/chart-utils.js";
+
+    const dim = { width: 800, height: 400, margin: 50 };
+    const scale = {
+        x: d3.scaleLinear().range([dim.margin, dim.width - dim.margin]),
+        y: d3.scaleLinear().range([dim.height - dim.margin, dim.margin])
+    }
+    const svg = d3.select("body").append("svg").attr("height", dim.height).attr("width", dim.width);
+
 
     const data = [
         [[0,0], [5,15], [10,'-'], [15,15], [20,10]],  // this dataset has missing data
@@ -28,26 +33,19 @@
         [[0,25], [5,20], [10,35], [15,30], [20,43]]
     ];;
 
-    const scaleX = d3.scaleLinear()
-                     .domain(d3.extent(d3.merge(data), d => d[0] >= 0 ? d[0] : 0))
-                     .range([margin,width - margin]);
+    scale.x.domain(d3.extent(d3.merge(data), d => d[0] >= 0 ? d[0] : 0));
+    scale.y.domain(d3.extent(d3.merge(data), d => d[1] >= 0 ? d[1] : 0));
 
-    const scaleY = d3.scaleLinear()
-                     .domain(d3.extent(d3.merge(data), d => d[1] >= 0 ? d[1] : 0))
-                     .range([height - margin,margin]);
-
-    const colorScale = d3.scaleOrdinal(d3.schemeCategory10).domain([0,data.length]);
+    const colorScale = d3.scaleOrdinal(d3.schemeCategory10).domain([0, data.length]);
 
     // Only render the area and line if the y-value is a number
     const area = d3.area()
-                    .x(d => scaleX(d[0]))
-                    .y(d => scaleY(d[1]))
-                    .y1(scaleY(0))
+                    .x(d => scale.x(d[0]))
+                    .y(d => scale.y(d[1]))
+                    .y1(scale.y(0))
                     .defined(d => !isNaN(d[1]));  // only render if y-value is a number
 
     const line = area.lineX0();
-
-    const svg = d3.select("body").append("svg").attr("height",height).attr("width",width);
 
     svg.selectAll(".area")
        .data(data)
@@ -63,12 +61,11 @@
             .attr("d", line)
             .style("stroke", colorScale);
 
-    // Render the axes (see js/cartesian-chart-utils.js)
-    pkt.cartesianAxes()
-        .container(svg)
-        .xScale(scaleX)
-        .yScale(scaleY)()
-
+    // Render the axes
+    utils.cartesianAxes()
+         .container(svg)
+         .xScale(scale.x)
+         .yScale(scale.y)()
 
 </script>
 </body>

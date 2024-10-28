@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Radial axes</title>
+    <link rel="stylesheet" href="../../css/chart-utils.css">
+    <style>
+        path.line {
+            stroke: red;
+            fill: none;
+        }
+        path.area {
+            stroke: none;
+            fill: rgb(100%, 0%, 0%, 0.3);
+        }
+        path.dataset {stroke-width: 1px;}
+        svg, canvas {
+            position: absolute;
+            top: 5px;
+            left: 5px;
+            width: 500px;
+            height: 400px;
+        }
+    </style>
+</head>
+<body>
+
+<script type="module">
+    import * as d3 from 'https://cdn.skypack.dev/d3@7';
+    import * as utils from '../../js/chart-utils.js';
+    import {fixResolution} from './js/canvas-utils.js';
+
+    const dim = {width: 500, height: 400, margin: 100};
+    const scale = {
+        angle: d3.scaleLinear().range([0, 2*Math.PI]),
+        radius: d3.scaleLinear().range([0, dim.width/2 - dim.margin])
+    }
+
+    // SVG view port (layer for axes)
+    const svg = d3.select("body")
+                  .append("svg")
+                    .attr("height", dim.height)
+                    .attr("width", dim.width);
+
+    // Canvas view port (layer for chart data)
+    const canvas = d3.select("body")
+                     .append("canvas")
+                       .attr("height", dim.height)
+                       .attr("width", dim.width);
+    const ctx = fixResolution(canvas.node().getContext("2d"));
+
+    // Sample data
+    const series = 3;
+    const data = [];
+
+    const steps = d3.range(0,10,1); // 10 steps
+
+    for (let i = 0; i < series; i++) {
+        data.push(steps.map(d => [d, 20 + Math.random() * 80]));
+    }
+
+    scale.angle.domain([0, steps.length]);
+    scale.radius.domain([0, 100]);
+
+    const colorScale = d3.scaleOrdinal(d3.schemeCategory10).domain([0,data.length]);
+
+    // A container for the chart, moving the origin to the center of the SVG viewport
+    // This will be used by the axes only
+    const container = svg.append("g")
+                         .attr("transform", `translate(${dim.width/2},${dim.height/2})`);
+
+    // Draw radial axes with grid in SVG layer
+    utils.radialAxes()
+        .container(container)
+        .aScale(scale.angle)
+        .rScale(scale.radius)
+        .angularData(steps)
+        .numTicks(6)
+        .useGrid(true)();
+
+    // Radial area and line functions for Canvas context
+    const area = d3.areaRadial()
+                   .angle(d => scale.angle(d[0]))
+                   .outerRadius(d => scale.radius(d[1]))
+                   .context(ctx);
+
+    const line = area.lineOuterRadius()
+                     .context(ctx);
+
+    // Render the area, line and points in Canvas
+
+    ctx.translate(dim.width/2, dim.height/2);
+    data.forEach(d => {
+        ctx.fillStyle = colorScale(data.indexOf(d));
+        ctx.strokeStyle = colorScale(data.indexOf(d));
+        ctx.globalAlpha = .3;
+
+        // Draw the area
+        ctx.beginPath();
+        area(d);
+        ctx.fill();
+
+        // Draw the line
+        ctx.globalAlpha = 1;
+        ctx.fillStyle = "transparent";
+        ctx.beginPath();
+        line(d);
+        ctx.stroke();
+
+        // Draw dots at each point
+        ctx.fillStyle = colorScale(data.indexOf(d));
+        ctx.beginPath();
+        d.forEach(p => {
+            const point = d3.pointRadial(scale.angle(p[0]), scale.radius(p[1]));
+            ctx.moveTo(point[0], point[1]);
+            ctx.arc(point[0], point[1], 4, 0, 2*Math.PI);
+        });
+        ctx.fill();
+    });
+
+    /*
+        // Render the area
+    container.selectAll("path.dataset")
+       .data(data)
+         .join("path")
+            .attr("class", "dataset")
+            .attr("d", area)
+            .style("fill", colorScale)
+            .style("fill-opacity", .3);
+
+    // Render the line
+    container.selectAll("path.line")
+        .data(data)
+        .join("path")
+        .attr("class", "line")
+        .attr("d", line)
+        .style("stroke", colorScale)
+        .style("fill", "none");
+
+    // Draw dots at each point
+    container.selectAll("g.dataset")
+       .data(data)
+         .join("g")
+           .attr("class", "dataset")
+           .style("fill", colorScale)
+           .selectAll("circle.point")
+           .data(d => d)
+             .join("circle")
+               .attr("class", "point")
+               .attr("cx", d => d3.pointRadial(scale.angle(d[0]), scale.radius(d[1]))[0])
+               .attr("cy", d => d3.pointRadial(scale.angle(d[0]), scale.radius(d[1]))[1])
+               .attr("r", 4);
+     */
+
+</script>
+</body>
+</html>

@@ -3,8 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <title>Area with baseline and topline</title>
-    <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
-    <script src="../js/chart-utils.js"></script>
     <link rel="stylesheet" href="../css/chart-utils.css">
     <style>
         path {fill: none}
@@ -14,10 +12,17 @@
     </style>
 </head>
 <body>
-<script>
-    const width  = 800;
-    const height = 400;
-    const margin = 50;
+<script type="module">
+    import * as d3 from "https://cdn.skypack.dev/d3@7";
+    import * as utils from "../js/chart-utils.js";
+
+    const dim = { width: 800, height: 400, margin: 50 };
+    const scale = {
+        x: d3.scaleLinear().range([dim.margin, dim.width - dim.margin]),
+        y: d3.scaleLinear().range([dim.height - dim.margin, dim.margin])
+    }
+    const svg = d3.select("body").append("svg").attr("height", dim.height).attr("width", dim.width);
+
 
     const data = [
         [0,.1,.05],
@@ -27,23 +32,16 @@
         [4,.1,.01]
     ];
 
-    const scaleX = d3.scaleLinear()
-                     .domain(d3.extent(data, d => d[0]))
-                     .range([margin,width - margin]);
-
-    const scaleY = d3.scaleLinear()
-                     .domain([0,d3.max(data, d => d[1])])
-                     .range([height - margin,margin]);
+    scale.x.domain(d3.extent(data, d => d[0]));
+    scale.y.domain([0,d3.max(data, d => d[1])]);
 
     const area = d3.area()
-                   .x(d => scaleX(d[0]))
-                   .y1(d => scaleY(d[1]))
-                   .y0(d => scaleY(d[2]));
+                   .x(d => scale.x(d[0]))
+                   .y1(d => scale.y(d[1]))
+                   .y0(d => scale.y(d[2]));
 
     const topline  = area.lineY1();
     const baseline = area.lineY0();
-
-    const svg = d3.select("body").append("svg").attr("height",height).attr("width",width);
 
     svg.append("path")
         .datum(data)
@@ -60,10 +58,10 @@
         .attr("class", "baseline")
         .attr("d", baseline)
 
-    pkt.cartesianAxes()
+    utils.cartesianAxes()
         .container(svg)
-        .xScale(scaleX)
-        .yScale(scaleY)();
+        .xScale(scale.x)
+        .yScale(scale.y)();
 
 </script>
 </body>
