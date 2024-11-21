@@ -68,6 +68,9 @@
     svg.append("line").attr("x1", 0).attr("x2", width).attr("y1", 150).attr("y2", 150).attr("stroke", "black");
     strokeSymbols.forEach((s,i) => display(svg, d3[s], i, 170, "stroke", 120, 70, colorScale, true));
 
+
+
+    window.d3 = d3;
 </script>
 </body>
 </html>

@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <title>Simple transitions - with details</title>
-    <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
     <style>
         p {font-family: sans-serif}
         h1 {
@@ -29,7 +28,9 @@
     <p class="t1">DURATION for t1 (black to red). Steps: <span id="t1" class="val">waiting</span></p>
     <p class="t2">DURATION for t2 (red to blue). Steps: <span id="t2" class="val">waiting</span></p>
 </div>
-<script>
+<script type="module">
+    import * as d3 from "https://cdn.skypack.dev/d3@7";
+
     // This file contains extra code to display the dynamics of the transitions in the page
     // See a shorter example of this code in Part2/Chapter12/Transitions/1-transition.html
 
@@ -75,6 +76,10 @@
             .on("start", () => d3.select("#w2").text('transition started'))
             .tween("", () => t => d3.select("#t2").text(`${fmt(t)} (${fmt(t*duration2/1000)}s of ${fmt(duration2/1000)}s)`))
             .style("color", "blue");   // set final styles and attributes
+
+    // To interact using the console
+    window.d3 = d3;
+    window.transition = transition;
 
 </script>
 </body>

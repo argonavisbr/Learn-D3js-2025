@@ -1,0 +1,32 @@
+h1 {
+    font-family: sans-serif;
+    font-size: 24pt;
+}
+.main-panel {
+    width: 800px;
+    position: absolute;
+    top: 75px; left: 10px;
+    border: 1px solid lightblue;
+    height: 604px;
+    font-family: monospace;
+    font-size: 15px;
+}
+.control-panel {
+    width: 180px;
+    height: 580px;
+    background: #ccc;
+    position: absolute;
+    top: 0; left: 0;
+    padding: 10px;
+    margin: 2px;
+}
+.chart-panel {
+    width: 600px;
+    height: 100%;
+    float: right;
+    position: absolute;
+    top: 0; left: 200px;
+}
+span {
+    font-weight: bold;
+}

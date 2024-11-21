@@ -1,5 +1,5 @@
 import * as d3 from 'https://cdn.skypack.dev/d3@7';
-import {dim, app} from './constants-1.6.js';
+import {dim, app} from './common-1.6.js';
 
 export function drawLegend() {
     const legend = d3.select("svg")

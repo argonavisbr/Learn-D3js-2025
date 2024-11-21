@@ -6,7 +6,8 @@
     <link rel="stylesheet" href="../css/chart-utils.css">
 </head>
 <body>
-<p>See results in JavaScript console</p>
+<p>See results in JavaScript console.</p>
+<p>You can use the following objects in the console prompt: <code>d3</code>, <code>data1</code>, <code>stack</code>, <code>keys</code>, <code>stackedData</code>.</p>
 <script type="module">
     import * as d3 from 'https://cdn.skypack.dev/d3@7';
     import {drawBarChart, drawAreaChart, svg, dim} from './js/stack-examples.js';
@@ -47,6 +48,14 @@
     drawBarChart(g1, stackedData, keys);
     const g2 = svg.append("g").attr("transform", `translate(${dim.width/2}, 0)`);
     drawAreaChart(g2, stackedData, keys);
+
+
+    // Bypass to use local constants in the console
+    window.d3 = d3;
+    window.data1 = data1;
+    window.stackedData = stackedData;
+    window.keys = keys;
+    window.stack = stack;
 
 </script>
 </body>

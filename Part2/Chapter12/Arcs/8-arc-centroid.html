@@ -31,8 +31,7 @@
 <script type="module">
     import * as d3 from "https://cdn.skypack.dev/d3@7";
 
-    const width  = 600;
-    const height = 600;
+    const dim = {width: 800, height: 500};
 
     const arc = d3.arc()
                   .innerRadius(0)
@@ -42,65 +41,65 @@
 
     const svg = d3.select("body")
                   .append("svg")
-                  .attr("height", height)
-                  .attr("width", width);
+                  .attr("height", dim.height)
+                  .attr("width", dim.width);
 
-    // Coordinate system for the arc
+    // Cartesian coordinate system for the arc
      svg.append("line")
         .attr("x1", 0)
-        .attr("y1", height/2)
-        .attr("x2", width)
-        .attr("y2", height/2);
+        .attr("y1", dim.height/2)
+        .attr("x2", dim.width)
+        .attr("y2", dim.height/2);
 
      svg.append("line")
-        .attr("x1", width/2)
+        .attr("x1", dim.width/2)
         .attr("y1", 0)
-        .attr("x2", width/2)
-        .attr("y2", height);
+        .attr("x2", dim.width/2)
+        .attr("y2", dim.height);
 
     // Container in polar coordinates (same as arc coordinates)
-    const polarg = svg.append("g")
-                      .attr("transform", `translate(${[width/2,height/2]})`);
+    const container = svg.append("g")
+                         .attr("transform", `translate(${[dim.width/2, dim.height/2]})`);
 
-    polarg.append("path")
-          .attr("d", arc);
+    container.append("path")
+             .attr("d", arc);
 
-    const centroid = arc.centroid();
-    const [x, y] = centroid;
+    const [x,y] = arc.centroid();
+    console.log(x,y)
 
     // draw a line from the x-axis to the centroid
-    polarg.append("line")
+    container.append("line")
         .attr("class", "coord")
         .attr("x1", x)
         .attr("y1", 0)
         .attr("x2", x)
         .attr("y2", y)
 
-    polarg.append("line")
+    container.append("line")
         .attr("class", "coord")
         .attr("x1", x)
         .attr("y1", y)
         .attr("x2", 0)
         .attr("y2", y)
 
-    polarg.append("circle")
+    container.append("circle")
         .attr("cx", x)
         .attr("cy", y)
         .attr("r", 7)
-        .attr("fill", "brown");
+        .style("fill", "brown");
 
-    polarg.append("text")
+    container.append("text")
         .attr("x", x)
         .attr("y", 5)
-        .attr("text-anchor", "middle")
-        .attr("alignment-baseline", "hanging")
+        .style("text-anchor", "middle")
+        .style("alignment-baseline", "hanging")
         .text(x.toFixed(2));
 
-    polarg.append("text")
+    container.append("text")
         .attr("x", -5)
         .attr("y", y)
-        .attr("text-anchor", "end")
-        .attr("alignment-baseline", "middle")
+        .style("text-anchor", "end")
+        .style("alignment-baseline", "middle")
         .text(y.toFixed(2));
 
 </script>

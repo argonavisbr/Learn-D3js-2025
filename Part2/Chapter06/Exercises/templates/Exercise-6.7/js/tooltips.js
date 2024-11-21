@@ -1,5 +1,5 @@
 import * as d3 from "https://cdn.jsdelivr.net/npm/d3@7/+esm";
-import {app} from "./constants.js";
+import {app} from "./common.js";
 
 const fmt = d3.format(",");
 

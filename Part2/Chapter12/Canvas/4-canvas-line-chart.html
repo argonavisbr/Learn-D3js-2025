@@ -37,14 +37,15 @@
     const dim = {width: 400, height: 300,
                  margin: {top: 20, right: 10, bottom: 20, left: 30}};
 
-    const scale = {x: d3.scaleLinear()
-                        .range([dim.margin.left, dim.width - dim.margin.right]),
-                   y: d3.scaleLinear()
-                        .range([dim.height - dim.margin.bottom, dim.margin.top])
+    const scale =
+        {x: d3.scaleLinear()
+              .range([dim.margin.left, dim.width - dim.margin.right])
+              .domain(d3.extent(data.flat().map(d => d[0]))),
+         y: d3.scaleLinear()
+              .range([dim.height - dim.margin.bottom, dim.margin.top])
+              .domain([0, d3.max(data.flat().map(d => d[1]))])
     };
 
-    scale.x.domain(d3.extent(data.flat().map(d => d[0])));
-    scale.y.domain([0, d3.max(data.flat().map(d => d[1]))]);
 
     // Render SVG chart
     const svg = createView("svg", dim, "body", "svg-chart");

@@ -1,5 +1,5 @@
 import * as d3 from 'https://cdn.skypack.dev/d3@7';
-import {app} from './constants-1.5.js';
+import {app} from './common-1.5.js';
 
 export {draw, show, clear};
 

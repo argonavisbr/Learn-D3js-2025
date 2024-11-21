@@ -83,6 +83,12 @@
         .attr("transform", d => `rotate(${point(d,radius,90)})`)
         .text(d => d.data.country);
 
+    // Bypass to explore this code using the JavaScript console
+    window.slices = slices;
+    window.arc = arc;
+    window.colorScale = colorScale;
+    window.chart = chart;
+    window.d3 = d3;
 
 </script>
 </body>

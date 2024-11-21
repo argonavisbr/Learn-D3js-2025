@@ -1,21 +1,35 @@
 /**
- * Axes generator functions
+ * Axes generator functions. ES module.
  *
- * pkt.radialAxes()
- * pkt.cartesianAxes()
- * pkt.legend()
- * pkt.p2c()
- * pkt.c2p()
+ * Exported functions:
+ * radialAxes()
+ * cartesianAxes()
+ * legend()
+ * p2c()
+ * c2p()
+ * updateTextLabels()
+ * pieLabels()
  *
- * @version 2.2.0 2024-04-15
+ * Exported constants:
+ * direction
+ * symbolsFill
+ * symbolsStroke
+ * symbolDrop
+ * symbolVenus
+ * symbolMars
+ * symbolZigZag
+ *
+ * @version 3.2 2024-10-31
  */
 
-// Namespace prefix for utility functions used in this book
-var pkt = pkt || {};
+import * as d3 from "https://cdn.jsdelivr.net/npm/d3@7/+esm";
+
+export {cartesianAxes, radialAxes, legend, p2c, c2p, updateTextLabels, pieLabels,
+        direction, symbolsFill, symbolsStroke, symbolDrop, symbolVenus, symbolMars, symbolZigZag};
 
 /**
  * Creates a Cartesian axes generator function.
- * @returns A function that when called will generate a system of cartesian axes
+ * @returns A function that when called will generate a system of cartesian axes. This function returns the axes [axisX, axisY].
  *
  * Methods:
  * - container(selection) - get/set the container (e.g. <svg> or <g>), required. Container will be tagged with the class 'chart' and 'cartesian'.
@@ -27,7 +41,7 @@ var pkt = pkt || {};
  * - showVerticalGrid(boolean) - turn on or off the vertical grid, default = false
  *
  */
-pkt.cartesianAxes = function() {
+function cartesianAxes() {
     let container = null;
     let xScale = null;
     let yScale = null;
@@ -37,7 +51,7 @@ pkt.cartesianAxes = function() {
     let showVerticalGrid = false;
 
     function f() {
-        return pkt.__drawCartesianAxes(container, xScale, yScale, xLabel, yLabel, showHorizontalGrid, showVerticalGrid);
+        return __drawCartesianAxes(container, xScale, yScale, xLabel, yLabel, showHorizontalGrid, showVerticalGrid);
     }
 
     f.container = arg => (arguments.length) ? container : (container = arg, f);
@@ -58,7 +72,8 @@ pkt.cartesianAxes = function() {
 
 /**
  * Creates a radial axes generator function.
- * @returns A function that when called will generate a system of cartesian axes
+ * @returns A function that when called will generate a system of cartesian axes. This function
+ *          returns the axis object.
  *
  * Methods:
  * - container(selection) - get/set the container (e.g. <svg> or <g>), required. Container will be tagged with the classes 'chart' and 'radial'.
@@ -70,7 +85,7 @@ pkt.cartesianAxes = function() {
  * - backdropOpacity(number) - get/set the opacity of the backdrop behind the radial labels, default = 1
  *
  */
-pkt.radialAxes = function() {
+function radialAxes() {
     let container = null;
     let aScale = null;
     let rScale = null;
@@ -78,9 +93,10 @@ pkt.radialAxes = function() {
     let numTicks = 6;
     let useGrid = false;
     let backdropOpacity = 1;
+    let backdropColor = "white";
 
     function f() {
-        return pkt.__drawRadialAxes(container, aScale, rScale, angularData, numTicks, useGrid, backdropOpacity);
+        return __drawRadialAxes(container, aScale, rScale, angularData, numTicks, useGrid, backdropOpacity, backdropColor);
     }
 
     f.container = arg => (arguments.length) ? container : (container = arg, f);
@@ -90,6 +106,7 @@ pkt.radialAxes = function() {
     f.numTicks = arg => (arguments.length) ? numTicks : (numTicks = arg, f);
     f.useGrid = arg => (arguments.length) ? useGrid : (useGrid = arg, f);
     f.backdropOpacity = arg => (arguments.length) ? backdropOpacity : (backdropOpacity = arg, f);
+    f.backdropColor = arg => (arguments.length) ? backdropColor : (backdropColor = arg, f);
 
     return f;
 }
@@ -106,7 +123,7 @@ pkt.radialAxes = function() {
  * - symbol(function) - get/set the d3.symbol function or scale, default = d3.symbolSquare
  *
  */
-pkt.legend = function() {
+function legend() {
     let container = null;
     let data = null;
     let color = null;
@@ -114,7 +131,7 @@ pkt.legend = function() {
     let symbol = d3.symbolSquare;
 
     function f() {
-        return pkt.__displayLegend(container, data, color, useDataAsIndex, symbol);
+        return __displayLegend(container, data, color, useDataAsIndex, symbol);
     }
 
     f.container = arg => (arguments.length) ? container : (container = arg, f);
@@ -132,7 +149,7 @@ pkt.legend = function() {
  * @param radius The radius
  * @returns {number[]} The cartesian coordinates [x,y]
  */
-pkt.p2c = function(angle, radius) {
+function p2c(angle, radius) {
     return [radius * (Math.cos(angle - Math.PI/2)), radius * (Math.sin(angle - Math.PI/2))];
 }
 
@@ -142,15 +159,16 @@ pkt.p2c = function(angle, radius) {
  * @param y The y coordinate
  * @returns {number[]} The polar coordinates [angle, radius]
  */
-pkt.c2p = function(x, y) {
+function c2p(x, y) {
     return [Math.atan2(y, x) + Math.PI / 2, Math.sqrt(x * x + y * y)];
 }
 
 /**
  * Updates text labels for radial axes
  * @param opacity
+ * @param color
  */
-pkt.updateTextLabels = function(opacity = 1) {
+function updateTextLabels(opacity = 1, color = "white") {
     const g = d3.select("g.chart");
     // Centers tick lines in relation to domain line
     g.selectAll(".tick line")
@@ -168,6 +186,7 @@ pkt.updateTextLabels = function(opacity = 1) {
         .attr("ry", 4)
         .attr("width", rh)
         .attr("height", rw)
+        .style("fill", color)
         .style("opacity", opacity);
 
     // Centers tick text in relation to domain line
@@ -185,7 +204,7 @@ pkt.updateTextLabels = function(opacity = 1) {
  * @param useDataAsIndex If true, the color & symbol functions will be called with the datum, otherwise with the index
  * @param symbol A d3.symbol function (default is d3.symbolSquare) or an ordinal scale of symbols
  */
-pkt.__displayLegend = function(container, data, color, useDataAsIndex = false, symbol = d3.symbolSquare) {
+const __displayLegend = function(container, data, color, useDataAsIndex = false, symbol = d3.symbolSquare) {
     container.attr("class", "legend");
     container.selectAll("g.entry")
         .data(data).join("g")
@@ -216,8 +235,9 @@ pkt.__displayLegend = function(container, data, color, useDataAsIndex = false, s
  * @param showHorizontalGrid  Whether to show horizontal grid lines, default = false
  * @param showVerticalGrid  Whether to show vertical grid lines, default = false
  *
+ * @returns The axis objects for x and y as an array [axisX, axisY]
  */
-pkt.__drawCartesianAxes = function(container, xScale, yScale,
+const __drawCartesianAxes = function(container, xScale, yScale,
                                    xLabel = 'x values',
                                    yLabel = 'y values',
                                    showHorizontalGrid = false,
@@ -277,7 +297,7 @@ pkt.__drawCartesianAxes = function(container, xScale, yScale,
         .text(yLabel)
         .attr("transform", `translate(${[labelPadding, (top + bottom)/2]}) rotate(90)`);
 
-    return axisY;
+    return [axisX,axisY];
 }
 
 /**
@@ -290,13 +310,17 @@ pkt.__drawCartesianAxes = function(container, xScale, yScale,
  * @param numTicks The number of ticks per axis, default = 6
  * @param useGrid Whether to draw a grid or not, default = false
  * @param backdropOpacity The opacity of the backdrop behind the text, default = 1
+ * @param backdropColor The color of the backdrop behind the text, default = "white"
+ *
+ * @returns The axis object
  */
 
-pkt.__drawRadialAxes = function(container, aScale, rScale,
+const __drawRadialAxes = function(container, aScale, rScale,
                                 angularData = d3.range(0,12),
                                 numTicks = 6,
                                 useGrid = false,
-                                backdropOpacity = 1) {
+                                backdropOpacity = 1,
+                                backdropColor = "white") {
 
     const axis = d3.axisBottom(rScale)
         .ticks(numTicks)
@@ -334,7 +358,7 @@ pkt.__drawRadialAxes = function(container, aScale, rScale,
     }
 
     // Draw backdrop behind text labels
-    pkt.updateTextLabels(backdropOpacity);
+    updateTextLabels(backdropOpacity, backdropColor);
 
     // Labels for each axis
     g.selectAll("text.angle.label")
@@ -342,14 +366,14 @@ pkt.__drawRadialAxes = function(container, aScale, rScale,
         .join("text")
         .attr("class", "angle label")
         .text(d => d)
-        .attr("x", (d,i) => pkt.p2c(aScale(i), rScale.range()[1] + 15)[0])
-        .attr("y", (d,i) => pkt.p2c(aScale(i), rScale.range()[1] + 15)[1])
+        .attr("x", (d,i) => p2c(aScale(i), rScale.range()[1] + 15)[0])
+        .attr("y", (d,i) => p2c(aScale(i), rScale.range()[1] + 15)[1])
         .attr("transform", "rotate(90)");
 
     return axis;
 }
 
-pkt.pieLabels = function() {
+function pieLabels() {
     let container = null;
     let arc = null;
     let property = null;
@@ -358,7 +382,7 @@ pkt.pieLabels = function() {
     let format = null;
 
     function f() {
-        return pkt.placePieLabels(container, arc, property, direction, radius, format);
+        return __placePieLabels(container, arc, property, direction, radius, format);
     }
 
     f.container = arg => (arguments.length) ? container : (container = arg, f);
@@ -372,10 +396,10 @@ pkt.pieLabels = function() {
 }
 
 
-pkt.direction = {TANGENTIAL: 1, RADIAL: 2, NONE: 0};
+const direction = {TANGENTIAL: 1, RADIAL: 2, NONE: 0};
 
-pkt.placePieLabels = function(container, arc, property,
-                              direction = pkt.direction.NONE,
+const __placePieLabels = function(container, arc, property,
+                              dir = direction.NONE,
                               radius = 1,
                               format = null) {
 
@@ -403,10 +427,10 @@ pkt.placePieLabels = function(container, arc, property,
             .style("alignment-baseline", "middle")
             .text(d => format && !isNaN(d.data[property]) ? format(d.data[property]) : d.data[property]);
 
-        if (direction === pkt.direction.RADIAL) {
+        if (dir === direction.RADIAL) {
             label.style("text-anchor", d => pt(d)[1] > 0 ? "start" : "end")
                 .attr("transform", d => pt(d)[1] > 0 ? `rotate(${pt(d,radius)})` : `rotate(${pt(d,radius,180)})`);
-        } else if (direction === pkt.direction.TANGENTIAL) { // tangential
+        } else if (dir === direction.TANGENTIAL) { // tangential
             label.style("text-anchor", "middle")
                 .attr("transform", d => `rotate(${pt(d,radius,90)})`);
         } else { // none
@@ -419,7 +443,7 @@ pkt.placePieLabels = function(container, arc, property,
  * A custom symbol for a zig-zag line. Can be used with fill, stroke, or both.
  * @type {{draw: (function(*, number=): null|string)}}
  */
-pkt.symbolZigZag = {
+const symbolZigZag = {
     draw: function(context, size = 64) {
         const side = Math.sqrt(size)/16;
         context.moveTo(12*side,0);
@@ -434,7 +458,7 @@ pkt.symbolZigZag = {
     }
 }
 
-pkt.symbolDrop = {
+const symbolDrop = {
     draw: function(context, size = 64) {
         const side = Math.sqrt(size)/16;
         context.arc(0,4*side,8*side,-Math.PI*.2,Math.PI*1.2);
@@ -450,7 +474,7 @@ pkt.symbolDrop = {
  * A custom symbol for the Venus symbol. Best for use with stroke and no fill.
  * @type {{draw: (function(*, number=): null|string)}}
  */
-pkt.symbolVenus = {
+const symbolVenus = {
     draw: function(context, size = 64) {
         const side = Math.sqrt(size)/16;
         context.arc(0,-6*side,8*side,0,2*Math.PI);
@@ -467,7 +491,7 @@ pkt.symbolVenus = {
  * A custom symbol for the Mars symbol. Best for use with stroke and no fill.
  * @type {{draw: (function(*, number=): null|string)}}
  */
-pkt.symbolMars = {
+const symbolMars = {
     draw: function(context, size = 64) {
         const side = Math.sqrt(size)/16;
         context.arc(-3*side,3*side,8*side,0,2*Math.PI);
@@ -481,8 +505,8 @@ pkt.symbolMars = {
     }
 }
 
-pkt.symbolsFill = [pkt.symbolZigZag, pkt.symbolDrop];
-pkt.symbolsStroke = [pkt.symbolVenus, pkt.symbolMars];
+const symbolsFill = [symbolZigZag, symbolDrop];
+const symbolsStroke = [symbolVenus, symbolMars];
 
 
 

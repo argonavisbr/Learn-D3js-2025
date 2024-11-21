@@ -19,7 +19,7 @@
  * symbolMars
  * symbolZigZag
  *
- * @version 3.1 2024-10-26
+ * @version 3.2 2024-10-31
  */
 
 import * as d3 from "https://cdn.jsdelivr.net/npm/d3@7/+esm";
@@ -93,9 +93,10 @@ function radialAxes() {
     let numTicks = 6;
     let useGrid = false;
     let backdropOpacity = 1;
+    let backdropColor = "white";
 
     function f() {
-        return __drawRadialAxes(container, aScale, rScale, angularData, numTicks, useGrid, backdropOpacity);
+        return __drawRadialAxes(container, aScale, rScale, angularData, numTicks, useGrid, backdropOpacity, backdropColor);
     }
 
     f.container = arg => (arguments.length) ? container : (container = arg, f);
@@ -105,6 +106,7 @@ function radialAxes() {
     f.numTicks = arg => (arguments.length) ? numTicks : (numTicks = arg, f);
     f.useGrid = arg => (arguments.length) ? useGrid : (useGrid = arg, f);
     f.backdropOpacity = arg => (arguments.length) ? backdropOpacity : (backdropOpacity = arg, f);
+    f.backdropColor = arg => (arguments.length) ? backdropColor : (backdropColor = arg, f);
 
     return f;
 }
@@ -164,8 +166,9 @@ function c2p(x, y) {
 /**
  * Updates text labels for radial axes
  * @param opacity
+ * @param color
  */
-function updateTextLabels(opacity = 1) {
+function updateTextLabels(opacity = 1, color = "white") {
     const g = d3.select("g.chart");
     // Centers tick lines in relation to domain line
     g.selectAll(".tick line")
@@ -183,6 +186,7 @@ function updateTextLabels(opacity = 1) {
         .attr("ry", 4)
         .attr("width", rh)
         .attr("height", rw)
+        .style("fill", color)
         .style("opacity", opacity);
 
     // Centers tick text in relation to domain line
@@ -306,6 +310,7 @@ const __drawCartesianAxes = function(container, xScale, yScale,
  * @param numTicks The number of ticks per axis, default = 6
  * @param useGrid Whether to draw a grid or not, default = false
  * @param backdropOpacity The opacity of the backdrop behind the text, default = 1
+ * @param backdropColor The color of the backdrop behind the text, default = "white"
  *
  * @returns The axis object
  */
@@ -314,7 +319,8 @@ const __drawRadialAxes = function(container, aScale, rScale,
                                 angularData = d3.range(0,12),
                                 numTicks = 6,
                                 useGrid = false,
-                                backdropOpacity = 1) {
+                                backdropOpacity = 1,
+                                backdropColor = "white") {
 
     const axis = d3.axisBottom(rScale)
         .ticks(numTicks)
@@ -352,7 +358,7 @@ const __drawRadialAxes = function(container, aScale, rScale,
     }
 
     // Draw backdrop behind text labels
-    updateTextLabels(backdropOpacity);
+    updateTextLabels(backdropOpacity, backdropColor);
 
     // Labels for each axis
     g.selectAll("text.angle.label")

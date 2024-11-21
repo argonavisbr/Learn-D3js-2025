@@ -1,0 +1,23 @@
+h1, p {
+    font-family: sans-serif;
+    text-align: center;
+    width: 750px;
+}
+h1 {
+    font-size: 16pt;
+}
+p {
+    font-size: 10px;
+}
+.legend text.label {
+    font-family: sans-serif;
+    font-size: 10px;
+    text-anchor: start;
+}
+text.label {
+    font-family: sans-serif;
+    font-size: 12px;
+}
+.label.inner {
+    font-weight: bold;
+}

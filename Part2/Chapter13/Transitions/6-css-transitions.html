@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>CSS transitions</title>
+  <style>
+    circle {
+        fill: black;
+        stroke: blue;
+        stroke-width: 2px;
+        transition: all 2s;
+    }
+    .hot {
+        fill: red;
+        stroke: yellow;
+        stroke-width: 6px;
+        transition: all 2s;
+    }
+    div {
+      float: left;
+    }
+    button {
+      clear: both;
+    }
+  </style>
+</head>
+<body>
+<h1>Using CSS transitions</h1>
+    <p>Click on the circle to change its color</p>
+    <div>
+      <svg width="100" height="100">
+        <circle cx="50" cy="50" r="40"></circle>
+      </svg>
+    </div>
+
+    <script type="module">
+        import * as d3 from "https://cdn.skypack.dev/d3@7";
+
+        let isHot = false;
+
+        d3.select("circle")
+          .on("click", function() {
+              d3.select(this).classed("hot", isHot = !isHot);
+          });
+
+    </script>
+</body>
+</html>

@@ -24,6 +24,9 @@
     import * as d3 from "https://cdn.skypack.dev/d3@7";
     import * as utils from "../../js/chart-utils.js";
 
+    // Constants
+    const data = {};
+    const app = {};
     const dim = {
         width: 800, height: 500, margin: 50
     };
@@ -35,34 +38,41 @@
 
     const file = "../../data/earthquakes-6-plus.csv";
 
-    d3.csv(file, d3.autoType)
-        .then(csv => {
-            console.log('csv', csv[0]);
+    // Run the app
+    load(file).then(draw);
 
-            // Convert data to standard format [[year, value], [year,value], ...]
-            const data = Object.entries(csv[0]).map(d => [d[0], d[1]]);
-            console.log('data', data);
 
-            // Plot the chart - repeating last value as 2024 to extend the line and use step-after
-            const lastValue = data[data.length-1][1];
-            plot(data.concat([['2024', lastValue]]));
-        });
+    // Functions
+    async function load(file) {
+        const csv = await d3.csv(file, d3.autoType);
+        console.log('csv', csv[0]);
 
-    function plot(data) {
+        // Convert data to standard format [[year, value], [year,value], ...]
+        const stdData = Object.entries(csv[0]).map(d => [d[0], d[1]]);
+        console.log('data', stdData);
 
-        scale.x.domain(data.map(d => d[0]));
-        scale.y.domain([100,d3.max(data, d => d[1])]);
+        // Plot the chart - repeating last value as 2024 to extend the line and use step-after
+        const lastValue = stdData[stdData.length-1][1];
+        data.quakes = stdData.concat([['2024', lastValue]]);
 
-        const line = d3.line()
+        config();
+    }
+
+    function config() {
+        scale.x.domain(data.quakes.map(d => d[0]));
+        scale.y.domain([100, d3.max(data.quakes, d => d[1])]);
+
+        app.line = d3.line()
             .x(d => scale.x(d[0]))
             .y(d => scale.y(d[1]))
             .curve(d3.curveStepAfter);
+    }
 
-
+    function draw() {
         svg.append("path")
-            .datum(data)
+            .datum(data.quakes)
             .attr("class", "line")
-            .attr("d", line);
+            .attr("d", app.line);
 
         utils.cartesianAxes()
             .container(svg)

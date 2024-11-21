@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <title>Native events and transition events</title>
-    <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
     <style>
         rect {
             fill: orange;
@@ -17,7 +16,10 @@
 <h3>Native events aand Transition events</h3>
 <p>Clicking interrupts the transition, which is logged with a transition event (see console and code).</p>
 <svg height="300" width="600"></svg>
-<script>
+
+<script type="module">
+    import * as d3 from "https://cdn.skypack.dev/d3@7";
+
 const data = [{x:50, name:"one"}, {x:300, name:"two"}];
 
 d3.select("svg").selectAll("rect")

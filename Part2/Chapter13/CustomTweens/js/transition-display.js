@@ -1,24 +1,24 @@
-function monitorTransition(tr) {
+import * as d3 from "https://cdn.skypack.dev/d3@7";
+
+export function monitorTransition(tr) {
     let start = d3.now();
     const duration = tr.duration();
     const delay = tr.delay();
-
     const timer = d3.interval(function() {
         const elapsed = d3.now() - start;
         if(elapsed < delay) {
             updateProgress(`delay`, elapsed, delay, elapsed/1000, true);
         }
     }, 10);
-
     tr.on("start", () => {timer.stop(); start = d3.now()}) // called when the transition starts
       .tween("", () => t => {
-        const elapsed = d3.now() - start;
-        updateProgress(`steps`, t, 1);
-        updateProgress(`duration`, elapsed, duration, elapsed/1000);
+            const elapsed = d3.now() - start;
+            updateProgress(`steps`, t, 1);
+            updateProgress(`duration`, elapsed, duration, elapsed/1000);
       })
 }
 
-function createTransitionPanel(container, x = 0, y = 0, width = 800) {
+export function createTransitionPanel(container, x = 0, y = 0, width = 800) {
     const panel = container.append("g").attr("transform", `translate(${x}, ${y})`);
     container.style("border", "outset 1px silver").style("background", "#eeeeee")
 

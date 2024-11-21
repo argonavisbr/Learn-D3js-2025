@@ -2,49 +2,26 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
-    <script src="https://d3js.org/d3.v7.min.js"></script>
-    <style>
-        svg {
-            pointer-events: all;
-        }
-        rect {
-            fill: red;
-        }
-        .grid {
-            stroke: #777777;
-        }
-    </style>
+    <title>Basic zoom</title>
+    <link rel="stylesheet" href="css/grid-squares.css">
 </head>
 <body>
-<script>
-    const width = 800, height = 600;
+<p>Double-click to zoom in, shift-double-click to zoom out.</p>
+<script type="module">
+    import * as d3 from "https://cdn.skypack.dev/d3@7";
+    import {makeGrid, drawSquare, svg} from "./js/grid-squares.js";
 
-    const svg = d3.select("body").append("svg")
-            .attr("width", width).attr("height", height);
-
-    const rect = svg.append("rect")
-            .attr("x",300).attr("y",200)
-            .attr("width", 100).attr("height", 100)
-
-    const exes = d3.range(0,width+1,50).map(d => [[d,0],[d,height]]);
-    const wyes = d3.range(0,height+1,50).map(d => [[0,d],[width,d]]);
-
-    const grid = svg.selectAll(".grid")
-            .data(d3.merge([exes, wyes]))
-            .join("path").attr("class","grid")
-            .attr("d", d3.line())
-            .style("stroke-width", d => d[0][0] == width/2 || d[1][1] == height/2 ? 3 : 1);
+    makeGrid();
+    drawSquare(300,200,100,100,"red");
 
     const zoomBehavior = d3.zoom()
             .duration(1000) // duration for double-click zooming
             .on('zoom', function(evt) {
                 console.log(evt.transform.toString())
                 svg.attr("transform", evt.transform);
-            })
+            });
 
     svg.call(zoomBehavior);
-
 </script>
 
 </body>

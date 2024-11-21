@@ -3,41 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <title>Average monthly temperature in selected cities</title>
-    <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
-    <script src="../js/chart-utils.js"></script>
     <link rel="stylesheet" href="../css/chart-utils.css">
-    <style>
-        path.steps {
-            stroke-width: 3px;
-            fill: none;
-            opacity: .75;
-        }
-        h1, p, text {
-            font-family: sans-serif;
-        }
-        p {font-size: 10pt}
-        h1 {font-size: 16pt}
-        text.city, text.anim {
-            font-size: 11px;
-            font-weight: bold;
-            text-anchor: middle;
-            alignment-baseline: hanging;
-            pointer-events: none;
-        }
-        .chart line, .chart path {
-            stroke: darkslategray;
-            opacity: .5;
-            stroke-width: 1px;
-        }
-        .tick text {
-            text-transform: capitalize;
-        }
-    </style>
+    <link rel="stylesheet" href="css/temperature.css">
 </head>
 <body>
 <h1>Average monthly temperature (ºC) in selected cities</h1>
-<script src="js/line-point-plot.js"></script>
-<script>
+<script type="module">
+    import * as d3 from "https://cdn.skypack.dev/d3@7";
+    import {plotCartesian} from "./js/line-point-plot.js";
+
   // Temperature data (Source: Wikipedia)
   const file = "../data/temperatures.csv";
 

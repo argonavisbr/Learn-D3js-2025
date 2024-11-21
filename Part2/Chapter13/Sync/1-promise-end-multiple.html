@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Using transition.end()</title>
+    <style>
+        svg {
+            border: 1px solid black;
+        }
+        path {
+            stroke-width: 3;
+        }
+    </style>
+</head>
+<body>
+<h1>Using transition.end() with multiple transitions</h1>
+<div></div>
+<script type="module">
+    import * as d3 from "https://cdn.skypack.dev/d3@7";
+
+    const dim = { width: 800, height: 300 };
+    const format = d3.format(",d");
+
+    const svg = d3.select("body")
+                  .append("svg")
+                  .attr("width", dim.width)
+                  .attr("height", dim.height);
+
+    const positions = [150, 300, 450, 600];
+    const colors = ["red", "green", "blue", "purple"];
+    const data = positions.map((d, i) => ({x: d, color: colors[i]}));
+
+    const start = d3.now();
+    const p1 = svg.selectAll("circle")
+                  .data(data)
+                    .join("circle")
+                      .attr("r", 50)
+                      .attr("cx", d => d.x)
+                      .attr("cy", -dim.height/2)
+                      .style("fill", d => d.color)
+                      .transition("a")
+                        .duration(1000)
+                        .delay((d,i) => i * 500)
+                        .attr("cy", dim.height/2)
+                        .on("end", (d,i) => { // end of each movetransition
+                            console.log(`on.end: Move transition ${i+1} ended at ${format(d3.now()-start)} ms`);
+                        })
+                        .end() // end of all move transitions
+                           .then(() => console.log(`end.resolve: ALL move transitions ended at ${format(d3.now()-start)} ms`));
+
+    const moreColors = ["orange", "yellow", "pink", "brown"];
+
+    const p2 = svg.selectAll("circle")
+                  .transition("b")
+                    .duration(1000)
+                    .delay((d,i) => i * 500 + 3000)
+                    .style("fill", (d,i) => moreColors[i])
+                     .on("end", (d,i) => { // end of each color transition
+                         console.log(`on.end: Color transition ${i+1} ended at ${format(d3.now()-start)} ms`);
+                     })
+                     .end() // end of all color transitions
+                       .then(() => console.log(`end.resolve: ALL color transitions ended at ${format(d3.now()-start)} ms`));
+
+    // Running a third transition when the first two are done
+    Promise.all([p1, p2])
+        .then(() => console.log(`Promise.all.resolve: Move AND color transitions ended at ${format(d3.now()-start)} ms`))
+        .then(function() {
+            svg.selectAll("circle")
+                .transition("c")
+                  .duration(1000)
+                  .delay((d,i) => i * 500 + 500)
+                  .attr("r", 10)
+                  .on("end", (d,i) => { // end of each shrink transition
+                      console.log(`on.end: Shrink transition ${i+1} ended at ${format(d3.now()-start)} ms`);
+                  })
+                  .end() // end of all shrink transitions
+                    .then(() => console.log(`end.resolve: ALL shrink transitions ended at ${format(d3.now()-start)} ms`));
+        })
+        .catch(() => console.log(`Promise.all.reject: Transition interrupted at ${format(d3.now()-start)} ms`));
+
+</script>
+</body>
+</html>

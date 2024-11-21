@@ -7,7 +7,6 @@
         .arc {
             stroke: white;
             stroke-width: 5;
-            fill-opacity: .9;
         }
     </style>
 </head>
@@ -15,8 +14,11 @@
 <script type="module">
     import * as d3 from "https://cdn.skypack.dev/d3@7";
 
-    const width  = 800;
-    const height = 400;
+    const dim = {width: 800, height: 400};
+
+    const svg = d3.select("body").append("svg")
+                                 .attr("height", dim.height)
+                                 .attr("width", dim.width);
 
     const arc = d3.arc()
                   .innerRadius(40)
@@ -27,18 +29,18 @@
         {startAngle: Math.PI * 90/180,  endAngle: Math.PI * 240/180},
         {startAngle: Math.PI * 240/180, endAngle: Math.PI * 2}
     ];
-    const slices = arcData.map(d => arc(d));
+    const data = slices.map(d => arc(d));
 
-    const colorScale = d3.scaleOrdinal(d3.schemeCategory10);
+    const color = d3.scaleOrdinal(d3.schemeCategory10);
 
-    const svg = d3.select("body").append("svg").attr("height",400).attr("width",width);
+    const chart = svg.append("g")
+                     .attr("transform", `translate(${dim.width/2},${dim.height/2})`);
 
-    svg.selectAll("path.arc")
-            .data(slices)
+    chart.selectAll("path.arc")
+         .data(data)
             .join("path").attr("class", "arc")
-            .attr("d", d => d)
-            .style("fill", (d,i) => colorScale(i))
-            .attr("transform", "translate(120,120)");
+              .attr("d", d => d)
+              .style("fill", color);
 
 </script>
 </body>

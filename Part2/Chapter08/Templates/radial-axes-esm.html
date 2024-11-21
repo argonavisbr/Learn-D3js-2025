@@ -51,7 +51,7 @@
 
 
     // Radial line function
-    const line = d3.radialLine()
+    const line = d3.lineRadial()
                    .angle(d => scaleAngle(d[0]))
                    .radius(d => scaleRadius(d[1]));
 

@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <title>Crossfade count forever</title>
-    <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
     <style>
         h1 {
             position: absolute;
@@ -14,7 +13,8 @@
 </head>
 <body>
 <h1></h1>
-<script>
+<script type="module">
+    import * as d3 from "https://cdn.skypack.dev/d3@7";
 
     const numbers = d3.range(10);
     let i = 0;

@@ -152,7 +152,8 @@
         const entries = body.select("#bar-chart")
                             .selectAll(".entry")
                               .data(app.data)
-                                .transition().duration(1000).delay((d,i) => i*50); // Add transition
+                                .transition().duration(1000)
+                                  .delay((d,i) => i*50); // Add transition
 
         entries.select(".bar")
                .style("fill", d => d.color) // needs update, because the order changed

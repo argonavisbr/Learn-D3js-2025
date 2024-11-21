@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Zoom for selected elements</title>
+    <link rel="stylesheet" href="css/grid-squares.css">
+</head>
+<body>
+<p>Double-click to zoom in, shift-double-click to zoom out.</p>
+<form>
+        <label for=".square">Zoom square</label>
+        <input type="radio" id=".square" name="zoom" value="zoom" checked>
+        <label for=".grid">Zoom grid</label>
+        <input type="radio" id=".grid" name="zoom" value="zoom" checked>
+        <label for="svg">Zoom SVG</label>
+        <input type="radio" id="svg" name="zoom" value="zoom" checked>
+</form>
+<p></p>
+<script type="module">
+    import * as d3 from "https://cdn.skypack.dev/d3@7";
+    import {makeGrid, drawSquare, svg} from "./js/grid-squares.js";
+
+    makeGrid();
+    drawSquare(300,200,100,100,"red");
+
+    let option = d3.select("input[name='zoom']:checked").attr("id");
+    let subject = d3.selectAll(`${option}`);
+
+    d3.selectAll("input[name='zoom']")
+        .on("change", function() {
+            option = d3.select("input[name='zoom']:checked").attr("id");
+            subject = d3.selectAll(`${option}`);
+        });
+
+    const zoomBehavior = d3.zoom()
+            .duration(1000) // duration for double-click zooming
+            .on('zoom', function(evt) {
+                console.log(evt.transform.toString())
+                //d3.select(".square").attr("transform", evt.transform);
+                //d3.selectAll(".grid").attr("transform", evt.transform);
+                subject.attr("transform", evt.transform);
+            })
+
+    svg.call(zoomBehavior);
+
+</script>
+
+</body>
+</html>

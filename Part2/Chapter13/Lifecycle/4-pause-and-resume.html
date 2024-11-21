@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <title>Using transition.end() and pause/resume events</title>
-    <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
     <style>
         svg {
             border: 1px solid black;
@@ -16,7 +15,8 @@
 <body>
 <h1>Using transition.end() and pause/resume events</h1>
 <div></div>
-<script>
+<script type="module">
+    import * as d3 from "https://cdn.skypack.dev/d3@7";
 
     const dim = { width: 800, height: 300 };
     const format = d3.format(",d");

@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <title>Attribute tweening</title>
-    <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
     <style>
         circle {
             fill: red;
@@ -14,15 +13,16 @@
     </style>
 </head>
 <body>
-<script src="js/transition-display.js"></script>
-<script>
+<script type="module">
+    import * as d3 from "https://cdn.skypack.dev/d3@7";
+    import {createTransitionPanel, monitorTransition} from "./js/transition-display.js";
+
     const svg1 = d3.select("body")
         .append("svg")
         .attr("width", 800)
         .attr("height", 100);
     createTransitionPanel(svg1);
-</script>
-<script>
+
  // This script will tween a circle's radius from 30 to 100
  const svg = d3.select("body").append("svg").attr("class", "data").attr("width", 800).attr("height", 600);
  const t = svg.append("circle")

@@ -49,8 +49,11 @@
         .rScale(scale.radius)
         .angularData(months.map(d => d+1))();
 
+    d3.lineRadial();
+    d3.lineRadial();
+
     // Radial line function
-    const area = d3.radialArea()
+    const area = d3.areaRadial()
                    .angle(d => scale.angle(d[0]))
                    .outerRadius(d => scale.radius(d[1]));
 
@@ -77,6 +80,8 @@
                   .attr("cy", d => d3.pointRadial(scale.angle(d[0]), scale.radius(d[1]))[1])
                   .attr("r", 4)
                   .style("fill", "red");
+
+    window.d3 = d3;
 
 </script>
 </body>

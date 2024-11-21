@@ -21,7 +21,10 @@
         x: d3.scaleLinear().range([dim.margin, dim.width - dim.margin]),
         y: d3.scaleLinear().range([dim.height - dim.margin, dim.margin])
     }
-    const svg = d3.select("body").append("svg").attr("height", dim.height).attr("width", dim.width);
+    const container = d3.select("body")
+                        .append("svg")
+                        .attr("height", dim.height)
+                        .attr("width", dim.width);
 
 
 
@@ -54,18 +57,18 @@
 
 
     // Bind the data array to a selection of <path> elements. Each <path> will receive a data series.
-    svg.selectAll("path.dataset")
+    container.selectAll("path.dataset")
        .data(datasets)
          .join("path")
            .attr("class", "dataset")
            .attr("d", line)
            .style("stroke", colorScale);
 
-    // Draw the axes (we are using a utility function from cartesian-chart-utils.js)
+    // Draw the axes (we are using a utility function from chart-utils.js)
     utils.cartesianAxes()
-        .container(svg)
-        .xScale(scale.x)
-        .yScale(scale.y)()
+         .container(container)
+         .xScale(scale.x)
+         .yScale(scale.y)()
 
 
 </script>

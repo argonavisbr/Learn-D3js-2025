@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>GDP pie chart</title>
+    <link rel="stylesheet" href="../../css/chart-utils.css">
+    <style>
+        h1, p {
+            font-family: sans-serif;
+            text-align: center;
+            width: 750px;
+        }
+        h1 {
+            font-size: 16pt;
+        }
+        p {
+            font-size: 10px;
+        }
+        text.label {
+            font-family: sans-serif;
+            font-size: 11px;
+        }
+
+        svg {border: 1px solid #ccc;}
+    </style>
+</head>
+<body>
+<h1>GDP share (US$) of richest countries in 2018</h1>
+<p>Source: World Bank</p>
+<script type="module">
+    import * as d3 from 'https://cdn.skypack.dev/d3@7';
+    import * as utils from '../../js/chart-utils.js';
+
+    const dim = {width: 800, height: 500, margin: 100};
+    const data = {};
+    const app = {
+        limit: 10,
+        pie: d3.pie()
+            .value(d => d.gdp)
+            .sort((a,b) => d3.ascending(a.country, b.country))
+            .sortValues(d3.descending) // this has precedence over sort
+            .startAngle(-Math.PI/2)
+            .endAngle(Math.PI/2),
+        arc: d3.arc()               // Configuration for all slices
+            .innerRadius(50)
+            .outerRadius(dim.width/2 - dim.margin)
+            .padAngle(.5)
+            .padRadius(10)
+    }
+
+    // A simple color scale, for 10 or 20 different coutries + 1 - last color is gray (rest of the world)
+    app.color= d3.scaleOrdinal(d3.schemeTableau10.concat("#777"));
+
+    const file = "../../data/gdp-world-bank-2022.csv";
+
+    d3.select("#limit").text(app.limit); // update the title of the page
+
+    // The SVG container
+    const svg = d3.select("body").append("svg")
+        .attr("width", dim.width)
+        .attr("height",dim.height);
+    // The chart container, placed in the center
+    const chart = svg.append("g")
+        .attr("class", "pie")
+        .attr("transform", `translate(${[dim.width/2, dim.height]})`);
+
+    load(file).then(draw);
+
+    async function load(file) {
+        // Parse the file, pre-process each row to include only the data we need (2018)
+        const csv = await d3.csv(file, row => ({country: row['Country'], gdp: +row['2018']}));
+        data.countries = prepare(csv, app.limit); // save list of limit countries + sum of the rest
+    }
+
+    /**
+     * Returns a selection, based on app.limit.
+     * @param data
+     * @param limit
+     * @returns {*}
+     */
+    function prepare(data, limit) {
+        // Get first limit countries
+        const selection = data.sort((a,b) => d3.descending(a.gdp, b.gdp))
+            .slice(0, limit);
+        // Create a new value for the rest of the world
+        const rest = data.filter(d => !selection.includes(d));
+        selection.push({country: 'Rest of the world', gdp: d3.sum(rest, d => d.gdp)});
+        return selection;
+    }
+
+    function draw() {
+        // Bind the data the set of slices
+        const slices = chart.selectAll("g.slice")
+            .data( app.pie(data.countries) )
+            .join("g")
+            .attr("class", "slice");
+        // Append a path with the rendered slice
+        slices.append("path")
+            .attr("d", app.arc)
+            .attr("fill", app.color);
+
+        // Alternative - Use labels on slices (remove if using legends):
+        utils.pieLabels()
+            .container(slices.filter(d => d.endAngle - d.startAngle > 0.08)) // Don't display in small slices
+            .arc(app.arc)
+            .property('gdp')
+            .radius(1.47)
+            .direction(utils.direction.RADIAL)
+            .format(d => d3.format(",.3s")(d).replace('G','B'))();
+
+        utils.pieLabels()
+            .container(slices.filter(d => d.endAngle - d.startAngle > 0.03)) // Don't display in small slices
+            .arc(app.arc)
+            .property('country')
+            .radius(1.75)
+            .direction(utils.direction.RADIAL)();
+
+        // Alternative - Use legends (remove if using labels on slices):
+        const legend = svg.append("g")
+            .attr("transform", `translate(${[dim.width-120,30]})`);
+
+        utils.legend()
+            .container(legend)
+            .color(app.color)
+            .data(data.countries.map(d => d.country))();
+    }
+
+</script>
+
+</body>
+</html>

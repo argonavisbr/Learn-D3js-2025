@@ -28,7 +28,11 @@ __`Symbol/`__
 
 Description.
 
-__`StepByStep/`__
+__`StepByStep1/`__
+
+Description.
+
+__`StepByStep2/`__
 
 Description.
 
@@ -51,7 +55,5 @@ Description.
 __`Exercises/`__
 
 Description.
-
-Resources used by examples and exercises in the other folders (they are loaded using relative URLs).
 
 

@@ -3,8 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <title>An animated multi-series line chart</title>
-    <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
-    <script src="../js/chart-utils.js"></script>
     <link rel="stylesheet" href="../css/chart-utils.css">
     <style>
         .dataset {
@@ -14,7 +12,10 @@
     </style>
 </head>
 <body>
-<script>
+<script type="module">
+    import * as d3 from "https://cdn.skypack.dev/d3@7";
+    import * as utils from "../js/chart-utils.js";
+
     const width  = 800;
     const height = 400;
     const margin = 50;
@@ -68,7 +69,7 @@
               .style("stroke-dashoffset", 0)
 
     // Draw the axes (we are using a utility function from cartesian-chart-utils.js)
-    pkt.cartesianAxes()
+    utils.cartesianAxes()
         .container(svg)
         .xScale(scaleX)
         .yScale(scaleY)()

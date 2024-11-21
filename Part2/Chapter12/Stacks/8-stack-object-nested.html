@@ -6,14 +6,16 @@
     <link rel="stylesheet" href="../css/chart-utils.css">
 </head>
 <body>
-<p>See results in JavaScript console</p>
+<p>See results in JavaScript console.</p>
+<p>You can use the following objects in the console prompt: <code>d3</code>, <code>data6</code>, <code>flat</code>, <code>stack</code>, <code>keys</code>, <code>stackedData</code>.</p>
+
 <script type="module">
     import * as d3 from 'https://cdn.skypack.dev/d3@7';
     import {drawBarChart, drawAreaChart, svg, dim} from './js/stack-examples.js';
 
     // If your data values are nested in arrays or objects, it's best to transform your data.
     // Flattening the data array so that the keys are top-level properties in each object is a good approach.
-    const data4 = [
+    const data6 = [
         {day: "Monday",
          series: [{type: 'a', val: 213},
                   {type: 'b', val: 100},
@@ -32,11 +34,11 @@
     ];
 
     // Get the keys
-    const keys = data4[0].series.map(k => k.type);
+    const keys = data6[0].series.map(k => k.type);
     console.log('keys', keys);
 
     // Flatten and widen the data
-    const flat = data4.map(obj => {
+    const flat = data6.map(obj => {
         obj.series.forEach(s => obj[s.type] = s.val)
         delete obj.series;
         return obj;
@@ -68,6 +70,15 @@
     drawBarChart(g1, stackedData, keys, flat.map(d => d.day));
     const g2 = svg.append("g").attr("transform", `translate(${dim.width/2}, 0)`);
     drawAreaChart(g2, stackedData, keys, flat.map(d => d.day));
+
+
+    // Bypass to use local constants in the console
+    window.d3 = d3;
+    window.data6 = data6;
+    window.flat = flat;
+    window.stackedData = stackedData;
+    window.keys = keys;
+    window.stack = stack;
 
 </script>
 </body>

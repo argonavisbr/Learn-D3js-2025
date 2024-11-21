@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Example dragging with Canvas</title>
+    <style>
+        canvas {
+            border: 1px solid black;
+        }
+    </style>
+</head>
+<body>
+<p>Drag the squares around the canvas.</p>
+<script type="module">
+    import * as d3 from "https://cdn.skypack.dev/d3@7";
+
+    const dim = {w: 800, h: 800};
+    const canvas = d3.select("body").append("canvas")
+                     .attr("width", dim.w)
+                     .attr("height", dim.h)
+                     .style("width", `${dim.w}px`)
+                     .style("height", `${dim.h}px`);
+
+    const ctx = canvas.node().getctx("2d");
+
+    const colors = [['#e41a1c','#377eb8','#4daf4a'],
+                    ['#984ea3','#ff7f00','#ffff33'],
+                    ['#a65628','#f781bf','#999999']];
+    const data = colors.map((p,i) => p.map((q,j) => ({color: q, x: i, y: j}) )).flat();
+    const side = 96; // side of the square
+    const scale = d3.scaleLinear().range([2,dim.w]).domain([1,9]);
+
+    // grid
+    const exes = d3.range(0,dim.w+1,50).map(d => [[d,0],[d,dim.h]]);
+    const wyes = d3.range(0,dim.h+1,50).map(d => [[0,d],[dim.w,d]]);
+    const line = d3.line().ctx(ctx);
+
+    function drawGrid() {
+        ctx.strokeStyle = "#ccc";
+        for (const d of d3.merge([exes, wyes])) {
+            ctx.beginPath();
+            ctx.lineWidth = d[0][0] === dim.w/2 || d[1][1] === dim.h/2 ? 3 : 1;
+            line(d);
+            ctx.stroke();
+        }
+    }
+
+    const drag = d3.drag()
+                   .subject(getSubject)
+                   .on("start", () => canvas.style("cursor", "grabbing"))
+                   .on("drag", function(e) {
+                        e.subject.x = scale.invert(e.dx + scale(e.subject.x));
+                        e.subject.y = scale.invert(e.dy + scale(e.subject.y));
+                        render();
+                   })
+                   .on("end", () => canvas.style("cursor", null));
+
+    // Get the subject of the drag event (the square, if the user clicks on it).
+    function getSubject(e) {
+        const [x, y] = d3.pointer(e);
+        const i = data.findIndex(d => {
+            const x0 = 200 + scale(d.x);
+            const y0 = 200 + scale(d.y);
+            return (x >= x0)
+                && (x <= x0 + side)
+                && (y >= y0)
+                && (y <= y0 + side);
+        });
+        return i >= 0 ? data[i] : null;
+    }
+
+    // Whenever the circles move, redraw the canvas.
+    function render() {
+        ctx.clearRect(0, 0, dim.w, dim.h);
+        drawGrid();
+        for (const d of data) {
+            const x = 200 + scale(d.x);
+            const y = 200 + scale(d.y);
+            ctx.beginPath();
+            ctx.moveTo(x, y);
+            ctx.rect(x, y, side, side);
+            ctx.fillStyle = d.color;
+            ctx.fill();
+        }
+        canvas.node().dispatchEvent(new CustomEvent("input"));
+    }
+
+    // Bind the drag behavior for interaction.
+    canvas.call(drag);
+
+    // Render the initial canvas.
+    render();
+
+</script>
+</body>
+</html>

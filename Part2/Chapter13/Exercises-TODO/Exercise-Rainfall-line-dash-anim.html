@@ -3,42 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <title>Average rainfall in selected cities</title>
-    <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
-    <script src="../js/chart-utils.js"></script>
     <link rel="stylesheet" href="../css/chart-utils.css">
+    <link rel="stylesheet" href="css/rainfall.css">
     <style>
-        path.months {
-            stroke-width: 3px;
-            fill: none;
-            opacity: .75;
-        }
-        h1, p, text {
-            font-family: sans-serif;
-        }
-        p {font-size: 10pt}
-        h1 {font-size: 16pt}
-        .chart path {
-            fill: none;
-            opacity: .5;
-            stroke-width: 1px;
-        }
-        text.label {
-            text-transform: capitalize;
-        }
-        .legend text {
-            font-size: 11px;
-            text-anchor: start;
-            pointer-events: none;
-        }
-        path {
-            fill: none;
-        }
-        .draw {
-            stroke-dasharray: 1500;
-            stroke-dashoffset: 1500;
-            animation: move 10s ease-out;
-        }
-
         @keyframes move {
             100% {
                 stroke-dashoffset: 0;
@@ -48,7 +15,10 @@
 </head>
 <body>
 <h1>Average monthly rainfall (mm) in selected cities</h1>
-<script>
+<script type="module">
+    import * as d3 from "https://cdn.skypack.dev/d3@7";
+    import * as utils from "../js/chart-utils.js";
+
   // Rainfall data (Source: Wikipedia)
   const file = "../data/rainfall.csv";
 
@@ -96,7 +66,7 @@
                            .attr("transform", `translate(${width/2},${height/2})`);
 
       // Draw radial axes
-      const axis = pkt.radialAxes().container(container)
+      const axis = utils.radialAxes().container(container)
                                    .aScale(scaleAngle)
                                    .rScale(scaleRadius)
                                    .angularData(months)  // text is formatted in CSS (text.label)
@@ -106,7 +76,7 @@
 
       axis.tickValues([0, 5, 10, 50, 100, 500, 1000, 3000]);
       d3.select("g.axis").call(axis)
-      pkt.updateTextLabels();
+      utils.updateTextLabels();
 
       // Render rain lines
       container
@@ -137,7 +107,7 @@
       // Display a legend
       const legend = svg.append("g")
                         .attr("transform", `translate(${[width, margin]})`);
-      pkt.legend()
+      utils.legend()
           .container(legend)
           .data(data.map(d => d[0]))
           .color(color)();

@@ -1,5 +1,5 @@
-import {load} from './init.js';
-import {draw} from './render.js';
+import {load} from './data.js';
+import {draw} from './view.js';
 
 await load();
 draw();

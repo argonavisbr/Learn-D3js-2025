@@ -1,6 +1,10 @@
+import * as d3 from "https://cdn.skypack.dev/d3@7";
+
 const maxValue = 5000;
 const scale = d3.scaleLinear().domain([0, maxValue]);
 const fmt = d3.format(".0f");
+
+export{scale, maxValue, drawBar, display, fmt};
 
 function drawBar(container, x, w = 2, color1 = 'red', color2 = 'black') {
     container.append("rect")
@@ -23,7 +27,7 @@ function display(container, dim, initialtext = "") {
 
     const axis = d3.axisBottom(scale)
                    .ticks(10, ".0f");
-    svg.append("g")
+    container.append("g")
         .attr("transform", `translate(0,150)`)
         .call(axis);
 }

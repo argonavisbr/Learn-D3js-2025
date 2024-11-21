@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <title>Interrupted simultaneous transitions</title>
-    <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
     <style>
         circle {
             fill: red;
@@ -11,7 +10,8 @@
     </style>
 </head>
 <body>
-<script>
+<script type="module">
+    import * as d3 from "https://cdn.skypack.dev/d3@7";
 
     // 1) Simultaneous transitions
     // The previous ones are interrupted by the ones that follow:

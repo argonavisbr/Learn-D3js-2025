@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Simple stacked bar chart</title>
+    <link rel="stylesheet" href="../css/chart-utils.css">
+    <style>
+        .area, .layer, .legend path {opacity: .7}
+    </style>
+</head>
+<body>
+<script type="module">
+    import * as d3 from 'https://cdn.skypack.dev/d3@7';
+    import * as utils from "../js/chart-utils.js";
+
+    // 1) The data
+    const data2 = [
+        {day: "Monday", a: 213, b: 100, c: 200, d: 300},
+        {day: "Friday", a: 121, b: 150, c: 250, d: 350},
+        {day: "Sunday", a: 637, b: 10, c: 20, d: 30}
+    ];
+
+    const keys = Object.keys(data2[0]).filter(k => k !== 'day'); // ['a', 'b', 'c', 'd'];
+    const stack = d3.stack().keys(keys);
+    const stackedData = stack(data2);
+
+    // 2) Dimensions, scales, colors
+    const dim = {
+        height: 400, width: 500,
+        margin: {top: 50, right: 100, bottom: 50, left: 50}
+    };
+    const observations = data2.map(d => d.day);
+    const scale = {
+        x: d3.scaleBand()  // configure this scale depending on your chart type
+             .range([dim.margin.left, dim.width - dim.margin.right])
+             .domain(observations)
+             .padding(0.2),
+        y: d3.scaleLinear()
+             .range([dim.height - dim.margin.bottom, dim.margin.top])
+             .domain([0, d3.max(stackedData.flat(2))]),
+    };
+
+    const color = d3.scaleOrdinal(d3.schemeCategory10)
+                    .domain(keys);
+
+    const container = d3.select("body").append("svg")
+                                       .attr("width", dim.width)
+                                       .attr("height", dim.height);
+
+    // 3) Draw axes
+    utils.cartesianAxes()
+         .container(container)
+         .xScale(scale.x)
+         .yScale(scale.y)
+         .showHorizontalGrid(true)
+         .xLabel('Observations')
+         .yLabel('Values')();
+
+    // Add legend at right margin
+    const legend =
+        container.append("g").attr("class", "legend")
+                 .attr("transform", `translate(${[dim.width - dim.margin.right + 10,
+                                                  dim.height/2 - dim.margin.bottom]})`);
+
+    utils.legend()
+         .container(legend)
+         .data(keys)
+         .color(color)();
+
+    // 4) Render the chart
+    // Must configure scale.x (see above)
+    // For bars, use d3.bandScale()
+    // For areas, use d3.scaleTime() or d3.scalePoint()
+
+</script>
+</body>
+</html>

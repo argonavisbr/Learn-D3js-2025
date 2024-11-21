@@ -1,0 +1,31 @@
+path.months {
+    stroke-width: 3px;
+    fill: none;
+    opacity: .75;
+}
+h1, p, text {
+    font-family: sans-serif;
+}
+p {font-size: 10pt}
+h1 {font-size: 16pt}
+.chart path {
+    fill: none;
+    opacity: .5;
+    stroke-width: 1px;
+}
+text.label {
+    text-transform: capitalize;
+}
+.legend text {
+    font-size: 11px;
+    text-anchor: start;
+    pointer-events: none;
+}
+path {
+    fill: none;
+}
+.draw {
+    stroke-dasharray: 1500;
+    stroke-dashoffset: 1500;
+    animation: move 10s ease-out;
+}

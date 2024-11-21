@@ -69,6 +69,12 @@
     // A helper function to obtain the angle and point at r times the centroid's radius for each slice
     const pt = (d,r,a=0) => [angle(d)+a, cx(d) * r, cy(d) * r];
 
+    function pt2(d,r,a=0) {
+        return [angle(d)+a,
+                cx(d) * r,
+                cy(d) * r];
+    }
+
     // Draw a line from the centroid to the edge of the slice
     g.append('line')
             .attr("x1", d => pt(d, 1)[1])

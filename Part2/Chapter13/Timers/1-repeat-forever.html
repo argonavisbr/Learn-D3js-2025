@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <title>Execute periodic interval after a delay, run forever</title>
-    <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
 </head>
 <body>
 <h1>d3.interval(): wait for 2 seconds and then run every 100 ms forever...</h1>
 <p>See results in JavaScript console</p>
-<script>
+<script type="module">
+    import * as d3 from "https://cdn.skypack.dev/d3@7";
 
     // Start after 2000 ms (timeout) and run every 100 ms (interval)
     d3.timeout(() => d3.interval(e => console.log(e), 100), 2000);

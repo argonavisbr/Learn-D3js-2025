@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <title>Custom tweens: multiple tweens</title>
-    <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
     <style>
         circle {
             fill: red;
@@ -14,16 +13,17 @@
     </style>
 </head>
 <body>
-<script src="js/transition-display.js"></script>
-<script>
+<script type="module">
+    import * as d3 from "https://cdn.skypack.dev/d3@7";
+    import {createTransitionPanel, monitorTransition} from "./js/transition-display.js";
+
     // This script is used to display a panel that shows the current state of the transition
     const svg1 = d3.select("body")
         .append("svg")
         .attr("width", 800)
         .attr("height", 100);
     createTransitionPanel(svg1);
-</script>
-<script>
+
     // This is the main script that creates a transition with a custom tween
     let count = 0;
     const delay = 1000;

@@ -30,7 +30,7 @@
     // Sample data
     const samples = d3.range(0, 12).map(d => Math.floor(Math.random() * 80) + 20);
     const angles  = d3.range(0, samples.length, 1);
-    const data = angles.map((d,i) => [d, samples[i]]);
+    const data = angles.map((a,i) => [a, samples[i]]);
 
     // A container for the chart, moving the origin to the center of the SVG viewport
     const container = svg.append("g")

@@ -4,23 +4,35 @@ Files and exercises for chapter 12.
 
 ## 1) Description of each subfolder in this folder
 
-__`TODO/`__
+__`Arcs/`__
 
 Description.
 
-__`TODO/`__
+__`Pies/`__
 
 Description.
 
-__`TODO/`__
+__`Stacks/`__
 
 Description.
 
-__`TODO/`__
+__`Canvas/`__
 
 Description.
 
-__`StepByStep/`__
+__`StepByStep1/`__
+
+Description.
+
+__`StepByStep2/`__
+
+Description.
+
+__`Examples/`__
+
+Description.
+
+__`Exercises/`__
 
 Description.
 
@@ -28,6 +40,6 @@ __`data/`__
 
 Description.
 
-Resources used by examples and exercises in the other folders (they are loaded using relative URLs).
+__`js/`__
 
-
+Description.

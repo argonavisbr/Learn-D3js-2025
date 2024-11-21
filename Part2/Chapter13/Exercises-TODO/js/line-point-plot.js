@@ -1,3 +1,6 @@
+import * as d3 from "https://cdn.skypack.dev/d3@7";
+import * as utils from "../../js/chart-utils.js";
+
 /**
  * Plots cartesian line chart with points in x-axis
  * @param container
@@ -7,7 +10,7 @@
  * @param labels
  * @param animLabels If true animates labels, otherwise adds a legend
  */
-function plotCartesian(container, dim, data, points, labels, animLabels = false) {
+export function plotCartesian(container, dim, data, points, labels, animLabels = false) {
     const scaleX = d3.scalePoint()
         .range([dim.margin.left, dim.width - dim.margin.right])
         .domain(points);
@@ -39,7 +42,7 @@ function plotCartesian(container, dim, data, points, labels, animLabels = false)
         .attr("d", line)
         .style("stroke", (d,i) => color(i));
 
-    pkt.cartesianAxes()
+    utils.cartesianAxes()
         .container(container)
         .xScale(scaleX)
         .yScale(scaleY)
@@ -53,7 +56,7 @@ function plotCartesian(container, dim, data, points, labels, animLabels = false)
     if (animLabels) {
         animateLabels(container, data, color);
     } else {
-        pkt.legend()
+        utils.legend()
             .container(leg)
             .data(data.map(d => d[0]))
             .color(color)();

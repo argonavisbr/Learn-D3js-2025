@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Draggable bar heights</title>
+    <style>
+        text {font-family: sans-serif}
+    </style>
+</head>
+<body>
+<p>Drag the bars to change their height. Press reset to return to previous data.</p>
+<script type="module">
+    import * as d3 from "https://cdn.skypack.dev/d3@7";
+
+    const rawData = [50,20,75,30];
+    const data = rawData.map((d,i) => ({id: i, value: d})); // so that bars can bve identified
+    const savedData = data.map(d => ({...d})); // deep copy
+
+    const dim = { width: 800, height: 400, margin: 50 };
+    const scale = {
+        x: d3.scaleBand().domain(d3.range(data.length)).range([dim.margin, dim.width - dim.margin]).padding(0.1),
+        y: d3.scaleLinear().domain([0,d3.max(data, d => d.value)]).range([dim.height - dim.margin, dim.margin])
+    }
+    const svg = d3.select("body").append("svg").attr("height", dim.height).attr("width", dim.width);
+    const color = d3.scaleOrdinal(d3.schemeTableau10).domain(d3.range(data.length));
+
+    function resizeBar(bar, y) {
+        bar.attr("y", scale.y(y))
+           .attr("height", scale.y(0) - scale.y(y));
+    }
+    function moveLabel(text, y) {
+        text.attr("y", scale.y(y) - 5)
+            .text(d3.format('.0d')(y));
+    }
+
+    const drag = d3.drag()
+                   .on("drag", function(e,d) {
+                       const y = scale.y.invert(e.y);
+                       resizeBar(d3.select(this).select("rect"), y);
+                       moveLabel(d3.select(this).select("text"), y);
+                   })
+                   .on("end", function() {
+                       data[d.id].value = y;
+                   });
+
+    const bars = svg.selectAll("g").attr("class", "bar")
+                    .data(data)
+                       .join("g")
+                       .call(drag);
+
+    bars.append("rect")
+        .attr("x", d => scale.x(d.id))
+        .attr("y", d => scale.y(d.value))
+        .attr("width", scale.x.bandwidth())
+        .attr("height", d => scale.y(0) - scale.y(d.value))
+        .attr("fill", color);
+
+    bars.append("text")
+        .attr("x", d => scale.x(d.id) + scale.x.bandwidth() / 2)
+        .attr("y", d => scale.y(d.value) - 5)
+        .attr("text-anchor", "middle")
+        .text(d => d.value);
+
+    d3.select("body").append("button").text("Reset").on("click", reset);
+
+    function reset() {
+        bars.data(savedData)
+        bars.select("rect")
+            .transition().duration(1000)
+            .attr("y", d => scale.y(d.value))
+            .attr("height", d => scale.y(0) - scale.y(d.value));
+        bars.select("text")
+            .transition().duration(1000)
+            .attr("y", d => scale.y(d.value) - 5)
+            .text(d => d.value);
+    }
+
+</script>
+
+</body>
+</html>

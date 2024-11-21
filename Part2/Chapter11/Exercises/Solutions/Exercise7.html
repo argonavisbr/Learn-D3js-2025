@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Exercise 7: Global temperatures 1880 to 2023</title>
+    <title>Exercise 7: Global temperatures 1880 to 2024</title>
     <link rel="stylesheet" href="../../css/chart-utils.css">
     <style>
         path.median, path.months {
@@ -36,7 +36,7 @@
     const svg = d3.select("body").append("svg").attr("height", dim.height).attr("width", dim.width);
 
   // Global temperatures 1880 to 2023 (Source: https://data.giss.nasa.gov/gistemp/)
-  const file = "../../data/GLB.Ts.1880.2023.csv";
+  const file = "../../data/GLB.Ts.1880.2024.csv";
 
   // Load, parse and prepare data
   d3.text(file)

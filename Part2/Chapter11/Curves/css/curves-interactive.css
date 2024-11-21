@@ -1,0 +1,29 @@
+path {
+    fill: none;
+}
+.controls {
+    text-align: center;
+}
+svg {
+    border: solid lightgray;
+}
+div {
+    width: 600px;
+}
+input {
+    margin: 5px 5px;
+    width: 50%;
+}
+#tension {
+    font-size: 10pt;
+    font-family: monospace;
+}
+p, h1 {
+    font-family: sans-serif;
+}
+h1 {
+    font-size: 16pt;
+}
+p {
+    font-size: 10pt;
+}

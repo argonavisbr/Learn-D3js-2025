@@ -1,7 +1,7 @@
 import * as d3 from "https://cdn.jsdelivr.net/npm/d3@7/+esm";
 
 // import the app and dim objects
-import {app, dim} from "./constants.js";
+import {app, dim} from "./common.js";
 
 // VIEW CONFIGURATION (called after each view change)
 

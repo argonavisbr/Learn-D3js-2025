@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <title>JavaScript setTimeout(): run once after a delay and stop</title>
-    <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
     <link rel="stylesheet" href="css/timer-utils.css">
     <style>
         h1 {font-family: sans-serif}
@@ -12,8 +11,11 @@
 <body>
 <h1>Native setTimeout(): print elapsed time and bar after 2s, 3s, and <span id="max"></span>s...</h1>
 <p>Same code as <i>d3-timeout.html</i>, but using native JavaScript <code>setTimeout()</code></p>
-<script src="js/timer-utils.js"></script>
-<script>
+
+<script type="module">
+    import * as d3 from "https://cdn.skypack.dev/d3@7";
+    import {maxValue, fmt, display, drawBar} from "./js/timer-utils.js";
+
     // Configure maxValue and scale in timer-utils.js
 
     const dim = {width: 1100, height: 200, margin: 50}

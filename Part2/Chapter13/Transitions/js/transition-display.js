@@ -1,4 +1,6 @@
-function monitorTransition(tr) {
+import * as d3 from "https://cdn.skypack.dev/d3@7";
+
+export function monitorTransition(tr) {
     let start = d3.now();
     const duration = tr.duration();
     const delay = tr.delay();
@@ -16,7 +18,7 @@ function monitorTransition(tr) {
       })
 }
 
-function createTransitionPanel(container, x = 0, y = 0, width = 800) {
+export function createTransitionPanel(container, x = 0, y = 0, width = 800) {
     const panel = container.append("g").attr("transform", `translate(${x}, ${y})`);
     container.style("border", "outset 1px silver").style("background", "#eeeeee")
 

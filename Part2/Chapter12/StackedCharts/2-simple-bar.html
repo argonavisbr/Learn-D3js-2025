@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Simple stacked bar chart</title>
+    <link rel="stylesheet" href="../css/chart-utils.css">
+    <style>
+        .area, .layer, .legend path {opacity: .7}
+    </style>
+</head>
+<body>
+<script type="module">
+    import * as d3 from 'https://cdn.skypack.dev/d3@7';
+    import * as utils from "../js/chart-utils.js";
+
+    // 1) The data
+    const data2 = [
+        {day: "Monday", a: 213, b: 100, c: 200, d: 300},
+        {day: "Friday", a: 121, b: 150, c: 250, d: 350},
+        {day: "Sunday", a: 637, b: 10, c: 20, d: 30}
+    ];
+
+    const keys = Object.keys(data2[0]).filter(k => k !== 'day'); // ['a', 'b', 'c', 'd'];
+    const stack = d3.stack().keys(keys);
+    const stackedData = stack(data2);
+
+    // 2) Dimensions, scales, colors
+
+    const dim = {
+        height: 400, width: 500,
+        margin: {top: 50, right: 100, bottom: 50, left: 50}
+    };
+    const observations = data2.map(d => d.day);
+    const scale = {
+        x: d3.scaleBand()  // Use a band scale for the x-axis, so that the bars are spaced evenly
+             .range([dim.margin.left, dim.width - dim.margin.right])
+             .domain(observations)
+             .padding(0.2),
+        y: d3.scaleLinear()
+             .range([dim.height - dim.margin.bottom, dim.margin.top])
+             .domain([0, d3.max(stackedData.flat(2))]),
+    };
+
+    const color = d3.scaleOrdinal(d3.schemeCategory10)
+                    .domain([0, keys.length]);
+
+    const container = d3.select("body").append("svg")
+                                       .attr("width", dim.width)
+                                       .attr("height", dim.height);
+
+    // 3) Draw axes
+    utils.cartesianAxes()
+         .container(container)
+         .xScale(scale.x)
+         .yScale(scale.y)
+         .showHorizontalGrid(true)
+         .xLabel('Observations')
+         .yLabel('Values')();
+
+    // Add legend at right margin
+    const legend =
+        container.append("g").attr("class", "legend")
+                 .attr("transform", `translate(${[dim.width - dim.margin.right + 10,
+                                                  dim.height/2 - dim.margin.bottom]})`);
+
+    utils.legend()
+         .container(legend)
+         .data(keys)
+         .color(color)();
+
+    // 3) Render the chart
+    // Using a d3.scaleBand() for scale.x (see above)
+    const layers =
+        container.selectAll("g.layer")    // each group represents a layer
+                 .data(stackedData)
+                     .join("g").attr("class", "layer")
+                     .style("fill", (_,i) => color(i));   // assign a color to each layer by index
+
+    layers.selectAll("rect")
+          .data(d => d)        // each layer is an array of 2 values: [bottom, top] of a bar in the stack
+            .join("rect")
+              .attr("y", d => scale.y(d[1]))    // linear scale: top of bar is the top of the layer
+              .attr("height", d => scale.y(d[0]) - scale.y(d[1])) // linear scale: height of bar is (bottom - top)
+              .attr("x", (d,i) => scale.x(observations[i]))   // band scale: x position of the bar
+              .attr("width", scale.x.bandwidth());          // band scale: width of the bar
+
+</script>
+</body>
+</html>

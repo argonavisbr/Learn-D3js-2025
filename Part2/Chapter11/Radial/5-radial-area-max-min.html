@@ -42,7 +42,7 @@
     const outer = d3.range(0, 12).map(() => d3.randomInt(60,120)());
     const inner = d3.range(0, 12).map(() => d3.randomInt(15,60)());
     const angles  = d3.range(0, outer.length, 1);
-    const data = angles.map((d,i) => [d, outer[i], inner[i]]);
+    const data = angles.map((a,i) => [a, outer[i], inner[i]]);
 
     // A container for the chart, moving the origin to the center of the SVG viewport
     const container = svg.append("g")

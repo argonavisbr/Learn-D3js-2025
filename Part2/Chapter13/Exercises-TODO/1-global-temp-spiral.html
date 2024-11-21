@@ -3,8 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <title>Global temperatures 1880 to 2023 - spiral</title>
-    <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
-    <script src="../js/chart-utils.js"></script>
     <link rel="stylesheet" href="../css/chart-utils.css">
     <style>
         path.months {
@@ -14,9 +12,13 @@
         }
         h1, p, text {
             font-family: sans-serif;
+            color: #ddd;
         }
-        p {font-size: 10pt}
-        h1 {font-size: 16pt}
+        a:link, a:visited {
+            color: #9ab;
+        }
+        p {font-size: 10px}
+        h1 {font-size: 16px}
         text.year {
             font-size: 15px;
             font-weight: bold;
@@ -27,17 +29,35 @@
         .chart {
             pointer-events: none;
         }
-        svg {
-            background-color: #445566;
+        svg, body {
+            background-color: #234;
+        }
+        .radial .domain, .radial circle  {
+            stroke: #567;
+        }
+        .radial text {
+            fill: #abc;
+        }
+        .radial .grid {
+            stroke: #567;
+        }
+        circle {
+            fill: #567;
+        }
+        .radial .grid.zero {
+            stroke: #d66;
         }
     </style>
 </head>
 <body>
-<h1>Global temperatures from 1880 to 2023</h1>
+<h1>Global temperatures from <span id="first-year">1880</span> to <span id="last-year">2023</span></h1>
 <p>Source: <a href="https://data.giss.nasa.gov/gistemp/">NASA Godard Institute for Space Studies</a></p>
-<script>
-  // Global temperatures 1880 to 2023 (Source: https://data.giss.nasa.gov/gistemp/)
-  const file = "../data/GLB.Ts.1880.2023.csv";
+<script type="module">
+    import * as d3 from "https://cdn.skypack.dev/d3@7";
+    import * as utils from "../js/chart-utils.js";
+
+  // Global temperatures 1880 to 2024 (Source: https://data.giss.nasa.gov/gistemp/)
+  const file = "../data/GLB.Ts.1880.2024.csv";
 
   // Load, parse and prepare the data
   d3.csv(file, d3.autoType)
@@ -99,14 +119,8 @@
       const chart = svg.append("g")
                        .attr("transform", `translate(${width/2},${height/2})`);
 
-      // Draw radial axes in chart container
-      pkt.radialAxes().container(chart)
-          .aScale(scaleAngle)
-          .rScale(scaleRadius)
-          .angularData(months)
-          .numTicks(10)
-          .useGrid(true)
-          .backdropOpacity(0.1)();
+      d3.select("#last-year").text(data[data.length-1][0]);
+      d3.select("#first-year").text(data[0][0]);
 
       svg.append("text")
           .attr("class", "yearLabel")
@@ -161,10 +175,12 @@
                 .attr("y", y + 10)
                 .text(d[0]);
 
-           chart.selectAll("g.line path") // make all other lines fainter
+           // make all other lines fainter
+           chart.selectAll("g.line path")
                 .style("opacity", .35);
 
-           selectedLine.style("stroke-width", 5)  // make current line thicker and opaque
+           // make current line thicker and opaque
+           selectedLine.style("stroke-width", 5)
                        .style("opacity", 1);
         })
         .on("mouseout", function() {
@@ -172,9 +188,19 @@
            chart.selectAll("text.year")
                 .remove(); // remove the year label
            chart.selectAll("g.line path")
-                .style("stroke-width", 1.2)
-                .style("opacity", .75); // restore default opacity and stroke-width for all lines
+                .style("stroke-width", null)
+                .style("opacity", null); // restore default opacity and stroke-width for all lines
         });
+
+      // Draw radial axes in chart container
+      utils.radialAxes().container(chart)
+          .aScale(scaleAngle)
+          .rScale(scaleRadius)
+          .angularData(months)
+          .numTicks(10)
+          .useGrid(true)
+          .backdropColor(svg.style("background-color"))
+          .backdropOpacity(0.8)();
   }
 
 </script>

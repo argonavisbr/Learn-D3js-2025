@@ -1,0 +1,15 @@
+path.line {
+    fill: none;
+    stroke-width: 2px
+}
+
+path.area {
+    fill: rgba(70%,95%,95%);
+}
+
+h1, p, text {
+    font-family: sans-serif;
+}
+
+p {font-size: 10pt}
+h1 {font-size: 16pt}

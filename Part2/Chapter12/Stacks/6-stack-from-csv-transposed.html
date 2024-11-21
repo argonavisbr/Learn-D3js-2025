@@ -6,63 +6,74 @@
     <link rel="stylesheet" href="../css/chart-utils.css">
 </head>
 <body>
-<p>See results in JavaScript console</p>
+<p>See results in JavaScript console.</p>
+<p>You can use the following objects in the console prompt: <code>d3</code>, <code>data4</code>, <code>dataTable</code>, <code>flip</code>, <code>objects</code>, <code>stack</code>, <code>keys</code>, <code>stackedData</code>.</p>
+
 <script type="module">
     import * as d3 from 'https://cdn.skypack.dev/d3@7';
     import {drawBarChart, drawAreaChart, svg, dim} from './js/stack-examples.js';
 
     // Loading a test CSV file in wide format
-    d3.text("../data/test-transposed.csv")
-      .then(data6 => {
-          // Load as text and use d3.parseRows() to obtain the data as a matrix
-          const dataTable = d3.csvParseRows(data6, d3.autoType);
+    const data4 = await d3.text("../data/test-transposed.csv");
 
-          // Inspect the data
-          console.log(dataTable);
+    // Load as text and use d3.parseRows() to obtain the data as a matrix
+    const dataTable = d3.csvParseRows(data4, d3.autoType);
 
-          // The data is in wide format, but we need to transpose it
-          const flip = d3.transpose(dataTable);
+    // Inspect the data
+    console.log(dataTable);
 
-          // Inspect the transposed data
-          console.log(flip);
+    // The data is in wide format, but we need to transpose it
+    const flip = d3.transpose(dataTable);
 
-          // Get keys
-          const keys = flip[0].filter(d => d !== "type");
-          console.log(keys);
+    // Inspect the transposed data
+    console.log(flip);
 
-          // Transform into an array of objects
-          const objects = flip.filter((d,i) => i > 0)
-                                 .map(d => Object.fromEntries(d.map((v, i) => [flip[0][i], v])));
+    // Get keys
+    const keys = flip[0].filter(d => d !== "type");
+    console.log(keys);
 
-          // Inspect the data - it's the same format as in the file 3-stack-object-array-wide.html
-          // except that the 'day' property is now 'type'
-          console.log(objects)
+    // Transform into an array of objects
+    const objects = flip.filter((d,i) => i > 0)
+                         .map(d => Object.fromEntries(d.map((v, i) => [flip[0][i], v])));
 
-          // Configure the stack and stack the data
-          const stack = d3.stack()
-                          .keys(keys);
-          const stackedData = stack(objects);
+    // Inspect the data - it's the same format as in the file 3-stack-object-array-wide.html
+    // except that the 'day' property is now 'type'
+    console.log(objects)
 
-          // Inspect the stacked data
-          console.log(JSON.stringify(stackedData));
+    // Configure the stack and stack the data
+    const stack = d3.stack()
+                  .keys(keys);
+    const stackedData = stack(objects);
+
+    // Inspect the stacked data
+    console.log(JSON.stringify(stackedData));
 
 
-          /* Result is a 3x4 array of pairs
-           [
-             [ [  0,213], [  0,121], [  0,637] ],
-             [ [213,313], [121,271], [637,647] ],
-             [ [313,513], [271,521], [647,667] ],
-             [ [513,813], [521,871], [667,697] ]
-           ]
-           */
+    /* Result is a 3x4 array of pairs
+    [
+     [ [  0,213], [  0,121], [  0,637] ],
+     [ [213,313], [121,271], [637,647] ],
+     [ [313,513], [271,521], [647,667] ],
+     [ [513,813], [521,871], [667,697] ]
+    ]
+    */
 
-          // See the results!
-          // Renders bar and area chart with the stack (uses ../js/chart-utils.js and js/stack-examples.js)
-          const g1 = svg.append("g").attr("transform", `translate(0, 0)`);
-          drawBarChart(g1, stackedData, keys, objects.map(d => d.type));
-          const g2 = svg.append("g").attr("transform", `translate(${dim.width/2}, 0)`);
-          drawAreaChart(g2, stackedData, keys, objects.map(d => d.type));
-      });
+    // See the results!
+    // Renders bar and area chart with the stack (uses ../js/chart-utils.js and js/stack-examples.js)
+    const g1 = svg.append("g").attr("transform", `translate(0, 0)`);
+    drawBarChart(g1, stackedData, keys, objects.map(d => d.type));
+    const g2 = svg.append("g").attr("transform", `translate(${dim.width/2}, 0)`);
+    drawAreaChart(g2, stackedData, keys, objects.map(d => d.type));
+
+    // Bypass to use local constants in the console
+    window.d3 = d3;
+    window.data4 = data4;
+    window.dataTable = dataTable;
+    window.flip = flip;
+    window.objects = objects;
+    window.stackedData = stackedData;
+    window.keys = keys;
+    window.stack = stack;
 
 </script>
 </body>

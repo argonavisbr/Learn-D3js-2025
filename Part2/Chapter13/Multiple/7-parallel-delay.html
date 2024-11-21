@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <title>Simultaneous transitions</title>
-    <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
     <style>
         ul {
             list-style-type: none;
@@ -34,7 +33,9 @@
     <li><code>d3.select("ul").transition().delay(6000).duration(0)</code>: <span id="t5">...</span>ms</li>
     <li><code>d3.select("ul").transition().delay(7000).duration(0)</code>: <span id="t6">...</span>ms</li>
 </ul>
-<script>
+<script type="module">
+    import * as d3 from "https://cdn.skypack.dev/d3@7";
+
     const fmt = d3.format("d")
     // Save the start time
     const start =  d3.now();

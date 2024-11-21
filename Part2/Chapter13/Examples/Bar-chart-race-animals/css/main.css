@@ -1,0 +1,69 @@
+text { /* default */
+    font-family: sans-serif;
+    font-size: 10px;
+}
+
+.label {
+    font-variant-numeric: tabular-nums; /* fixed width for digits */
+    alignment-baseline: middle;
+    font-family: "Arial Narrow", sans-serif;
+    text-anchor: start; /* default - changes with textInside variable */
+}
+.name.label { /* names */
+    font-size: 12px;
+    font-weight: bold;
+}
+.value.label { /* values */
+    font-size: 10px;
+    font-weight: normal;
+}
+
+.step.label {
+    alignment-baseline: baseline;
+    font-size:  36px;
+    text-anchor: end;
+}
+
+.bar {
+    fill-opacity: 0.7;
+    fill: white; /* default */
+    stroke: black;
+    stroke-width: .5;
+    stroke-opacity: .3;
+}
+
+/* axes */
+.tick line {
+    stroke: black;
+    stroke-opacity: 0.2;
+    stroke-dasharray: 2 2;
+}
+.tick:first-of-type line {
+    stroke-opacity: .1;
+}
+.tick text {
+    fill: black;
+}
+
+/* page */
+h1 {
+    font-family: sans-serif;
+    font-size: 20px;
+}
+p {
+    font-family: sans-serif;
+    font-size: 14px;
+}
+svg.chart {
+    background: #dfe6df;
+    float: left;
+    margin-right: 20px;
+}
+
+/* legend */
+.legend text {
+    alignment-baseline: baseline;
+}
+.legend path  {
+    fill-opacity: .7;
+}

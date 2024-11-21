@@ -47,7 +47,7 @@
         .angularData(months.map(d => d+1))();
 
     // Radial line function
-    const line = d3.radialLine()
+    const line = d3.lineRadial()
                    .angle(d => scale.angle(d[0]))
                    .radius(d => scale.radius(d[1]));
 

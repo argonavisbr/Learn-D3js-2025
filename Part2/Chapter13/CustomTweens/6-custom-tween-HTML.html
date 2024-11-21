@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <title>Custom tweens: tween</title>
-    <script src="https://d3js.org/d3.v5.min.js"></script>
     <style>
         h1 {
             display: inline;
@@ -21,7 +20,7 @@
             font-size: 12px;
         }
         .panel {
-            margin-left: 300px
+            margin-left: 10px
         }
         span {
             font-weight: bold;
@@ -29,15 +28,6 @@
     </style>
 </head>
 <body>
-<script src="js/transition-display.js"></script>
-<script>
-    // This script is used to display a panel that shows the current state of the transition
-    const svg = d3.select("body")
-        .append("svg")
-        .attr("width", 800)
-        .attr("height", 100);
-    createTransitionPanel(svg);
-</script>
 
 <div class="panel">
     <p>Transition step: <span id="step"></span><br>
@@ -46,11 +36,20 @@
         A color: <span id="a-color"></span><br>
         B color: <span id="b-color"></span></p>
 </div>
-
 <h1 id="one">A</h1>
 <h1 id="two">B</h1>
 
-<script>
+<script type="module">
+    import * as d3 from "https://cdn.skypack.dev/d3@7";
+    import {createTransitionPanel, monitorTransition} from "./js/transition-display.js";
+
+    // This script is used to display a panel that shows the current state of the transition
+    const svg = d3.select(".panel")
+        .append("svg").raise()
+        .attr("width", 800)
+        .attr("height", 100);
+    createTransitionPanel(svg);
+
     // This is the main script that creates a transition with a custom tween
     let count = 0;
     const duration = 5000;
@@ -93,5 +92,6 @@
     monitorTransition(trs, delay, duration);
 
 </script>
+
 </body>
 </html>

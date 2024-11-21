@@ -1,10 +1,12 @@
-function draw(dim, grid, scale, easeType, index, animated = false, shortName = false) {
+import * as d3 from "https://cdn.skypack.dev/d3@7";
+
+export function draw(container, dim, grid, scale, easeType, index, animated = false, shortName = false) {
 
     const i = index % grid.rows;
     const j = Math.floor(index / grid.rows);
     const datum = d3.range(0, 1, 0.002);
 
-    const g = svg.append("g")
+    const g = container.append("g")
         .attr("transform",
             "translate("+[j * dim.width/grid.cols,i * dim.height/grid.rows]+")");
 
@@ -49,7 +51,7 @@ function draw(dim, grid, scale, easeType, index, animated = false, shortName = f
         g.append("rect")
             .attr("class", "vertical-bar free-dot")
             .attr("width", 6)
-            .attr("height", scaleY(0))
+            .attr("height", scale.y(0))
             .attr("x", scale.x(1)+7)
             .attr("y", scale.y(1))
             .style("opacity", .1);

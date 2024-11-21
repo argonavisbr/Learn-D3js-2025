@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Drag and drop</title>
+    <link rel="stylesheet" href="css/grid-squares.css">
+</head>
+<body>
+<p>Drag and drop squares. The nine colored squares are bound to data. The black one is not.
+    See the JavaScript console for differences and compare the object's subject and datum.</p>
+<script type="module">
+    import * as d3 from "https://cdn.skypack.dev/d3@7";
+    import {makeGrid, drawSquare, drawSquares, svg} from "./js/grid-squares.js";
+
+    makeGrid();
+    drawSquares();                         // draws several squares bound to data
+    drawSquare(500,500,100,100,"black");  // draws a single square not bound to any data
+
+    // Dragging multiple objects without any data attached
+    // Using drag attributes
+    const drag = d3.drag()
+        .on('start', function() {
+            d3.select(this).raise();
+            d3.select(this).style("cursor", "move") // you can also use classed to toggle
+        })
+        .on('drag', function(e) {
+            const obj = d3.select(this);
+            const ctm = obj.node().getCTM();
+            obj.attr("transform", `translate(${[ctm.e + e.dx, ctm.f + e.dy]})`);
+        })
+        .on('end', function(e,d) {
+            d3.select(this).style("cursor", "auto")
+
+            console.log("=====> Square was dragged")
+            // All these return the datum bound to the element being dragged
+            console.log("drag.subject", e.subject) // unless the subject is set with drag.subject()
+            console.log("d", d)
+            // All these return the element being dragged
+            console.log("this", this)
+            console.log("e.sourceEvent.target", e.sourceEvent.target)
+        });
+
+    // Attach drag behavior to all squares
+    d3.selectAll("rect.square")
+      .call(drag);
+
+</script>
+
+</body>
+</html>

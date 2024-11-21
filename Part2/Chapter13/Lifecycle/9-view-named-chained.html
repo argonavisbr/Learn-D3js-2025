@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <title>Multiple transitions, same selection, different names, chained</title>
-    <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
     <link rel="stylesheet" href="css/transition-display.css">
 </head>
 <body>
@@ -11,49 +10,26 @@
 <p>All transitions on the same selections complete without interruptions because they have different names.
    The unnamed sub-transitions are chained to their parent transitions and also run without interruptions.
    See <code>transition-display.js</code> for event-handlers and console for more results. </p>
-<script src="js/transition-display.js"></script>
-<script>
-
-    const speed = 10; // slower transitions and delays = higher number
-    const maxTime = 520 * speed;  // max time to display in the axis
+<script type="module">
+    import * as d3 from "https://cdn.skypack.dev/d3@7";
+    import {registerListeners, start, data, app} from "./js/lifecycle-display.js";
 
     // Transition data
-    const data = [
-        {name: "T1", delay: 300 * speed, duration: 200 * speed},
-        {name: "T2", delay: 50 * speed, duration: 150 * speed},
-        {name: "T3", delay: 100 * speed, duration: 150 * speed},
-        {name: "T3-1", delay: 0, duration: 250 * speed, parent: 2},
-        {name: "T2-1", delay: 0, duration: 250 * speed, parent: 1}
+    data.transitions = [
+        {name: "T1", delay: 300 * app.speed, duration: 200 * app.speed},
+        {name: "T2", delay: 50 * app.speed, duration: 150 * app.speed},
+        {name: "T3", delay: 100 * app.speed, duration: 150 * app.speed},
+        {name: "T3-1", delay: 0, duration: 250 * app.speed, parent: 2},
+        {name: "T2-1", delay: 0, duration: 250 * app.speed, parent: 1}
     ];
 
-    const spacing = 75 / data.length;  // spacing between transitions (min 15, to display 5 transitions)
-    data.forEach((d,i) => d.position = i * spacing * 8);
-
-    const dim = {width: 1000, height: 700};
-    const scale = d3.scaleLinear()
-                    .domain([0, maxTime])
-                    .range([50, dim.width - 50])
-    const axis = d3.axisBottom()
-                   .tickSize(dim.height - 100 + 10)
-                   .tickSizeOuter(15)
-                   .scale(scale);
-
-    const svg = d3.select("body")
-                  .append("svg")
-                    .attr("width", dim.width)
-                    .attr("height", dim.height);
-
-    // Draw axes and chart guidelines
-    renderChart(svg);
-    drawScheduledTransitions(data);
-
-    // Run transitions
-    const start = d3.now();
+    app.maxTime = 520 * app.speed;  // max time to display in the axis
+    start();
 
     // Note that the main transitions are initialized with a unique name (d.name)
-    data.forEach(d => {
+    data.transitions.forEach(d => {
         d.transition = d.parent
-            ? data[d.parent].transition.transition() // sub-transition
+            ? data.transitions[d.parent].transition.transition() // sub-transition
                 .delay(d.delay)
                 .duration(d.duration)
             : d3.transition(d.name)                  // main transition (has name)

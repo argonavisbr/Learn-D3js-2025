@@ -23,21 +23,21 @@
 
     const svg = d3.select("body").append("svg").attr("height", dim.height).attr("width", dim.width);
 
-    const g = svg.append("g")
-                 .datum([[0,0], [100,200], [200,50], [300,150], [400,100]]);
+    const point = svg.append("g")
+                     .datum([[0,0], [100,200], [200,50], [300,150], [400,100]]);
 
     // Render the line using the inherited datum (the entire data array)
-    g.append("path")
-        .attr("d", d3.line());      // same as d => d3.line()(d)
+    point.append("path")
+         .attr("d", d3.line());      // same as d => d3.line()(d)
 
     // Join a selection of <text> elements to the inherited data array, rendering a label near each point
     // CSS styles (font-size, family and baseline) were added in the head
-    g.selectAll("text")
-     .data(d => d)                  // d = the entire dataset (inherited)
-       .join("text")
-         .text(p => p)              // p = each [x,y] point in the dataset
-           .attr("x", p => p[0] + 10)  // positions the text 10 pixels to the right of the x-coordinate
-           .attr("y", p => p[1]);
+    point.selectAll("text")
+         .data(d => d)                  // d = the entire dataset (inherited)
+           .join("text")
+             .text(p => p)              // p = each [x,y] point in the dataset
+               .attr("x", p => p[0] + 10)  // positions the text 10 pixels to the right of the x-coordinate
+               .attr("y", p => p[1]);
 
 
 </script>

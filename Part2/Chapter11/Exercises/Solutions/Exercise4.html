@@ -15,6 +15,9 @@
     </style>
 </head>
 <body>
+
+<!-- This is a template file with all the code in a single HTML page. You can also use the Exercise4/ folder -->
+
 <h1>Monthly rainfall in São Paulo, Brazil (1984-2017)</h1>
 <p>Source: inmet.gov.br</p>
 <script type="module">
@@ -25,87 +28,97 @@
         width: 800, height: 400,
         margin: {top: 0, left: 50, bottom: 50, right: 150}
     };
-    const scale = {
-        x: d3.scalePoint().range([dim.margin.left, dim.width - dim.margin.right]),
-        y: d3.scaleLinear().range([dim.height - dim.margin.bottom, dim.margin.top])
+    const app = {
+        area: null,
+        line: {top: null, base: null, avg: null},
+        color: null,
+        scale: {
+            x: d3.scalePoint().range([dim.margin.left, dim.width - dim.margin.right]),
+            y: d3.scaleLinear().range([dim.height - dim.margin.bottom, dim.margin.top])
+        }
     }
+    const data = {};
+
     const svg = d3.select("body").append("svg").attr("height", dim.height).attr("width", dim.width);
 
     const file = "../../data/rain_sao_paulo_tidy.csv";
 
-    d3.csv(file, d3.autoType)
-        .then(csv => {
-            console.log('csv', csv);
+    await load(file);
+    draw();
 
-            // 1) group by month
-            const byMonth = d3.rollup(csv, v => v.map(o => ({Year: o.Year, Value: o.Rain})), d => d.Month);
-            console.log('byMonth', byMonth);
 
-            // 2) compute max, min, and average (mean or median) for each month
-            const statsByMonth = Array.from(byMonth, ([key, value]) => {
-                const max = d3.max(value, d => d.Value);
-                const min = d3.min(value, d => d.Value);
-                const avg = d3.median(value, d => d.Value);
-                const month = d3.timeFormat('%b')(d3.isoParse(`2020-${key}-15`));
-                return {month: month, max: max, min: min, avg: avg};
-            });
-            console.log('maxByMonth', statsByMonth);
+    async function load(file) {
+        const csv = await d3.csv(file, d3.autoType)
+                console.log('csv', csv);
 
-            // 3) plot
+                // 1) group by month
+                const byMonth = d3.rollup(csv, v => v.map(o => ({Year: o.Year, Value: o.Rain})), d => d.Month);
+                console.log('byMonth', byMonth);
 
-            plot(statsByMonth);
-        });
+                // 2) compute max, min, and average (mean or median) for each month
+                data.stats = Array.from(byMonth, ([key, value]) => {
+                    const max = d3.max(value, d => d.Value);
+                    const min = d3.min(value, d => d.Value);
+                    const avg = d3.median(value, d => d.Value);
+                    const month = d3.timeFormat('%b')(d3.isoParse(`2020-${key}-15`));
+                    return {month: month, max: max, min: min, avg: avg};
+                });
+                console.log('data.stats', data.stats);
 
-    function plot(data) {
+                config();
+    }
 
-        scale.x.domain(data.map(d => d.month));
-        scale.y.domain([0, d3.max(data, d => d.max) + 100]);
+    function config() {
+        app.scale.x.domain(data.stats.map(d => d.month));
+        app.scale.y.domain([0, d3.max(data.stats, d => d.max) + 100]);
 
-        const area = d3.area()
-                       .x(d => scale.x(d.month))
-                       .y1(d => scale.y(d.max))
-                       .y0(d => scale.y(d.min))
-                       .curve(d3.curveNatural);
+        app.area = d3.area()
+            .x(d => app.scale.x(d.month))
+            .y1(d => app.scale.y(d.max))
+            .y0(d => app.scale.y(d.min))
+            .curve(d3.curveNatural);
 
-        const topline = area.lineY1();
-        const baseline = area.lineY0();
+        app.line.top = app.area.lineY1();
+        app.line.base = app.area.lineY0();
 
-        const avgline = d3.line()
-                          .x(d => scale.x(d.month))
-                          .y(d => scale.y(d.avg))
-                          .curve(d3.curveNatural);
+        app.line.avg = d3.line()
+            .x(d => app.scale.x(d.month))
+            .y(d => app.scale.y(d.avg))
+            .curve(d3.curveNatural);
 
+        app.color = d3.scaleOrdinal(["olive", "navy", "blue"]);
+    }
+
+    function draw() {
         const chart = svg.append("g");
 
-        const colors = d3.scaleOrdinal(["olive", "navy", "blue"]);
-
         chart.append("path")
-            .datum(data)
+            .datum(data.stats)
             .attr("class", "area")
-            .attr("d", area);
+            .attr("d", app.area);
 
         chart.append("path")
-            .datum(data)
+            .datum(data.stats)
             .attr("class", "line")
-            .attr("d", baseline)
-            .style("stroke", colors(0));
+            .attr("d", app.line.base)
+            .style("stroke", app.color(0));
 
         chart.append("path")
-            .datum(data)
+            .datum(data.stats)
             .attr("class", "line")
-            .attr("d", avgline)
-            .style("stroke", colors(1));
+            .attr("d", app.line.avg)
+            .style("stroke", app.color(1));
 
         chart.append("path")
-            .datum(data)
+            .datum(data.stats)
             .attr("class", "line")
-            .attr("d", topline)
-            .style("stroke", colors(2));
+            .attr("d", app.line.top)
+            .style("stroke", app.color(2));
 
         utils.cartesianAxes()
             .container(chart)
-            .xScale(scale.x)
-            .yScale(scale.y)
+            .xScale(app.scale.x)
+            .yScale(app.scale.y)
             .xLabel("Month")
             .yLabel("Rainfall (mm)")
             .showHorizontalGrid(true)();
@@ -114,7 +127,7 @@
                           .attr("transform", `translate(${dim.width - dim.margin.right}, ${dim.margin.top})`);
         utils.legend()
            .container(legend)
-           .color(colors)
+           .color(app.color)
            .data(["Record minimum", "Median", "Record maximum"])();
     }
 

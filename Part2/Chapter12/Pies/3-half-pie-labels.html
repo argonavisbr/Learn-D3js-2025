@@ -66,15 +66,15 @@
     const svg = d3.select("body").append("svg").attr("height",dim.height).attr("width",dim.width);
 
     // Bind the data to a container, and place the origin where the chart will fit
-    const g = svg.selectAll("g")
+    const chart = svg.selectAll("g")
                  .data( pie(data) )
                    .join("g")
                       .attr("transform", `translate(${[dim.width/2-40,dim.height]})`);
 
     // Render the chart
-    g.append("path").attr("class", "slice")
-            .attr("d", arc)
-            .attr("fill", (d,i) => colorScale(i));
+    chart.append("path").attr("class", "slice")
+                        .attr("d", arc)
+                        .attr("fill", (d,i) => colorScale(i));
 
     // Code to render the labels using the centroid
     // You can reuse these in other charts, importing the chart-utils.js file
@@ -88,7 +88,7 @@
     const pt = (d,r=1,a=0) => [angle(d)+a, cx(d) * r, cy(d) * r];
 
     // Places the population label inside the slice
-    g.append('text').attr("class", "inner label")
+    chart.append('text').attr("class", "inner label")
         .attr("x",d => cx(d)*1.2)
         .attr("y",d => cy(d)*1.2)
         .attr("text-anchor", "middle")
@@ -96,7 +96,7 @@
         .text(d => d3.format(",.0f")(d.data.population));
 
     // Places the flag label at the edge of the slice (remove if using legends)
-    g.append('text').attr("class", "outer label")
+    chart.append('text').attr("class", "outer label")
         .attr("x",d => pt(d, dist)[1])
         .attr("y",d => pt(d, dist)[2])
         .attr("alignment-baseline", "middle")
@@ -107,11 +107,11 @@
 
     // (1) Place the labels tangentially to the slices...
     if(tangential) {
-        g.selectAll(".outer.label")
+        chart.selectAll(".outer.label")
             .attr("text-anchor", "middle")
             .attr("transform", d => `rotate(${pt(d,dist,90)})`);
     } else { // ... or (2) place the labels radially to the slices...
-        g.selectAll(".outer.label")
+        chart.selectAll(".outer.label")
             .attr("text-anchor", d => pt(d)[1] > 0 ? "start" : "end")
             .attr("transform", d => pt(d)[1] > 0 ? `rotate(${pt(d,dist)})` : `rotate(${pt(d,dist,180)})`);
     }
@@ -123,6 +123,13 @@
        .container(legend)
        .color(colorScale)
        .data(data.map(d => d.country))();
+
+    // Bypass to explore this code using the JavaScript console
+    window.slices = slices;
+    window.arc = arc;
+    window.colorScale = colorScale;
+    window.chart = chart;
+    window.d3 = d3;
 
 </script>
 </body>

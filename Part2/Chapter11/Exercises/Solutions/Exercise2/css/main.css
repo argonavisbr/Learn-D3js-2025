@@ -1,0 +1,20 @@
+path.line {
+    stroke-width: 2px;
+    fill: none;
+    opacity: .85
+}
+h1, p {
+    font-family: sans-serif;
+}
+h1 {
+    font-size: 16pt;
+    text-align: center;
+}
+p {
+    font-size: 10px;
+    text-align: center;
+}
+text.label {
+    font-size: 12px;
+}
+svg {border: 1px solid #ccc;}
