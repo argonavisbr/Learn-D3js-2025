@@ -1,0 +1,836 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="88ab0fd2-922d-4b26-894c-0ae61af44502" name="Changes" comment="Updated files before reviewing Chapter 13.">
+      <change afterPath="$PROJECT_DIR$/Part2/Chapter13/Examples/css/temperature.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Part2/Chapter13/StepByStep/step-11-continents/css/main-1.1.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Part2/Chapter13/StepByStep/step-11-continents/js/common-1.6.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Part2/Chapter13/StepByStep/step-11-continents/js/data-1.4.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Part2/Chapter13/StepByStep/step-11-continents/js/view-1.9.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Part2/Chapter13/StepByStep/step-6-animate/js/animation-1.0.1.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Part2/Chapter13/StepByStep/step-6-animate/js/animation-1.0.2.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Part2/Chapter13/StepByStep/step-7-keyframes/js/view-1.5.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Part2/Chapter13/StepByStep/step-9-images/index.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Part2/Chapter13/StepByStep/step-9-images/js/animation-1.1.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Part2/Chapter13/StepByStep/step-9-images/js/main-1.2.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Part2/Chapter13/Transitions/7-pause-and-resume.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter06/StepByStep/11-join/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter06/StepByStep/11-join/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter11/Exercises/Solutions/Exercise2.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter11/Exercises/Solutions/Exercise2.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter11/Exercises/Solutions/Exercise2/js/common.js" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter11/Exercises/Solutions/Exercise2/js/common.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter12/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter12/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter12/data/America_population2.json" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter12/data/Americas_population-by-year.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter12/data/Americas_population.json" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter12/data/Americas_population-by-country.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter12/data/monthly_json.json" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter12/_OLD_Chapter12/Data/monthly_json.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter12/data/world-gdp-share-test.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter13/Animations/2-symbol-css-anim.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter13/Animations/3-symbol-css-anim.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter13/Animations/3-css-dynamics-panel.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter13/Animations/4-css-dynamics-panel.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter13/Animations/4-lines-dash-motion-symbol.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter13/Animations/2-lines-dash-motion-symbol.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter13/CustomTweens/1-custom-attrTween.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter13/CustomTweens/1-attrTween.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter13/CustomTweens/2-custom-styleTween.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter13/CustomTweens/2-styleTween.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter13/CustomTweens/3-custom-textTween.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter13/CustomTweens/3-textTween.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter13/CustomTweens/4-custom-multiple.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter13/CustomTweens/4-multiple.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter13/CustomTweens/5-custom-tween.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter13/CustomTweens/5-tween.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter13/CustomTweens/6-custom-tween-HTML.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter13/CustomTweens/6-tween-HTML.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter13/Exercises-TODO/1-global-temp-spiral.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter13/Exercises-TODO/Exercise09.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter13/Exercises-TODO/Exercise-Rainfall-animate-motion-circles.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter13/Examples/Rainfall-animate-motion-circles.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter13/Exercises-TODO/Exercise-Rainfall-animate-motion-draw.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter13/Examples/Rainfall-animate-motion-draw.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter13/Exercises-TODO/Exercise-Rainfall-line-dash-anim.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter13/Examples/Rainfall-animate-line-dash.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter13/Exercises-TODO/Exercise-Temperature-textpath-animate.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter13/Exercises-TODO/Exercise08.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter13/Exercises-TODO/Exercise-rainfall-animate-motion-canvas.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter13/Examples/Rainfall-animate-motion-canvas.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter13/Exercises-TODO/css/rainfall.css" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter13/Examples/css/rainfall.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter13/Lifecycle/10-view-selections-chained.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter13/Lifecycle/9-view-selections-chained.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter13/Lifecycle/3-view-single-transition.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter13/Lifecycle/3-view-single.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter13/Lifecycle/4-pause-and-resume.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter13/Lifecycle/5-view-multiple.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter13/Lifecycle/4-view-multiple.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter13/Lifecycle/6-view-multiple-named.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter13/Lifecycle/5-view-multiple-named.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter13/Lifecycle/7-view-multiple-selections.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter13/Lifecycle/6-view-multiple-selections.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter13/Lifecycle/8-view-multiple-chained.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter13/Lifecycle/7-view-multiple-chained.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter13/Lifecycle/9-view-named-chained.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter13/Lifecycle/8-view-named-chained.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter13/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter13/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter13/SVG/5-svg-clipPath-example.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter13/SVG/5-svg-clipPath.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter13/StepByStep/step-10-images/css/main-1.1.css" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter13/StepByStep/step-10-pause/css/main-1.1.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter13/StepByStep/step-10-images/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter13/StepByStep/step-11-continents/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter13/StepByStep/step-10-images/js/animation-1.2.js" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter13/StepByStep/step-11-continents/js/animation-1.2.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter13/StepByStep/step-10-images/js/common-1.5.js" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter13/StepByStep/step-9-images/js/common-1.5.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter13/StepByStep/step-10-images/js/data-1.3.js" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter13/StepByStep/step-9-images/js/data-1.3.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter13/StepByStep/step-10-images/js/main-1.3.js" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter13/StepByStep/step-10-pause/js/main-1.2.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter13/StepByStep/step-10-images/js/view-1.7.js" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter13/StepByStep/step-10-pause/js/view-1.8.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter13/StepByStep/step-3-bars/js/view-1.1.js" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter13/StepByStep/step-3-bars/js/view-1.1.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter13/StepByStep/step-4-update/js/animation-1.0.js" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter13/StepByStep/step-4-update/js/animation-1.0.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter13/StepByStep/step-4-update/js/main-1.2.js" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter13/StepByStep/step-4-update/js/main-1.2.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter13/StepByStep/step-4-update/js/view-1.2.js" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter13/StepByStep/step-4-update/js/view-1.2.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter13/StepByStep/step-5-direction/js/animation-1.0.js" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter13/StepByStep/step-5-direction/js/animation-1.0.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter13/StepByStep/step-5-direction/js/data-1.1.js" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter13/StepByStep/step-5-direction/js/data-1.1.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter13/StepByStep/step-5-direction/js/main-1.2.js" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter13/StepByStep/step-5-direction/js/main-1.2.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter13/StepByStep/step-5-direction/js/view-1.3.js" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter13/StepByStep/step-5-direction/js/view-1.3.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter13/StepByStep/step-6-animate/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter13/StepByStep/step-6-animate/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter13/StepByStep/step-6-animate/js/animation-1.1.js" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter13/StepByStep/step-6-animate/js/animation-1.1.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter13/StepByStep/step-6-animate/js/common-1.2.js" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter13/StepByStep/step-6-animate/js/common-1.2.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter13/StepByStep/step-6-animate/js/data-1.1.js" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter13/StepByStep/step-6-animate/js/data-1.1.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter13/StepByStep/step-6-animate/js/main-1.3.js" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter13/StepByStep/step-6-animate/js/main-1.2.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter13/StepByStep/step-6-animate/js/view-1.3.js" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter13/StepByStep/step-6-animate/js/view-1.3.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter13/StepByStep/step-7-keyframes/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter13/StepByStep/step-7-keyframes/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter13/StepByStep/step-7-keyframes/js/animation-1.1.js" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter13/StepByStep/step-7-keyframes/js/animation-1.1.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter13/StepByStep/step-7-keyframes/js/common-1.3.js" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter13/StepByStep/step-7-keyframes/js/common-1.3.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter13/StepByStep/step-7-keyframes/js/data-1.2.js" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter13/StepByStep/step-7-keyframes/js/data-1.2.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter13/StepByStep/step-7-keyframes/js/main-1.3.js" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter13/StepByStep/step-8-axes/js/main-1.2.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter13/StepByStep/step-7-keyframes/js/view-1.4.js" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter13/StepByStep/step-6-animate/js/view-1.4.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter13/StepByStep/step-8-axes/css/main-1.1.css" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter13/StepByStep/step-8-axes/css/main-1.1.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter13/StepByStep/step-8-axes/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter13/StepByStep/step-8-axes/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter13/StepByStep/step-8-axes/js/animation-1.1.js" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter13/StepByStep/step-8-axes/js/animation-1.1.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter13/StepByStep/step-8-axes/js/data-1.2.js" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter13/StepByStep/step-8-axes/js/data-1.2.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter13/StepByStep/step-8-axes/js/main-1.3.js" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter13/StepByStep/step-7-keyframes/js/main-1.2.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter13/StepByStep/step-8-axes/js/view-1.5.js" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter13/StepByStep/step-8-axes/js/view-1.6.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter13/StepByStep/step-9-pause/css/main-1.1.css" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter13/StepByStep/step-9-images/css/main-1.1.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter13/StepByStep/step-9-pause/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter13/StepByStep/step-10-pause/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter13/StepByStep/step-9-pause/js/animation-1.2.js" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter13/StepByStep/step-10-pause/js/animation-1.2.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter13/StepByStep/step-9-pause/js/common-1.4.js" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter13/StepByStep/step-10-pause/js/common-1.5.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter13/StepByStep/step-9-pause/js/data-1.2.js" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter13/StepByStep/step-10-pause/js/data-1.3.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter13/StepByStep/step-9-pause/js/main-1.3.js" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter13/StepByStep/step-11-continents/js/main-1.2.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter13/StepByStep/step-9-pause/js/view-1.6.js" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter13/StepByStep/step-9-images/js/view-1.7.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter13/Sync/1-promise-end-multiple.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter13/Sync/1-promise-end-multiple.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter13/Sync/2-promise-end-repeat.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter13/Sync/2-promise-end-repeat.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter13/Sync/3-end-repeat-await.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter13/Sync/3-end-repeat-await.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter13/Sync/4-interrupt-chained.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter13/Sync/4-interrupt-chained.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter13/TextTransitions/5-count-forever-await-TODO.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter13/Tweens/1-tween-attr.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter13/Tweens/1-attr-value.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter13/Tweens/2-tween-style-attr.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter13/Tweens/2-style-attr.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter13/Tweens/3-tween-attr-function.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter13/Tweens/3-attr-function.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter13/Tweens/4-tween-text.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter13/Tweens/4-text.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter13/data/GLB.Ts.1880.2023.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter13/_OLD_Chapter13/Data/GLB.Ts.1880.2023.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter13/data/UNdata_Export_2024.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter13/_OLD_Chapter13/Data/UNdata_Export_2024.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter13/data/gdp-per-capita-maddison.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter13/_OLD_Chapter13/Data/gdp-per-capita-maddison.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter13/data/monthly_json.json" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter13/_OLD_Chapter13/Data/monthly_json.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter13/data/south-america-gdp-imf.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter13/_OLD_Chapter13/Data/south-america-gdp-imf.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter13/data/south-america-gdp-short.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter13/_OLD_Chapter13/Data/south-america-gdp-short.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter13/data/south-america-gdp-wb.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter13/_OLD_Chapter13/Data/south-america-gdp-wb.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter13/data/un_regions_gdp.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter13/_OLD_Chapter13/Data/un_regions_gdp.csv" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="package" />
+        <option value="Kotlin Script" />
+        <option value="CSS File" />
+        <option value="HTML File" />
+        <option value="JavaScript File" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="KotlinScriptingSettings" supportWarning="false" />
+  <component name="MacroExpansionManager">
+    <option name="directoryName" value="hmbxihw1" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="PackageJsonUpdateNotifier">
+    <dismissed value="$PROJECT_DIR$/package.json" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 5
+}</component>
+  <component name="ProjectId" id="2N4n4VvuXjZfQuGFHY6PItpJIWK" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ASKED_ADD_EXTERNAL_FILES": "true",
+    "DefaultHtmlFileTemplate": "HTML File",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "git-widget-placeholder": "main",
+    "javascript.nodejs.core.library.configured.version": "18.13.0",
+    "javascript.nodejs.core.library.typings.version": "18.13.0",
+    "last_opened_file_path": "/Users/helderdarocha/IdeaProjects/Learn-D3js-2023/Part2/Chapter13/Exercises-TODO",
+    "list.type.of.created.stylesheet": "CSS",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs.jest.jest_package": "/Users/helderdarocha/IdeaProjects/Learn-D3js-2023/node_modules/jest",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Project",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.0",
+    "run.code.analysis.last.selected.profile": "pProject Default",
+    "settings.editor.selected.configurable": "com.github.copilot.settings.ApplicationConfigurable",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/Part2/Chapter13/Exercises-TODO" />
+      <recent name="$PROJECT_DIR$/Part2/Chapter13/StepByStep" />
+      <recent name="$PROJECT_DIR$/Part2/Chapter13/StepByStep/step-10-pause/js" />
+      <recent name="$PROJECT_DIR$/Part2/Chapter13/StepByStep/step-9-images/js" />
+      <recent name="$PROJECT_DIR$/Part2/Chapter13/StepByStep/step-8-axes/js" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/Part2/Chapter12/_OLD_Chapter12/Data" />
+      <recent name="$PROJECT_DIR$/Part2/Chapter13/Exercises-TODO" />
+      <recent name="$PROJECT_DIR$/Part2/Chapter13/Examples" />
+      <recent name="$PROJECT_DIR$/Part2/Chapter13/_OLD_Chapter13/Data" />
+      <recent name="$PROJECT_DIR$/Part2/Chapter13/Transitions" />
+    </key>
+  </component>
+  <component name="RunManager" selected="JavaScript Debug.1-bar-chart-race-UN-GDP.html">
+    <configuration name="1-bar-chart-race-UN-GDP.html" type="JavascriptDebugType" temporary="true" nameIsGenerated="true" uri="http://localhost:63342/Learn-D3js-2023/Part2/Chapter12/Examples/1-bar-chart-race-UN-GDP.html" useBuiltInWebServerPort="true">
+      <method v="2" />
+    </configuration>
+    <configuration name="Exercise12.html" type="JavascriptDebugType" temporary="true" nameIsGenerated="true" uri="http://localhost:63342/Learn-D3js-2023/Part2/Chapter11/Exercises/Solutions/Exercise12.html" useBuiltInWebServerPort="true">
+      <method v="2" />
+    </configuration>
+    <configuration name="checkCodes.js" type="NodeJSConfigurationType" temporary="true" nameIsGenerated="true" path-to-js-file="$PROJECT_DIR$/Tools/checkCodes.js" working-dir="$PROJECT_DIR$/Tools">
+      <method v="2" />
+    </configuration>
+    <configuration name="checkFlagFiles.js" type="NodeJSConfigurationType" temporary="true" nameIsGenerated="true" path-to-js-file="$PROJECT_DIR$/Tools/checkFlagFiles.js" working-dir="$PROJECT_DIR$/Tools">
+      <method v="2" />
+    </configuration>
+    <configuration name="testChanges.js" type="NodeJSConfigurationType" temporary="true" nameIsGenerated="true" path-to-js-file="$PROJECT_DIR$/Tools/testChanges.js" working-dir="$PROJECT_DIR$/Tools">
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="JavaScript Debug.Exercise12.html" />
+        <item itemvalue="Node.js.testChanges.js" />
+        <item itemvalue="Node.js.checkFlagFiles.js" />
+        <item itemvalue="Node.js.checkCodes.js" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="88ab0fd2-922d-4b26-894c-0ae61af44502" name="Changes" comment="" />
+      <created>1678932032008</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1678932032008</updated>
+      <workItem from="1678932034396" duration="1370000" />
+      <workItem from="1678979859328" duration="1581000" />
+      <workItem from="1679050508269" duration="4042000" />
+      <workItem from="1679062363784" duration="780000" />
+      <workItem from="1679063420372" duration="696000" />
+      <workItem from="1679066660122" duration="9867000" />
+      <workItem from="1679146795918" duration="8002000" />
+      <workItem from="1679582963399" duration="1415000" />
+      <workItem from="1679663749870" duration="2206000" />
+      <workItem from="1679666339360" duration="1687000" />
+      <workItem from="1679926261378" duration="5443000" />
+      <workItem from="1679956615132" duration="1887000" />
+      <workItem from="1679966010379" duration="770000" />
+      <workItem from="1680028916235" duration="968000" />
+      <workItem from="1680187359448" duration="4648000" />
+      <workItem from="1680294352711" duration="7586000" />
+      <workItem from="1680377200933" duration="36847000" />
+      <workItem from="1681045020781" duration="4658000" />
+      <workItem from="1681132125715" duration="4038000" />
+      <workItem from="1681216174825" duration="18259000" />
+      <workItem from="1681389217700" duration="12731000" />
+      <workItem from="1681477842727" duration="11000" />
+      <workItem from="1681689806119" duration="696000" />
+      <workItem from="1681820867099" duration="5612000" />
+      <workItem from="1681854696308" duration="1198000" />
+      <workItem from="1681902168854" duration="6789000" />
+      <workItem from="1682355728978" duration="3237000" />
+      <workItem from="1682359902616" duration="55000" />
+      <workItem from="1683296096658" duration="21000" />
+      <workItem from="1683296494628" duration="4450000" />
+      <workItem from="1683755374612" duration="1406000" />
+      <workItem from="1683813611356" duration="2596000" />
+      <workItem from="1683896649704" duration="4480000" />
+      <workItem from="1684244427566" duration="6027000" />
+      <workItem from="1684326516213" duration="12870000" />
+      <workItem from="1684416840003" duration="19462000" />
+      <workItem from="1684495989783" duration="21760000" />
+      <workItem from="1684621399865" duration="40000" />
+      <workItem from="1684766467406" duration="14940000" />
+      <workItem from="1686652903269" duration="3493000" />
+      <workItem from="1686697259002" duration="7727000" />
+      <workItem from="1686977374461" duration="13700000" />
+      <workItem from="1687176563820" duration="4036000" />
+      <workItem from="1690936706239" duration="678000" />
+      <workItem from="1690942420979" duration="615000" />
+      <workItem from="1691370720496" duration="115000" />
+      <workItem from="1691497187753" duration="750000" />
+      <workItem from="1692021383045" duration="4449000" />
+      <workItem from="1693317625651" duration="66398000" />
+      <workItem from="1694180043518" duration="11676000" />
+      <workItem from="1695064392764" duration="3231000" />
+      <workItem from="1696452287723" duration="47014000" />
+      <workItem from="1696944113674" duration="15495000" />
+      <workItem from="1697025050193" duration="1506000" />
+      <workItem from="1697046575100" duration="24894000" />
+      <workItem from="1697196207885" duration="925000" />
+      <workItem from="1697715994245" duration="1972000" />
+      <workItem from="1697983784518" duration="57608000" />
+      <workItem from="1698667623122" duration="1947000" />
+      <workItem from="1698845443511" duration="4613000" />
+      <workItem from="1698929824650" duration="94304000" />
+      <workItem from="1699376915758" duration="17504000" />
+      <workItem from="1699757550890" duration="1250000" />
+      <workItem from="1699830508929" duration="15401000" />
+      <workItem from="1699982751135" duration="11734000" />
+      <workItem from="1700221513547" duration="6790000" />
+      <workItem from="1700486705983" duration="22768000" />
+      <workItem from="1701090408431" duration="7639000" />
+      <workItem from="1701175715726" duration="6020000" />
+      <workItem from="1701428831882" duration="88275000" />
+      <workItem from="1701706157039" duration="81000" />
+      <workItem from="1701706243816" duration="618000" />
+      <workItem from="1701717232805" duration="37805000" />
+      <workItem from="1701866228609" duration="21723000" />
+      <workItem from="1701914446055" duration="74000" />
+      <workItem from="1701914527485" duration="1115000" />
+      <workItem from="1701971803868" duration="3347000" />
+      <workItem from="1701981578596" duration="7670000" />
+      <workItem from="1702467063569" duration="606000" />
+      <workItem from="1702554544620" duration="5724000" />
+      <workItem from="1702596899552" duration="15553000" />
+      <workItem from="1703867151128" duration="94000" />
+      <workItem from="1704053751194" duration="785000" />
+      <workItem from="1704221831142" duration="21232000" />
+      <workItem from="1704384480589" duration="16810000" />
+      <workItem from="1705410833545" duration="1609000" />
+      <workItem from="1705432063576" duration="1613000" />
+      <workItem from="1705501904419" duration="9748000" />
+      <workItem from="1705757362757" duration="4631000" />
+      <workItem from="1706386805353" duration="16161000" />
+      <workItem from="1706623012763" duration="118000" />
+      <workItem from="1706623140864" duration="38681000" />
+      <workItem from="1706817243202" duration="8373000" />
+      <workItem from="1706825853785" duration="3984000" />
+      <workItem from="1706873196834" duration="6494000" />
+      <workItem from="1709161750509" duration="609000" />
+      <workItem from="1709766871271" duration="2136000" />
+      <workItem from="1710250558168" duration="27107000" />
+      <workItem from="1710505586522" duration="3523000" />
+      <workItem from="1710774480772" duration="18262000" />
+      <workItem from="1711642952067" duration="3730000" />
+      <workItem from="1711757763053" duration="8758000" />
+      <workItem from="1711802572144" duration="24630000" />
+      <workItem from="1712087051063" duration="3834000" />
+      <workItem from="1712096657815" duration="14271000" />
+      <workItem from="1712190503766" duration="58001000" />
+      <workItem from="1712404240141" duration="25397000" />
+      <workItem from="1712501859000" duration="96000" />
+      <workItem from="1712501983285" duration="29288000" />
+      <workItem from="1712610180794" duration="46676000" />
+      <workItem from="1712876303715" duration="3054000" />
+      <workItem from="1713136457453" duration="63854000" />
+      <workItem from="1713529845038" duration="22593000" />
+      <workItem from="1713632313891" duration="67323000" />
+      <workItem from="1713877966928" duration="28567000" />
+      <workItem from="1714138537040" duration="39821000" />
+      <workItem from="1714236020059" duration="59064000" />
+      <workItem from="1714414550459" duration="53537000" />
+      <workItem from="1714655835394" duration="22738000" />
+      <workItem from="1714757398626" duration="10832000" />
+      <workItem from="1715006593932" duration="15093000" />
+      <workItem from="1715079707703" duration="700000" />
+      <workItem from="1715082469027" duration="11676000" />
+      <workItem from="1715102888094" duration="1735000" />
+      <workItem from="1715475012161" duration="2079000" />
+      <workItem from="1715691361899" duration="1697000" />
+      <workItem from="1715858546321" duration="653000" />
+      <workItem from="1715862244938" duration="42133000" />
+      <workItem from="1716062533772" duration="1854000" />
+      <workItem from="1716291477822" duration="2387000" />
+      <workItem from="1716681773245" duration="1077000" />
+      <workItem from="1716857838158" duration="122000" />
+      <workItem from="1716903205049" duration="8171000" />
+      <workItem from="1717106562840" duration="457000" />
+      <workItem from="1717289544182" duration="1553000" />
+      <workItem from="1718110756336" duration="4900000" />
+      <workItem from="1718328067348" duration="696000" />
+      <workItem from="1718372092043" duration="4394000" />
+      <workItem from="1718891817611" duration="109023000" />
+      <workItem from="1719510560256" duration="14956000" />
+      <workItem from="1719686661830" duration="10198000" />
+      <workItem from="1719954762350" duration="2478000" />
+      <workItem from="1720219247844" duration="55127000" />
+      <workItem from="1720795051773" duration="21549000" />
+      <workItem from="1720836917095" duration="6007000" />
+      <workItem from="1720876940570" duration="58323000" />
+      <workItem from="1721051664624" duration="2841000" />
+      <workItem from="1721054891721" duration="29418000" />
+      <workItem from="1721160994611" duration="24467000" />
+      <workItem from="1721221912725" duration="16857000" />
+      <workItem from="1721249273996" duration="18350000" />
+      <workItem from="1721319138226" duration="47294000" />
+      <workItem from="1721491110444" duration="12274000" />
+      <workItem from="1721588315044" duration="18053000" />
+      <workItem from="1721769062811" duration="15630000" />
+      <workItem from="1721830165599" duration="31752000" />
+      <workItem from="1722113406036" duration="4951000" />
+      <workItem from="1722289059453" duration="51000" />
+      <workItem from="1722292861057" duration="690000" />
+      <workItem from="1722293929954" duration="4000" />
+      <workItem from="1722305441274" duration="51000" />
+      <workItem from="1722348689463" duration="6000" />
+      <workItem from="1722355701916" duration="389000" />
+      <workItem from="1722356523385" duration="1808000" />
+      <workItem from="1722386226252" duration="1365000" />
+      <workItem from="1722563749974" duration="23437000" />
+      <workItem from="1722779585452" duration="11560000" />
+      <workItem from="1722814334324" duration="315000" />
+      <workItem from="1722883103247" duration="1248000" />
+      <workItem from="1722886044629" duration="7040000" />
+      <workItem from="1722905704054" duration="1313000" />
+      <workItem from="1722925385087" duration="11679000" />
+      <workItem from="1722984784760" duration="3714000" />
+      <workItem from="1723057044305" duration="2031000" />
+      <workItem from="1723422915593" duration="12724000" />
+      <workItem from="1723831748632" duration="2000" />
+      <workItem from="1723999439331" duration="38000" />
+      <workItem from="1723999908270" duration="120000" />
+      <workItem from="1724710688001" duration="4447000" />
+      <workItem from="1725630676333" duration="175000" />
+      <workItem from="1726178246356" duration="1231000" />
+      <workItem from="1726234935384" duration="948000" />
+      <workItem from="1726758226462" duration="21703000" />
+      <workItem from="1727050607583" duration="608000" />
+      <workItem from="1727126865773" duration="6089000" />
+      <workItem from="1727298640208" duration="26710000" />
+      <workItem from="1727726597720" duration="4585000" />
+      <workItem from="1727787807035" duration="5741000" />
+      <workItem from="1727877354414" duration="13452000" />
+      <workItem from="1727979079506" duration="27824000" />
+      <workItem from="1728063975320" duration="14695000" />
+      <workItem from="1728175468167" duration="22663000" />
+      <workItem from="1728276372428" duration="806000" />
+      <workItem from="1728321911425" duration="12737000" />
+      <workItem from="1728399053416" duration="2848000" />
+      <workItem from="1728673720695" duration="27141000" />
+      <workItem from="1728856097844" duration="23545000" />
+      <workItem from="1728999188436" duration="24960000" />
+      <workItem from="1729085893416" duration="14097000" />
+      <workItem from="1729249819963" duration="7213000" />
+      <workItem from="1729268621688" duration="4224000" />
+      <workItem from="1729282435712" duration="12963000" />
+      <workItem from="1729345793250" duration="8405000" />
+      <workItem from="1729472988255" duration="191000" />
+      <workItem from="1729473313344" duration="119000" />
+      <workItem from="1729473465052" duration="757000" />
+      <workItem from="1729474244351" duration="652000" />
+      <workItem from="1729533506522" duration="15038000" />
+      <workItem from="1729604768131" duration="18532000" />
+      <workItem from="1729688156242" duration="18480000" />
+      <workItem from="1729778511902" duration="78207000" />
+      <workItem from="1729971971229" duration="6447000" />
+      <workItem from="1729979728953" duration="3328000" />
+      <workItem from="1730053457870" duration="194000" />
+      <workItem from="1730058374072" duration="8619000" />
+      <workItem from="1730135632296" duration="3732000" />
+      <workItem from="1730208824676" duration="15497000" />
+      <workItem from="1730284517584" duration="16584000" />
+      <workItem from="1730387221519" duration="1362000" />
+      <workItem from="1730396452380" duration="224000" />
+      <workItem from="1730396679319" duration="13172000" />
+      <workItem from="1730462210745" duration="24301000" />
+      <workItem from="1730554285492" duration="16123000" />
+      <workItem from="1730578167237" duration="498000" />
+      <workItem from="1730742157291" duration="14517000" />
+      <workItem from="1730814110006" duration="5067000" />
+      <workItem from="1730851927159" duration="5064000" />
+      <workItem from="1730899711006" duration="1851000" />
+      <workItem from="1730922883060" duration="4103000" />
+      <workItem from="1731009110891" duration="6388000" />
+      <workItem from="1731062474245" duration="27197000" />
+      <workItem from="1731107029109" duration="4675000" />
+      <workItem from="1731161141684" duration="8749000" />
+      <workItem from="1731280793852" duration="3025000" />
+      <workItem from="1731290320618" duration="3299000" />
+      <workItem from="1731321474734" duration="9293000" />
+      <workItem from="1731336905314" duration="8446000" />
+      <workItem from="1731416133852" duration="15186000" />
+      <workItem from="1731506940472" duration="31835000" />
+      <workItem from="1731593823815" duration="14145000" />
+      <workItem from="1731936253226" duration="130000" />
+      <workItem from="1731964822632" duration="6975000" />
+      <workItem from="1732022240170" duration="6634000" />
+      <workItem from="1732134881603" duration="16010000" />
+      <workItem from="1732191625346" duration="1438000" />
+      <workItem from="1732196506174" duration="5486000" />
+      <workItem from="1732213182990" duration="8321000" />
+      <workItem from="1732230897877" duration="299000" />
+      <workItem from="1732231343255" duration="27000" />
+      <workItem from="1732240211451" duration="12764000" />
+      <workItem from="1732320541331" duration="5014000" />
+      <workItem from="1732367939373" duration="21470000" />
+      <workItem from="1732399405331" duration="438000" />
+      <workItem from="1732404949576" duration="6708000" />
+      <workItem from="1732460671341" duration="7487000" />
+    </task>
+    <task id="LOCAL-00001" summary="Example files for Chapter 1">
+      <created>1678932902809</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1678932902809</updated>
+    </task>
+    <task id="LOCAL-00002" summary="Example files for Chapter 1 - Updated readme files">
+      <created>1679059195207</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1679059195207</updated>
+    </task>
+    <task id="LOCAL-00003" summary="Updated readme files">
+      <created>1679059695261</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1679059695261</updated>
+    </task>
+    <task id="LOCAL-00004" summary="Updated readme files">
+      <created>1679060139914</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1679060139914</updated>
+    </task>
+    <task id="LOCAL-00005" summary="Updated exercises and module examples">
+      <created>1679966037969</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1679966037969</updated>
+    </task>
+    <task id="LOCAL-00006" summary="Added examples with modules (temporary)">
+      <created>1679966179252</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1679966179252</updated>
+    </task>
+    <task id="LOCAL-00007" summary="Added Chapter 2">
+      <created>1680187619545</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1680187619545</updated>
+    </task>
+    <task id="LOCAL-00008" summary="Added Chapter 2">
+      <created>1680187898797</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1680187898798</updated>
+    </task>
+    <task id="LOCAL-00009" summary="Updated Chapter 2 + readme files">
+      <created>1680273665937</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1680273665937</updated>
+    </task>
+    <task id="LOCAL-00010" summary="Updated Chapter 2 + readme files">
+      <created>1680875744872</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1680875744872</updated>
+    </task>
+    <task id="LOCAL-00011" summary="Updated Chapter 2 + readme files">
+      <created>1681096243946</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1681096243946</updated>
+    </task>
+    <task id="LOCAL-00012" summary="Split old Chapter 2 into new Chapters 2 (SVG) and 3 (Web/JavaScript)">
+      <created>1681133577679</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1681133577679</updated>
+    </task>
+    <task id="LOCAL-00013" summary="Split old Chapter 2 into new Chapters 2 (SVG) and 3 (Web/JavaScript)">
+      <created>1681831488837</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1681831488837</updated>
+    </task>
+    <task id="LOCAL-00014" summary="Updated files">
+      <created>1682359948106</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1682359948106</updated>
+    </task>
+    <task id="LOCAL-00015" summary="Updated files">
+      <created>1684250349706</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1684250349706</updated>
+    </task>
+    <task id="LOCAL-00016" summary="Updated files">
+      <created>1684250370291</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1684250370291</updated>
+    </task>
+    <task id="LOCAL-00017" summary="Updated files">
+      <created>1684250443113</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1684250443113</updated>
+    </task>
+    <task id="LOCAL-00018" summary="Updated files">
+      <created>1687019952588</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1687019952588</updated>
+    </task>
+    <task id="LOCAL-00019" summary="Chapter 5, Chapter 6, Tutorial 1">
+      <created>1697086026969</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1697086026970</updated>
+    </task>
+    <task id="LOCAL-00020" summary="Updated README.md file for Part 2. Changed StepByStep01 to Tutorial01.">
+      <created>1697197645344</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1697197645344</updated>
+    </task>
+    <task id="LOCAL-00021" summary="Updated files for chapters 5, 6, 7, 8, 9 and 10.">
+      <option name="closed" value="true" />
+      <created>1706873359843</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1706873359843</updated>
+    </task>
+    <task id="LOCAL-00022" summary="Updated files for chapters 5, 6, 7, 8, 9 and 10.">
+      <option name="closed" value="true" />
+      <created>1706874655173</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1706874655173</updated>
+    </task>
+    <task id="LOCAL-00023" summary="Updated files for chapters 5 to 11.">
+      <option name="closed" value="true" />
+      <created>1714343176869</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1714343176869</updated>
+    </task>
+    <task id="LOCAL-00024" summary="Updated files for chapter 11.">
+      <option name="closed" value="true" />
+      <created>1714537832707</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1714537832707</updated>
+    </task>
+    <task id="LOCAL-00025" summary="Updated files for chapter 12.">
+      <option name="closed" value="true" />
+      <created>1719706139190</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1719706139190</updated>
+    </task>
+    <task id="LOCAL-00026" summary="Updated files for chapter 13.">
+      <option name="closed" value="true" />
+      <created>1719706208995</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1719706208995</updated>
+    </task>
+    <task id="LOCAL-00027" summary="Updated files for chapter 12.">
+      <option name="closed" value="true" />
+      <created>1722386671559</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1722386671559</updated>
+    </task>
+    <task id="LOCAL-00028" summary="Updated files for parts I and II and updated chapter numbering for entire book.">
+      <option name="closed" value="true" />
+      <created>1726954199642</created>
+      <option name="number" value="00028" />
+      <option name="presentableId" value="LOCAL-00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1726954199642</updated>
+    </task>
+    <task id="LOCAL-00029" summary="Updated files for parts I and II and updated chapter numbering for entire book.">
+      <option name="closed" value="true" />
+      <created>1726955541849</created>
+      <option name="number" value="00029" />
+      <option name="presentableId" value="LOCAL-00029" />
+      <option name="project" value="LOCAL" />
+      <updated>1726955541849</updated>
+    </task>
+    <task id="LOCAL-00030" summary="Updated files after review of Chapters 5, 6 and 4.">
+      <option name="closed" value="true" />
+      <created>1728687495495</created>
+      <option name="number" value="00030" />
+      <option name="presentableId" value="LOCAL-00030" />
+      <option name="project" value="LOCAL" />
+      <updated>1728687495495</updated>
+    </task>
+    <task id="LOCAL-00031" summary="Updated files after review of Chapter 7.">
+      <option name="closed" value="true" />
+      <created>1729605455224</created>
+      <option name="number" value="00031" />
+      <option name="presentableId" value="LOCAL-00031" />
+      <option name="project" value="LOCAL" />
+      <updated>1729605455224</updated>
+    </task>
+    <task id="LOCAL-00032" summary="Updated files after review of Chapter 7.">
+      <option name="closed" value="true" />
+      <created>1729947453680</created>
+      <option name="number" value="00032" />
+      <option name="presentableId" value="LOCAL-00032" />
+      <option name="project" value="LOCAL" />
+      <updated>1729947453680</updated>
+    </task>
+    <task id="LOCAL-00033" summary="Updated files after review of Chapter 10.">
+      <option name="closed" value="true" />
+      <created>1729947510465</created>
+      <option name="number" value="00033" />
+      <option name="presentableId" value="LOCAL-00033" />
+      <option name="project" value="LOCAL" />
+      <updated>1729947510465</updated>
+    </task>
+    <task id="LOCAL-00034" summary="Updated files before reviewing Chapters 11 and 12.">
+      <option name="closed" value="true" />
+      <created>1730136950208</created>
+      <option name="number" value="00034" />
+      <option name="presentableId" value="LOCAL-00034" />
+      <option name="project" value="LOCAL" />
+      <updated>1730136950208</updated>
+    </task>
+    <task id="LOCAL-00035" summary="Updated files before reviewing Chapter 13.">
+      <option name="closed" value="true" />
+      <created>1732231181825</created>
+      <option name="number" value="00035" />
+      <option name="presentableId" value="LOCAL-00035" />
+      <option name="project" value="LOCAL" />
+      <updated>1732231181825</updated>
+    </task>
+    <option name="localTasksCounter" value="36" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Example files for Chapter 1" />
+    <MESSAGE value="Example files for Chapter 1 - Updated readme files" />
+    <MESSAGE value="Updated readme files" />
+    <MESSAGE value="Updated exercises and module examples" />
+    <MESSAGE value="Added examples with modules (temporary)" />
+    <MESSAGE value="Added Chapter 2" />
+    <MESSAGE value="Updated Chapter 2 + readme files" />
+    <MESSAGE value="Split old Chapter 2 into new Chapters 2 (SVG) and 3 (Web/JavaScript)" />
+    <MESSAGE value="Updated files" />
+    <MESSAGE value="Chapter 5, Chapter 6, Tutorial 1" />
+    <MESSAGE value="Updated README.md file for Part 2. Changed StepByStep01 to Tutorial01." />
+    <MESSAGE value="Updated files for chapters 5, 6, 7, 8, 9 and 10." />
+    <MESSAGE value="Updated files for chapters 5 to 11." />
+    <MESSAGE value="Updated files for chapter 11." />
+    <MESSAGE value="Updated files for chapter 13." />
+    <MESSAGE value="Updated files for chapter 12." />
+    <MESSAGE value="Updated files for parts I and II and updated chapter numbering for entire book." />
+    <MESSAGE value="Updated files after review of Chapters 5, 6 and 4." />
+    <MESSAGE value="Updated files after review of Chapter 7." />
+    <MESSAGE value="Updated files after review of Chapter 10." />
+    <MESSAGE value="Updated files before reviewing Chapters 11 and 12." />
+    <MESSAGE value="Updated files before reviewing Chapter 13." />
+    <option name="LAST_COMMIT_MESSAGE" value="Updated files before reviewing Chapter 13." />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/Part2/Chapter09/Logarithmic/7-symlog-log-compare.html</url>
+          <line>29</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/Part2/Chapter13/Timers/js/timer-utils.js</url>
+          <line>3</line>
+          <option name="timeStamp" value="2" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/Part2/Chapter13/SVG/2-d3-svg-animateMotion.html</url>
+          <line>29</line>
+          <option name="timeStamp" value="3" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/Part2/Chapter14/Events/1-simple-handler.html</url>
+          <line>50</line>
+          <option name="timeStamp" value="4" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/Part1/Chapter04/DynamicBar/5-modules/js/render.js</url>
+          <line>65</line>
+          <option name="timeStamp" value="5" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/DVS/lab/pesticides/index.html</url>
+          <line>68</line>
+          <option name="timeStamp" value="6" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/Part2/Chapter13/StepByStep/final-no-images/js/view.js</url>
+          <line>102</line>
+          <option name="timeStamp" value="7" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/DVS/ke/project_folder/modules/histogram.js</url>
+          <line>58</line>
+          <option name="timeStamp" value="8" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/Learn_D3js_2023$6_line_multiple_html_test_js.info" NAME="6-line-multiple.html.test.js Coverage Results" MODIFIED="1712690646913" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="JestJavaScriptTestRunnerCoverage" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
+  </component>
+</project>
