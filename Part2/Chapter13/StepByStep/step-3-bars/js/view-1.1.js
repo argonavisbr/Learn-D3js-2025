@@ -39,8 +39,8 @@ function show(dataFrame) {
 }
 
 function drawBars(data) {
-    const barWidth = d => app.scale.x(d.value) - app.scale.x(0);
-    const barRank = d => `translate(${[app.scale.x(0), app.scale.y(d.rank)]})`;
+    const initWidth = d => app.scale.x(d.value) - app.scale.x(0);
+    const initRank = d => `translate(${[app.scale.x(0), app.scale.y(d.rank)]})`;
     const visible = data.slice(0, app.numBars);
 
     const entry =  svg.select(".entries")
@@ -48,12 +48,12 @@ function drawBars(data) {
         .data(visible)
         .join("g")
              .attr("class", "entry")
-             .attr("transform", barRank);
+             .attr("transform", initRank);
 
     entry.append("rect")
         .attr("class", "bar")
         .attr("height", app.scale.y.bandwidth())
-        .attr("width", d => barWidth(d))
+        .attr("width", d => initWidth(d))
         .style("fill", d => app.color(d.country));
 
     entry.append("text")
@@ -65,6 +65,6 @@ function drawBars(data) {
     entry.append("text")
         .attr("class", "value label")
         .attr("y", app.scale.y.bandwidth()/2)
-        .attr("x", d => barWidth(d) + 5)
+        .attr("x", d => initWidth(d) + 5)
         .text(d => app.fmt(d.value).replace('G', 'B'))
 }

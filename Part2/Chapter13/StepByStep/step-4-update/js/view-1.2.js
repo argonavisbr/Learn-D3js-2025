@@ -53,18 +53,18 @@ function drawBars(data) {
 }
 
 function joinEnter(enter) {
-    const barWidth = d => app.scale.x(d.value) - app.scale.x(0);
-    const barRank = d => `translate(${[app.scale.x(0), app.scale.y(d.rank)]})`;
+    const initWidth = d => app.scale.x(d.value) - app.scale.x(0);
+    const initRank = d => `translate(${[app.scale.x(0), app.scale.y(d.rank)]})`;
 
     const enterGrp =
         enter.append("g")
             .attr("class", "entry")
-            .attr("transform", barRank);
+            .attr("transform", initRank);
 
     enterGrp.append("rect")
         .attr("class", "bar")
         .attr("height", app.scale.y.bandwidth())
-        .attr("width", d => barWidth(d))
+        .attr("width", d => initWidth(d))
         .style("fill", d => app.color(d.country));
 
     enterGrp.append("text")
@@ -76,7 +76,7 @@ function joinEnter(enter) {
     enterGrp.append("text")
         .attr("class", "value label")
         .attr("y", app.scale.y.bandwidth()/2)
-        .attr("x", d => barWidth(d) + 5)
+        .attr("x", d => initWidth(d) + 5)
         .text(d => app.fmt(d.value).replace('G', 'B'));
 
     return enterGrp;

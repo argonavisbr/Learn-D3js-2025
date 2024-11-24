@@ -1,0 +1,61 @@
+text, p, h1 {
+    font-family: sans-serif;
+    font-size: 10px;
+}
+
+.label {
+    font-variant-numeric: tabular-nums; /* fixed width for digits */
+    alignment-baseline: middle;
+    font-family: "Arial Narrow", sans-serif;
+    text-anchor: start; /* default - changes with textInside variable */
+}
+.name.label { /* names */
+    font-size: 12px;
+    font-weight: bold;
+    text-anchor: end;
+}
+.value.label { /* values */
+    font-size: 10px;
+    font-weight: normal;
+}
+
+.step.label {
+    alignment-baseline: baseline;
+    font-size:  36px;
+    text-anchor: end;
+}
+
+.bar {
+    fill-opacity: 0.9;
+    fill: lightseagreen;
+    stroke: black;
+    stroke-width: .5;
+    stroke-opacity: .3;
+}
+
+/* page */
+h1 {
+    font-size: 20px;
+}
+p {
+    font-size: 14px;
+}
+
+svg.chart {
+    background: #dfe6df;
+    float: left;
+    margin-right: 20px;
+}
+
+/* axes */
+.tick line {
+    stroke: white;
+    stroke-opacity: 0.7;
+    stroke-dasharray: 3 3;
+}
+.tick:first-of-type line {
+    stroke-opacity: .1;
+}
+.tick text {
+    fill: black;
+}

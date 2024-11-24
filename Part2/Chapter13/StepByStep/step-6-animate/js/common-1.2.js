@@ -11,9 +11,9 @@ const dim = {
 
 // An object for global settings, functions and configurations
 const app = {
-    dur: 1000,          // duration of the transition that changes the order of the bars
     barHeight: 40,      // will be used to compute the height of the chart
     numBars: 10,        // will be used to compute the height of the chart
+    duration: 1000,     // duration of the transitions
     scale: {
         x: d3.scaleLinear().range([dim.margin.left, dim.width - dim.margin.right]),
         y: d3.scaleBand().padding(0.1)
@@ -28,8 +28,9 @@ app.scale.y.domain(d3.range(app.numBars+1))
            .range([dim.margin.top, dim.height - dim.margin.bottom + dim.height/app.numBars]);
 
 function getTransition() {
-    return d3.transition().duration(app.dur).ease(d3.easeLinear);
+    return d3.transition().duration(app.duration).ease(d3.easeLinear);
 }
+
 
 
 

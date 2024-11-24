@@ -23,28 +23,28 @@ function prepare(rawData) {
     const byYearArray = [...byYearMap].sort((a,b) => d3.ascending(a[0],b[0]));
 
     // 3) Set the data for the chart.
-    //chart.data = byYearArray.map(([y,d]) => [y, rank(d)]);
-    chart.data = interpolateDataFrames(byYearArray, app.numFrames); // data now contains numFrames more frames per year
-
+    //chart.data = byYearArray.map(([year,dataMap]) => [year, rank(dataMap)]);
+    chart.data = interpolateDataFrames(byYearArray); // data now contains numFrames more frames per year
+console.log(chart.data)
     // 4) Create maps used by updates to decide how to move bars
     createNavigationMaps();
 }
 
 function createNavigationMaps() {
-    // 1) Map with all the keys and their intermediate values and ranks. This is used to
-    //    configure the chart.nxt and chart.prv maps.
-    const dataMap = d3.groups(chart.data.flatMap(([, data]) => data), d => d.country);
+    // 1) Array containing objects grouped by country used to configure the chart.nxt and chart.prv maps.
+    const allObjects = chart.data.flatMap(([, data]) => data);
+    const byCountry = d3.groups(allObjects, d => d.country);
 
     // 2) Map that gets the next object, given the current one
-    const nextMap = new Map(dataMap.flatMap(([_, data]) => d3.pairs(data)));
+    const nextMap = new Map(byCountry.flatMap(([_, data]) => d3.pairs(data)));
     chart.nxt = d => nextMap.get(d) || d;
 
     // 3) Map that gets the previous object, given the current one
-    const prevMap = new Map(dataMap.flatMap(([_, data]) => d3.pairs(data).map(([a, b]) => [b, a])));
+    const prevMap = new Map(byCountry.flatMap(([_, data]) => d3.pairs(data).map(([a, b]) => [b, a])));
     chart.prv = d => prevMap.get(d) || d;
 }
 
-function interpolateDataFrames(data, numFrames) {
+function interpolateDataFrames(data) {
     const dataFrames = [];
     for (let pair of d3.pairs(data)) {
 
@@ -52,8 +52,8 @@ function interpolateDataFrames(data, numFrames) {
         const [year1, dataMap1] = entry1;
         const [year2, dataMap2] = entry2;
 
-        for (let i = 0; i < numFrames; ++i) {
-            const t = i / numFrames;
+        for (let i = 0; i < app.numFrames; ++i) {
+            const t = i / app.numFrames;
 
             const interpolatedYear = year1 * (1 - t)
                                    + year2 * t;

@@ -9,5 +9,5 @@ const file = "../../data/un_gdp.csv";
 data.load(file)
     .then(() => {
         view.draw();
-        animation.controls();
+        animation.start();
     });

@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Using transition.end() and pause/resume events</title>
+    <style>
+        svg {
+            border: 1px solid black;
+        }
+        path {
+            stroke-width: 3;
+        }
+    </style>
+</head>
+<body>
+<h1>Using transition.end() and pause/resume events</h1>
+<div></div>
+<script type="module">
+    import * as d3 from "https://cdn.skypack.dev/d3@7";
+
+    const dim = { width: 800, height: 300 };
+    const format = d3.format(",d");
+
+    const svg = d3.select("body")
+                  .append("svg")
+                  .attr("width", dim.width)
+                  .attr("height", dim.height);
+
+    const positions = [150, 300, 450, 600];
+    const colors = ["red", "green", "blue", "purple"];
+    const data = positions.map((d, i) => ({x: d, color: colors[i], i: i}));
+
+    function getTransition() {
+        return d3.transition()
+                 .duration(duration)
+                 .ease(d3.easeLinear);
+    }
+
+    const duration = 1000;
+    const count = 0;
+
+    let trs = svg.selectAll("circle")
+                 .data(data)
+                   .join("circle")
+                     .attr("r", 50)
+                     .attr("cx", d => d.x)
+                     .attr("cy", -dim.height / 2)
+                     .style("fill", d => d.color)
+                     .transition(getTransition())
+                       .delay((d, i) => i * 500)
+                       .attr("cy", dim.height / 2);
+    monitor(trs, 0);
+
+    const state = [];
+    let paused = false;
+
+    d3.select("div")
+        .append("button")
+        .text(paused ? "Resume" : "Pause")
+        .on("click", function() {
+            if(!paused) {
+                svg.selectAll("circle").interrupt();
+            } else {
+                state.forEach((s,i) => {
+                    const tr2 = s.object
+                                 .transition(getTransition())
+                                    .duration(duration - s.t)
+                                    .delay(i * 500)
+                                    .attr("cy", dim.height/2);
+                    monitor(tr2, s.t);
+                });
+                state.length = 0;
+            }
+            paused = !paused;
+            d3.select(this).text(paused ? "Resume" : "Pause");
+        });
+
+    d3.select("div")
+        .append("button")
+        .text("Reload page")
+        .on("click", () => location.reload());
+
+    function monitor(transition, startTime) {
+
+        let start = startTime;
+
+        transition.on("start", d => {
+            start = d3.now();
+            console.log(`on.start: Transition ${d.i} started`);
+        })
+
+        transition.on("interrupt", function (d) {
+            const sel = {
+                transition: d.i,
+                object: d3.select(this),
+                t: d3.now() - start
+            };
+            state.push(sel);
+            console.log(`on.interrupt: Transition ${d.i} interrupted after ${format(sel.t)} ms with cy = ${sel.object.attr("cy")}`);
+        })
+
+        transition.on("cancel", function (d) {
+            const sel = {
+                transition: d.i,
+                object: d3.select(this),
+                t: 0
+            };
+            state.push(sel);
+            console.log(`on.cancel: Transition ${d.i} cancelled at ${format(d3.now() - start)} ms`);
+        });
+
+        transition.on("end", (d) => { // Event at end of *each* move transition
+            console.log(`on.end: Transition ${d.i} ended after ${format(d3.now() - start)} ms`);
+        });
+
+        const promise = transition.end();
+        promise.then(d => {
+            if (d && d.color)
+                console.log(`end().then(): Transition ended for ${d.color} ball.`);
+        }).catch(d => {
+            if (d && d.color)
+                console.log(`end().catch(): Transition interrupted at ${d.color} ball.`);
+        });
+
+    }
+
+
+
+</script>
+</body>
+</html>

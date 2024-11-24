@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Custom tweens: styleTween</title>
+    <style>
+        circle {
+            fill: red;
+        }
+        text.test {
+            font-size: 24pt;
+        }
+    </style>
+</head>
+<body>
+<script type="module">
+    import * as d3 from "https://cdn.skypack.dev/d3@7";
+    import {createTransitionPanel, monitorTransition} from "./js/transition-display.js";
+
+    // This script is used to display a panel that shows the current state of the transition
+    const svg1 = d3.select("body")
+        .append("svg")
+        .attr("width", 800)
+        .attr("height", 100);
+    createTransitionPanel(svg1);
+
+    // This is the main script that creates a transition with a custom tween
+    let count = 0;
+    const delay = 1000;
+    const dur = 3000;
+    const svg = d3.select("body")
+                  .append("svg")
+                  .attr("width", 800)
+                  .attr("height", 600);
+
+    svg.append("g")
+        .attr("class", "log")
+        .attr("transform", "translate(50,50)");
+
+    const finalFill = "blue";
+    const fmt = d3.format(".3f");
+
+    // The custom tweens here were purposefully made verbose to show the process.
+    // You can write the entire tween function in a single line if you prefer.
+    // See 4-multiple.html for some examples.
+
+    const trs =
+        svg.append("circle")
+        .attr("transform", "translate(400,100)")
+        .attr("r", 80) // initial value
+        .transition()
+            .delay(delay)
+            .duration(dur)
+            .ease(d3.easeLinear)
+            .styleTween("fill", function() {    // same effect as .style("fill", "blue")
+                // A) This part runs ONCE for each element in the selection
+                const initialFill = d3.select(this).style("fill");
+                console.log("Tweening fill " + fmt(initialFill) + " to " + fmt(finalFill));
+
+                // This is the interpolation function that computes the value for the current frame
+                const interpolator = d3.interpolate(initialFill, finalFill);
+
+                // B) This function is called FOR EACH FRAME of the transition
+                return function(t) {
+                    // This is the value after the last frame
+                    const prevFill = d3.select(this).style("fill"); // previous tweened value
+
+                    // This is the interpolated value for the current frame
+                    const newFill = interpolator(t);
+
+                    // Show the values on the screen and in the console
+                    const log = [
+                        `t: ${fmt(t)}`,
+                        `frame: ${++count}`,
+                        `initial fill: ${initialFill}`,
+                        `previous fill: ${prevFill}`,
+                        `new fill: ${newFill}`];
+                    console.log(log.join("\n"));
+                    d3.select(".log").selectAll("text")
+                        .data(log)
+                        .join("text")
+                        .attr("dy", (d, i) => `${i}em`)
+                        .text(d => d);
+
+                    return newFill; // return the computed value
+                }
+            });
+
+    // This attaches the transition to the panel so it will show its progress
+    monitorTransition(trs, delay, dur);
+
+</script>
+</body>
+</html>

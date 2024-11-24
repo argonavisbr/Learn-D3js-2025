@@ -50,11 +50,11 @@ svg.chart {
 /* axes */
 .tick line {
     stroke: white;
-    stroke-opacity: 0.8;
+    stroke-opacity: 0.7;
     stroke-dasharray: 3 3;
 }
 .tick:first-of-type line {
-    stroke-opacity: .1;
+    stroke-opacity: 0;
 }
 .tick text {
     fill: black;

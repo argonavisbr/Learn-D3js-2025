@@ -26,6 +26,7 @@ export function draw() {
     svg.append("g")
         .attr("class", "entries");
 
+    // 4) Show the first year
     show(chart.data[0]);
 }
 
@@ -54,18 +55,18 @@ function drawBars(data) {
 }
 
 function joinEnter(enter) {
-    const prevRank = d => `translate(${[app.scale.x(0), app.scale.y(chart.prv(d).rank)]})`; // previous rank position
-    const prevWidth  = d => app.scale.x(chart.prv(d).value) - app.scale.x(0); // previous width
+    const initRank = d => `translate(${[app.scale.x(0), app.scale.y(chart.prv(d).rank)]})`;
+    const initWidth  = d => app.scale.x(chart.prv(d).value) - app.scale.x(0);
 
     const enterGrp =
         enter.append("g")
             .attr("class", "entry")
-            .attr("transform", prevRank)
+            .attr("transform", initRank)
 
     enterGrp.append("rect")
         .attr("class", "bar")
         .attr("height", app.scale.y.bandwidth())
-        .attr("width", prevWidth)
+        .attr("width", initWidth)
         .style("fill", d => app.color(d.country));
 
     enterGrp.append("text")
@@ -77,7 +78,7 @@ function joinEnter(enter) {
     enterGrp.append("text")
         .attr("class", "value label")
         .attr("y", app.scale.y.bandwidth()/2)
-        .attr("x", d => prevWidth(d) + 5)
+        .attr("x", d => initWidth(d) + 5)
         .text(d => app.fmt(d.value).replace('G', 'B'));
 
     return enterGrp;

@@ -4,29 +4,71 @@ Files and exercises for chapter 13.
 
 ## 1) Description of each subfolder in this folder
 
-__`TODO/`__
+__`Timers/`__
 
-Description.
+Examples using timers.
 
-__`TODO/`__
+__`Transitions/`__
 
-Description.
+Examples using transitions.
 
-__`TODO/`__
+__`Tweens/`__
 
-Description.
+Examples using style and attribute transitions.
 
-__`TODO/`__
+__`Ease/`__
 
-Description.
+Examples using different easing functions.
+
+__`CustomTweens/`__
+
+Examples using custom tweens.
+
+__`TextTransitions/`__
+
+Examples using transitions with text.
+
+__`Lifecycle/`__
+
+Examples and animations demonstrating the lifecycle of one or several transitions.
+
+__`Sync/`__
+
+Examples using interruptions and transition synchronization.
+
+__`Multiple/`__
+
+Examples using multiple concurrent or chained transitions.
+
+__`Animations/`__
+
+Animation examples.
+
+__`SVG/`__
+
+SVG examples.
 
 __`StepByStep/`__
 
-Description.
+A step-by-step tutorial.
+
+__`Examples/`__
+
+Additional examples.
+
+__`Exercises/`__
+
+Templates and solutions for exercises.
+
+__`js/`__
+
+Scripts and modules used by several examples.
+
+__`css/`__
+
+Stylesheets used by several examples.
 
 __`data/`__
-
-Description.
 
 Resources used by examples and exercises in the other folders (they are loaded using relative URLs).
 

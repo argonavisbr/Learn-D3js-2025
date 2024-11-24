@@ -18,8 +18,8 @@ function prepare(rawData) {
 
     // 2) Create a nested map of values per date and then name, convert to array and sort by date
     const byYearMap = d3.rollup(rawData, v => v[0].value,
-        d => d.year,
-        d => d.country);
+                                         d => d.year,
+                                            d => d.country);
     const byYearArray = [...byYearMap].sort((a,b) => d3.ascending(a[0],b[0]));
 
     // 3) Set the data for the chart.
@@ -30,16 +30,16 @@ function prepare(rawData) {
 }
 
 function createNavigationMaps() {
-    // 1) Map with all the keys and their intermediate values and ranks. This is used to
-    //    configure the chart.nxt and chart.prv maps.
-    const dataMap = d3.groups(chart.data.flatMap(([, data]) => data), d => d.country);
+    // 1) Array containing objects grouped by country used to configure the chart.nxt and chart.prv maps.
+    const allObjects = chart.data.flatMap(([, data]) => data);
+    const byCountry = d3.groups(allObjects, d => d.country);
 
     // 2) Map that gets the next object, given the current one
-    const nextMap = new Map(dataMap.flatMap(([_, data]) => d3.pairs(data)));
+    const nextMap = new Map(byCountry.flatMap(([_, data]) => d3.pairs(data)));
     chart.nxt = d => nextMap.get(d) || d;
 
     // 3) Map that gets the previous object, given the current one
-    const prevMap = new Map(dataMap.flatMap(([_, data]) => d3.pairs(data).map(([a, b]) => [b, a])));
+    const prevMap = new Map(byCountry.flatMap(([_, data]) => d3.pairs(data).map(([a, b]) => [b, a])));
     chart.prv = d => prevMap.get(d) || d;
 }
 
