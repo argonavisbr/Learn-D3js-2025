@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>SVG gradients and patterns</title>
+    <script src="https://cdn.jsdelivr.net/npm/d3-selection@3"></script>
+</head>
+<style>
+    svg {
+        border: solid 1px lightgray;
+    }
+    rect {
+        stroke: black;
+    }
+</style>
+<body>
+<h2>SVG gradients and patterns</h2>
+<script>
+
+    const svg = d3.select("body").append("svg")
+                    .attr("width", 600)
+                    .attr("height", 300);
+
+    const defs = svg.append("defs");
+
+    defs.append("pattern")
+        .attr("id", "diamond")
+        .attr("viewBox", "0 0 10 10")
+        .attr("width", 10)
+        .attr("height", 10)
+        .attr("patternUnits", "userSpaceOnUse")
+        .append("polygon")
+            .attr("points", "0,5 5,0 10,5 5,10");
+
+    defs.append("pattern")
+        .attr("id", "thick-backhatch")
+        .attr("viewBox", "0 0 10 10")
+        .attr("width", 10)
+        .attr("height", 10)
+        .attr("patternUnits", "userSpaceOnUse")
+        .each(function() {
+            d3.select(this).append("polygon")
+                .attr("points", "0,0 5,0 10,5 10,10");
+            d3.select(this).append("polygon")
+                .attr("points", "0,5 0,10 5,10");
+        });
+
+    defs.append("pattern")
+        .attr("id", "hatch")
+        .attr("viewBox", "0 0 10 10")
+        .attr("width", 10)
+        .attr("height", 10)
+        .attr("patternUnits", "userSpaceOnUse")
+        .each(function() {
+            d3.select(this).append("path")
+                .attr("d", "M0,0 L0,2 8,10 10,10 z");
+            d3.select(this).append("path")
+                .attr("d", "M8,0 L10,0 10,2 z");
+        });
+
+    defs.append("pattern")
+        .attr("id", "backhatch")
+        .attr("viewBox", "0 0 10 10")
+        .attr("width", 10)
+        .attr("height", 10)
+        .attr("patternUnits", "userSpaceOnUse")
+        .each(function() {
+            d3.select(this).append("path")
+                .attr("d", "M0,0 L0,2 8,10 10,10 z")
+                .attr("transform", "rotate(90,5,5)");
+            d3.select(this).append("path")
+                .attr("d", "M8,0 L10,0 10,2 z")
+                .attr("transform", "rotate(90,5,5)");
+        });
+
+    defs.append("pattern")
+        .attr("id", "crosshatch")
+        .attr("viewBox", "0 0 10 10")
+        .attr("width", 10)
+        .attr("height", 10)
+        .attr("patternUnits", "userSpaceOnUse")
+        .each(function() {
+            d3.select(this).append("path")
+                .attr("d", "M0,0 L0,2 8,10 10,10 z");
+            d3.select(this).append("path")
+                .attr("d", "M8,0 L10,0 10,2 z");
+            d3.select(this).append("path")
+                .attr("d", "M0,0 L0,2 8,10 10,10 z")
+                .attr("transform", "rotate(90,5,5)");
+            d3.select(this).append("path")
+                .attr("d", "M8,0 L10,0 10,2 z")
+                .attr("transform", "rotate(90,5,5)");
+        });
+
+    svg.append("rect")
+        .attr("height", 50)
+        .attr("width", 200)
+        .style("fill", "url(#thick-backhatch)")
+        .attr("transform", "translate(50,10)");
+
+    svg.append("rect")
+        .attr("height", 50)
+        .attr("width", 100)
+        .style("fill", "url(#hatch)")
+        .attr("transform", "translate(50,65)");
+
+    svg.append("rect")
+        .attr("height", 50)
+        .attr("width", 300)
+        .style("fill", "url(#crosshatch)")
+        .attr("transform", "translate(50,120)");
+
+    svg.append("rect")
+        .attr("height", 50)
+        .attr("width", 400)
+        .style("fill", "url(#diamond)")
+        .attr("transform", "translate(50,175)");
+
+    svg.append("rect")
+        .attr("height", 50)
+        .attr("width", 500)
+        .style("fill", "url(#backhatch)")
+        .attr("transform", "translate(50,230)");
+
+</script>
+</body>
+</html>

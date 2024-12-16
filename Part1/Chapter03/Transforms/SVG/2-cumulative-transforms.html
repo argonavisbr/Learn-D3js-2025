@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>SVG transform scale-translate</title>
+    <link rel="stylesheet" href="css/transform-examples.css">
+</head>
+<body>
+<h2>SVG cumulative transforms</h2>
+<p>Open console for equivalent <code>matrix()</code> transform.</p>
+<div class="view" width="600">
+    <p><b><code>translate(75,50) scale(0.5)</code></b> ___ or ___ <b><code id="matrix-0"></code></b></p>
+<svg width="600" height="400" viewBox="-300 -200 600 400">
+    <defs>
+        <marker id="arrow" markerWidth="10" markerHeight="6"
+                refY="3" refX="8" orient="auto-start-reverse"
+                markerUnits="strokeWidth">
+            <path d="M0,0 L0,6 L9,3 z"/>
+        </marker>
+    </defs>
+
+    <!-- No transform -->
+    <line x1="-300" y1="0" x2="300" y2="0" stroke="black" stroke-width="2" marker-end="url(#arrow)" marker-start="url(#arrow)"/>
+    <line y1="-200" y2="200" stroke="black" stroke-width="2" marker-end="url(#arrow)" marker-start="url(#arrow)"/>
+
+    <g class="no-tr"> <!-- The visible quadrant -->
+        <circle cx="25" cy="25" r="50"/>
+
+        <!-- First transform -->
+        <g transform="translate(75,50)" class="first-tr">
+            <line x1="-300" y1="0" x2="300" y2="0" stroke="blue" stroke-width="2" marker-end="url(#arrow)" marker-start="url(#arrow)"/>
+            <line y1="-200" y2="200" stroke="blue" stroke-width="2" marker-end="url(#arrow)" marker-start="url(#arrow)"/>
+            <circle cx="25" cy="25" r="50"/>
+        </g>
+
+        <!-- Second transform -->
+        <g transform="translate(75,50) scale(0.5)" class="second-tr">
+            <line x1="-300" y1="0" x2="300" y2="0" stroke="red" stroke-width="2" marker-end="url(#arrow)" marker-start="url(#arrow)"/>
+            <line y1="-200" y2="200" stroke="red" stroke-width="2" marker-end="url(#arrow)" marker-start="url(#arrow)"/>
+            <circle cx="25" cy="25" r="50"/>
+        </g>
+    </g>
+</svg>
+</div>
+<div class="view" width="600">
+    <p><b><code>scale(0.5) translate(75,50)</code></b> ___ or ___ <b><code id="matrix-1"></code></b></p>
+<!-- Same transforms in different order -->
+<svg width="600" height="400" viewBox="-300 -200 600 400">
+    <defs>
+        <marker id="arrow" markerWidth="10" markerHeight="6"
+                refY="3" refX="8" orient="auto-start-reverse"
+                markerUnits="strokeWidth">
+            <path d="M0,0 L0,6 L9,3 z"/>
+        </marker>
+    </defs>
+
+    <!-- No transform -->
+    <line x1="-300" y1="0" x2="300" y2="0" stroke="black" stroke-width="2" marker-end="url(#arrow)" marker-start="url(#arrow)"/>
+    <line y1="-200" y2="200" stroke="black" stroke-width="2" marker-end="url(#arrow)" marker-start="url(#arrow)"/>
+
+    <g class="no-tr"> <!-- The visible quadrant -->
+        <circle cx="25" cy="25" r="50"/>
+
+        <!-- First transform -->
+        <g transform="scale(0.5)" class="first-tr">
+            <line x1="-300" y1="0" x2="300" y2="0" stroke="blue" stroke-width="2" marker-end="url(#arrow)" marker-start="url(#arrow)"/>
+            <line y1="-200" y2="200" stroke="blue" stroke-width="2" marker-end="url(#arrow)" marker-start="url(#arrow)"/>
+            <circle cx="25" cy="25" r="50"/>
+        </g>
+
+        <!-- Second transform -->
+        <g transform="scale(0.5) translate(75,50)" class="second-tr">
+            <line x1="-300" y1="0" x2="300" y2="0" stroke="red" stroke-width="2" marker-end="url(#arrow)" marker-start="url(#arrow)"/>
+            <line y1="-200" y2="200" stroke="red" stroke-width="2" marker-end="url(#arrow)" marker-start="url(#arrow)"/>
+            <circle cx="25" cy="25" r="50"/>
+        </g>
+    </g>
+</svg>
+</div>
+<div class="view" width="600">
+    <p><b><code>scale(0.5) translate(150,100)</code></b> ___ or ___ <b><code id="matrix-2"></code></b></p>
+<!-- Same transforms in different order but compensated -->
+<svg width="600" height="400" viewBox="-300 -200 600 400">
+    <defs>
+        <marker id="arrow" markerWidth="10" markerHeight="6"
+                refY="3" refX="8" orient="auto-start-reverse"
+                markerUnits="strokeWidth">
+            <path d="M0,0 L0,6 L9,3 z"/>
+        </marker>
+    </defs>
+
+    <line x1="-300" y1="0" x2="300" y2="0" stroke="black" stroke-width="2" marker-end="url(#arrow)" marker-start="url(#arrow)"/>
+    <line y1="-200" y2="200" stroke="black" stroke-width="2" marker-end="url(#arrow)" marker-start="url(#arrow)"/>
+
+    <!-- No transform -->
+    <g class="no-tr"> <!-- The visible quadrant -->
+        <circle cx="25" cy="25" r="50"/>
+
+        <!-- First transform -->
+        <g transform="scale(0.5)" class="first-tr">
+            <line x1="-300" y1="0" x2="300" y2="0" stroke="blue" stroke-width="2" marker-end="url(#arrow)" marker-start="url(#arrow)"/>
+            <line y1="-200" y2="200" stroke="blue" stroke-width="2" marker-end="url(#arrow)" marker-start="url(#arrow)"/>
+            <circle cx="25" cy="25" r="50"/>
+        </g>
+
+        <!-- Second transform -->
+        <g transform="scale(0.5) translate(150,100)" class="second-tr">
+            <line x1="-300" y1="0" x2="300" y2="0" stroke="red" stroke-width="2" marker-end="url(#arrow)" marker-start="url(#arrow)"/>
+            <line y1="-200" y2="200" stroke="red" stroke-width="2" marker-end="url(#arrow)" marker-start="url(#arrow)"/>
+            <circle cx="25" cy="25" r="50"/>
+        </g>
+    </g>
+</svg>
+</div>
+<script>
+    // Equivalent matrix() transform
+    const shape = document.querySelectorAll('.second-tr');
+    const svg = document.querySelector('svg');
+    shape.forEach((element, i) => {
+        const mx = element.getCTM();
+        const sm = svg.getCTM();
+        const transform = `matrix(${[mx.a-sm.a, mx.b-sm.b, mx.c-sm.c, mx.d-sm.d, mx.e-sm.e, mx.f-sm.f]})`;
+        console.log(`matrix-${i}`, transform);
+        const label = document.querySelector(`#matrix-${i}`);
+        label.innerHTML = transform;
+    });
+</script>
+</body>
+</html>

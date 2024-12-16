@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>JavaScript examples</title>
+</head>
+<body>
+<h1>JavaScript examples: </h1>
+<p>Open developer console to see results. Open code to see comments</p>
+<ul>
+    <li class="list">One</li>
+    <li class="list">Two</li>
+    <li class="list" id="tri">Three</li>
+</ul>
+<script>
+    // Retrieving
+    const obj1 = document.getElementById("tri");
+
+    const obj2 = document.querySelector("ul > li:nth-child(3)");
+    const obj3 = document.querySelectorAll("li");
+
+    const body = document.getElementsByTagName("body")[0];
+    const collection = document.getElementsByClassName("list");
+    const obj4 = Array.from(collection)[0];
+    const obj5 = collection.item(2);
+
+    const obj6 = document.documentElement;
+
+    console.log("obj1", obj1);
+    console.log("obj2", obj2);
+    console.log("obj3", obj3);
+    console.log("obj4", obj4);
+    console.log("obj5", obj5);
+    console.log("obj6", obj6);
+
+    // Creating
+    const li = document.createElement("li")
+    const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+    const text = document.createElementNS("http://www.w3.org/2000/svg", "text");
+    const textContent = document.createTextNode("abc");
+
+    // Modifying
+    text.appendChild(textContent);
+    svg.appendChild(text);
+    body.appendChild(svg);
+
+    // Styles
+    text.setAttribute("x",20);
+    text.setAttribute("y", text.getAttribute("x"));
+    svg.style.backgroundColor = "lightgray";
+    console.log(text.innerHTML);
+
+</script>
+</body>
+</html>

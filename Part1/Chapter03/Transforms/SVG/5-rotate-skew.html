@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>SVG transform-rotate-skew</title>
+    <link rel="stylesheet" href="css/transform-examples.css">
+</head>
+<body>
+<h2>SVG rotating-shearing</h2>
+<p>Open console for equivalent <code>matrix()</code> transform. Examples #2 and #5 use <code>transform-origin</code>.</p>
+<div class="view" width="300">
+    <p><b><code>rotate(-45)</code></b> ___ or ___ <b><code id="matrix-0"></code></b></p>
+<svg width="300" height="200" viewBox="-150 -100 300 200">
+    <defs>
+        <marker id="arrow" markerWidth="10" markerHeight="6"
+                refY="3" refX="8" orient="auto-start-reverse"
+                markerUnits="strokeWidth">
+            <path d="M0,0 L0,6 L9,3 z"/>
+        </marker>
+    </defs>
+
+    <!-- No transform -->
+    <line x1="-150" y1="0" x2="150" y2="0" stroke="black" stroke-width="2" marker-end="url(#arrow)" marker-start="url(#arrow)"/>
+    <line y1="-100" y2="100" stroke="black" stroke-width="2" marker-end="url(#arrow)" marker-start="url(#arrow)"/>
+
+    <g class="no-tr"> <!-- The visible quadrant -->
+        <polygon points="0,0 100,5 75,25 100,45 0,50"/>
+        <text alignment-baseline="middle" x="10" y="28" font-size="30px" font-weight="bold">SVG</text>
+
+        <g transform="rotate(-45)" class="first-tr">
+            <line x1="-150" y1="0" x2="150" y2="0" stroke="lightgreen" stroke-width="2" marker-end="url(#arrow)" marker-start="url(#arrow)"/>
+            <line y1="-100" y2="100" stroke="lightgreen" stroke-width="2" marker-end="url(#arrow)" marker-start="url(#arrow)"/>
+            <polygon points="0,0 100,5 75,25 100,45 0,50"/>
+            <text alignment-baseline="middle" x="10" y="28" font-size="30px" font-weight="bold">SVG</text>
+        </g>
+    </g>
+
+    <circle class="center" cx="0" cy="0" r="3" fill="red" stroke="black"/>
+</svg>
+</div>
+<div class="view" width="300">
+    <p><b><code>rotate(-45)</code></b> ___ or ___ <b><code id="matrix-1"></code></b></p>
+<!-- Same transforms in different order -->
+    <svg width="300" height="200" viewBox="-150 -100 300 200">
+    <defs>
+        <marker id="arrow" markerWidth="10" markerHeight="6"
+                refY="3" refX="8" orient="auto-start-reverse"
+                markerUnits="strokeWidth">
+            <path d="M0,0 L0,6 L9,3 z"/>
+        </marker>
+    </defs>
+
+    <!-- No transform -->
+    <line x1="-150" y1="0" x2="150" y2="0" stroke="black" stroke-width="2" marker-end="url(#arrow)" marker-start="url(#arrow)"/>
+    <line y1="-100" y2="100" stroke="black" stroke-width="2" marker-end="url(#arrow)" marker-start="url(#arrow)"/>
+
+    <g class="no-tr"> <!-- The visible quadrant -->
+        <polygon points="0,0 100,5 75,25 100,45 0,50"/>
+        <text alignment-baseline="middle" x="10" y="28" font-size="30px" font-weight="bold">SVG</text>
+
+        <!-- Flip about y-axis -->
+        <g transform="rotate(-45)" class="first-tr" transform-origin="50 25">
+            <line x1="-150" y1="0" x2="150" y2="0" stroke="lightgreen" stroke-width="2" marker-end="url(#arrow)" marker-start="url(#arrow)"/>
+            <line y1="-100" y2="100" stroke="lightgreen" stroke-width="2" marker-end="url(#arrow)" marker-start="url(#arrow)"/>
+            <polygon points="0,0 100,5 75,25 100,45 0,50"/>
+            <text alignment-baseline="middle" x="10" y="28" font-size="30px" font-weight="bold">SVG</text>
+        </g>
+    </g>
+
+    <circle class="center" cx="50" cy="25" r="3" fill="red" stroke="black"/>
+</svg>
+</div>
+<div class="view" width="300">
+    <p><b><code>rotate(-45,50,25)</code></b> ___ or ___ <b><code id="matrix-2"></code></b></p>
+    <!-- Same transforms in different order -->
+    <svg width="300" height="200" viewBox="-150 -100 300 200">
+        <defs>
+            <marker id="arrow" markerWidth="10" markerHeight="6"
+                    refY="3" refX="8" orient="auto-start-reverse"
+                    markerUnits="strokeWidth">
+                <path d="M0,0 L0,6 L9,3 z"/>
+            </marker>
+        </defs>
+
+        <!-- No transform -->
+        <line x1="-150" y1="0" x2="150" y2="0" stroke="black" stroke-width="2" marker-end="url(#arrow)" marker-start="url(#arrow)"/>
+        <line y1="-100" y2="100" stroke="black" stroke-width="2" marker-end="url(#arrow)" marker-start="url(#arrow)"/>
+
+        <g class="no-tr"> <!-- The visible quadrant -->
+            <polygon points="0,0 100,5 75,25 100,45 0,50"/>
+            <text alignment-baseline="middle" x="10" y="28" font-size="30px" font-weight="bold">SVG</text>
+
+            <!-- Flip about y-axis -->
+            <g transform="rotate(-45,50,25)" class="first-tr">
+                <line x1="-150" y1="0" x2="150" y2="0" stroke="lightgreen" stroke-width="2" marker-end="url(#arrow)" marker-start="url(#arrow)"/>
+                <line y1="-100" y2="100" stroke="lightgreen" stroke-width="2" marker-end="url(#arrow)" marker-start="url(#arrow)"/>
+                <polygon points="0,0 100,5 75,25 100,45 0,50"/>
+                <text alignment-baseline="middle" x="10" y="28" font-size="30px" font-weight="bold">SVG</text>
+            </g>
+        </g>
+
+        <circle class="center" cx="0" cy="0" r="3" fill="red" stroke="black"/>
+    </svg>
+</div>
+<div class="view" width="300">
+    <p><b><code>skewX(-30)</code></b> ___ or ___ <b><code id="matrix-3"></code></b></p>
+<!-- Same transforms in different order but compensated -->
+    <svg width="300" height="200" viewBox="-150 -100 300 200">
+    <defs>
+        <marker id="arrow" markerWidth="10" markerHeight="6"
+                refY="3" refX="8" orient="auto-start-reverse"
+                markerUnits="strokeWidth">
+            <path d="M0,0 L0,6 L9,3 z"/>
+        </marker>
+    </defs>
+
+    <line x1="-150" y1="0" x2="150" y2="0" stroke="black" stroke-width="2" marker-end="url(#arrow)" marker-start="url(#arrow)"/>
+    <line y1="-100" y2="100" stroke="black" stroke-width="2" marker-end="url(#arrow)" marker-start="url(#arrow)"/>
+
+    <g class="no-tr"> <!-- The visible quadrant -->
+        <polygon points="0,0 100,5 75,25 100,45 0,50"/>
+        <text alignment-baseline="middle" x="10" y="28" font-size="30px" font-weight="bold">SVG</text>
+
+        <!-- Flip horizontal (with transform origin in the middle of shape) -->
+        <g transform="skewY(-30)" class="first-tr">
+            <line x1="-150" y1="0" x2="150" y2="0" stroke="lightgreen" stroke-width="2" marker-end="url(#arrow)" marker-start="url(#arrow)"/>
+            <line y1="-100" y2="100" stroke="lightgreen" stroke-width="2" marker-end="url(#arrow)" marker-start="url(#arrow)"/>
+            <polygon points="0,0 100,5 75,25 100,45 0,50"/>
+            <text alignment-baseline="middle" x="10" y="28" font-size="30px" font-weight="bold">SVG</text>
+        </g>
+    </g>
+
+    <circle class="center" cx="0" cy="0" r="3" fill="red" stroke="black"/>
+</svg>
+</div>
+<div class="view" width="300">
+    <p><b><code>skewY(-30)</code></b> ___ or ___ <b><code id="matrix-4"></code></b></p>
+    <!-- Same transforms in different order but compensated -->
+    <svg width="300" height="200" viewBox="-150 -100 300 200">
+        <defs>
+            <marker id="arrow" markerWidth="10" markerHeight="6"
+                    refY="3" refX="8" orient="auto-start-reverse"
+                    markerUnits="strokeWidth">
+                <path d="M0,0 L0,6 L9,3 z"/>
+            </marker>
+        </defs>
+
+        <line x1="-150" y1="0" x2="150" y2="0" stroke="black" stroke-width="2" marker-end="url(#arrow)" marker-start="url(#arrow)"/>
+        <line y1="-100" y2="100" stroke="black" stroke-width="2" marker-end="url(#arrow)" marker-start="url(#arrow)"/>
+
+        <g class="no-tr"> <!-- The visible quadrant -->
+            <polygon points="0,0 100,5 75,25 100,45 0,50"/>
+            <text alignment-baseline="middle" x="10" y="28" font-size="30px" font-weight="bold">SVG</text>
+
+            <!-- Flip horizontal (with transform origin in the middle of shape) -->
+            <g transform="skewY(-30)" class="first-tr" transform-origin="50 25">
+                <line x1="-150" y1="0" x2="150" y2="0" stroke="lightgreen" stroke-width="2" marker-end="url(#arrow)" marker-start="url(#arrow)"/>
+                <line y1="-100" y2="100" stroke="lightgreen" stroke-width="2" marker-end="url(#arrow)" marker-start="url(#arrow)"/>
+                <polygon points="0,0 100,5 75,25 100,45 0,50"/>
+                <text alignment-baseline="middle" x="10" y="28" font-size="30px" font-weight="bold">SVG</text>
+            </g>
+        </g>
+
+        <circle class="center" cx="50" cy="25" r="3" fill="red" stroke="black"/>
+    </svg>
+</div>
+<script>
+    // Equivalent matrix() transform
+    const shape = document.querySelectorAll('.first-tr');
+    const svg = document.querySelector('svg');
+    shape.forEach((element, i) => {
+        const mx = element.getCTM();
+        const sm = svg.getCTM();
+        const transform = `matrix(${[mx.a-sm.a, mx.b-sm.b, mx.c-sm.c, mx.d-sm.d, mx.e-sm.e, mx.f-sm.f]})`;
+        console.log(`matrix-${i}`, transform);
+        const label = document.querySelector(`#matrix-${i}`);
+        //label.innerHTML = transform;
+    });
+</script>
+</body>
+</html>

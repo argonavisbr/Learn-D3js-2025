@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Using markers</title>
+</head>
+<style>
+    svg {
+        border: solid 1px lightgray;
+        opacity: .8;
+        stroke-width: .04
+    }
+</style>
+<body>
+<h2>Marker template</h2>
+<!-- An arrowhead marker template - using viewBox to normalize dimensions and scale-->
+<svg width="500" height="300" viewBox="0 0 10 6">
+    <line x1="2" x2="2" y2="6" stroke="gray"/>
+    <line x1="4" x2="4" y2="6" stroke="gray"/>
+    <line x1="6" x2="6" y2="6" stroke="gray"/>
+    <line x1="8" x2="8" y2="6" stroke="gray"/>
+    <line y1="2" y2="2" x2="10" stroke="gray"/>
+    <line y1="4" y2="4" x2="10" stroke="gray"/>
+
+    <path d="M0,0 L0,6 L9,3 z"
+          stroke="red"
+          fill="red"
+          fill-opacity=".1"/>
+</svg>
+</body>
+</html>

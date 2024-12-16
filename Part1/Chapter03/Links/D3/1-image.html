@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Images</title>
+    <script src="https://cdn.jsdelivr.net/npm/d3-selection@3"></script>
+</head>
+<style>
+    svg {
+        border: solid 1px lightgray;
+    }
+</style>
+<body>
+<h2>Images</h2>
+<script>
+    const svg = d3.select("body")
+            .append("svg")
+            .attr("width", 600)
+            .attr("height", 400);
+
+    svg.append("image")
+            .attr("x", 25)
+            .attr("y", 25)
+            .attr("height", 350)
+            .attr("width", 350)
+            .attr("href", "../../data/images/pluto.jpg");
+
+    svg.append("image")
+            .attr("x", 400)
+            .attr("y", 300)
+            .attr("href", "../../data/flags/AUS.png");
+
+</script>
+</body>
+</html>

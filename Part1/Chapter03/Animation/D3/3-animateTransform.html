@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Example with animateTransform</title>
+    <style>
+        circle {
+            fill: none;
+            stroke: currentColor;
+            stroke-width: 20;
+        }
+        rect {
+            fill: currentColor;
+        }
+    </style>
+</head>
+<body>
+<h1>Example with animateTransform</h1>
+<script type="module">
+    import * as d3 from "https://cdn.skypack.dev/d3@7";
+
+    const svg = d3.create("svg")
+                  .attr("width", 750)
+                  .attr("height", 600);
+
+    svg.append("defs")
+        .append("g").attr("id", "earth")
+        .each(function() {
+            d3.select(this)
+                .append("circle")
+                    .attr("cx", 150)
+                    .attr("cy", 150)
+                    .attr("r", 120);
+            d3.select(this)
+                .append("rect")
+                    .attr("x", 30)
+                    .attr("y", 140)
+                    .attr("height", 20)
+                    .attr("width", 240);
+            d3.select(this)
+                .append("rect")
+                    .attr("y", 30)
+                    .attr("x", 140)
+                    .attr("width", 20)
+                    .attr("height", 240);
+        });
+
+    createObject("blue", 300, 0, 360, 0, 2);
+    createObject("red", 0, 0, 0, 360, 2);
+    createObject("green", 300, 300, 360, 0, 2);
+    createObject("orange", 0, 300, 0, 360, 2);
+
+    d3.select("body").append(() => svg.node());
+
+    function createObject(color, x, y, from, to, duration) {
+        return svg.append("use")
+                  .attr("href", "#earth")
+                  .attr("color", color)
+                  .attr("transform", `translate(${[x,y]})`)
+                  .attr("transform-origin", "150 150")
+                  .append("animateTransform")
+                        .attr("attributeName", "transform")
+                        .attr("type", "rotate")
+                        .attr("from", from)
+                        .attr("to", to)
+                        .attr("dur", `${duration}s`)
+                        .attr("repeatCount", "indefinite")
+                        .attr("additive", "sum");
+    }
+</script>
+</body>
+</html>

@@ -24,4 +24,15 @@ __`data/`__
 
 Resources used by examples and exercises in the other folders (they are loaded using relative URLs).
 
+## 2) Observable notebooks
 
+The following *Observable* notebooks are available for this chapter:
+
+- []()
+- []()
+
+## 3) Data gists
+
+The following data files are available for this chapter, via GitHub gists:
+
+- []()

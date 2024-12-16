@@ -2,35 +2,61 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Example of SVG image clipping used in the racing bars</title>
+    <title>Example of SVG image clipping</title>
     <style>
         svg {
             border: solid 1px black;
         }
-        image {
-            border: solid 1px red;
+        rect {
+            fill: darkgray;
+            stroke: black
+        }
+        .shadow {
+            opacity: .2;
         }
     </style>
 
 </head>
 <body>
-<h1>Example of SVG image clipping used in the racing bars</h1>
-<svg height="170" width="400">
+<h1>Example of SVG image clipping</h1>
+<svg height="340" width="400" viewBox="0 0 100 170">
 
     <defs>
-        <clipPath id="clip-0"><use xlink:href="#bar-0"/></clipPath>
-        <clipPath id="clip-7"><use xlink:href="#bar-7"/></clipPath>
-        <clipPath id="clip-3"><use xlink:href="#bar-3"/></clipPath>
+        <clipPath id="clip-1"><use href="#bar-1"/></clipPath>
+        <clipPath id="clip-2"><use href="#bar-2"/></clipPath>
+        <clipPath id="clip-3"><use href="#bar-3"/></clipPath>
     </defs>
 
     <g class="bars">
-        <rect id="bar-0" height="50" x="100" y="10" width="55"></rect>
-        <rect id="bar-7" height="50" x="100" y="62" width="70"></rect>
-        <rect id="bar-3" height="50" x="100" y="114" width="55"></rect>
+        <!-- the clipping shape (horizontal bars) -->
+        <rect id="bar-1" height="50" y="10" width="35"></rect>
+        <rect id="bar-2" height="50" y="62" width="65"></rect>
+        <rect id="bar-3" height="50" y="114" width="125"></rect>
 
-        <image clip-path="url(#clip-0)" xlink:href="../data/flags/USA.png" height="48" x="55" y="10"></image>
-        <image clip-path="url(#clip-7)" xlink:href="../data/flags/CHN.png" height="48" x="100" y="62"></image>
-        <image clip-path="url(#clip-3)" xlink:href="../data/flags/FRA.png" height="48" x="100" y="114"></image>
+        <!-- a shadow reference for the image -->
+        <image preserveAspectRatio="none" class="shadow"
+               href="../data/flags/AUS.png"
+               height="50" y="10"></image>
+        <image preserveAspectRatio="none" class="shadow"
+               href="../data/flags/CHN.png"
+               height="50" y="62"></image>
+        <image preserveAspectRatio="none" class="shadow"
+               href="../data/flags/FRA.png"
+               height="50" y="114"></image>
+
+        <!-- the clipped image -->
+        <image clip-path="url(#clip-1)"
+               preserveAspectRatio="none"
+               href="../data/flags/AUS.png"
+               height="50" y="10"></image>
+        <image clip-path="url(#clip-2)"
+               preserveAspectRatio="none"
+               href="../data/flags/CHN.png"
+               height="50" y="62"></image>
+        <image clip-path="url(#clip-3)"
+               preserveAspectRatio="none"
+               href="../data/flags/FRA.png"
+               height="50" y="114"></image>
     </g>
 </svg>
 

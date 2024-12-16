@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>SVG transform translate</title>
+    <link rel="stylesheet" href="css/transform-examples.css">
+</head>
+<body>
+<h2>SVG translating</h2>
+<p>Open console for equivalent <code>matrix()</code> transform.</p>
+<script type="module">
+    import {setup, showMatrix, addAxes, addCircle} from "./js/transform-examples.js";
+    const data = ["translate(75,50)","translate(150)","translate(0,-25)"];
+
+    // Draw axes and shape without transforms
+    const svg = setup(data);
+    addAxes(svg);
+    const noTr = svg.append("g").attr("class", "no-tr");
+    addCircle(noTr);
+
+    // Draw axes and shape with transforms
+    const firstTr = noTr.append("g").attr("class", "first-tr")
+                        .attr("transform", d => d);
+    addAxes(firstTr, "blue");
+    addCircle(firstTr);
+
+    // Compute the matrix() equivalent of the transform
+    showMatrix(".first-tr", svg);
+
+</script>
+</body>
+</html>

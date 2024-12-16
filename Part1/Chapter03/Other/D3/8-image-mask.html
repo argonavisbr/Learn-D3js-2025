@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>SVG masking</title>
+    <script src="https://cdn.jsdelivr.net/npm/d3-selection@3"></script>
+</head>
+<style>
+    svg {
+        border: solid 1px lightgray;
+    }
+</style>
+<body>
+<h2>SVG masking - using an image</h2>
+<script>
+    const svg = d3.select("body")
+            .append("svg")
+            .attr("width", 425)
+            .attr("height", 425);
+
+    svg.append("defs")
+       .append("mask")
+         .attr("id", "mask")
+         .append("image")
+            .attr("x", 25)
+            .attr("y", 25)
+            .attr("height", 350)
+            .attr("width", 350)
+            .attr("href", "../../data/images/fishMask.png")
+            .attr("opacity", 1)
+            .attr("preserveAspectRatio", "none");
+
+    svg.append("image")
+            .attr("x", 25)
+            .attr("y", 25)
+            .attr("height", 350)
+            .attr("width", 350)
+            .attr("href", "../../data/images/pluto.jpg");
+
+    svg.append("rect")
+            .attr("x", 25)
+            .attr("y", 25)
+            .attr("height", 350)
+            .attr("width", 350)
+            .attr("fill", "seagreen")
+            .attr("mask", "url(#mask)");
+    </script>
+</body>
+</html>

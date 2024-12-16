@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Examples using matrix transforms in SVG - used to generate image for the book</title>
+    <link rel="stylesheet" href="css/animated-transforms.css">
+</head>
+<body>
+<h1>Selected affine transforms in SVG</h1>
+<p>See console for <code>getCTM()</code> results.</p>
+<div class='view'></div>
+<script type="module">
+    import {matrix, makeViews, sin, cos, tan} from './js/animated-transforms.js';
+
+    makeViews(2,3);
+
+    // 6 simple transforms (created using the transformation matrix(a,b,c,d,e,f))
+    matrix()
+      (["matrix(1,0,0,1,0,0)","matrix(1,0,0,1,0,0)"],0,0);
+    matrix().e(-30).f(-30)
+      (["translate(-30,-30)","matrix(1,0,0,1,-30,-30)"],0,1);
+    matrix().a(cos(45)).b(-sin(45)).c(sin(45)).d(cos(45)).f(45)
+      (["rotate(45,0,45)","matrix(cos(45),-sin(45),sin(45),-cos(45),0,45)"],0,2);
+
+    matrix().a(1.5).d(0.75)
+       (["scale(1.5,.75)","matrix(1.5,0,0,.75,0,0)"],1,0);
+    matrix().a(-1).d(1)
+       (["scale(-1,1)","matrix(-1,0,0,1,0,0)"],1,1);
+    matrix().c(tan(30))
+        (["skewX(30)","matrix(1,0,tan(30),1,0,0)"],1,2);
+
+
+</script>
+
+</body>
+</html>

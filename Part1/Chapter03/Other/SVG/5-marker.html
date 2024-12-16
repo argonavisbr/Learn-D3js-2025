@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Using markers</title>
+</head>
+<style>
+    svg {
+        border: solid 1px lightgray;
+    }
+</style>
+<body>
+<h2>Using markers</h2>
+<svg width="600" height="300">
+    <defs>
+        <!-- An arrowhead marker - orient is auto since it should rotate with path -->
+        <marker id="arrow" markerWidth="10" markerHeight="6"
+                           refY="3" refX="0" orient="auto-start-reverse"
+                           markerUnits="strokeWidth"> <!-- This is default - will scale with stroke-width -->
+            <path d="M0,0 L0,6 L9,3 z" fill="red"/>
+        </marker>
+        <!-- A circle marker -->
+        <marker id="circle" markerWidth="10" markerHeight="10"
+                            refX="5" refY="5" orient="auto">
+            <circle cx="5" cy="5" r="4" fill="blue"/>
+            <rect x="3" y="3" width="4" height="4" fill="yellow"/>
+        </marker>
+    </defs>
+    <path d="M75,250 C200,100 250,100 250,250
+             L400,250 250,50 450,150 500,50 550,200"
+        fill="none"
+        stroke="red"
+        stroke-width="4"
+        marker-end="url(#arrow)"
+        marker-mid="url(#circle)"
+        marker-start="url(#arrow)"/>
+</svg>
+</body>
+</html>

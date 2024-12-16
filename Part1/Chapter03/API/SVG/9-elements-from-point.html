@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Simple example using elementsFromPoint</title>
+</head>
+<body>
+<h1>Simple example using elementsFromPoint</h1>
+<p>Click anywhere inside fill, on stroke or outside shape. See console to see which elements are in the point that you clicked.</p>
+<svg width="600" height="400" viewBox="0 0 300 200" style="cursor: crosshair;">
+    <path d="M 10 10 L 100 100 L 200 10" style="fill: red; stroke-width: 0.5; fill-opacity: 0.8; stroke: black;"></path>
+    <circle cx="90" cy="45" r="3" fill="yellow" class="yellow"></circle>
+    <circle cx="130" cy="25" r="3" fill="white" class="white"></circle>
+    <circle cx="30" cy="75" r="3" fill="green" class="green"></circle>
+    <circle cx="170" cy="95" r="3" fill="purple" class="purple"></circle>
+</svg>
+
+<script type="module">
+    const svg = document.querySelector("svg");
+
+    svg.addEventListener("click", function(e) { // events use screen coordinates
+        const pt = DOMPoint.fromPoint(e);
+        const elements = document.elementsFromPoint(pt.x, pt.y); // also uses screen coordinates
+        console.log(elements);
+        // if you need to convert to local (SVG) coordinates, use the following:
+        // const localPt = pt.matrixTransform(svg.getScreenCTM().inverse());
+    });
+
+</script>
+
+</body>
+</html>

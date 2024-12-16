@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>SVG masking</title>
+</head>
+<style>
+    svg {
+        border: solid 1px lightgray;
+    }
+</style>
+<body>
+<h2>SVG masking - using an image</h2>
+<svg width="425" height="425">
+    <defs>
+        <mask id="mask">
+            <image x="25" y="25" height="350" width="350"
+                   href="../../data/images/fishMask.png" opacity="1"
+                   preserveAspectRatio="none"/>
+        </mask>
+    </defs>
+
+    <!-- Masked image -->
+    <image x="25" y="25" height="350" width="350"
+           href="../../data/images/pluto.jpg"/>
+    <rect x="25" y="25" height="350" width="350"
+          fill="seagreen" mask="url(#mask)" />
+
+</svg>
+</body>
+</html>

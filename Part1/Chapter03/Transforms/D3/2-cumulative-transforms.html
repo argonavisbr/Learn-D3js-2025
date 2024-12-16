@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>SVG transform scale-translate</title>
+    <link rel="stylesheet" href="css/transform-examples.css">
+</head>
+<body>
+<h2>SVG cumulative transforms</h2>
+<p>Open console for equivalent <code>matrix()</code> transform.</p>
+
+<script type="module">
+    import {setup, showMatrix, addAxes, addCircle} from "./js/transform-examples.js";
+    const data = ["translate(75,50) scale(0.5)","scale(0.5) translate(75,50)","scale(0.5) translate(150,100)"];
+
+    // Draw axes and shape without transforms
+    const svg = setup(data);
+    addAxes(svg);
+    const noTr = svg.append("g").attr("class", "no-tr");
+    addCircle(noTr);
+
+    // Draw axes and shape with transforms
+    const firstTr = noTr.append("g").attr("class", "first-tr")
+        .attr("transform", d => d.split(" ")[0]);
+    addAxes(firstTr, "blue");
+    addCircle(firstTr);
+
+    const secondTr = noTr.append("g").attr("class", "second-tr")
+        .attr("transform", d => d);
+    addAxes(secondTr, "red");
+    addCircle(secondTr);
+
+    // Compute the matrix() equivalent of the transform
+    showMatrix(".second-tr", svg);
+</script>
+</body>
+</html>

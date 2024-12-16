@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Using getCTM(), getScreenCTM() and SVGMatrix/DOMMatrix API methods</title>
+</head>
+<body>
+<h1>Using getCTM() and SVGMatrix/DOMMatrix API methods</h1>
+<style>
+    svg {
+        position: absolute;
+        left: 150px;
+        top: 150px;
+        border: solid 1px gray;
+    }
+    h1 {
+        font-family: sans-serif;
+        font-size: 24px;
+    }
+</style>
+<p>Examples using the Current Transformation Matrix (CTM).
+    See console for results. Applying a transform via the <code>transform</code> attribute, then applying the <code>inverse()</code> transform using the API.</p>
+<script type="module">
+    import * as d3 from "https://cdn.skypack.dev/d3@7";
+
+    const svg = d3.select("body").append("svg")
+        .attr("width", 300)
+        .attr("height", 300);
+
+    const rect = svg.append("rect")
+        .attr("x", 100).attr("y", 100)
+        .attr("width", 100).attr("height", 100)
+        .transition().duration(1000)
+           .attr("transform-origin", "150 150")
+           .attr("transform", "rotate(90,50,50)")
+           .style("fill", "red");
+
+    const ctm = rect.node().getCTM();
+    const screenCTM = rect.node().getScreenCTM();
+
+    console.log("CTM: ", ctm);
+    console.log("Screen CTM: ", screenCTM);
+
+    // Using CTM to get the inverse matrix (this will undo the transform)
+    const itm = ctm.inverse();
+    console.log("Inverse CTM: ", itm);
+
+    // DOMMatrix example
+    const inverted = DOMMatrix.fromMatrix(itm);
+    const string = inverted.toString(); // converts to a usable string in CSS
+    console.log("New transform", string);
+
+    // Apply the new transform
+    rect.transition().delay(2000)
+        .style("transform", string)
+        .style("fill", "purple");
+
+</script>
+</body>
+</html>

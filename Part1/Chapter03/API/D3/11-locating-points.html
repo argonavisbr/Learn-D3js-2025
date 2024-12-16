@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Locating points</title>
+    <style>
+        svg {
+            border: solid 1px gray;
+        }
+        path {
+            fill: lightgray;
+            stroke-width: 6px;
+            fill-opacity: 0.5;
+            stroke: gray;
+        }
+    </style>
+</head>
+<body>
+<h1>Locating points</h1>
+<p>Clicking anywhere inside the SVG will draw a square.</p>
+<ul>
+    <li>Blue: inside stroke</li>
+    <li>Red: inside shape</li>
+    <li>Gray: outside shape</li>
+</ul>
+
+<script type="module">
+    import * as d3 from "https://cdn.skypack.dev/d3@7";
+
+    const svg = d3.select("body")
+                    .append("svg")
+                    .attr("width", 1000)
+                    .attr("height", 500)
+                    .attr("viewBox", "0 0 500 250");  // a viewBox in SVG
+
+    const pathString = "M123,362C185,412,205,223,247,314C254,329,183,433,253,424C345,412,284,304,322,287C341,279,358,265,374,291C470,438,446,203,376,219C361,223,308,241,322,185C334,136,500,204,419,143C258,20,333,164,278,141C213,114,259,0,193,34C86,89,231,118,193,158C154,199,125,113,66,134C7,154,0,308,72,247C122,204,195,230,164,270C128,316,48,303,123,362z";
+    const path = svg.append("path")
+                    .attr("d", pathString)
+                    .attr("transform", "scale(1,.5)");  // a transform in the path
+
+    const pathLength = path.node().getTotalLength();
+    console.log(`Path length: ${pathLength} pixels`);
+
+    // 500 random points in the SVG area
+    const [,,w,h] = svg.attr("viewBox").split(" ").map(n => d3.randomUniform(+n));
+    const points = Array.from({length: 500}, () => new DOMPoint(w(), h()));
+    console.log(points)
+
+    svg.selectAll("circle")
+      .data(points)
+        .join("circle")
+            .attr("class", "random")
+            .attr("cx", d => d.x)
+            .attr("cy", d => d.y)
+            .attr("r", 3)
+            .attr("stroke", "white")
+            .style("fill", d => isInStroke(d) ? "blue" : isInside(d) ? "red" : "gray");
+
+    // click to add a square at the point
+    svg.on("click", function(e) {
+        const arrToObj = ([x,y]) => ({x,y});
+        const pt = DOMPoint.fromPoint(arrToObj(d3.pointer(e)));
+        svg.append("rect")
+            .attr("x", pt.x - 5)
+            .attr("y", pt.y - 5)
+            .attr("width", 10)
+            .attr("height", 10)
+            .style("fill", isInStroke(pt) ? "navy" : isInside(pt) ? "darkred" : "#444");
+    });
+
+    // Functions
+    function isInside(point) {
+        const pt = point.matrixTransform(svg.node().getScreenCTM()); // reapplies screen CTM (since this is a DOM method)
+        const elements = document.elementsFromPoint(pt.x, pt.y);
+        return elements.includes(path.node());
+    }
+
+    function isInStroke(point) { // uses local coordinates
+        const spt = point.matrixTransform(svg.node().getCTM());           // applies SVG viewBox
+        const ppt = spt.matrixTransform(path.node().getCTM().inverse());  // inverts path transform
+        const pt = svg.node().createSVGPoint(); // necessary because Chrome/Safari doesn't support DOMPoint
+        pt.x = ppt.x;
+        pt.y = ppt.y;
+        return path.node().isPointInStroke(pt);  // this method requires deprecated SVGPoint on Chrome/Safari!
+    }
+
+</script>
+
+</body>
+</html>

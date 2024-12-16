@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Using getCTM(), getScreenCTM() and SVGMatrix/DOMMatrix API methods</title>
+</head>
+<body>
+<h1>Using getCTM() and SVGMatrix/DOMMatrix API methods</h1>
+<style>
+    svg {
+        position: absolute;
+        left: 150px;
+        top: 150px;
+        border: solid 1px gray;
+    }
+</style>
+<p>Examples using the Current Transformation Matrix (CTM).
+    See console for results. Applying a transform via the <code>transform</code> attribute, then applying the <code>inverse()</code> transform using the API.</p>
+
+<svg width="300" height="300">
+    <rect x="100" y="100" width="100" height="100" transform-origin="150 150">
+        <animateTransform attributeName="transform" type="rotate" to="90,50,50" dur="1s" fill="freeze"/>
+        <animate attributeName="fill" attributeType="CSS" to="red" dur="1s" fill="freeze"/>
+        <animate attributeName="fill" attributeType="CSS" to="purple" begin="3s" dur="1s" fill="freeze"/>
+    </rect>
+</svg>
+
+<script type="module">
+
+    const rect = document.querySelector("rect");
+
+    const ctm = rect.getCTM();
+    const screenCTM = rect.getScreenCTM();
+
+    console.log("CTM: ", ctm);
+    console.log("Screen CTM: ", screenCTM);
+
+    // Using CTM to get the inverse matrix (this will undo the transform)
+    const itm = ctm.inverse();
+    console.log("Inverse CTM: ", itm);
+
+    // DOMMatrix example
+    const inverted = new DOMMatrix.fromMatrix(itm);
+    const string = inverted.toString(); // converts to a usable string in CSS
+    console.log("New transform", string);
+
+    // apply the new transform (inverse) after 2 seconds (using the Web Animation API)
+    document.querySelector('rect animate')
+            .addEventListener('endEvent', () => rect.animate({transform: string}, {delay: 2000, duration: 1000, fill: "forwards"}));
+
+</script>
+</body>
+</html>

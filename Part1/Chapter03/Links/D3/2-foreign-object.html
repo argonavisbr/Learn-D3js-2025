@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Links and foreign objects</title>
+    <script src="https://cdn.jsdelivr.net/npm/d3-selection@3"></script>
+</head>
+<style>
+    svg {
+        border: solid 1px lightgray;
+    }
+</style>
+<body>
+<h2>Links and foreign objects</h2>
+<script>
+    const detachedSVG = d3.create("svg:svg")
+                          .attr("width", 300)
+                          .attr("height", 150);
+
+    const flagsDirectory = "../../data/flags/";
+    const data = [
+        {name: "USA", flag: flagsDirectory+"USA.png"},
+        {name: "China", flag: flagsDirectory+"CHN.png"},
+        {name: "France", flag: flagsDirectory+"FRA.png"},
+        {name: "Australia", flag: flagsDirectory+"AUS.png"}
+    ];
+
+    detachedSVG.selectAll("a")
+       .data(data)
+          .join("a")
+            .attr("href", d => d.flag)
+            .attr("target", "result")
+            .append("text")
+               .attr("x", 50)
+               .attr("y", (d, i) => 25 + i * 25)
+               .attr("alignment-baseline", "hanging")
+               .text(d => d.name);
+
+    detachedSVG.append("rect")
+            .attr("x", 125)
+            .attr("y", 25)
+            .attr("width", 155)
+            .attr("height", 100)
+            .attr("fill", "lightgray");
+
+    // Linking targets to iframe via D3 fails in Chromium Version 131 (2024)
+    detachedSVG.append("foreignObject")
+            .attr("x", 150)
+            .attr("y", 50)
+            .attr("width", 105)
+            .attr("height", 55)
+            .append("xhtml:iframe")
+               .attr("width", 100)
+               .attr("height", 50)
+               .attr("name", "result");
+
+    d3.select("body").append(() => detachedSVG.node());
+</script>
+</body>
+</html>

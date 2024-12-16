@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>SVG groups - using currentColor</title>
+</head>
+<style>
+    svg { border: solid 1px lightgray; }
+</style>
+<body>
+<h1>SVG groups - using <code>currentColor</code></h1>
+<svg width="600" height="300">
+    <g>
+        <circle cx="150" cy="150" r="120" fill="none" stroke="currentColor" stroke-width="20"></circle>
+        <rect x="30" y="140" height="20" width="240" fill="currentColor"></rect>
+        <rect y="30" x="140" width="20" height="240" fill="currentColor"></rect>
+    </g>
+    <g color="red"> <!-- Applying a color to strokes and fills -->
+        <circle cx="450" cy="150" r="120" fill="none" stroke="currentColor" stroke-width="20"></circle>
+        <rect x="330" y="140" height="20" width="240" fill="currentColor"></rect>
+        <rect y="30" x="440" width="20" height="240" fill="currentColor"></rect>
+    </g>
+</svg>
+</body>
+</html>

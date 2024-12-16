@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>SVG viewports</title>
+</head>
+<style>
+    svg { border: solid 1px lightgray; }
+    table {width: 1230px; text-align: center}
+    td {width: 300px; font-family: monospace}
+</style>
+<body>
+<h1>Nested SVG viewports with local view box</h1>
+<p>SVG with <code>with=300</code> and <code>height=300</code></p>
+<svg width="300" height="300">
+    <circle cx="150" cy="150" r="120" fill="none" stroke="black" stroke-width="20"></circle>
+    <rect x="30" y="140" height="20" width="240"></rect>
+    <rect y="30" x="140" width="20" height="240"></rect>
+</svg>
+<svg width="300" height="300" viewBox="0 0 300 300"> <!-- identity transformation -->
+    <circle cx="150" cy="150" r="120" fill="none" stroke="black" stroke-width="20"></circle>
+    <rect x="30" y="140" height="20" width="240"></rect>
+    <rect y="30" x="140" width="20" height="240"></rect>
+</svg>
+<svg width="300" height="300" viewBox="-15 -15 300 300"> <!-- pixels outside, units inside -->
+    <circle cx="0" cy="0" r="12" fill="none" stroke="black" stroke-width="2"></circle>
+    <rect x="-12" y="-1" height="2" width="24"></rect>
+    <rect y="-12" x="-1" width="2" height="24"></rect>
+</svg>
+<svg width="300" height="300" viewBox="-15 -15 30 30"> <!-- pixels outside, units inside -->
+    <circle cx="0" cy="0" r="12" fill="none" stroke="black" stroke-width="2"></circle>
+    <rect x="-12" y="-1" height="2" width="24"></rect>
+    <rect y="-12" x="-1" width="2" height="24"></rect>
+</svg>
+<table><tr><td>no viewBox</td><td>viewBox="0 0 300 300</td><td>viewBox="-15 -15 300 300"</td><td>viewBox="-15 -15 30 30"</td></tr></table>
+</body>
+</html>

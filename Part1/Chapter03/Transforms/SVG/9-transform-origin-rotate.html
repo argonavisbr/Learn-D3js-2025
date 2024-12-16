@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Using transform-origin or x,y params on rotate</title>
+</head>
+<body>
+<svg width="750" height="600">
+    <!-- Transform origin default for circles is center, for rectangles and groups is top-left corner -->
+    <!-- Circle or ellipse naturally rotates around its center -->
+    <!-- Rectangles and groups need to specify center for transforms -->
+    <!-- Best is using transform-origin, because it defines a consistent pivot point for the element,
+         which doesn't change when the element is moved or scaled. -->
+    <!-- You can also use x,y params on rotate to specify the pivot point, but the value may change if
+         there are previous transforms. -->
+    <rect x="0" y="0" height="200" width="200" fill="red" transform="translate(100,100)" transform-origin="100 100">
+        <animateTransform attributeName="transform" type="rotate" from="360" to="0" dur="2s" repeatCount="indefinite" additive="sum"/>
+    </rect>
+    <ellipse cx="0" cy="0" rx="100" ry="80" fill="blue" transform="translate(100,100)"> <!-- origin was translated -->
+        <animateTransform attributeName="transform" type="rotate" from="360" to="0" dur="2s" repeatCount="indefinite" additive="sum"/>
+    </ellipse>
+
+</svg>
+</body>
+</html>

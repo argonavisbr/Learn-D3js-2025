@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Using getCTM(), getScreenCTM() and SVGMatrix API methods</title>
+    <style>
+        svg {
+            position: absolute;
+            left: 150px;
+            top: 180px;
+            border: solid 1px gray;
+        }
+    </style>
+</head>
+<body>
+<h1>Example with getScreenCTM()</h1>
+<h3>Click anywhere in the SVG</h3>
+<p>The black point shows the mouse coordinates obtained from the pointer event.
+   The offset is due to the position of the SVG amd can be corrected obtaining the inverse screen CTM.
+   The blue circle is corrected by subtracting the offset (works only of there are no other transforms).
+   The red circle is corrected by applying the inverse screen CTM to the circle.
+</p>
+
+<svg width="600" height="600"></svg>
+
+<script type="module">
+    // Draw a circle at mouse position: black (not corrected), blue (corrected by subtracting offset), red (corrected by inverse CTM)
+    const svg = document.querySelector("svg");
+    svg.addEventListener("click", e => {
+
+        const blueCircle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+        blueCircle.setAttribute("r", 10);
+        blueCircle.setAttribute("fill", "blue");
+        svg.appendChild(blueCircle);
+
+        const redCircle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+        redCircle.setAttribute("r", 5);
+        redCircle.setAttribute("fill", "red");
+        svg.appendChild(redCircle);
+
+        const blackCircle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+        blackCircle.setAttribute("r", 2);
+        svg.appendChild(blackCircle);
+
+        // Pointer coordinates - shows offset!
+        blackCircle.setAttribute("cx", e.x);
+        blackCircle.setAttribute("cy", e.y);
+
+        // Get the Screen CTM
+        const stm = svg.getScreenCTM();
+
+        // Solution 1: Subtracting the offset
+        const pt = DOMPoint.fromPoint(e).matrixTransform(stm.inverse());
+        blueCircle.setAttribute("cx", pt.x);
+        blueCircle.setAttribute("cy", pt.y);
+
+        // Solution 2: a) Setting pointer coordinates without any correction
+        redCircle.setAttribute("cx", e.x);
+        redCircle.setAttribute("cy", e.y);
+
+        // b) Applying the inverse CTM to the circle
+        const itm = DOMMatrix.fromMatrix(stm.inverse());
+        redCircle.setAttribute("transform", itm.toString());
+    });
+
+</script>
+</body>
+</html>

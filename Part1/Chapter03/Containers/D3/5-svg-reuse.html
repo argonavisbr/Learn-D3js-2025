@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>SVG groups - using D3</title>
+    <script src="https://cdn.jsdelivr.net/npm/d3-selection@3"></script>
+</head>
+<style>
+    svg { border: solid 1px lightgray; }
+</style>
+<body>
+<h1>SVG viewBox</h1>
+<p>SVG with <code>with=300</code> and <code>height=300</code></p>
+<script>
+    d3.select("body")
+      .append("svg")
+        .attr("width", 460)
+        .attr("height", 300)
+           .append("defs")
+              .append("svg")
+                .attr("viewBox", "-15 -15 30 30")
+                .attr("width", 30)
+                .attr("height", 30)
+                .attr("id", "earth-symbol")
+                .append(makeSymbol);
+
+    d3.select("svg")
+        .append("use")
+        .attr("href", "#earth-symbol")
+        .attr("transform", "scale(10)")
+        .attr("color", "green");
+
+    d3.select("svg")
+        .append("use")
+        .attr("href", "#earth-symbol")
+        .attr("transform", "translate(300,75) scale(5)")
+        .attr("color", "orange");
+
+    function makeSymbol() {   // the smallest shape using integers for dimensions and positions
+        const g = d3.create("svg:g");
+        g.append("circle")
+            .attr("r", 12)
+            .style("fill", "none")
+            .style("stroke", "currentColor")
+            .style("stroke-width", 2);
+        g.append("rect")
+            .attr("x", -12)
+            .attr("y", -1)
+            .attr("height", 2)
+            .attr("width", 24)
+            .style("fill", "currentColor");
+        g.append("rect")
+            .attr("y", -12)
+            .attr("x", -1)
+            .attr("width", 2)
+            .attr("height", 24)
+            .style("fill", "currentColor");
+        return g.node();
+    }
+</script>
+
+</body>
+</html>

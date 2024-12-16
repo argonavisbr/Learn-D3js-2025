@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Using point at length with transforms</title>
+    <style>
+        svg {
+            border: solid 1px gray;
+        }
+    </style>
+</head>
+<body>
+<h1>Using point at length with transforms</h1>
+<p>Both SVG and <code>path</code> have transforms. Random points distributed along perimeter.</p>
+<svg width="1000" height="500" viewBox="0 0 500 250" style="cursor: crosshair;">
+    <path d="M123,362C185,412,205,223,247,314C254,329,183,433,253,424C345,412,284,304,322,287C341,279,358,265,374,291C470,438,446,203,376,219C361,223,308,241,322,185C334,136,500,204,419,143C258,20,333,164,278,141C213,114,259,0,193,34C86,89,231,118,193,158C154,199,125,113,66,134C7,154,0,308,72,247C122,204,195,230,164,270C128,316,48,303,123,362z"
+          fill="orange" stroke-width="2" fill-opacity="0.5" stroke="gray"
+          transform="scale(1,.5)"></path>
+</svg>
+<script type="module">
+    const svg = document.querySelector("svg");
+    const path = document.querySelector("path");
+
+    const pathLength = path.getTotalLength();
+    console.log(`Path length: ${pathLength} pixels`);
+
+    // Draw 100 random points along the path length (perimeter)
+    const strokePoints = Array.from({length: 100}, () => Math.random() * pathLength);
+    strokePoints.forEach(p => {
+        const pt = path.getPointAtLength(p);  // get point at length not considering transforms
+        const spt = pt.matrixTransform(svg.getCTM().inverse());  // invert SVG viewBox
+        const point = spt.matrixTransform(path.getCTM());        // apply path transform
+
+        const circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+
+        circle.setAttribute("class", "fixed");
+        circle.setAttribute("cx", point.x);
+        circle.setAttribute("cy", point.y);
+        circle.setAttribute("r", 3);
+        circle.setAttribute("stroke", "white");
+        svg.appendChild(circle);
+    });
+
+</script>
+
+</body>
+</html>

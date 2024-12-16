@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>JavaScript examples: Promise-all</title>
+</head>
+<body>
+<h1>JavaScript examples: using async and await</h1>
+<p>Open developer console to see results. Open code to see comments</p>
+<script type="module">
+    const filenames = [
+        'continents.csv',
+        'continents.json',
+        'continents.xml'
+    ];
+
+    const promises =
+        filenames.map(
+            file => fetch(`../data/${file}`).then(resp => resp.text())
+        );
+
+    const total = await fetchFiles(promises);
+    console.log(`Total size (bytes): ${total}`);
+
+    async function fetchFiles(promises) {
+        const files = await Promise.all(promises);
+        return files.map(file => file.length).reduce( (tot, len) => tot + len);
+    }
+
+</script>
+</body>
+</html>

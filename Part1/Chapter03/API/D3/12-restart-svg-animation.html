@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Example with animateMotion using D3</title>
+    <style>
+      path {
+        fill: none;
+        stroke: blue;
+        stroke-width: 2px;
+      }
+      rect {
+        fill: yellow;
+        stroke: black;
+      }
+      svg {
+        border: solid 1px black;
+      }
+    </style>
+</head>
+<body>
+<p>Examples using <code>setCurrentTime()</code> and <code>beginElement()</code> to control animations via DOM or D3.</p>
+<script type="module">
+    import * as d3 from "https://cdn.skypack.dev/d3@7";
+
+    const svg = d3.select("body")
+                  .append("svg")
+                  .attr("width", 800)
+                  .attr("height", 400);
+
+    svg.append("path")
+        .attr("id", "road")
+        .attr("d", "M50,350L79,348C108,346,167,342,225,302C283,263,342,188,400,186C458,183,517,253,575,285C633,317,692,311,721,308L750,305");
+
+    svg.append("rect")
+        .attr("height", 10)
+        .attr("width", 50)
+        .attr("rx", 5)
+        .attr("ry", 5)
+        .attr("transform", "translate(-25,-15)")
+        .each(function() {
+            d3.select(this)
+                .append("animateMotion")
+                .attr("dur", "5s")
+                .attr("rotate", "auto")
+                .append("mpath")
+                .attr("href", "#road");
+            d3.select(this)
+                .append("animate")
+                .attr("attributeName", "fill")
+                .attr("to", "red")
+                .attr("dur", "5s")
+                .attr("fill", "freeze");
+        });
+
+
+    const buttons = d3.select("body").append("div");
+    buttons.append("button")
+        .text("Restart motion animation")
+        .on("click", () => svg.select("animateMotion").node().beginElement());
+    buttons.append("button")
+        .text("Restart color animation")
+        .on("click", () => svg.select("animate").node().beginElement());
+    buttons.append("button")
+        .text("Restart all animations")
+        .on("click", () => svg.node().setCurrentTime(0));
+</script>
+
+</body>
+</html>

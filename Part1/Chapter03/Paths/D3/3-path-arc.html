@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>SVG path arcs using D3</title>
+    <script src="https://cdn.jsdelivr.net/npm/d3-selection@3"></script>
+</head>
+<style>
+    svg {
+        border: solid 1px lightgray;
+    }
+    text {
+        font-size: 18pt
+    }
+</style>
+<body>
+<h2>SVG path arcs using D3</h2>
+<script>
+    // It's much easier to create these arcs in D3.
+    // This example simply copies the d attribute from the SVG path element in the browser's inspector.
+
+    const svg = d3.select("body")
+            .append("svg")
+            .attr("width", 600)
+            .attr("height", 300)
+            .attr("viewBox", "0 0 562 150");
+
+    svg.append("g")
+       .attr("transform", "translate(300,180)")
+            .append("path")
+            .attr("d", "M-100,-100 L0,-100 A100,100 0 0,1 -100,0 L-100,-100 z")
+            .style("fill-opacity", .2)
+            .style("stroke", "red")
+            .style("stroke-width", 4)
+            .style("stroke-opacity", .5)
+
+    svg.append("g")
+       .attr("transform", "translate(290,170)")
+            .append("path")
+            .attr("d", "M-100,-100 L0,-100 A100,100 0 1,0 -100,0 L-100,-100 z")
+            .style("fill-opacity", .2)
+            .style("stroke", "red")
+            .style("stroke-width", 4)
+            .style("stroke-opacity", .5)
+
+</script>
+</body>
+</html>

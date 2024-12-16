@@ -4,15 +4,13 @@ Introduction
 ## 1) Description of each subfolder in this folder
 
 __`Chapter01/`__
-Code for Chapter 1 - Quick start
+Code for Chapter 1 - Data-driven Documents
 
 __`Chapter02/`__
-Code for Chapter 2 - Essential SVG
+Code for Chapter 2 - Essential JavaScript for D3
 
 __`Chapter03/`__
-Code for Chapter 3 - Essential Web Technologies
+Code for Chapter 3 - Essential SVG for D3
 
 __`Chapter04/`__
-Code for Chapter 4 - Data-driven Documents
-
-## 2) CodePen links to selected examples
+Code for Chapter 4 - Quick Start with D3

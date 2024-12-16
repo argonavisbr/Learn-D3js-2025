@@ -4,20 +4,39 @@ Files and exercises for chapter 2.
 
 ## 1) Description of each subfolder in this folder
 
-__`SVG/`__
+__`Selectors/`__
 
-HTML pages containing SVG graphics written in XML.
+Examples using CSS selectors.
 
-__`SVG-with-D3/`__
+__`JavaScript/`__
 
-HTML pages containing SVG graphics written in JavaScript with D3.
+JavaScript snippets.
 
-__`SVG-Extra/`__
+__`DOM/`__
 
-Some additional SVG examples using animations.
+Simple examples using the DOM.
 
-__`images/`__
+__`Canvas/`__
 
-Image resources used by examples (they are loaded using relative URLs).
+HTML Canvas examples.
 
+__`DataFormat/`__
 
+Examples loading files in JSON, CSV and XML.
+
+__`data/`__, __`js/`__ and __`images/`__
+
+Resources used by examples and exercises in the other folders (they are loaded using relative URLs).
+
+## 2) Observable notebooks
+
+The following *Observable* notebooks are available for this chapter:
+
+- [Comparing Canvas and SVG]()
+- [World map using Canvas]()
+
+## 3) Data gists
+
+The following data files are available for this chapter, via GitHub gists:
+
+- [GeoJSON world map]()

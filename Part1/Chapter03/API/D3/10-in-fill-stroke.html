@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Simple examples using isPointInFill and isPointInStroke</title>
+</head>
+<body>
+<h1>Simple examples using isPointInFill and isPointInStroke</h1>
+<p>Click anywhere inside fill, on stroke or outside shape. See console for results.</p>
+
+<svg width="600" height="400"  style="cursor: crosshair;" viewBox="0 0 300 200">
+    <path d="M 10 10 L 100 100 L 200 10"
+          fill="red" stroke-width="5" stroke="black" />
+</svg>
+
+<script type="module">
+    import * as d3 from "https://cdn.skypack.dev/d3@7";
+
+    const svg = d3.select("svg");
+    const path = d3.select("path");
+
+    // Works because no transform was applied to path
+    svg.on("click", function(e) {
+        const ept = d3.pointer(e);       // Convert to SVG coordinates
+        const pt = svg.node().createSVGPoint(); // isPointInFill and isPointInStroke require SVGPoint in Chromium
+        pt.x = ept[0];
+        pt.y = ept[1];
+        console.log(`Clicked at (${pt.x},${pt.y})`);
+        console.log(`In fill: ${path.node().isPointInFill(pt)}`);
+        console.log(`In stroke: ${path.node().isPointInStroke(pt)}`);
+    });
+
+</script>
+
+</body>
+</html>

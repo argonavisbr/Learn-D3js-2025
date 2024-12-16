@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>SVG gradients and patterns</title>
+</head>
+<style>
+    svg {
+        border: solid 1px lightgray;
+    }
+    rect {
+        stroke: black;
+    }
+</style>
+<body>
+<h2>SVG gradients and patterns</h2>
+<svg width="600" height="300">
+    <defs>
+        <pattern id="diamond" viewBox="0 0 10 10" width="10" height="10" patternUnits="userSpaceOnUse">
+            <polygon points="0,5 5,0 10,5 5,10"/>
+        </pattern>
+        <pattern id="thick-backhatch" viewBox="0 0 10 10" width="10" height="10" patternUnits="userSpaceOnUse">
+            <polygon points="0,0 5,0 10,5 10,10"/>
+            <polygon points="0,5 0,10 5,10"/>
+        </pattern>
+        <pattern id="hatch" viewBox="0 0 10 10" width="10" height="10" patternUnits="userSpaceOnUse">
+            <path d="M0,0 L0,2 8,10 10,10 z"/>
+            <path d="M8,0 L10,0 10,2 z"/>
+        </pattern>
+        <pattern id="backhatch" viewBox="0 0 10 10" width="10" height="10" patternUnits="userSpaceOnUse">
+            <path d="M0,0 L0,2 8,10 10,10 z" transform="rotate(90,5,5)"/>
+            <path d="M8,0 L10,0 10,2 z"  transform="rotate(90,5,5)"/>
+        </pattern>
+        <pattern id="crosshatch" viewBox="0 0 10 10" width="10" height="10" patternUnits="userSpaceOnUse">
+            <path d="M0,0 L0,2 8,10 10,10 z"/>
+            <path d="M8,0 L10,0 10,2 z"/>
+            <path d="M0,0 L0,2 8,10 10,10 z" transform="rotate(90,5,5)"/>
+            <path d="M8,0 L10,0 10,2 z"  transform="rotate(90,5,5)"/>
+        </pattern>
+    </defs>
+
+    <rect height="50" width="200" fill="url(#thick-backhatch)" transform="translate(50,10)" />
+    <rect height="50" width="100" fill="url(#hatch)" transform="translate(50,65)" />
+    <rect height="50" width="300" fill="url(#crosshatch)" transform="translate(50,120)" />
+    <rect height="50" width="400" fill="url(#diamond)" transform="translate(50,175)" />
+    <rect height="50" width="500" fill="url(#backhatch)" transform="translate(50,230)" />
+
+</svg>
+</body>
+</html>

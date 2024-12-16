@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Using getCTM(), getScreenCTM() and SVGMatrix API methods</title>
+</head>
+<body>
+<h1>Using getCTM() and SVGMatrix API methods</h1>
+<style>
+    svg {
+        position: absolute;
+        left: 150px;
+        top: 150px;
+        border: solid 1px gray;
+    }
+</style>
+<p>Examples using the Current Transformation Matrix (CTM).
+    See console for more results. The triangle will be applied the square's CTM after 2 seconds.</p>
+
+<svg width="600" height="300">
+    <rect x="100" y="100" width="100" height="100" fill="orange"
+          transform="translate(45,80) rotate(-40) scale(1.5)" />
+    <polygon points="100,100 200,100 150,200" fill="red" />
+</svg>
+
+<script type="module">
+
+    const rect = document.querySelector("rect");
+
+    const ctm = rect.getCTM();
+    const screenCTM = rect.getScreenCTM();
+
+    console.log("CTM: ", ctm);
+    console.log("Screen CTM: ", screenCTM);
+
+    const domMatrix = DOMMatrix.fromMatrix(ctm);
+
+    setTimeout(() => {
+        // Apply the translation to the polygon
+        const polygon = document.querySelector("polygon");
+        polygon.setAttribute("transform", domMatrix.toString());
+    }, 2000);
+
+</script>
+</body>
+</html>

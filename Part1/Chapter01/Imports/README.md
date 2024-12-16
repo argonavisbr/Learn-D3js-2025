@@ -1,8 +1,7 @@
 # Chapter01/Module-frontend
 
 This section shows several examples on how to import the D3 library using frontend JavaScript or HTML. 
-Although modules are recommended and supported in all modern browsers, to avoid version conflicts and other hard-to-debug
-errors, we will use simple scripts in HTML and import the full D3 bundle in most examples in this book. 
+Although using individual modules is recommended, we will import the full D3 bundle in most examples in this book. 
 Optimization techniques and other advanced topics will be covered in the last chapters.
 
 ## 2) Description of each file in this folder
@@ -31,7 +30,7 @@ Imports multiple ES modules. One is transitive but must be imported because a fu
 
 __`6-import-esm-modules-prefix.html`__
 
-If you want to use the same d3 prefix to call functions from multiple modules, you can import them using Promise.all() and assign the prefix to both.
+If you want to use the same `d3` prefix to call functions from multiple modules, you can import them using `Promise.all()` and assign the prefix to both.
 
 __`7-import-esm-external-script.html`__
 
@@ -39,7 +38,7 @@ Typical Web applications keep most of the JavaScript in external files. This exa
 
 __`8-import-esm-external-script-full.html`__
 
-You can keep all the code in external scripts. This example imports an external scripts that runs the app.
+You can keep all the code in external scripts. This example imports an external script that runs the app.
 
 __`9-import-esm-modules-no-prefix`__
 
@@ -51,10 +50,10 @@ If you want to import separate modules without using ESM, you also need to impor
 
 __`11-import-transitive-test.html`__
 
-Transitive dependencies (d3-transition, in this case) don't need to be imported (unless you need to call a function from it).
+Transitive dependencies (`d3-transition`, in this case) don't need to be imported (unless you need to call a function from it).
 
 __`12-import-transitive-test-legacy.html`__
 
 In non-ESM code, it's simpler to import the default bundle, to avoid too many script imports in HTML.
 
-See also examples in `Chapter22/` for importing modules using NPM.
+See also examples in `Chapter21/` for importing modules using NPM.

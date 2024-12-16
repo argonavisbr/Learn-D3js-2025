@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>SVG transform-scale-rotate</title>
+</head>
+<style>
+    svg {
+        border: solid 1px lightgray;
+    }
+    text {font-style: italic;}
+    line {stroke-width: 1.5;}
+</style>
+<body>
+<h2>SVG transform-scale-rotate</h2>
+<p>Open console for equivalent <code>matrix()</code> transform.</p>
+<svg width="500" height="300">
+    <defs>
+        <marker id="arrow" markerWidth="10" markerHeight="6"
+                refY="3" refX="0" orient="auto"
+                markerUnits="strokeWidth">
+            <path d="M0,0 L0,6 L9,3 z" fill="navy"/>
+        </marker>
+        <g id="coords">
+            <line x1="5" y1="15" x2="200" y2="15" stroke="currentColor" marker-end="url(#arrow)"/>
+            <line x1="15" y1="5" x2="15" y2="150" stroke="currentColor" marker-end="url(#arrow)"/>
+            <text x="190" y="25" fill="currentColor">x</text>
+            <text x="20" y="145" fill="currentColor">y</text>
+            <rect x="50" y="50" width="50" height="50" fill="currentColor"/>
+        </g>
+    </defs>
+
+    <use href="#coords" color="black" />
+    <use href="#coords" color="blue" transform="translate(200,20) rotate(30) scale(1.5) " />
+</svg>
+<script>
+    // Equivalent matrix() transform
+    const use = document.querySelectorAll('use')[1];
+    const ctm = DOMMatrix.fromMatrix(use.getCTM());
+    console.log(ctm.toString());
+</script>
+</body>
+</html>

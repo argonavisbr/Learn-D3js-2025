@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/4.6.0/papaparse.min.js"></script>
+    <link rel="stylesheet" href="css/main.css">
+</head>
+<body>
+
+<h1>Number of hours in a day</h1>
+<div id="hours" class="data"></div>
+
+<h1>Number of days in a year</h1>
+<div id="days" class="data"></div>
+
+<script>
+
+    function showData(dataArray, id) {
+        let dataDiv = document.getElementById(id);
+        if (dataArray.length === 0) {
+            dataDiv.innerHTML = "<p>Error reading file</p>";
+        } else {
+            let maxValue = Math.max(...dataArray.map(obj => obj.Duration));
+            let maxBar = 300.0/maxValue;
+
+            for(let i = 0; i < dataArray.length; i++) {
+                let label = dataArray[i].Location.charAt(0) + dataArray[i].Location.slice(1).toLowerCase();
+                let barSize = maxBar * dataArray[i].Duration;
+                dataDiv.innerHTML +=
+                        "<div>"
+                            +"<span>" + label + "</span>"
+                            +"<span style='width: "+barSize+"px'>&nbsp;</span>"
+                            +"<span style='left: " +(90 + barSize)+"px'>" + dataArray[i].Duration + "</span>"
+                        +"</div>";
+            }
+        }
+    }
+
+    const files = ['../data/PlanetDay.json', '../data/PlanetYear.csv'];
+    var promises = files.map(file => fetch(file).then(resp => resp.text()));
+
+    Promise.all(promises).then(function(results) {
+        const jsonData = JSON.parse(results[0]);
+        const [csvData]  = Papa.parse(results[1], {header: true}).data;
+
+        console.log(csvData)
+        console.log(jsonData)
+
+        showData(jsonData, "hours");
+
+        const csvObj = [];
+        for(let key in csvData) {
+            csvObj.push({Location: key, Duration: +csvData[key]});
+        }
+        console.log(csvObj);
+
+        showData(csvObj, "days");
+    });
+
+
+</script>
+
+</body>
+</html>

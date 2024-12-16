@@ -1,0 +1,37 @@
+text {font-family: sans-serif}
+svg {
+    border: solid 1px lightgray;
+}
+.no-tr {
+    fill: black;
+}
+.no-tr circle {
+    opacity: .1;
+}
+.no-tr > text {
+    opacity: .3;
+}
+.no-tr polygon {
+    opacity: .05;
+}
+.first-tr {
+    fill: seagreen;
+}
+.first-tr circle {
+    fill: blue;
+    opacity: .3;
+}
+.first-tr > text {
+    fill: greenyellow;
+}
+.first-tr polygon {
+    opacity: .9;
+}
+.second-tr circle {
+    fill: red;
+    opacity: .6;
+}
+div {
+    display: inline-block;
+    margin: 10px;
+}

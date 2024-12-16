@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>SVG transform: translate using D3</title>
+    <script src="https://cdn.jsdelivr.net/npm/d3-selection@3"></script>
+</head>
+<style>
+    svg {
+        border: solid 1px lightgray;
+    }
+    text {font-style: italic;}
+    line {stroke-width: 1.5;}
+</style>
+<body>
+<h2>SVG transform: translate using D3</h2>
+<script>
+    const svg = d3.select("body")
+        .append("svg")
+        .attr("width", 600)
+        .attr("height", 300);
+
+    const defs = svg.append("defs");
+
+    const marker = defs.append("marker")
+        .attr("id", "arrow")
+        .attr("markerWidth", 10)
+        .attr("markerHeight", 6)
+        .attr("refY", 3)
+        .attr("refX", 0)
+        .attr("orient", "auto")
+        .attr("markerUnits", "strokeWidth");
+    marker.append("path")
+        .attr("d", "M0,0 L0,6 L9,3 z")
+        .style("fill", "navy");
+
+    const g = defs.append("g").attr("id", "coords");
+    g.append("line")
+        .attr("x1", 5)
+        .attr("y1", 15)
+        .attr("x2", 200)
+        .attr("y2", 15)
+        .style("stroke", "currentColor")
+        .attr("marker-end", "url(#arrow)");
+    g.append("line")
+        .attr("x1", 15)
+        .attr("y1", 5)
+        .attr("x2", 15)
+        .attr("y2", 150)
+        .style("stroke", "currentColor")
+        .attr("marker-end", "url(#arrow)");
+
+    g.append("text")
+        .attr("x", 190)
+        .attr("y", 25)
+        .style("fill", "currentColor")
+        .text("x");
+    g.append("text")
+        .attr("x", 20)
+        .attr("y", 145)
+        .style("fill", "currentColor")
+        .text("y");
+    g.append("rect")
+        .attr("x", 50)
+        .attr("y", 50)
+        .attr("width", 50)
+        .attr("height", 50)
+        .style("fill", "currentColor");
+
+    svg.append("use")
+        .attr("href", "#coords")
+        .style("color", "black");
+
+    const use = svg.append("use")
+        .attr("href", "#coords")
+        .style("color", "blue")
+        .attr("transform", "translate(100,100)");
+
+    // Equivalent matrix() transform
+    const ctm = DOMMatrix.fromMatrix(use.node().getCTM());
+    console.log(ctm.toString());
+
+</script>
+</body>
+</html>

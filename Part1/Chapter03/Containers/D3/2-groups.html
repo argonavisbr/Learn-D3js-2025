@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>SVG groups - using currentColor - Using D3</title>
+    <script src="https://cdn.jsdelivr.net/npm/d3-selection@3"></script>
+</head>
+<style>
+    svg { border: solid 1px lightgray; }
+</style>
+<body>
+<h1>SVG groups - using <code>currentColor</code></h1>
+<svg width="600" height="300"></svg>
+<script>
+    const svg = d3.select("svg");
+
+    makeSymbol(svg, 0, 0);
+    makeSymbol(svg, 300, 0, "red");
+
+    function makeSymbol(container, x, y, color) {
+        const g = container.append("g").style("color", color);
+        g.append("circle")
+            .attr("cx", x+150)
+            .attr("cy", y+150)
+            .attr("r", 120)
+            .style("fill", "none")
+            .style("stroke", "currentColor")
+            .style("stroke-width", 20);
+        g.append("rect")
+            .attr("x", x+30)
+            .attr("y", y+140)
+            .attr("height", 20)
+            .attr("width", 240)
+            .style("fill", "currentColor");
+        g.append("rect")
+            .attr("y", y+30)
+            .attr("x", x+140)
+            .attr("width", 20)
+            .attr("height", 240)
+            .style("fill", "currentColor");
+    }
+
+</script>
+</body>
+</html>

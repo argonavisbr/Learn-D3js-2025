@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>SVG masking using D3</title>
+    <script src="https://cdn.jsdelivr.net/npm/d3-selection@3"></script>
+</head>
+<style>
+    svg {
+        border: solid 1px lightgray;
+    }
+</style>
+<body>
+<h2>SVG masking using D3</h2>
+<script>
+    const svg2 = d3.select("body")
+        .append("svg")
+        .attr("width", 425)
+        .attr("height", 425);
+
+    const defs = svg2.append("defs");
+
+    const mask = defs.append("mask")
+        .attr("id", "mask");
+    mask.append("rect")
+        .attr("x", 25)
+        .attr("y", 25)
+        .attr("height", 350)
+        .attr("width", 350)
+        .style("fill", "white");
+    mask.append("circle")
+        .attr("cx", 200)
+        .attr("cy", 199)
+        .attr("r", 139)
+        .style("fill", "black");
+
+    svg2.append("image")
+        .attr("x", 25)
+        .attr("y", 25)
+        .attr("height", 350)
+        .attr("width", 350)
+        .attr("href", "../../data/images/pluto.jpg");
+
+    svg2.append("rect")
+        .attr("x", 25)
+        .attr("y", 25)
+        .attr("height", 350)
+        .attr("width", 350)
+        .attr("mask", "url(#mask)")
+        .style("fill", "white");
+</script>
+
+</body>
+</html>

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>SVG groups</title>
+    <script src="https://cdn.jsdelivr.net/npm/d3-selection@3"></script>
+</head>
+<style>
+    svg { border: solid 1px lightgray; }
+</style>
+<body>
+<h1>SVG viewBox</h1>
+<p>SVG with <code>with=300</code> and <code>height=300</code></p>
+<svg width="460" height="300" >
+</svg>
+<script>
+    const svg = d3.select("svg");
+    svg.append("defs")
+        .append("symbol")
+            .attr("viewBox", "-15 -15 30 30")
+            .attr("width", 30)
+            .attr("height", 30)
+            .attr("id", "earth")
+            .each(function() {
+                d3.select(this).append("circle")
+                    .attr("cx", 0)
+                    .attr("cy", 0)
+                    .attr("r", 12)
+                    .style("fill", "none")
+                    .style("stroke", "currentColor")
+                    .style("stroke-width", 2);
+                d3.select(this).append("rect")
+                    .attr("x", -12)
+                    .attr("y", -1)
+                    .attr("height", 2)
+                    .attr("width", 24)
+                    .style("fill", "currentColor");
+                d3.select(this).append("rect")
+                    .attr("y", -12)
+                    .attr("x", -1)
+                    .attr("width", 2)
+                    .attr("height", 24)
+                    .style("fill", "currentColor");
+            });
+
+    svg.append("use")
+        .attr("href", "#earth");
+    svg.append("use")
+        .attr("href", "#earth")
+        .attr("transform", "scale(10)")
+        .style("color", "green");
+    svg.append("use")
+        .attr("href", "#earth")
+        .attr("transform", "translate(300,75) scale(5)")
+        .style("color", "orange");
+
+</script>
+
+</body>
+</html>

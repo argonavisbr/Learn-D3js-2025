@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>SVG viewports - using D3</title>
+    <script src="https://cdn.jsdelivr.net/npm/d3-selection@3"></script>
+</head>
+<style>
+    svg { border: solid 1px lightgray; }
+    table {width: 1230px; text-align: center}
+    td {width: 300px; font-family: monospace}
+</style>
+<body>
+<h1>Nested SVG viewports with local view box</h1>
+<p>SVG with <code>with=300</code> and <code>height=300</code></p>
+<div/>
+<table><tr><td>no viewBox</td><td>viewBox="0 0 300 300</td><td>viewBox="-15 -15 300 300"</td><td>viewBox="-15 -15 30 30"</td></tr></table>
+</body>
+<script>
+    d3.select("div")
+        .append("svg")
+        .attr("width", 300)
+        .attr("height", 300)
+        .append(makeShapes);
+
+    d3.select("div")
+        .append("svg")
+        .attr("width", 300)
+        .attr("height", 300)
+        .attr("viewBox", "0 0 300 300")
+        .append(makeShapes);
+
+    d3.select("div")
+        .append("svg")
+        .attr("width", 300)
+        .attr("height", 300)
+        .attr("viewBox", "-15 -15 300 300")
+        .append(makeSymbol);
+
+    d3.select("div")
+        .append("svg")
+        .attr("width", 300)
+        .attr("height", 300)
+        .attr("viewBox", "-15 -15 30 30")
+        .append(makeSymbol);
+
+    function makeShapes() {
+        const g = d3.create("svg:g");
+        g.append("circle")
+            .attr("cx", 150)
+            .attr("cy", 150)
+            .attr("r", 120)
+            .style("fill", "none")
+            .style("stroke", "currentColor")
+            .style("stroke-width", 20);
+        g.append("rect")
+            .attr("x", 30)
+            .attr("y", 140)
+            .attr("height", 20)
+            .attr("width", 240)
+            .style("fill", "currentColor");
+        g.append("rect")
+            .attr("y", 30)
+            .attr("x", 140)
+            .attr("width", 20)
+            .attr("height", 240)
+            .style("fill", "currentColor");
+        return g.node();
+    }
+
+    function makeSymbol() {   // the smallest shape using integers for dimensions and positions
+        const g = d3.create("svg:g");
+        g.append("circle")
+            .attr("r", 12)
+            .style("fill", "none")
+            .style("stroke", "currentColor")
+            .style("stroke-width", 2);
+        g.append("rect")
+            .attr("x", -12)
+            .attr("y", -1)
+            .attr("height", 2)
+            .attr("width", 24)
+            .style("fill", "currentColor");
+        g.append("rect")
+            .attr("y", -12)
+            .attr("x", -1)
+            .attr("width", 2)
+            .attr("height", 24)
+            .style("fill", "currentColor");
+        return g.node();
+    }
+</script>
+</html>

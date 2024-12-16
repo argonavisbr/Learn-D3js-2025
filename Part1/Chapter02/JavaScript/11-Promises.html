@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>JavaScript examples: Promises</title>
+    <style>
+        #result {
+            color: green;
+        }
+        #status {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+<h1>JavaScript examples: Promises</h1>
+<p>Open developer console to see results. Open code to see comments</p>
+
+<p>Contents from good file: <b><span id="result"></span></b></p>
+<p>Loading bad file status: <b><span id="status"></span></b></p>
+<script>
+
+    // Simple fetch and print string
+    fetch('../data/PlanetDiameters.csv')
+        .then(response => console.log(response.text()));
+
+    // Fetch returns a promise
+    // The function in then() will run when the file is loaded
+    fetch('../data/PlanetDiameters.csv')
+        .then(response => response.text())      // HttpResponse object
+        .then(text   => text.substring(14,19))  // String object
+        .then(word => document.getElementById('result').innerHTML = word);
+
+
+    // Fetching a file that doesn't exist
+    fetch('../data/BadFile')
+        .then(resp => {
+            if (resp.ok) {
+                return resp.text();
+            } else if (resp.status === 404) {
+                throw new Error(`File not found!`);
+            }
+        })
+        .then(text => document.getElementById('status').innerHTML = "Success: " + text)
+        .catch(error => document.getElementById('status').innerHTML = error);
+
+</script>
+</body>
+</html>

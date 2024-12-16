@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>DOM examples</title>
+</head>
+<body>
+<h1>DOM examples: DOM interface types</h1>
+<p>Open developer console to see results. Open code to see comments</p>
+<svg>
+    <circle r="5"/>
+    <text>Some text</text>
+</svg>
+<script>
+
+    const circle = document.querySelector("circle");
+    const text = document.querySelector("text");
+    const h1 = document.querySelector("h1");
+    const radius = circle.r.baseVal.value;
+    const textContent = text.textContent;
+    const body = document.body;
+
+    testNode(circle);
+    testNode(text);
+    testNode(h1);
+    testNode(radius);
+    testNode(textContent);
+    testNode(body);
+
+    function testNode(node) {
+        console.log("**********");
+        console.log('nodeType', node.nodeType);
+        console.log('nodeName', node.nodeName);
+        console.log('nodeValue', node.nodeValue);
+        console.log('constructor.name', node.constructor.name);
+        console.log('typeof', typeof node)
+
+        if (node.nodeType === Node.ELEMENT_NODE) {
+            console.log("This is an Element node");
+            if(node instanceof SVGElement) {
+                console.log("This is an SVGElement");
+            } else if(node instanceof HTMLElement) {
+                console.log("This is some HTML element");
+            }
+        } else if (node.nodeType === Node.ATTRIBUTE_NODE) {
+            console.log("This is an Attribute node");
+        } else if (node.nodeType === Node.TEXT_NODE) {
+            console.log("This is a Text node");
+        } else {
+            console.log("This is some other Node");
+        }
+    }
+
+</script>
+</body>
+</html>

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Using markers</title>
+    <script src="https://cdn.jsdelivr.net/npm/d3-selection@3"></script>
+</head>
+<style>
+    svg {
+        border: solid 1px lightgray;
+    }
+</style>
+<body>
+<h2>Using markers</h2>
+<script>
+    const svg = d3.select("body").append("svg")
+                    .attr("width", 600)
+                    .attr("height", 300);
+
+    const defs = svg.append("defs");
+    defs.append("marker")
+        .attr("id", "arrow")
+        .attr("markerWidth", 10)
+        .attr("markerHeight", 6)
+        .attr("refY", 3)
+        .attr("refX", 0)
+        .attr("orient", "auto-start-reverse")
+        .attr("markerUnits", "strokeWidth")
+        .append("path")
+            .attr("d", "M0,0 L0,6 L9,3 z")
+            .attr("fill", "red");
+    defs.append("marker")
+        .attr("id", "circle")
+        .attr("markerWidth", 10)
+        .attr("markerHeight", 10)
+        .attr("refX", 5)
+        .attr("refY", 5)
+        .attr("orient", "auto")
+        .each(function() {
+            d3.select(this)
+                .append("circle")
+                    .attr("cx", 5)
+                    .attr("cy", 5)
+                    .attr("r", 4)
+                    .style("fill", "blue");
+            d3.select(this)
+                .append("rect")
+                    .attr("x", 3)
+                    .attr("y", 3)
+                    .attr("width", 4)
+                    .attr("height", 4)
+                    .style("fill", "yellow");
+        });
+
+    svg.append("path")
+        .attr("d", "M75,250 C200,100 250,100 250,250 L400,250 250,50 450,150 500,50 550,200")
+        .style("fill", "none")
+        .style("stroke", "red")
+        .style("stroke-width", 4)
+        .attr("marker-end", "url(#arrow)")
+        .attr("marker-mid", "url(#circle)")
+        .attr("marker-start", "url(#arrow)");
+
+</script>
+</body>
+</html>

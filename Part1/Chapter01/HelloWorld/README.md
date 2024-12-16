@@ -37,9 +37,11 @@ You need to be connected to the Internet, since all examples download the D3 lib
 load the library in the `/Imports` folder).
 
 You also need to serve the files through a local web server. Most examples won't work if you simply open the file in a
-browser. You can get one automatically if you use an IDE such as Visual Studio Code (with the Live Preview extension),
-Adobe Brackets, GitHub Atom or JetBrains WebStorm/IDEA. These are all very popular Web editors and they all provide
-automatic preview through a Web server (some might require a plugin).
+browser. You can get one automatically if you use an IDE such as *JetBrains WebStorm* or *Visual Studio Code* 
+(with the *Live Preview extension*). Both of these IDEs are great options and are free to use while you learn. *WebStorm*
+is free for any non-commercial use. You can start using it out-of-the-box, since no configuration is necessary. 
+*Visual Studio Code* is free for any use, commercial or not, but you need to set it up and install a plug-in for 
+automatic preview through a Web server. 
 
 If you prefer you can also use your console terminal to install (if necessary) and run a command-line server. If you
 have NPM installed, install a simple web server using:
@@ -63,11 +65,13 @@ You can start by forking the following examples, which are already set up. They 
 - JSFiddle: https://jsfiddle.net/helderdarocha/93fty6zh/1/
 - CodePen:  https://codepen.io/helderdarocha/pen/xxazVeN
 
+(You can also use these environments without any configuration, importing the ESM modules directly in the code window, 
+but you may encounter some limitations or bugs.)
+
 These are great to experiment with the code as you learn. Both have a console that help with debugging. You can
 modify the code as much as you want, save it and share it. External files, however, will need to be loaded via a
-separate URL.
-
-You can, of course, use any other cloud-based IDE or sandbox of your choice.
+separate URL. You can use these environments to start using D3 quickly, and to share your code, but you should have
+a local enviroment set up by the time you finish Chapter 4.
 
 ## 4) Observable notebooks
 
@@ -76,6 +80,8 @@ and see the results immediately. You can the examples from this chapter here:
 
 https://observablehq.com/d/90d319473e8012ae
 
+Programming for a notebook is slightly different from programming in a code editor, but it's a great way to learn and
+share your code. In all chapters, selected examples will also be available in *Observable* notebooks.
 
 
 

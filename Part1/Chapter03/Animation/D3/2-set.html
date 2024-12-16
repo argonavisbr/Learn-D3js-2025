@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Simple examples using set</title>
+</head>
+<body>
+<script type="module">
+    import * as d3 from "https://cdn.skypack.dev/d3@7";
+
+    const svg = d3.create("svg")
+                  .attr("width", 800)
+                  .attr("height", 400);
+
+    svg.append("rect")
+        .attr("x", 50)
+        .attr("y", 50)
+        .attr("width", 100)
+        .attr("height", 50)
+        .attr("fill", "red")
+        .append("set")
+            .attr("attributeName", "fill")
+            .attr("to", "yellow")
+            .attr("dur", "2s")
+            .attr("begin", "click");
+
+    svg.append("rect")
+        .attr("x", 200)
+        .attr("y", 50)
+        .attr("width", 100)
+        .attr("height", 50)
+        .attr("fill", "blue")
+        .attr("opacity", 0.5)
+        .append("set")
+            .attr("attributeName", "y")
+            .attr("to", 100)
+            .attr("dur", "2s")
+            .attr("begin", "click");
+
+    d3.select("body").append(() => svg.node());
+
+</script>
+</body>
+</html>

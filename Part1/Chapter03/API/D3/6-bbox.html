@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Examples using getBBox</title>
+  <style>
+    svg {
+      border: 1px solid black;
+    }
+  </style>
+</head>
+<body>
+<h1>Examples using <code>getBBox()</code></h1>
+<p>See console for more details.
+<p>This method gets the bounding box in SVG coordinates but does
+   not consider transforms (you need to either apply it to the bounding box, if it is a translation,
+   or contain it in a group, if it involves other transforms. It might be easier to use
+   if your elements don't use transforms.
+<p>See also examples using <code>getBoundingClientRect()</code> which considers transforms,
+   but uses the coordinates of the page (not the SVG viewport).</p>
+
+<script type="module">
+    import * as d3 from "https://cdn.skypack.dev/d3@7";
+    import sym from "./js/custom-symbols.js";
+
+    const svg = d3.select("body").append("svg")
+              .attr("width", 1000)
+              .attr("height", 200);
+
+    const rect = svg.append("rect")
+                .attr("x", 50).attr("y", 50)
+                .attr("width", 100).attr("height", 100)
+                .attr("transform-origin", "100 100")
+                .attr("transform", "rotate(45) ")
+                .style("fill", "red");
+
+    const text = svg.append("text")
+                .attr("x", 230)
+                .attr("y", 100)
+                .text("Lorem ipsum")
+                .style("font-size", "30px")
+                .style("fill", "navy");
+
+    const circle = svg.append("circle")
+                    .attr("cx", 500).attr("cy", 100).attr("r", 50)
+                    .style("fill", "green");
+
+    const group = svg.append("g")
+                 .attr("transform", "translate(670, 100)");
+
+    const path1 = group.append("path")
+                   .attr("d", d3.symbol(sym.symbolMars).size(4000))
+                   .attr("transform", "translate(50, -30)")
+                   .style("stroke", "darkblue").style("fill", "none").style("stroke-width", 3);
+
+    const path2 = group.append("path")
+                   .attr("d", d3.symbol(sym.symbolVenus).size(4000))
+                   .style("stroke", "magenta").style("fill", "none").style("stroke-width", 3);
+
+    const line = svg.append("line")
+                .attr("x1", 850).attr("y1", 50)
+                .attr("x2", 950).attr("y2", 150)
+                .style("stroke", "black").style("stroke-width", 2);
+
+    // draw the bounding boxes over the shapes with a light gray stroke
+    drawBBox(text.node());
+    drawBBox(circle.node());
+    drawBBox(line.node());
+    drawBBox(path1.node());
+    drawBBox(path2.node());
+    drawBBox(group.node());
+    drawBBox(contain(rect.node()).node()); // correct for lost transforms
+
+    function drawBBox(element) {
+        const bbox = element.getBBox();
+        console.log(element, bbox);
+        svg.append("rect")
+              .attr("x", bbox.x)
+              .attr("y", bbox.y)
+              .attr("width", bbox.width)
+              .attr("height", bbox.height)
+              .attr("transform", getTranslation(element)) // correct for lost translations
+              .style("fill", "none")
+              .style("stroke", "lightgray");
+    }
+
+    // getBBox does not preserve transforms. For scaling, rotation, skewing, put the element in a group
+    // and apply the transform to the group.
+    function contain(element) {
+        const detached = d3.select(element).remove();
+        const container = svg.append("g");
+        container.append(() => detached.node());
+        return container;
+    }
+
+    // getBBBox does not preserve transforms. Translating can be corrected using the transformation matrix
+    // without the need to place the element in a container.
+    function getTranslation(element) {
+        const tm = element.getCTM();
+        return `translate(${tm.e}, ${tm.f})`;
+    }
+
+</script>
+</body>
+</html>

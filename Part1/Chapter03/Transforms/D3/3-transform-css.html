@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>CSS transforms</title>
+    <link rel="stylesheet" href="css/transform-examples.css">
+</head>
+<style>
+    .first-tr {
+        transform-origin: 50px 25px;
+        transform: translate(-25px,-50px) rotate(-30deg) scale(1.5);
+    }
+</style>
+<body>
+<h2>CSS transforms</h2>
+<p>Transforms are applied in the style sheet.</p>
+<script type="module">
+    import {setup, showMatrix, addAxes, addPolygonAndText} from "./js/transform-examples.js";
+    const data = ["translate(-25px,-50px) rotate(-30deg) scale(1.5)"];
+
+    // Draw axes and shape without transforms
+    const svg = setup(data);
+    addAxes(svg);
+    const noTr = svg.append("g").attr("class", "no-tr");
+    addPolygonAndText(noTr, true);
+
+    // Draw axes and shape with transforms
+    const firstTr = noTr.append("g").attr("class", "first-tr"); // transform applied in <style> block
+    addAxes(firstTr, "lightgreen");
+    addPolygonAndText(firstTr, true);
+
+    // Compute the matrix() equivalent of the transform
+    showMatrix(".first-tr", svg);
+</script>
+</body>
+</html>

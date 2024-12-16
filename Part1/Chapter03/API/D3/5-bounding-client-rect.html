@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Examples using getBoundingClientRect</title>
+  <style>
+    svg {
+      border: 1px solid black;
+    }
+  </style>
+</head>
+<body>
+<h1>Examples using <code>getBoundingClientRect()</code></h1>
+<p>See console for more details.
+<p>This method considers element transforms but does not use SVG coordinates (you need to
+    compensate it subtracting the SVG's bounding box position - e.g. via inverse screen CTM).
+    It might be easier to use if your elements use transforms.
+<p>See also examples using <code>getBBox()</code> which uses SVG coordinates,
+    but does not consider transforms.</p>
+<script type="module">
+  import * as d3 from "https://cdn.skypack.dev/d3@7";
+  import sym from "./js/custom-symbols.js";
+
+    const svg = d3.create("svg")
+        .attr("width", 1000)
+        .attr("height", 200);
+    d3.select("body").append(() => svg.node());
+
+    const rect = svg.append("rect")
+                    .attr("x", 50).attr("y", 50)
+                    .attr("width", 100).attr("height", 100)
+                    .attr("transform-origin", "100 100")
+                    .attr("transform", "rotate(45) ")
+                    .style("fill", "red");
+
+    const text = svg.append("text")
+                    .attr("x", 230)
+                    .attr("y", 100)
+                    .text("Lorem ipsum")
+                    .style("font-size", "30px")
+                    .style("fill", "navy");
+
+
+    const circle = svg.append("circle")
+                        .attr("cx", 500).attr("cy", 100).attr("r", 50)
+                        .style("fill", "green");
+
+    const group = svg.append("g")
+                     .attr("transform", "translate(670, 100)");
+
+    const path1 = group.append("path")
+                       .attr("d", d3.symbol(sym.symbolMars).size(4000))
+                       .attr("transform", "translate(50, -30)")
+                       .style("stroke", "darkblue").style("fill", "none").style("stroke-width", 3);
+
+    const path2 = group.append("path")
+                       .attr("d", d3.symbol(sym.symbolVenus).size(4000))
+                       .style("stroke", "magenta").style("fill", "none").style("stroke-width", 3);
+
+    const line = svg.append("line")
+                    .attr("x1", 850).attr("y1", 50)
+                    .attr("x2", 950).attr("y2", 150)
+                    .style("stroke", "black").style("stroke-width", 2);
+
+    drawBBox(text.node());
+    drawBBox(circle.node());
+    drawBBox(line.node());
+    drawBBox(path1.node());
+    drawBBox(path2.node());
+    drawBBox(group.node());
+    drawBBox(rect.node());
+
+
+  // getBoundingClientRect() is a DOM method (not a specific SVG DOM method like getBBox
+  // so you need to consider the offset of the SVG as well.
+  function getCoords(element) {
+      const box = element.getBoundingClientRect();
+      const stm = svg.node().getScreenCTM();
+      const origin = DOMPoint.fromPoint(box).matrixTransform(stm.inverse());
+      box.x = origin.x;
+      box.y = origin.y;
+      return box;
+  }
+
+  function drawBBox(element) {
+      const bbox = getCoords(element);
+      console.log(element, bbox);
+      svg.append("rect")
+          .attr("x", bbox.x)
+          .attr("y", bbox.y)
+          .attr("width", bbox.width)
+          .attr("height", bbox.height)
+          .style("fill", "none")
+          .style("stroke", "lightgray");
+  }
+
+
+</script>
+</body>
+</html>

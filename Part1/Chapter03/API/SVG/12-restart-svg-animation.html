@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Example with animateMotion</title>
+    <style>
+      path {
+        fill: none;
+        stroke: blue;
+        stroke-width: 2px;
+      }
+      rect {
+        fill: yellow;
+        stroke: black;
+      }
+      svg {
+        border: solid 1px black;
+      }
+    </style>
+</head>
+<body>
+<p>Examples using <code>setCurrentTime()</code> and <code>beginElement()</code> to control animations via DOM or D3.</p>
+<svg width="800" height="400">
+    <path id="road" d="M50,350L79,348C108,346,167,342,225,302C283,263,342,188,400,186C458,183,517,253,575,285C633,317,692,311,721,308L750,305"></path>
+    <rect height="10" width="50" rx="5" ry="5" transform="translate(-25,-15)">
+        <animateMotion dur="5s" rotate="auto">
+            <mpath href="#road"></mpath>
+        </animateMotion>
+        <animate attributeName="fill" to="red" dur="5s" fill="freeze"></animate>
+    </rect>
+</svg>
+<div>
+    <button id="rmotion">Restart motion animation</button>
+    <button id="rcolor">Restart color animation</button>
+    <button id="rall">Restart all animations</button>
+</div>
+<script type="module">
+
+    const animateMotion = document.querySelector("animateMotion");
+    const animate = document.querySelector("animate");
+    const svg = document.querySelector("svg");
+
+    const button1 = document.getElementById("rmotion");
+    button1.addEventListener("click", () => animateMotion.beginElement());
+
+    const button2 = document.getElementById("rcolor");
+    button2.addEventListener("click", () => animate.beginElement());
+
+    const button3 = document.getElementById("rall");
+    button3.addEventListener("click", () => svg.setCurrentTime(0));
+
+</script>
+
+</body>
+</html>

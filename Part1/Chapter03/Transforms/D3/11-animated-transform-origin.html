@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Examples using matrix transforms in SVG - used to generate image for the book</title>
+    <link rel="stylesheet" href="css/animated-transforms.css">
+</head>
+<body>
+<h1>Selected affine transforms in SVG using transform-origin</h1>
+<p>See console for <code>getCTM()</code> results.</p>
+<div class='view'></div>
+<script type="module">
+    import {matrix, makeViews, sin, cos, tan} from './js/animated-transforms.js';
+
+    makeViews(2,4);
+
+    // 8 simple transforms (created using the transformation matrix(a,b,c,d,e,f))
+    matrix().a(cos(135)).b(-sin(135)).c(sin(135)).d(cos(135))
+      (["rotate(135)","matrix(cos(135),-sin(135),sin(135),-cos(135),0,0)"],0,0);
+    matrix().a(cos(135)).b(-sin(135)).c(sin(135)).d(cos(135))
+      (["rotate(135)","matrix(cos(135),-sin(135),sin(135),-cos(135),0,0)"],0,1,[30,30]); // transform-origin
+    matrix().a(1.5).d(0.75)
+       (["scale(1.5, 0.75)","matrix(1.5,0,0,.75,0,0)"],0,2);
+    matrix().a(1.5).d(0.75)
+        (["scale(1.5, 0.75)","matrix(1.5,0,0,.75,0,0)"],0,3,[30,30]); // transform-origin
+
+    matrix().a(-1).d(1)
+       (["scale(-1,1)","matrix(-1,0,0,1,0,0)"],1,0);
+    matrix().a(-1).d(1)
+       (["scale(-1,1)","matrix(-1,0,0,1,0,0)"],1,1,[30,30]); // transform-origin
+    matrix().c(tan(45))
+        (["skewX(45)","matrix(1,0,tan(60),1,0,0)"],1,2);
+    matrix().c(tan(45))
+        (["skewX(45)","matrix(1,0,tan(60),1,0,0)"],1,3,[30,30]); // transform-origin
+
+
+</script>
+
+</body>
+</html>

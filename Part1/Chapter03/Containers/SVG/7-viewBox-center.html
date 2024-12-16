@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>SVG ViewBox</title>
+</head>
+<style>
+    svg { border: solid 1px lightgray; }
+    circle {
+        stroke: black;
+        stroke-width: 4;
+        fill: orange;}
+    line {
+        stroke: blue;
+        stroke-width: 10;
+        stroke-linecap: round;
+    }
+    rect {
+        fill: lightblue;
+        stroke: purple;
+        stroke-width: 10;
+    }
+</style>
+<body>
+<h1>SVG ViewBox</h1>
+<svg width="400" height="300" viewBox="-200 -150 400 300">
+    <rect width="350" height="250"/>
+    <circle r="100"/>
+    <line y2="90"/>
+    <line x2="90"/>
+</svg>
+</body>
+</html>

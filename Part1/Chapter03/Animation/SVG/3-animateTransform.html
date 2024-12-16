@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Example with animateTransform - using transform-origin or x,y params on rotate</title>
+</head>
+<body>
+<h1>Example with animateTransform</h1>
+<svg width="750" height="600">
+    <defs>
+        <g id="earth">
+            <circle cx="150" cy="150" r="120" fill="none" stroke="currentColor" stroke-width="20"></circle>
+            <rect x="30" y="140" height="20" width="240" fill="currentColor"></rect>
+            <rect y="30" x="140" width="20" height="240" fill="currentColor"></rect>
+        </g>
+    </defs>
+
+    <use href="#earth" color="blue" transform-origin="150 150" transform="translate(300,0)">
+        <animateTransform attributeName="transform" type="rotate" from="360" to="0" dur="2s" repeatCount="indefinite" additive="sum"/>
+    </use>
+
+    <use href="#earth" color="red"  transform-origin="150 150">
+        <animateTransform attributeName="transform" type="rotate" to="360" dur="2s" repeatCount="indefinite"/>
+    </use>
+
+    <use href="#earth" color="green" transform="translate(300,300)">
+        <animateTransform attributeName="transform" type="rotate" to="0 150 150" from="360 150 150" dur="2s" repeatCount="indefinite" additive="sum"/>
+    </use>
+
+    <use href="#earth" color="orange"  transform="translate(0,300)">
+        <animateTransform attributeName="transform" type="rotate" from="0 150 150" to="360 150 150" dur="2s" repeatCount="indefinite" additive="sum"/>
+    </use>
+</svg>
+</body>
+</html>

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>SVG shapes using D3</title>
+    <script src="https://cdn.jsdelivr.net/npm/d3-selection@3"></script>
+</head>
+<style>
+    svg {
+        border: solid 1px lightgray;
+    }
+</style>
+<body>
+<h2>SVG shapes using D3</h2>
+
+<script>
+    // Circles
+    const svg = d3.select("body")
+                    .append("svg")
+                    .attr("width", 200)
+                    .attr("height", 200);
+
+    svg.append("circle").attr("r", 25);
+    svg.append("circle").attr("cx", 40).attr("cy", 40).attr("r", 20);
+    svg.append("circle").attr("cx", 100).attr("cy", 100).attr("r", 50);
+    svg.append("circle").attr("cx", 200).attr("cy", 200).attr("r", 75);
+
+    // Rectangles
+    const svg2 = d3.select("body")
+        .append("svg")
+        .attr("width", 200)
+        .attr("height", 200);
+
+    svg2.append("rect").attr("x", 95).attr("y", 10).attr("width", 10).attr("height", 180);
+    svg2.append("rect").attr("x", 10).attr("y", 95).attr("width", 180).attr("height", 10);
+
+    // Lines
+    const svg3 = d3.select("body")
+        .append("svg")
+        .attr("width", 200)
+        .attr("height", 200);
+
+    svg3.append("line")
+        .attr("x1", 10).attr("y1", 10)
+        .attr("x2", 190).attr("y2", 190)
+        .attr("stroke", "black");
+    svg3.append("line")
+        .attr("x1", 10).attr("y1", 190)
+        .attr("x2", 190).attr("y2", 10)
+        .attr("stroke", "black");
+
+    const svg4 = d3.select("body")
+        .append("svg")
+        .attr("width", 200)
+        .attr("height", 200);
+
+    svg4.append("ellipse")
+        .attr("cx", 100).attr("cy", 100)
+        .attr("rx", 90).attr("ry", 45);
+
+    const svg5 = d3.select("body")
+        .append("svg")
+        .attr("width", 200)
+        .attr("height", 200);
+
+    svg5.append("polygon")
+        .attr("points", "20 20 30 130 150 160 180 140 60 60 80 190 170 30")
+        .attr("fill-rule", "evenodd");
+</script>
+</body>
+</html>

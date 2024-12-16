@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>SVG gradients and patterns</title>
+</head>
+<style>
+    svg {
+        border: solid 1px lightgray;
+    }
+</style>
+<body>
+<h2>SVG gradients and patterns</h2>
+<svg width="600" height="200">
+    <defs>
+        <linearGradient x2="1" id="rainbow">
+            <stop offset="0" stop-color="rgb(255,0,0)" />
+            <stop offset="0.25" stop-color="rgb(255,255,64)" />
+            <stop offset="0.5" stop-color="rgb(64,255,64)" />
+            <stop offset="0.75" stop-color="rgb(64,64,255)" />
+            <stop offset="1" stop-color="rgb(128,0,255)" />
+        </linearGradient>
+        <radialGradient cx="0.35" cy="0.35" r="1" id="glow">
+            <stop offset="0" stop-color="rgb(255,255,255)" />
+            <stop offset="0.5" stop-color="rgb(0,128,255)" />
+            <stop offset="1" stop-color="rgb(128,0,255)" />
+        </radialGradient>
+    </defs>
+
+    <rect width="300" height="50" fill="url(#rainbow)" transform="translate(50,25)"/>
+    <rect width="300" height="50" stroke="url(#rainbow)" fill="none" stroke-width="10" transform="rotate(180,200,145) translate(50,120)"/>
+    <circle r="75" fill="url(#glow)" transform="translate(475,100)"/>
+
+</svg>
+</body>
+</html>

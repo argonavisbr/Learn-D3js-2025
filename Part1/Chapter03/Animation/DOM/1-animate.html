@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>SVG animation</title>
+</head>
+<body>
+<script>
+    const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+    svg.setAttribute("width", 800);
+    svg.setAttribute("height", 400);
+    document.body.appendChild(svg);
+
+    const rect1 = document.createElementNS("http://www.w3.org/2000/svg", "rect");
+    rect1.setAttribute("x", 50);
+    rect1.setAttribute("y", 50);
+    rect1.setAttribute("width", 100);
+    rect1.setAttribute("height", 50);
+    rect1.setAttribute("fill", "red");
+    svg.appendChild(rect1);
+
+    const rect2 = document.createElementNS("http://www.w3.org/2000/svg", "rect");
+    rect2.setAttribute("x", 200);
+    rect2.setAttribute("y", 50);
+    rect2.setAttribute("width", 100);
+    rect2.setAttribute("height", 50);
+    rect2.setAttribute("fill", "blue");
+    rect2.setAttribute("opacity", 0.5);
+    svg.appendChild(rect2);
+
+    const animate1 = document.createElementNS("http://www.w3.org/2000/svg", "animate");
+    animate1.setAttribute("attributeName", "x");
+    animate1.setAttribute("to", 200);
+    animate1.setAttribute("dur", "2s");
+    animate1.setAttribute("fill", "freeze");
+    animate1.setAttribute("begin", "click");
+    rect1.appendChild(animate1);
+
+    const animate2 = document.createElementNS("http://www.w3.org/2000/svg", "animate");
+    animate2.setAttribute("attributeName", "fill");
+    animate2.setAttribute("to", "yellow");
+    animate2.setAttribute("dur", "2s");
+    animate2.setAttribute("fill", "remove");
+    animate2.setAttribute("begin", "click");
+    rect1.appendChild(animate2);
+
+    const animate = document.createElementNS("http://www.w3.org/2000/svg", "animate");
+    animate.setAttribute("attributeName", "y");
+    animate.setAttribute("to", 100);
+    animate.setAttribute("dur", "2s");
+    animate.setAttribute("fill", "freeze");
+    animate.setAttribute("begin", "click");
+    rect2.appendChild(animate);
+
+</script>
+</body>
+</html>

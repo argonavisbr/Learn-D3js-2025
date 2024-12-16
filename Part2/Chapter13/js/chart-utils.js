@@ -19,7 +19,7 @@
  * symbolMars
  * symbolZigZag
  *
- * @version 3.2 2024-10-31
+ * @version 3.2.1 2024-11-28
  */
 
 import * as d3 from "https://cdn.jsdelivr.net/npm/d3@7/+esm";
@@ -508,5 +508,18 @@ const symbolMars = {
 const symbolsFill = [symbolZigZag, symbolDrop];
 const symbolsStroke = [symbolVenus, symbolMars];
 
+export function addArrows(defs, id, width, height, fill) {
+    defs.append("marker")
+        .attr("id", id)
+        .attr("viewBox", `0 0 ${width} ${height}`)
+        .attr("refX", width/2)
+        .attr("refY", height/2)
+        .attr("markerWidth", width * .6)
+        .attr("markerHeight", height * .6)
+        .attr("orient", "auto")
+        .append("path")
+           .attr("d", "M0,0L10,5L0,10")
+           .attr("fill", fill);
+}
 
 

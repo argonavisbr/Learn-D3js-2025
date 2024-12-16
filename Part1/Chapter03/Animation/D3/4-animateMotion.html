@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Example with animateMotion using D3</title>
+    <style>
+      path {
+        fill: none;
+        stroke: blue;
+        stroke-width: 2px;
+      }
+      rect {
+        fill: red;
+      }
+      svg {
+        border: solid 1px black;
+      }
+    </style>
+</head>
+<body>
+<script type="module">
+    import * as d3 from "https://cdn.skypack.dev/d3@7";
+
+    const svg = d3.create("svg")
+                  .attr("width", 800)
+                  .attr("height", 400);
+
+    svg.append("path")
+        .attr("id", "road")
+        .attr("d", "M50,350L79,348C108,346,167,342,225,302C283,263,342,188,400,186C458,183,517,253,575,285C633,317,692,311,721,308L750,305");
+
+    svg.append("rect")
+        .attr("height", 10)
+        .attr("width", 50)
+        .attr("rx", 5)
+        .attr("ry", 5)
+        .attr("transform", "translate(-25,-15)")
+        .append("animateMotion")
+            .attr("dur", "5s")
+            .attr("rotate", "auto")
+            .attr("repeatCount", "indefinite")
+            .append("mpath")
+                .attr("xlink:href", "#road");
+
+    d3.select("body").append(() => svg.node());
+</script>
+
+</body>
+</html>

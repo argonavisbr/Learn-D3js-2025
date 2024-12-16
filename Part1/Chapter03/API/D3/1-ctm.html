@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Using getCTM(), getScreenCTM() and SVGMatrix API methods</title>
+</head>
+<body>
+<h1>Using getCTM() and SVGMatrix API methods</h1>
+<style>
+    svg {
+        position: absolute;
+        left: 150px;
+        top: 150px;
+        border: solid 1px gray;
+    }
+</style>
+<p>Examples using the Current Transformation Matrix (CTM).
+    See console for more results. The triangle will be applied the square's CTM after 2 seconds.</p>
+
+<svg width="600" height="300"></svg>
+
+<script type="module">
+    import * as d3 from "https://cdn.skypack.dev/d3@7";
+
+    const svg = d3.select("svg");
+    const rect = svg.append("rect")
+                    .attr("x", 100).attr("y", 100)
+                    .attr("width", 100).attr("height", 100)
+                    .style("fill", "orange")
+                    .attr("transform", "translate(45,80) rotate(-40) scale(1.5)");
+
+    const polygon = svg.append("polygon")
+                       .attr("points", "100,100 200,100 150,200")
+                       .style("fill", "red");
+
+    const ctm = rect.node().getCTM();
+    const screenCTM = rect.node().getScreenCTM();
+
+    console.log("CTM: ", ctm);
+    console.log("Screen CTM: ", screenCTM);
+
+    const domMatrix = DOMMatrix.fromMatrix(ctm);
+
+    polygon.transition()
+        .delay(2000)
+        .duration(1000)
+        .attr("transform", domMatrix.toString());
+
+</script>
+</body>
+</html>

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>JavaScript examples: Modules</title>
+</head>
+<body>
+<h1>JavaScript examples: modules</h1>
+<p>This example uses modules. See the source code!</p>
+<script type="module">
+    import {append, makeTable} from './modules/tableFunctions.js';
+
+    const data = [
+            ['Creature', 'Population', 'Location'],
+            ['Vampire', 350, 'Romania'],
+            ['Werewolf', 8, 'Serbia'],
+            ['Banshee', 15, 'Ireland'],
+            ['Siren', 213, 'Adriatic Sea']
+        ];
+
+    const table = makeTable(data);
+    append(table);
+
+</script>
+</body>
+</html>

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>SVG groups</title>
+</head>
+<style>
+    svg { border: solid 1px lightgray; }
+</style>
+<body>
+<h1>SVG viewBox</h1>
+<p>SVG with <code>with=300</code> and <code>height=300</code></p>
+<svg width="460" height="300" >
+    <defs>
+        <svg viewBox="-15 -15 30 30" width="30" height="30" id="earth-symbol">
+            <circle cx="0" cy="0" r="12" fill="none" stroke="currentColor" stroke-width="2"></circle>
+            <rect x="-12" y="-1" height="2" width="24" fill="currentColor"></rect>
+            <rect y="-12" x="-1" width="2" height="24" fill="currentColor"></rect>
+        </svg>
+    </defs>
+    <!--use href="#earth-symbol"/-->
+    <use href="#earth-symbol" transform="scale(10)" color="green"/>
+    <use href="#earth-symbol" transform="translate(300,75) scale(5)" color="orange"/>
+</svg>
+
+</body>
+</html>

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Using transform-origin or x,y params on rotate</title>
+    <script src="https://cdn.jsdelivr.net/npm/d3-selection@3"></script>
+</head>
+<body>
+<svg width="750" height="600"></svg>
+<script>
+    const svg = d3.select("svg");
+
+    // Transform origin default for circles is center, for rectangles and groups is top-left corner
+    // Circle or ellipse naturally rotates around its center
+    // Rectangles and groups need to specify center for transforms
+    // Best is using transform-origin, because it defines a consistent pivot point for the element,
+    // which doesn't change when the element is moved or scaled.
+    // You can also use x,y params on rotate to specify the pivot point, but the value may change if
+    // there are previous transforms.
+
+    svg.append("rect")
+        .attr("x", 0)
+        .attr("y", 0)
+        .attr("height", 200)
+        .attr("width", 200)
+        .style("fill", "red")
+        .attr("transform", "translate(100,100)")
+        .attr("transform-origin", "100 100")
+        .append("animateTransform")
+            .attr("attributeName", "transform")
+            .attr("type", "rotate")
+            .attr("from", 360)
+            .attr("to", 0)
+            .attr("dur", "2s")
+            .attr("repeatCount", "indefinite")
+            .attr("additive", "sum");
+
+    svg.append("ellipse")
+        .attr("cx", 0)
+        .attr("cy", 0)
+        .attr("rx", 100)
+        .attr("ry", 80)
+        .style("fill", "blue")
+        .attr("transform", "translate(100,100)")
+        .append("animateTransform")
+            .attr("attributeName", "transform")
+            .attr("type", "rotate")
+            .attr("from", 360)
+            .attr("to", 0)
+            .attr("dur", "2s")
+            .attr("repeatCount", "indefinite")
+            .attr("additive", "sum");
+
+
+</script>
+</body>
+</html>

@@ -1,31 +1,59 @@
 # Chapter03
 
 Files and exercises for chapter 3.
+Each directory contains two or more subdirectories: the `SVG` subdirectory contains code written in SVG (and pure JavaScript, if it contains scripts). The `D3` subdirectory implements the same examples using D3 and using recommended D3 features. This chapter is intended as a reference about essential SVG features you should know to efficiently use D3.
 
 ## 1) Description of each subfolder in this folder
 
-__`Selectors/`__
+__`Shapes/`__
 
-Examples using CSS selectors.
+Examples creating SVG shapes: rectangles, circles, ellipses, lines, and polygons, and applying styles (strokes, fills, etc).
 
-__`JavaScript/`__
+__`Containers/`__
 
-JavaScript examples.
+SVG containers, such as the initial viewport (svg), nested viewports, groups (g), and the use of the viewBox attribute.
 
-__`DOM/`__
+__`Paths/`__
 
-DOM examples.
+Examples using SVG paths, to produce open and closed shapes, curves and arcs.
 
-__`Canvas/`__
+__`Text/`__
 
-HTML Canvas examples.
+Examples using text, tspan and textPath, and styles for aligning text horizontally and vertically.
 
-__`DataFormat/`__
+__`Links/`__
 
-Examples loading files in JSON, CSV and XML.
+Examples using links, images and foreign objects.
 
-__`data/`__, __`js/`__ and __`images/`__
+__`Transforms/`__
 
-Resources used by examples and exercises in the other folders (they are loaded using relative URLs).
+Several examples using transforms: translating, rotating, scaling, shearing, flipping and combining transforms, using `transform-origin` and the `matrix()` function.
 
+__`Other/`__
 
+Simple examples using other SVG elements: `defs`, `use`, `symbol`, `marker`, `clipPath`, `mask`, `filter`, `gradient`, and `pattern`.
+
+__`Animation/`__
+
+Small examples using SVG animation (SMIL): `animate`, `set`, `animateTransform`, `animateMotion`, and text path animations.
+
+__`API/`__
+
+Examples using the SVG DOM API to obtain information from SVG elements and apply transforms. All code is pure JavaScript and in D3.
+
+__`data/`__
+
+Image files used by some examples.
+
+## 2) Observable notebooks
+
+The following *Observable* notebooks are available for this chapter:
+
+- []()
+- []()
+
+## 3) Data gists
+
+The following data files are available for this chapter, via GitHub gists:
+
+- []()

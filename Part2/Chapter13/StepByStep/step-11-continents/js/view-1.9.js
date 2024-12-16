@@ -133,7 +133,7 @@ function joinEnter(enter) {
     enterGrp.append("image")
         .attr("class", "bar")
         .attr("preserveAspectRatio", "none")
-        .attr("xlink:href", d => icon(d.country))
+        .attr("href", d => icon(d.country))
         .attr("height", app.scale.y.bandwidth())
         .attr("width", app.scale.y.bandwidth() * (1 + 2/3))
         .attr("x", d => initWidth(d) - app.scale.y.bandwidth() * (1 + 2/3))

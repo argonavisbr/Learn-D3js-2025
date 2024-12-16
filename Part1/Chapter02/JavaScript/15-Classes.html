@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Basic example with classes</title>
+</head>
+<body>
+<h1>Very basic example demonstrating classes in pure JavaScript</h1>
+<p>See source code and open console for results.</p>
+<script type="module">
+    import {Point, Dimension} from './modules/geometry.js';
+
+    // Base class for all shapes. It has a draw method that is overridden by subclasses (polymorphism)
+    class Shape {
+        name = "Shape";
+        constructor(color, dim, pos) {
+            this.color = color;
+            this.dim = dim;
+            this.pos = pos;
+            this.name = name;
+        }
+        draw(context) {
+            console.log(`Drawing a ${this.name} at (${this.pos.x},${this.pos.y}) with color ${this.color}`);
+        }
+    }
+
+    // Subclasses of Shape (inheritance). Each subclass has a draw method that overrides the one in the base class
+    // The draw method is polymorphic. It is called on a Shape object, but the actual method that is called depends
+    // on the subclass. It refers to the superclass to print the name of the shape.
+    class Circle extends Shape {
+        name = "Circle";
+        constructor(color, dim, pos) {
+            super(color, dim, pos); // Call the constructor of the superclass
+        }
+        draw(context) {
+            super.draw(context); // Call the draw method of the superclass
+            const radius = Math.max(this.dim.width,this.dim.height) / 2;
+            const center = new Point(this.pos.x + this.dim.width / 2, this.pos.y + this.dim.height / 2);
+            context.beginPath();
+            context.arc(center.x, center.y, radius, 0, 2 * Math.PI);
+            context.fillStyle = this.color;
+            context.fill();
+        }
+    }
+
+    class Rectangle extends Shape {
+        name = "Rectangle";
+        constructor(color, dim, pos) {
+            super(color, dim, pos);
+        }
+        draw(context) {
+            super.draw(context);
+            context.fillStyle = this.color;
+            context.fillRect(this.pos.x, this.pos.y, this.dim.width, this.dim.height);
+        }
+    }
+
+    class Hexagon extends Shape {
+        name = "Hexagon";
+        constructor(color, dim, pos) {
+            super(color, dim, pos);
+        }
+        draw(context) {
+            super.draw(context);
+            const radius = Math.max(this.dim.width,this.dim.height) / 2;
+            const center = new Point(this.pos.x + this.dim.width / 2, this.pos.y + this.dim.height / 2);
+            context.beginPath();
+            for (let i = 0; i < 6; i++) {
+                const angle = Math.PI / 3 * i;
+                const x = center.x + radius * Math.cos(angle);
+                const y = center.y + radius * Math.sin(angle);
+                if (i === 0) {
+                    context.moveTo(x, y);
+                } else {
+                    context.lineTo(x, y);
+                }
+            }
+            context.closePath();
+            context.fillStyle = this.color;
+            context.fill();
+        }
+    }
+
+    // Create an array of different shapes
+    const shapes = [
+        new Circle('red', new Dimension(200, 200), new Point(50, 50)),
+        new Rectangle('blue', new Dimension(200, 200), new Point(300, 50)),
+        new Hexagon('green', new Dimension(200, 200), new Point(550, 50))
+    ];
+
+    // Creating a canvas to draw the shapes
+    const canvas = document.createElement('canvas');
+    canvas.width = 800;
+    canvas.height = 600;
+    document.body.appendChild(canvas);
+    const context = canvas.getContext('2d');
+
+    // Using polymorphism to draw the shapes (all shapes have a draw method)
+    shapes.forEach(shape => shape.draw(context));
+</script>
+</body>
+</html>

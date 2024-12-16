@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>SVG filter using D3</title>
+    <script src="https://cdn.jsdelivr.net/npm/d3-selection@3"></script>
+</head>
+<style>
+    svg {
+        border: solid 1px lightgray;
+    }
+</style>
+<body>
+<h2>SVG filter using D3</h2>
+
+<script>
+    const svg = d3.select("body")
+        .append("svg")
+        .attr("width", 600)
+        .attr("height", 300);
+
+    const defs = svg.append("defs");
+
+    defs.append("filter")
+        .attr("id", "filter1")
+        .append("feGaussianBlur")
+            .attr("stdDeviation", "7");
+
+    defs.append("filter")
+        .attr("id", "filter2")
+        .attr("x", -100)
+        .attr("y", -100)
+        .attr("height", 200)
+        .attr("width", 200)
+        .append("feGaussianBlur")
+            .attr("in", "SourceGraphic")
+            .attr("stdDeviation", "0, 5");
+
+    svg.append("text")
+        .attr("font-size", 40)
+        .attr("x", 50)
+        .attr("y", 60)
+        .style("fill", "black")
+        .attr("filter", "url(#filter2)")
+        .text("Do you need glasses?");
+
+    const g = svg.append("g")
+        .attr("id", "stardot")
+        .attr("transform", "translate(100,25) scale(0.5)");
+
+    g.append("polygon")
+        .attr("id", "star")
+        .attr("points", "250,0 400,500 0,200 500,200 100,500")
+        .style("fill", "red")
+        .attr("fill-rule", "evenodd");
+    g.append("circle")
+        .attr("id", "circ")
+        .attr("cx", 250)
+        .attr("cy", 283)
+        .attr("r", 75)
+        .style("fill", "blue")
+        .attr("filter", "url(#filter1)");
+
+
+</script>
+</body>
+</html>

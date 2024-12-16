@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>SVG transform-scale</title>
+    <link rel="stylesheet" href="css/transform-examples.css">
+</head>
+<body>
+<h2>SVG scaling-flipping</h2>
+<p>Open console for equivalent <code>matrix()</code> transform. Last 2 examples use <code>transform-origin</code>.</p>
+
+<script type="module">
+    import {setup, showMatrix, addAxes, addPolygonAndText} from "./js/transform-examples.js";
+    import * as d3 from "https://cdn.skypack.dev/d3-selection@3";
+
+    const data = ["scale(-1)", "scale(-1,1)", "scale(1,-1)", "scale(-1,1)", "scale(1,-1)"];
+
+    // Draw axes and shape without transforms
+    const svg = setup(data, 300, 200);
+    addAxes(svg);
+    const noTr = svg.append("g").attr("class", "no-tr");
+    addPolygonAndText(noTr);
+
+    // Draw axes and shape with transforms
+    const firstTr = noTr.append("g").attr("class", "first-tr")
+                        .attr("transform", d => d)
+                        .attr("transform-origin", (d,i) => i > 2 ? "50 25" : "0 0");
+    //addAxes(firstTr, "lightgreen");
+    addPolygonAndText(firstTr, true);
+
+    d3.selectAll(".first-tr").each(function(d,i) {
+        if (d3.select(this).attr("transform-origin") === "0 0") {
+            d3.select(this).select(".center").remove();
+        }
+    });
+
+    // Compute the matrix() equivalent of the transform
+    showMatrix(".first-tr", svg);
+</script>
+</body>
+</html>

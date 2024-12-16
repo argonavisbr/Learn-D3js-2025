@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Examples with computed text length and BBox for text</title>
+</head>
+<body>
+<h1>Using <code>getComputedTextLength()</code> and <code>getBBox()</code> for text. See console and source code for details.</h1>
+<script type="module">
+    import * as d3 from "https://cdn.skypack.dev/d3@7";
+
+    const svg = d3.select("body").append("svg")
+                  .attr("width", 800)
+                  .attr("height", 400);
+
+    // a simple line of text
+    const text = svg.append("text")
+                    .attr("x", 50)
+                    .attr("y", 100)
+                    .text("Lorem ipsum")
+                    .style("font-size", "40px")
+                    .style("fill", "navy");
+    // A simple curved path
+    const path = svg.append("path")
+                    .attr("id", "path")
+                    .attr("d", "M50,350L79,348C108,346,167,342,225,302C283,263,342,188,400,186C458,183,517,253,575,285C633,317,692,311,721,308L750,305")
+                    .style("stroke", "black")
+                    .style("fill", "none")
+                    .style("stroke-width", 1);
+
+    // A simple circle
+    const circle = svg.append("circle")
+                      .attr("cx", 500)
+                      .attr("cy", 90)
+                      .attr("r", 80)
+                      .style("fill", "orange");
+
+    // Text over path
+    const curvedText = svg.append("text")
+    curvedText.append("textPath")
+        .attr("href", "#path")
+        .attr("startOffset", "25%")
+        .text("Lorem ipsum")
+        .style("font-size", "40px")
+        .style("fill", "red");
+
+    // get the computed text length
+    console.log(`Computed text length: ${text.node().getComputedTextLength()} pixels`);
+
+    // get the bounding box
+    const textBBox = text.node().getBBox();
+    console.log(`Bounding box: `, textBBox);
+
+    // draw the bounding box
+    drawBBox(textBBox);
+
+    // get the computed text length
+    console.log(`Computed text length: ${curvedText.node().getComputedTextLength()} pixels`);
+
+    // get the bounding box
+    const curvedBBox = curvedText.node().getBBox();
+    console.log(`Bounding box: `, curvedBBox);
+
+    // draw the bounding box
+    drawBBox(curvedBBox);
+
+    function drawBBox(box) {
+        svg.append("rect")
+            .attr("x", box.x)
+            .attr("y", box.y)
+            .attr("width", box.width)
+            .attr("height", box.height)
+            .style("fill", "none")
+            .style("stroke", "gray")
+            .style("stroke-width", 1);
+    }
+</script>
+
+</body>
+</html>

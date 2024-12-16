@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Using getCTM(), getScreenCTM() and SVGMatrix API methods</title>
+    <style>
+        svg {
+            position: absolute;
+            left: 150px;
+            top: 200px;
+            border: solid 1px gray;
+        }
+    </style>
+</head>
+<body>
+<h1>Example with getScreenCTM()</h1>
+<h3>Click anywhere in the SVG</h3>
+<p>The black point shows the mouse coordinates obtained from the pointer event.
+   The offset is due to the position of the SVG and can be corrected obtaining the inverse screen CTM.
+   The blue circle is corrected by applying the inverse screen CTM to the point.
+   The red circle is corrected by applying the inverse screen CTM to the circle.
+   The orange circle is corrected by using d3.pointer() which applies the inverse screen CTM to the point.
+</p>
+
+<svg width="600" height="600"></svg>
+
+<script type="module">
+    import * as d3 from "https://cdn.skypack.dev/d3@7";
+
+    // Draw a circle at mouse position: black (not corrected), blue (corrected by subtracting offset), red (corrected by inverse CTM)
+    const svg = d3.select("svg");
+    svg.on("click", e => {
+
+        const orangeCircle = svg.append("circle").attr("r", 15).attr("fill", "orange");
+        const blueCircle = svg.append("circle").attr("r", 10).attr("fill", "blue");
+        const redCircle = svg.append("circle").attr("r", 5).attr("fill", "red");
+        const blackCircle = svg.append("circle").attr("r", 3);
+
+        // Using the screen coordinates, from the event!
+        blackCircle.attr("cx", e.x);    // will not be corrected
+        blackCircle.attr("cy", e.y);
+
+        redCircle.attr("cx", e.x);      // will transform the shape afterwards
+        redCircle.attr("cy", e.y);
+
+        // Get the Screen CTM (only necessary for solutions 1 and 2
+        const stm = svg.node().getScreenCTM();
+
+        // Solution 1: Correct the point using the inverse screen CTM
+        const ipt = DOMPoint.fromPoint(e).matrixTransform(stm.inverse());
+        blueCircle.attr("cx", ipt.x);
+        blueCircle.attr("cy", ipt.y);
+
+        // Solution 2: Applying the inverse of the Screen CTM to the circle
+        const itm = DOMMatrix.fromMatrix(stm.inverse());
+        redCircle.attr("transform", itm.toString());
+
+        // Solution 3 (recommended in D3): Using d3.pointer() (applies the inverse screen CTM to point)
+        const pt = d3.pointer(e);
+        console.log(ipt, pt)
+        orangeCircle.attr("cx", pt[0]);
+        orangeCircle.attr("cy", pt[1]);
+
+    });
+</script>
+</body>
+</html>
