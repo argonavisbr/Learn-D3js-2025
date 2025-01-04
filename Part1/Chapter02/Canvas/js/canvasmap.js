@@ -22,13 +22,8 @@ export function drawMap(data) {
     });
 }
 
-function scaleX(coord) {
-    return canvas.width * (180 + coord) / 360;
-}
-
-function scaleY(coord) {
-    return canvas.height * (90 - coord) / 180;
-}
+const scaleX = coord => canvas.width * (180 + coord) / 360;
+const scaleY = coord => canvas.height * (90 - coord) / 180;
 
 function drawPolygon(coords) {
     ctx.beginPath();

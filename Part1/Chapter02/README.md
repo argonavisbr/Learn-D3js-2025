@@ -32,11 +32,11 @@ Resources used by examples and exercises in the other folders (they are loaded u
 
 The following *Observable* notebooks are available for this chapter:
 
-- [Comparing Canvas and SVG]()
-- [World map using Canvas]()
+- [Comparing Canvas and SVG](https://observablehq.com/d/27af3d02a7495cb7)
+- [World map using Canvas](https://observablehq.com/d/e478ae9701905c7e)
 
 ## 3) Data gists
 
 The following data files are available for this chapter, via GitHub gists:
 
-- [GeoJSON world map]()
+- [GeoJSON world map](https://bit.ly/3r4gIVL)

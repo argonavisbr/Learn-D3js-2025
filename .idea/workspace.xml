@@ -4,292 +4,108 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="88ab0fd2-922d-4b26-894c-0ae61af44502" name="Changes" comment="Updated files after reviewing Chapter 13.">
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Part1/Chapter02/DOM/4-Interface-types.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Part1/Chapter02/DOM/5-Methods.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Part1/Chapter02/JavaScript/15-Classes.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Part1/Chapter02/JavaScript/modules/geometry.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Part1/Chapter03/API/D3/1-ctm.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Part1/Chapter03/API/D3/10-in-fill-stroke.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Part1/Chapter03/API/D3/11-locating-points.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Part1/Chapter03/API/D3/12-restart-svg-animation.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Part1/Chapter03/API/D3/2-ctm-inverse.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Part1/Chapter03/API/D3/3-screen-ctm.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Part1/Chapter03/API/D3/4-lengths.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Part1/Chapter03/API/D3/5-bounding-client-rect.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Part1/Chapter03/API/D3/6-bbox.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Part1/Chapter03/API/D3/7-point-at-length.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Part1/Chapter03/API/D3/8-point-transforms.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Part1/Chapter03/API/D3/9-elements-from-point.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Part1/Chapter03/API/D3/js/custom-symbols.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Part1/Chapter03/API/SVG/1-ctm.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Part1/Chapter03/API/SVG/10-in-fill-stroke.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Part1/Chapter03/API/SVG/11-locating-points.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Part1/Chapter03/API/SVG/12-restart-svg-animation.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Part1/Chapter03/API/SVG/2-ctm-inverse.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Part1/Chapter03/API/SVG/3-screen-ctm.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Part1/Chapter03/API/SVG/4-lengths.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Part1/Chapter03/API/SVG/5-bounding-client-rect.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Part1/Chapter03/API/SVG/6-bbox.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Part1/Chapter03/API/SVG/7-point-at-length.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Part1/Chapter03/API/SVG/8-point-transforms.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Part1/Chapter03/API/SVG/9-elements-from-point.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Part1/Chapter03/Animation/D3/1-animate.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Part1/Chapter03/Animation/D3/2-set.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Part1/Chapter03/Animation/D3/3-animateTransform.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Part1/Chapter03/Animation/D3/4-animateMotion.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Part1/Chapter03/Animation/D3/5-textPathAnimate.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Part1/Chapter03/Animation/DOM/1-animate.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Part1/Chapter03/Animation/SVG/1-animate.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Part1/Chapter03/Animation/SVG/2-set.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Part1/Chapter03/Animation/SVG/3-animateTransform.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Part1/Chapter03/Animation/SVG/4-animateMotion.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Part1/Chapter03/Animation/SVG/5-textPathAnimate.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Part1/Chapter03/Containers/D3/2-groups.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Part1/Chapter03/Containers/D3/3-defs-use.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Part1/Chapter03/Containers/D3/4-nested-viewport.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Part1/Chapter03/Containers/D3/5-svg-reuse.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Part1/Chapter03/Containers/SVG/2-groups.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Part1/Chapter03/Containers/SVG/3-defs-use.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Part1/Chapter03/Containers/SVG/4-nested-viewport.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Part1/Chapter03/Containers/SVG/5-svg-reuse.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Part1/Chapter03/Links/D3/1-image.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Part1/Chapter03/Links/D3/2-foreign-object.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Part1/Chapter03/Links/DOM/2-foreign-object.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Part1/Chapter03/Links/SVG/1-image.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Part1/Chapter03/Links/SVG/2-foreign-object.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Part1/Chapter03/Other/D3/11-pattern.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Part1/Chapter03/Other/D3/3-symbols.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Part1/Chapter03/Other/D3/4-marker-template.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Part1/Chapter03/Other/D3/5-marker.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Part1/Chapter03/Other/D3/8-image-mask.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Part1/Chapter03/Other/SVG/11-pattern.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Part1/Chapter03/Other/SVG/3-symbols.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Part1/Chapter03/Other/SVG/4-marker-template.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Part1/Chapter03/Other/SVG/5-marker.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Part1/Chapter03/Other/SVG/8-image-mask.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Part1/Chapter03/Shapes/D3/8-ellipses.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Part1/Chapter03/Shapes/D3/9-polygon.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Part1/Chapter03/Shapes/SVG/8-ellipses.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Part1/Chapter03/Shapes/SVG/9-polygon.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Part1/Chapter03/Text/D3/4-textPath.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Part1/Chapter03/Text/SVG/4-textPath.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Part1/Chapter03/Transforms/D3/1-translate.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Part1/Chapter03/Transforms/D3/10-animated-transforms.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Part1/Chapter03/Transforms/D3/11-animated-transform-origin.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Part1/Chapter03/Transforms/D3/2-cumulative-transforms.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Part1/Chapter03/Transforms/D3/3-transform-css.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Part1/Chapter03/Transforms/D3/4-scale-flip.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Part1/Chapter03/Transforms/D3/5-rotate-skew.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Part1/Chapter03/Transforms/D3/6-simple-translate.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Part1/Chapter03/Transforms/D3/7-simple-scale-rotate.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Part1/Chapter03/Transforms/D3/8-simple-skew.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Part1/Chapter03/Transforms/D3/9-transform-origin-rotate.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Part1/Chapter03/Transforms/D3/css/animated-transforms.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Part1/Chapter03/Transforms/D3/css/transform-examples.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Part1/Chapter03/Transforms/D3/js/animated-transforms.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Part1/Chapter03/Transforms/D3/js/transform-examples.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Part1/Chapter03/Transforms/SVG/1-translate.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Part1/Chapter03/Transforms/SVG/2-cumulative-transforms.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Part1/Chapter03/Transforms/SVG/3-transform-css.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Part1/Chapter03/Transforms/SVG/4-scale-flip.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Part1/Chapter03/Transforms/SVG/5-rotate-skew.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Part1/Chapter03/Transforms/SVG/6-simple-translate.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Part1/Chapter03/Transforms/SVG/7-simple-scale-rotate.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Part1/Chapter03/Transforms/SVG/8-simple-skew.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Part1/Chapter03/Transforms/SVG/9-transform-origin-rotate.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Part1/Chapter03/Transforms/SVG/css/transform-examples.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Part1/Chapter03/data/flags/AUS.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Part1/Chapter03/data/flags/CHN.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Part1/Chapter03/data/flags/FRA.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Part1/Chapter03/data/flags/USA.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Part1/Chapter03/data/images/fishMask.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Part1/Chapter03/data/images/jupiter.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Part1/Chapter03/data/images/saturn.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Part2/Chapter11/Areas/8-area-multiple-markers.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Tools/OLD_Part_1/_OLD_Chapter3/TheFish.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Tools/OLD_Part_1/_OLD_Chapter3/TheFishMask.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Tools/OLD_Part_1/_OLD_Chapter3/W3C-anim/animMotion01.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Tools/OLD_Part_1/_OLD_Chapter3/W3C-anim/animMotionJS.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Tools/OLD_Part_1/_OLD_Chapter3/W3C-anim/anim_1.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Tools/OLD_Part_1/_OLD_Chapter3/W3C-anim/orion.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Tools/OLD_Part_1/_OLD_Chapter3/W3C-anim/script_5.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Tools/OLD_Part_1/_OLD_Chapter3/matrix-transforms-2.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Tools/OLD_Part_1/_OLD_Chapter3/smil_1.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Tools/OLD_Part_1/_OLD_Chapter3/smil_2.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Tools/OLD_Part_1/_OLD_Chapter3/smil_2.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Tools/OLD_Part_1/_OLD_Chapter3/smil_3_values.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Tools/OLD_Part_1/_OLD_Chapter3/smil_4_keyTimes.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Tools/OLD_Part_1/_OLD_Chapter3/smil_5_keySplines.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Tools/OLD_Part_1/_OLD_Chapter3/smil_5_keySplines.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Tools/OLD_Part_1/_OLD_Chapter3/smil_6_motion.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Tools/OLD_Part_1/_OLD_Chapter3/smil_7_transform.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Tools/OLD_Part_1/_OLD_Chapter3/svgdemo.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Tools/OLD_Part_1/_OLD_Chapter3/tanque.svg" afterDir="false" />
+    <list default="true" id="88ab0fd2-922d-4b26-894c-0ae61af44502" name="Changes" comment="Updated files after reviewing Chapters 2 and 3.">
+      <change afterPath="$PROJECT_DIR$/Part2/Chapter08/Templates/README.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Part2/Chapter08/css/chart-utils.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Part2/Chapter08/js/chart-utils.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Part2/Chapter09/css/chart-utils.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Part2/Chapter09/js/chart-utils.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Part2/Chapter13/js/more-symbols.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part1/Chapter01/HelloWorld/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/Part1/Chapter01/HelloWorld/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part1/Chapter01/Imports/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/Part1/Chapter01/Imports/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part1/Chapter02/Canvas/js/canvasmap.js" beforeDir="false" afterPath="$PROJECT_DIR$/Part1/Chapter02/Canvas/js/canvasmap.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Part1/Chapter02/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/Part1/Chapter02/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part1/Chapter02/SVG-with-D3/1-viewport.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part1/Chapter03/Containers/D3/1-initial-viewport.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part1/Chapter02/SVG-with-D3/10-polyline.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part1/Chapter02/SVG-with-D3/11-polygon.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part1/Chapter02/SVG-with-D3/12-path-line.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part1/Chapter03/Paths/D3/1-path-line.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part1/Chapter02/SVG-with-D3/13-path-curve.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part1/Chapter03/Paths/D3/2-path-curve.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part1/Chapter02/SVG-with-D3/14-path-arc.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part1/Chapter03/Paths/D3/3-path-arc.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part1/Chapter02/SVG-with-D3/15-text.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part1/Chapter03/Text/D3/1-text.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part1/Chapter02/SVG-with-D3/16-text-align.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part1/Chapter03/Text/D3/2-text-align.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part1/Chapter02/SVG-with-D3/17-tspan.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part1/Chapter03/Text/D3/3-tspan.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part1/Chapter02/SVG-with-D3/18-groups-style.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part1/Chapter02/SVG-with-D3/19-groups-transforms.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part1/Chapter02/SVG-with-D3/2-shapes.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part1/Chapter03/Shapes/D3/1-shapes.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part1/Chapter02/SVG-with-D3/20-translate.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part1/Chapter02/SVG-with-D3/21-scale-rotate.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part1/Chapter02/SVG-with-D3/22-skew.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part1/Chapter02/SVG-with-D3/23-defs-use.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part1/Chapter03/Other/D3/1-defs-use.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part1/Chapter02/SVG-with-D3/24-defs-use-board.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part1/Chapter03/Other/D3/2-defs-use-board.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part1/Chapter02/SVG-with-D3/25-gradient.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part1/Chapter03/Other/D3/10-gradient.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part1/Chapter02/SVG-with-D3/26-clipping.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part1/Chapter03/Other/D3/6-clipping.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part1/Chapter02/SVG-with-D3/27-mask.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part1/Chapter03/Other/D3/7-mask.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part1/Chapter02/SVG-with-D3/28-filter.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part1/Chapter03/Other/D3/9-filter.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part1/Chapter02/SVG-with-D3/29-viewBox-default.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part1/Chapter03/Containers/D3/6-viewBox-default.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part1/Chapter02/SVG-with-D3/3-lines-stroke.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part1/Chapter03/Shapes/D3/2-line-stroke.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part1/Chapter02/SVG-with-D3/30-viewBox-center.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part1/Chapter03/Containers/D3/7-viewBox-center.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part1/Chapter02/SVG-with-D3/31-viewBox-scaled.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part1/Chapter03/Containers/D3/8-viewBox-scaled.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part1/Chapter02/SVG-with-D3/32-example.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part1/Chapter02/SVG-with-D3/33-matrix-transforms.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part1/Chapter02/SVG-with-D3/4-lines-css.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part1/Chapter03/Shapes/D3/4-line-css.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part1/Chapter02/SVG-with-D3/5-lines-css-inline.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part1/Chapter03/Shapes/D3/5-line-css-inline.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part1/Chapter02/SVG-with-D3/6-rect-stroke.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part1/Chapter03/Shapes/D3/3-rect-stroke.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part1/Chapter02/SVG-with-D3/7-rect-css-class.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part1/Chapter03/Shapes/D3/6-rect-css-class.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part1/Chapter02/SVG-with-D3/8-rect-opacity.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part1/Chapter03/Shapes/D3/7-rect-opacity.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part1/Chapter02/SVG-with-D3/9-ellipse.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part1/Chapter02/SVG-with-D3/README.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part1/Chapter02/SVG/1-viewport-dom.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part1/Chapter03/Containers/DOM/1-initial-viewport-dom.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part1/Chapter02/SVG/1-viewport.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part1/Chapter03/Containers/SVG/1-initial-viewport.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part1/Chapter02/SVG/10-polyline.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part1/Chapter02/SVG/11-polygon.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part1/Chapter02/SVG/12-path-line.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part1/Chapter03/Paths/SVG/1-path-line.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part1/Chapter02/SVG/13-path-curve.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part1/Chapter03/Paths/SVG/2-path-curve.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part1/Chapter02/SVG/14-path-arc.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part1/Chapter03/Paths/SVG/3-path-arc.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part1/Chapter02/SVG/15-text.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part1/Chapter03/Text/SVG/1-text.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part1/Chapter02/SVG/16-text-align.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part1/Chapter03/Text/SVG/2-text-align.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part1/Chapter02/SVG/17-tspan.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part1/Chapter03/Text/SVG/3-tspan.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part1/Chapter02/SVG/18-groups-style.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part1/Chapter02/SVG/19-groups-transforms.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part1/Chapter02/SVG/2-shapes.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part1/Chapter03/Shapes/SVG/1-shapes.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part1/Chapter02/SVG/20-translate.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part1/Chapter02/SVG/21-scale-rotate.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part1/Chapter02/SVG/22-skew.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part1/Chapter02/SVG/23-defs-use.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part1/Chapter03/Other/SVG/1-defs-use.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part1/Chapter02/SVG/24-defs-use-board.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part1/Chapter03/Other/SVG/2-defs-use-board.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part1/Chapter02/SVG/25-gradient-pattern.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part1/Chapter03/Other/SVG/10-gradient.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part1/Chapter02/SVG/26-clipping.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part1/Chapter03/Other/SVG/6-clipping.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part1/Chapter02/SVG/27-mask.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part1/Chapter03/Other/SVG/7-mask.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part1/Chapter02/SVG/28-filter.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part1/Chapter03/Other/SVG/9-filter.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part1/Chapter02/SVG/29-viewBox-default.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part1/Chapter03/Containers/SVG/6-viewBox-default.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part1/Chapter02/SVG/3-lines-stroke.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part1/Chapter03/Shapes/SVG/2-line-stroke.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part1/Chapter02/SVG/30-viewBox-center.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part1/Chapter03/Containers/SVG/7-viewBox-center.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part1/Chapter02/SVG/31-viewBox-scaled.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part1/Chapter03/Containers/SVG/8-viewBox-scaled.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part1/Chapter02/SVG/32-example.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part1/Chapter02/SVG/4-lines-css.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part1/Chapter03/Shapes/SVG/4-line-css.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part1/Chapter02/SVG/5-lines-css-inline.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part1/Chapter03/Shapes/SVG/5-line-css-inline.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part1/Chapter02/SVG/6-rect-stroke.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part1/Chapter03/Shapes/SVG/3-rect-stroke.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part1/Chapter02/SVG/7-rect-css-class.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part1/Chapter03/Shapes/SVG/6-rect-css-class.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part1/Chapter02/SVG/8-rect-opacity.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part1/Chapter03/Shapes/SVG/7-rect-opacity.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part1/Chapter02/SVG/9-ellipse.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part1/Chapter02/SVG/README.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part1/Chapter02/images/pluto.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/Part1/Chapter02/data/images/pluto.jpg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part1/Chapter03/Canvas/1-canvas-svg-compare.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part1/Chapter02/Canvas/1-canvas-svg-compare.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part1/Chapter03/Canvas/2-canvas-map.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part1/Chapter02/Canvas/2-canvas-map.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part1/Chapter03/Canvas/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/Part1/Chapter02/Canvas/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part1/Chapter03/Canvas/js/canvasmap.js" beforeDir="false" afterPath="$PROJECT_DIR$/Part1/Chapter02/Canvas/js/canvasmap.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part1/Chapter03/DOM-TODO/1-Static-page.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part1/Chapter02/DOM/1-Static-page.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part1/Chapter03/DOM-TODO/2-Dynamic-page.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part1/Chapter02/DOM/2-Dynamic-page.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part1/Chapter03/DOM-TODO/3-Page-and-script.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part1/Chapter02/DOM/3-Page-and-script.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part1/Chapter03/DOM-TODO/4-DOM-interface-types.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part1/Chapter03/DOM-TODO/5-DOM-methods.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part1/Chapter03/DOM-TODO/5-SVG-DOM.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part1/Chapter02/DOM/5-SVG-DOM.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part1/Chapter03/DOM-TODO/6-DOM-events.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part1/Chapter03/DOM-TODO/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/Part1/Chapter02/DOM/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part1/Chapter03/DataFormat/1-Fetch-json-await.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part1/Chapter02/DataFormat/1-Fetch-json-await.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part1/Chapter03/DataFormat/1-Fetch-json.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part1/Chapter02/DataFormat/1-Fetch-json.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part1/Chapter03/DataFormat/15-JSON.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part1/Chapter02/DataFormat/15-JSON.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part1/Chapter03/DataFormat/2-Fetch-csv-await.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part1/Chapter02/DataFormat/2-Fetch-csv-await.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part1/Chapter03/DataFormat/2-Fetch-csv.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part1/Chapter02/DataFormat/2-Fetch-csv.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part1/Chapter03/DataFormat/3-JSONparse-await.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part1/Chapter02/DataFormat/3-JSONparse-await.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part1/Chapter03/DataFormat/3-JSONparse.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part1/Chapter02/DataFormat/3-JSONparse.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part1/Chapter03/DataFormat/4-CSVparse-await.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part1/Chapter02/DataFormat/4-CSVparse-await.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part1/Chapter03/DataFormat/4-CSVparse.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part1/Chapter02/DataFormat/4-CSVparse.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part1/Chapter03/DataFormat/5-Promise-multi-fetch.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part1/Chapter02/DataFormat/5-Promise-multi-fetch.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part1/Chapter03/DataFormat/6-Fetch-File-XPath-Extract.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part1/Chapter02/DataFormat/6-Fetch-File-XPath-Extract.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part1/Chapter03/DataFormat/7-Fetch-URL-XPath-Extract.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part1/Chapter02/DataFormat/7-Fetch-URL-XPath-Extract.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part1/Chapter03/DataFormat/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/Part1/Chapter02/DataFormat/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part1/Chapter03/DataFormat/css/main.css" beforeDir="false" afterPath="$PROJECT_DIR$/Part1/Chapter02/DataFormat/css/main.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part1/Chapter03/JavaScript/1-Arrays.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part1/Chapter02/JavaScript/1-Arrays.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part1/Chapter03/JavaScript/10-Generators.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part1/Chapter02/JavaScript/10-Generators.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part1/Chapter03/JavaScript/11-Promises.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part1/Chapter02/JavaScript/11-Promises.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part1/Chapter03/JavaScript/12-Promise-all.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part1/Chapter02/JavaScript/12-Promise-all.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part1/Chapter03/JavaScript/13-Async-await.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part1/Chapter02/JavaScript/13-Async-await.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part1/Chapter03/JavaScript/14-Modules.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part1/Chapter02/JavaScript/14-Modules.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part1/Chapter03/JavaScript/2-Arrays-methods-modifying.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part1/Chapter02/JavaScript/2-Arrays-methods-1.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part1/Chapter03/JavaScript/3-Arrays-methods-non-modifying.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part1/Chapter02/JavaScript/3-Arrays-methods-2.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part1/Chapter03/JavaScript/4-Objects.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part1/Chapter02/JavaScript/4-Objects.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part1/Chapter03/JavaScript/5-Maps-sets.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part1/Chapter02/JavaScript/5-Maps-sets.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part1/Chapter03/JavaScript/6-Strings.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part1/Chapter02/JavaScript/6-Strings.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part1/Chapter03/JavaScript/7-Strings-methods.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part1/Chapter02/JavaScript/7-Strings-methods.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part1/Chapter03/JavaScript/8-Method-chaining.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part1/Chapter02/JavaScript/8-Method-chaining.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part1/Chapter03/JavaScript/9-Functions.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part1/Chapter02/JavaScript/9-Functions.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part1/Chapter03/JavaScript/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/Part1/Chapter02/JavaScript/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part1/Chapter03/JavaScript/modules/colors.js" beforeDir="false" afterPath="$PROJECT_DIR$/Part1/Chapter02/JavaScript/modules/colors.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part1/Chapter03/JavaScript/modules/style.js" beforeDir="false" afterPath="$PROJECT_DIR$/Part1/Chapter02/JavaScript/modules/style.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part1/Chapter03/JavaScript/modules/tableFunctions.js" beforeDir="false" afterPath="$PROJECT_DIR$/Part1/Chapter02/JavaScript/modules/tableFunctions.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part1/Chapter03/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/Part1/Chapter03/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part1/Chapter03/Selectors/1-CSS-selectors.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part1/Chapter02/Selectors/1-CSS-selectors.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part1/Chapter03/Selectors/2-DOM-selectors.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part1/Chapter02/Selectors/2-DOM-selectors.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part1/Chapter03/Selectors/3-D3-selectors.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part1/Chapter02/Selectors/3-D3-selectors.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part1/Chapter03/Selectors/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/Part1/Chapter02/Selectors/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part1/Chapter03/data/Images/jupiter.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/Part1/Chapter02/data/images/jupiter.jpg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part1/Chapter03/data/Images/pluto.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/Part1/Chapter03/data/images/pluto.jpg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part1/Chapter03/data/Images/saturn.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/Part1/Chapter02/data/images/saturn.jpg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part1/Chapter03/data/PlanetDay.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Part1/Chapter02/data/PlanetDay.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part1/Chapter03/data/PlanetDay.json" beforeDir="false" afterPath="$PROJECT_DIR$/Part1/Chapter02/data/PlanetDay.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part1/Chapter03/data/PlanetDiameters.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Part1/Chapter02/data/PlanetDiameters.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part1/Chapter03/data/PlanetYear.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Part1/Chapter02/data/PlanetYear.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part1/Chapter03/data/SolarSystemData.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part1/Chapter03/data/ThreeVariablesPlanets.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part1/Chapter03/data/continents.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Part1/Chapter02/data/continents.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part1/Chapter03/data/continents.json" beforeDir="false" afterPath="$PROJECT_DIR$/Part1/Chapter02/data/continents.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part1/Chapter03/data/continents.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Part1/Chapter02/data/continents.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part1/Chapter03/data/world-lowres.geojson" beforeDir="false" afterPath="$PROJECT_DIR$/Part1/Chapter02/data/world-lowres.geojson" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part1/Chapter03/images/pluto.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part1/Chapter04/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/Part1/Chapter04/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part1/Chapter04/_OLD_Chapter4/2-polygon-map-scales.html" beforeDir="false" afterPath="$PROJECT_DIR$/Tools/OLD_Part_1/_OLD_Chapter4/2-polygon-map-scales.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part1/Chapter04/_OLD_Chapter4/8-parse-csv-tidy.html" beforeDir="false" afterPath="$PROJECT_DIR$/Tools/OLD_Part_1/_OLD_Chapter4/8-parse-csv-tidy.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part1/Chapter04/_OLD_Chapter4/HTML_Bar/1-bar-chart.html" beforeDir="false" afterPath="$PROJECT_DIR$/Tools/OLD_Part_1/_OLD_Chapter4/HTML_Bar/1-bar-chart.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part1/Chapter04/_OLD_Chapter4/HTML_Bar/10-load-json-jupiter.html" beforeDir="false" afterPath="$PROJECT_DIR$/Tools/OLD_Part_1/_OLD_Chapter4/HTML_Bar/10-load-json-jupiter.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part1/Chapter04/_OLD_Chapter4/HTML_Bar/2-bar-width.html" beforeDir="false" afterPath="$PROJECT_DIR$/Tools/OLD_Part_1/_OLD_Chapter4/HTML_Bar/2-bar-width.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part1/Chapter04/_OLD_Chapter4/HTML_Bar/3-scales.html" beforeDir="false" afterPath="$PROJECT_DIR$/Tools/OLD_Part_1/_OLD_Chapter4/HTML_Bar/3-scales.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part1/Chapter04/_OLD_Chapter4/HTML_Bar/4-max-sort.html" beforeDir="false" afterPath="$PROJECT_DIR$/Tools/OLD_Part_1/_OLD_Chapter4/HTML_Bar/4-max-sort.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part1/Chapter04/_OLD_Chapter4/HTML_Bar/5-labels.html" beforeDir="false" afterPath="$PROJECT_DIR$/Tools/OLD_Part_1/_OLD_Chapter4/HTML_Bar/5-labels.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part1/Chapter04/_OLD_Chapter4/HTML_Bar/6-entries.html" beforeDir="false" afterPath="$PROJECT_DIR$/Tools/OLD_Part_1/_OLD_Chapter4/HTML_Bar/6-entries.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part1/Chapter04/_OLD_Chapter4/HTML_Bar/7-entries-each.html" beforeDir="false" afterPath="$PROJECT_DIR$/Tools/OLD_Part_1/_OLD_Chapter4/HTML_Bar/7-entries-each.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part1/Chapter04/_OLD_Chapter4/HTML_Bar/8-colors.html" beforeDir="false" afterPath="$PROJECT_DIR$/Tools/OLD_Part_1/_OLD_Chapter4/HTML_Bar/8-colors.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part1/Chapter04/_OLD_Chapter4/HTML_Bar/9-load-json.html" beforeDir="false" afterPath="$PROJECT_DIR$/Tools/OLD_Part_1/_OLD_Chapter4/HTML_Bar/9-load-json.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part1/Chapter04/_OLD_Chapter4/HTML_Bar/MyFile.html" beforeDir="false" afterPath="$PROJECT_DIR$/Tools/OLD_Part_1/_OLD_Chapter4/HTML_Bar/MyFile.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part1/Chapter04/_OLD_Chapter4/simplest/1-attributes.html" beforeDir="false" afterPath="$PROJECT_DIR$/Tools/OLD_Part_1/_OLD_Chapter4/simplest/1-attributes.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part1/Chapter04/_OLD_Chapter4/simplest/2-scatter-plot.html" beforeDir="false" afterPath="$PROJECT_DIR$/Tools/OLD_Part_1/_OLD_Chapter4/simplest/2-scatter-plot.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part1/Chapter04/_OLD_Chapter4/simplest/3-bar-chart.html" beforeDir="false" afterPath="$PROJECT_DIR$/Tools/OLD_Part_1/_OLD_Chapter4/simplest/3-bar-chart.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part1/Chapter04/_OLD_Chapter4/simplest/4-updated-bar-chart.html" beforeDir="false" afterPath="$PROJECT_DIR$/Tools/OLD_Part_1/_OLD_Chapter4/simplest/4-updated-bar-chart.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part1/Chapter04/_OLD_Chapter4/simplest/5-animated-bar-chart.html" beforeDir="false" afterPath="$PROJECT_DIR$/Tools/OLD_Part_1/_OLD_Chapter4/simplest/5-animated-bar-chart.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part1/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/Part1/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part2/Chapter07/Generate/7-interpolate-TODO.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter07/Generate/7-interpolate-TODO.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part2/Chapter07/Generate/9-blur2.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter07/Generate/9-blur2.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part2/Chapter13/SVG/5-svg-clipPath.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter13/SVG/5-svg-clipPath.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part2/Chapter13/StepByStep/step-10-pause/js/view-1.8.js" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter13/StepByStep/step-10-pause/js/view-1.8.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part1/Chapter03/Shapes/SVG/7-rect-opacity.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part1/Chapter03/Shapes/SVG/7-rect-opacity.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter08/Axes/2-axis.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter08/Axes/2-axis.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter08/Axes/4-axes-all.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter08/Axes/4-axes-all.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter08/ConfigStyle/10-ordinal-ticks.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter08/ConfigStyle/11-ordinal-ticks.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter08/ConfigStyle/11-ticks-transforms.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter08/ConfigStyle/12-tick-transforms.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter08/ConfigStyle/12-tick-styling.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter08/ConfigStyle/13-tick-styling.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter08/ConfigStyle/13-axis-scales.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter08/ConfigStyle/9-axis-scales.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter08/ConfigStyle/2-tick-size.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter08/ConfigStyle/2-tick-size.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter08/ConfigStyle/7-tick-values.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter08/ConfigStyle/7-tick-values.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter08/ConfigStyle/8-time-ticks.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter08/ConfigStyle/10-time-ticks.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter08/ConfigStyle/9-axis-scale-domain.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter08/ConfigStyle/8-axis-scale-domain.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter08/Exercises/Exercise2.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter08/Exercises_TODO/Exercise2.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter08/Exercises/Exercise3.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter08/Exercises_TODO/Exercise3.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter08/Templates/cartesian-axes-2.1.0.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter08/Templates/cartesian-axes-esm.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter08/Templates/cartesian-axes.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter08/Templates/radial-axes-2.1.0.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter08/Templates/radial-axes-esm.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter08/Templates/radial-axes.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter08/css/cartesian-axes-2.1.0.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter08/css/cartesian-axes.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter08/css/radial-axes-2.1.0.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter08/css/radial-axes.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter08/js/cartesian-axes-2.1.0.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter08/js/cartesian-axes-esm.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter08/js/radial-axes-2.1.0.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter08/js/radial-axes-esm.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter09/DateTime/1-time.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter09/DateTime/1-time.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter09/DateTime/2-time-hours.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter09/DateTime/2-time-hours.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter09/DateTime/3-time-utc.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter09/DateTime/3-time-utc.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter09/Exercises/Solutions/Exercise1.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter09/Exercises-TODO/Solutions/Exercise1.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter09/Exercises/Solutions/Exercise2.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter09/Exercises-TODO/Solutions/Exercise2.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter09/Exercises/Solutions/Exercise3.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter09/Exercises-TODO/Solutions/Exercise3.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter09/Exercises/Solutions/Exercise4.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter09/Exercises-TODO/Solutions/Exercise4.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter09/Exercises/Solutions/Exercise5.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter09/Exercises-TODO/Solutions/Exercise5.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter09/Exercises/Solutions/Exercise6.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter09/Exercises-TODO/Solutions/Exercise6.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter09/Exercises/Templates/Exercise1.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter09/Exercises-TODO/Templates/Exercise1.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter09/Exercises/giss-bar-full.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter09/Exercises-TODO/giss-bar-full.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter09/Exercises/giss-bar-scale-band.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter09/Exercises-TODO/giss-bar-scale-band.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter09/Exercises/giss-scale-point.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter09/Exercises-TODO/giss-scale-point.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter09/Exponential/1-pow-2.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter09/Exponential/1-pow-2.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter09/Exponential/2-pow-2-cartesian.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter09/Exponential/2-pow-2-cartesian.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter09/Exponential/3-pow-3.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter09/Exponential/3-pow-3.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter09/Exponential/4-pow-3-cartesian.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter09/Exponential/4-pow-3-cartesian.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter09/Exponential/5-sqrt.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter09/Exponential/5-sqrt.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter09/Exponential/6-sqrt-cartesian.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter09/Exponential/6-sqrt-cartesian.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter09/Exponential/7-radial.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter09/Exponential/7-radial.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter09/Exponential/8-radial-compare.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter09/Exponential/8-radial-compare.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter09/Exponential/9-radial-bar-chart.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter09/Exponential/9-radial-bar-chart.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter09/Interpolated/1-sequential-rainbow.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter09/Interpolated/1-sequential-rainbow.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter09/Interpolated/2-sequential-pow-rainbow.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter09/Interpolated/2-sequential-pow-rainbow.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter09/Interpolated/3-diverging-rainbow.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter09/Interpolated/3-diverging-rainbow.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter09/Interpolated/4-diverging-symlog-rainbow.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter09/Interpolated/4-diverging-symlog-rainbow.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter09/Interpolated/5-diverging.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter09/Interpolated/5-diverging.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter09/Interpolated/6-diverging-symlog.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter09/Interpolated/6-diverging-symlog.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter09/Linear/2-linear-cartesian.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter09/Linear/2-linear-cartesian.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter09/Linear/3-segmented.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter09/Linear/3-segmented.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter09/Linear/4-segmented-cartesian.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter09/Linear/4-segmented-cartesian.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter09/Linear/7-identity.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter09/Linear/7-identity.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter09/Linear/8-linear-scale-not-d3.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter09/Linear/8-linear-scale-not-d3.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter09/Logarithmic/1-log.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter09/Logarithmic/1-log.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter09/Logarithmic/2-log-cartesian.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter09/Logarithmic/2-log-cartesian.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter09/Logarithmic/3-log-2.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter09/Logarithmic/3-log-2.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter09/Logarithmic/4-log-2-cartesian.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter09/Logarithmic/4-log-2-cartesian.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter09/Logarithmic/5-symlog.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter09/Logarithmic/5-symlog.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter09/Logarithmic/6-symlog-cartesian.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter09/Logarithmic/6-symlog-cartesian.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter09/Logarithmic/7-symlog-log-compare.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter09/Logarithmic/7-symlog-log-compare.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter09/Partition/1-quantize.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter09/Partition/1-quantize.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter09/Partition/2-quantile.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter09/Partition/2-quantile.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter09/css/cartesian-axes-2.0.0.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter09/css/cartesian-axes.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter09/css/radial-axes-2.0.0.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter09/css/radial-axes.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter09/js/cartesian-axes-2.0.0.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter09/js/cartesian-axes.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter09/js/radial-axes-2.0.0.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter09/js/radial-axes-esm.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter09/js/radial-axes.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter10/CSS-4/3-currentcolor.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter10/CSS-4/3-currentcolor.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter10/ColorSchemes/10-interpolate-cyclic.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter10/ColorSchemes/10-interpolate-cyclic.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter10/ColorSchemes/2-categorical.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter10/ColorSchemes/2-categorical.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter10/ColorSchemes/3-discrete-single-hue.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter10/ColorSchemes/3-discrete-single-hue.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter10/ColorSchemes/4-discrete-multi-hue.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter10/ColorSchemes/4-discrete-multi-hue.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter10/ColorSchemes/5-discrete-diverging.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter10/ColorSchemes/5-discrete-diverging.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter10/ColorSchemes/6-interpolate-single-hue.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter10/ColorSchemes/6-interpolate-single-hue.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter10/ColorSchemes/7-interpolate-multi-hue.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter10/ColorSchemes/7-interpolate-multi-hue.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter10/ColorSchemes/8-interpolate-diverging.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter10/ColorSchemes/8-interpolate-diverging.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter10/ColorSchemes/9-interpolate-designed.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter10/ColorSchemes/9-interpolate-designed.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter10/js/chart-utils.js" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter10/js/chart-utils.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter11/js/chart-utils.js" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter11/js/chart-utils.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter12/js/chart-utils.js" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter12/js/chart-utils.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Part2/Chapter13/StepByStep/step-11-continents/js/view-1.9.js" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter13/StepByStep/step-11-continents/js/view-1.9.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part2/Chapter13/StepByStep/step-9-images/js/view-1.7.js" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter13/StepByStep/step-9-images/js/view-1.7.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Part2/Chapter13/js/chart-utils.js" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter13/js/chart-utils.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter14/js/chart-utils.js" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter14/js/chart-utils.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -329,46 +145,46 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
-    &quot;DefaultHtmlFileTemplate&quot;: &quot;HTML File&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;javascript.nodejs.core.library.configured.version&quot;: &quot;18.13.0&quot;,
-    &quot;javascript.nodejs.core.library.typings.version&quot;: &quot;18.13.0&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/Users/helderdarocha/IdeaProjects/Learn-D3js-2023/Part1/Chapter03/data/images&quot;,
-    &quot;list.type.of.created.stylesheet&quot;: &quot;CSS&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs.jest.jest_package&quot;: &quot;/Users/helderdarocha/IdeaProjects/Learn-D3js-2023/node_modules/jest&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
-    &quot;run.code.analysis.last.selected.profile&quot;: &quot;pProject Default&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;Settings.JavaScript&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ASKED_ADD_EXTERNAL_FILES": "true",
+    "DefaultHtmlFileTemplate": "HTML File",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "git-widget-placeholder": "main",
+    "javascript.nodejs.core.library.configured.version": "18.13.0",
+    "javascript.nodejs.core.library.typings.version": "18.13.0",
+    "last_opened_file_path": "/Users/helderdarocha/IdeaProjects/Learn-D3js-2023/Part2/Chapter08/Templates",
+    "list.type.of.created.stylesheet": "CSS",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs.jest.jest_package": "/Users/helderdarocha/IdeaProjects/Learn-D3js-2023/node_modules/jest",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Project",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.0",
+    "run.code.analysis.last.selected.profile": "pProject Default",
+    "settings.editor.selected.configurable": "Settings.JavaScript",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/Part1/Chapter03/data/images" />
-      <recent name="$PROJECT_DIR$/Part1/Chapter03/Other/SVG" />
-      <recent name="$PROJECT_DIR$/Part1/Chapter02/Canvas" />
-      <recent name="$PROJECT_DIR$/Part1/Chapter03/API-TODO/D3" />
-      <recent name="$PROJECT_DIR$/Part1/Chapter03/API-TODO/DOM" />
+      <recent name="$PROJECT_DIR$/Part2/Chapter08/Templates" />
+      <recent name="$PROJECT_DIR$/Part2/Chapter14/js" />
+      <recent name="$PROJECT_DIR$/Part2/Chapter13/js" />
+      <recent name="$PROJECT_DIR$/Part2/Chapter12/js" />
+      <recent name="$PROJECT_DIR$/Part2/Chapter11/js" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/Part1/Chapter03/data/images" />
+      <recent name="$PROJECT_DIR$/Part2/Chapter13/js" />
+      <recent name="$PROJECT_DIR$/Part2/Chapter13/Lifecycle" />
       <recent name="$PROJECT_DIR$/Tools/OLD_Part_1" />
+      <recent name="$PROJECT_DIR$/Part1/Chapter03/data/images" />
       <recent name="$PROJECT_DIR$/Part1/Chapter03/API-TODO/D3/js" />
-      <recent name="$PROJECT_DIR$/Part1/Chapter03/Transforms-TODO/D3" />
-      <recent name="$PROJECT_DIR$/Part1/Chapter03/Other/SVG" />
     </key>
   </component>
   <component name="RunManager" selected="JavaScript Debug.1-bar-chart-race-UN-GDP.html">
@@ -689,7 +505,15 @@
       <workItem from="1734136844769" duration="50000" />
       <workItem from="1734137768532" duration="2125000" />
       <workItem from="1734278446581" duration="8200000" />
-      <workItem from="1734348870058" duration="2323000" />
+      <workItem from="1734348870058" duration="2486000" />
+      <workItem from="1734372359045" duration="9000" />
+      <workItem from="1734380077230" duration="27000" />
+      <workItem from="1734437870414" duration="9545000" />
+      <workItem from="1734520384065" duration="3000" />
+      <workItem from="1734660625064" duration="429000" />
+      <workItem from="1735520628509" duration="93000" />
+      <workItem from="1735931570936" duration="10607000" />
+      <workItem from="1736006757728" duration="9350000" />
     </task>
     <task id="LOCAL-00001" summary="Example files for Chapter 1">
       <created>1678932902809</created>
@@ -975,7 +799,15 @@
       <option name="project" value="LOCAL" />
       <updated>1732473101361</updated>
     </task>
-    <option name="localTasksCounter" value="39" />
+    <task id="LOCAL-00039" summary="Updated files after reviewing Chapters 2 and 3.">
+      <option name="closed" value="true" />
+      <created>1734357433997</created>
+      <option name="number" value="00039" />
+      <option name="presentableId" value="LOCAL-00039" />
+      <option name="project" value="LOCAL" />
+      <updated>1734357433997</updated>
+    </task>
+    <option name="localTasksCounter" value="40" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -1016,14 +848,15 @@
     <MESSAGE value="Updated files before reviewing Chapters 11 and 12." />
     <MESSAGE value="Updated files before reviewing Chapter 13." />
     <MESSAGE value="Updated files after reviewing Chapter 13." />
-    <option name="LAST_COMMIT_MESSAGE" value="Updated files after reviewing Chapter 13." />
+    <MESSAGE value="Updated files after reviewing Chapters 2 and 3." />
+    <option name="LAST_COMMIT_MESSAGE" value="Updated files after reviewing Chapters 2 and 3." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/Part2/Chapter09/Logarithmic/7-symlog-log-compare.html</url>
-          <line>29</line>
+          <line>30</line>
           <option name="timeStamp" value="1" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">

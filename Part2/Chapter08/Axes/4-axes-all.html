@@ -50,20 +50,28 @@
         .attr("transform", "translate(150,280)")
         .text("axisRight").style("fill", "orange")
 
-    move();
+    move(false);
 
     const fmt = d3.format(".0s");
 
-    function move() {
+    function move(moved) {
+        const d = moved ? 0 : 50;
+
+        const tr = svg.transition()
+                      .delay(2000)
+                      .end().then(() => move(!moved));
+
         svg.selectAll("g.ax")
-            .transition()
-            .delay(2000)
-            .attr("transform", "translate(50,50)");
+            .transition(tr)
+            .attr("transform", `translate(${d},${d})`);
 
         svg.select(".pos")
-            .transition()
-            .delay(2000)
-            .attrTween("text", () => function(t) {d3.select(this).text(`With origin at (${[fmt(t*50),fmt(t*50)]})`)})
+            .transition(tr)
+            .attrTween("text", () => function(t) {
+                d3.select(this)
+                  .text(`With origin at (${[fmt(t*d),fmt(t*d)]})`);
+            });
+
     }
 
     // For console access (don't use in production)

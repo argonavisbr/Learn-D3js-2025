@@ -24,11 +24,10 @@
         new Date(2018,9,15,18,55,0)
     ];
 
+    // Using an interval within a day
     const scale = d3.scaleTime()
             .domain([new Date(2018,9,15,0,0,0),new Date(2018,9,15,23,59,59)])
             .range([0,1000]);
-
-    const xAxis = d3.axisBottom().scale(scale).tickSize(25);
 
     console.log(new Date(1950,1,1), scale(new Date(1950,1,1)));
     console.log(new Date(1975,1,1), scale(new Date(1975,1,1)));
@@ -36,6 +35,8 @@
     console.log(new Date(2025,1,1), scale(new Date(2025,1,1)));
     console.log(new Date(2050,1,1), scale(new Date(2050,1,1)));
 
+
+    const xAxis = d3.axisBottom().scale(scale).tickSize(25);
     d3.select("body").append("svg")
             .append("g")
             .attr("transform","translate(25,25)")

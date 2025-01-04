@@ -20,11 +20,9 @@
     const data = d3.range(-20,21);
 
     const scale = d3.scalePow()
-            .exponent(2)
-            .domain([-20,21])
-            .range([0,1000]);
-
-    const xAxis = d3.axisBottom().scale(scale).tickSize(25);
+                    .exponent(2)
+                    .domain([-20,21])
+                    .range([0,1000]);
 
     console.log(0, scale(0));
     console.log(5, scale(5));
@@ -33,6 +31,7 @@
     console.log(20, scale(20));
     console.log(25, scale(25));
 
+    const xAxis = d3.axisBottom().scale(scale).tickSize(25);
     d3.select("body").append("svg")
             .append("g")
             .attr("transform","translate(25,25)")

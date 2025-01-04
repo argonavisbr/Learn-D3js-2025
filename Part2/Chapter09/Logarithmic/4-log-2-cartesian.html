@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Logarithmic Scales</title>
+    <title>Logarithmic Scales in Cartesian axes</title>
     <style>
         circle {
             fill-opacity: .1;
@@ -19,12 +19,9 @@
     const scaleX = d3.scaleLinear().domain([0,5000]).range([50,910]);
 
     const scaleY = d3.scaleLog()
-            .domain([1,5000])
-            .range([0,500])
-            .base(2);
-
-    const xAxis = d3.axisBottom().scale(scaleX).tickSize(500);
-    const yAxis = d3.axisRight().scale(scaleY).tickSize(860);
+                     .domain([1,5000])
+                     .range([0,500])
+                     .base(2);
 
     console.log("y", 0, scaleY(0));
     console.log("y", 2, scaleY(2));
@@ -43,6 +40,9 @@
             .attr("cx", (d,i)=>scaleX(i))
     .attr("cy", d=>scaleY(d)+25);
 
+    // Simple axes
+    const xAxis = d3.axisBottom().scale(scaleX).tickSize(500);
+    const yAxis = d3.axisRight().scale(scaleY).tickSize(860);
     d3.select("svg")
             .append("g")
             .attr("transform","translate(50,25)")

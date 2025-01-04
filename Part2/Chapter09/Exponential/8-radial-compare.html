@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Exponential Scales</title>
+    <title>Comparing Radial Scales with Linear and Exponential Scales</title>
     <style>
         circle {
             fill-opacity: 1;
@@ -32,7 +32,7 @@
             .domain(d)
             .range(r);
 
-    // Using simplified functions (blue)
+    // Using simplified functions - not D3 (in blue)
     const scale_f1 = createLinearScale(d, r);
     const scale_f2 = createSqrtScale(d, r);
     const scale_f3 = createRadialscale(d, r);
@@ -44,17 +44,24 @@
     const svg = d3.select("body").append("svg")
                   .attr("height", 550).attr("width", 1050);
 
-    render(scale1, xAxis1, 0, 'red');
-    render(scale2, xAxis2, 100, 'red');
-    render(scale3, xAxis3, 200, 'red');
-    render(scale_f1, xAxis1, 50, 'blue');
-    render(scale_f2, xAxis2, 150, 'blue');
-    render(scale_f3, xAxis3, 250, 'blue');
+    // Using D3 scales
+    render(scale1, xAxis1, 50, 'red');
+    render(scale2, xAxis2, 200, 'red');
+    render(scale3, xAxis3, 350, 'red');
 
-    function render(scale, axis, y, color) {
+    // Using implemented functions (to demonstrate the mathematical equivalence)
+    render(scale_f1, xAxis1, 100, 'blue');
+    render(scale_f2, xAxis2, 250, 'blue');
+    render(scale_f3, xAxis3, 400, 'blue');
+
+    svg.append("text").attr("x", 25).attr("y", 40).text("Linear scale");
+    svg.append("text").attr("x", 25).attr("y", 190).text("Sqrt scale");
+    svg.append("text").attr("x", 25).attr("y", 340).text("Radial scale");
+
+    function render(scale, axis, y, color, name) {
         const g = svg.append("g")
-            .attr("transform",`translate(25,${y+25})`)
-            .call(axis);
+                     .attr("transform",`translate(25,${y+25})`)
+                     .call(axis);
 
         g.selectAll("circle")
             .data(data)
@@ -64,7 +71,7 @@
             .attr("fill", color);
     }
 
-    // Example functions
+    // Example functions (not D3)
     // f(x) = ax + b
     function createLinearScale(domain, range) {
         const a = (range[1]-range[0])/(domain[1]-domain[0]);
@@ -85,11 +92,6 @@
         const b = - a * domain[0] + range[0]*range[0];
         return x => Math.sqrt(Math.abs(a*x + b));
     }
-
-
-
-
-
 
 </script>
 

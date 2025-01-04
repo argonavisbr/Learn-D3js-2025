@@ -5,7 +5,8 @@
     <title>Symlog and Log</title>
 </head>
 <body>
-
+<h1>Comparing log distributions</h1>
+<p>Note that Symlog starts differently since it uses a linear function near the zero.</p>
 <script type="module">
     import * as d3 from "https://cdn.skypack.dev/d3@7";
 
@@ -42,8 +43,12 @@
   plot('symlog', symlogScale, 250);
 
   function plot(type, scale, y) {
+      svg.append("text")
+            .attr("x", 20)
+            .attr("y", y - 15)
+            .text(type);
       svg.selectAll(`.${type}`)
-          .data(data)
+         .data(data)
           .join("circle")
           .attr("class", type)
           .attr("cx", scale)

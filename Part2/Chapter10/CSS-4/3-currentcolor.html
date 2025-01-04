@@ -61,6 +61,8 @@
         </g>
 </svg></td>
 </tr></table>
+<code>g.style.color = </code><input type="text" id="newCurrentColor" value="darkcyan">
+<button id="change">Set color</button>
 
     <script type="module">
         import * as d3 from 'https://cdn.skypack.dev/d3@7';
@@ -71,7 +73,27 @@
             .transition().delay(1000)
             .style("color", "olive")
               .transition().delay(1000)
-              .style("color", "orange")
+              .style("color", "orange");
+
+        d3.select("#newCurrentColor")
+            .transition().delay(1000)
+            .attr("value", "magenta")
+              .transition().delay(1000)
+              .attr("value", "olive")
+                .transition().delay(1000)
+                .attr("value", "orange");
+
+        d3.select("#change")
+            .on("click", function() {
+                const newColor = d3.select("#newCurrentColor").property("value");
+                d3.select("g").style("color", newColor);
+            });
+        d3.select("#newCurrentColor")
+            .on("keypress", function(e) {
+                if(e.key === "Enter") {
+                    d3.select("#change").dispatch("click");
+                }
+            });
     </script>
 </body>
 </html>

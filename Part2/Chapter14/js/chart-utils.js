@@ -12,20 +12,13 @@
  *
  * Exported constants:
  * direction
- * symbolsFill
- * symbolsStroke
- * symbolDrop
- * symbolVenus
- * symbolMars
- * symbolZigZag
  *
- * @version 3.2 2024-10-31
+ * @version 3.3 2025-01-03
  */
 
 import * as d3 from "https://cdn.jsdelivr.net/npm/d3@7/+esm";
 
-export {cartesianAxes, radialAxes, legend, p2c, c2p, updateTextLabels, pieLabels,
-        direction, symbolsFill, symbolsStroke, symbolDrop, symbolVenus, symbolMars, symbolZigZag};
+export {cartesianAxes, radialAxes, legend, p2c, c2p, updateTextLabels, pieLabels, direction};
 
 /**
  * Creates a Cartesian axes generator function.
@@ -39,6 +32,7 @@ export {cartesianAxes, radialAxes, legend, p2c, c2p, updateTextLabels, pieLabels
  * - yLabel(string) - get/set the y-axis label, default = 'y values'
  * - showHorizontalGrid(boolean) - turn on or off the horizontal grid, default = false
  * - showVerticalGrid(boolean) - turn on or off the vertical grid, default = false
+ * - arrowheads(string) - get/set the arrowheads to use for the axes: "end", "start", "both", "none"; default = "none"
  *
  */
 function cartesianAxes() {
@@ -49,9 +43,10 @@ function cartesianAxes() {
     let yLabel = 'y values';
     let showHorizontalGrid = false;
     let showVerticalGrid = false;
+    let arrowheads = "none";
 
     function f() {
-        return __drawCartesianAxes(container, xScale, yScale, xLabel, yLabel, showHorizontalGrid, showVerticalGrid);
+        return __drawCartesianAxes(container, xScale, yScale, xLabel, yLabel, showHorizontalGrid, showVerticalGrid, arrowheads);
     }
 
     f.container = arg => (arguments.length) ? container : (container = arg, f);
@@ -61,6 +56,7 @@ function cartesianAxes() {
     f.yLabel = arg => (arguments.length) ? yLabel : (yLabel = arg, f);
     f.showHorizontalGrid = arg => (arguments.length) ? showHorizontalGrid : (showHorizontalGrid = arg, f);
     f.showVerticalGrid = arg => (arguments.length) ? showVerticalGrid : (showVerticalGrid = arg, f);
+    f.arrowheads = arg => (arguments.length) ? arrowheads : (arrowheads = arg, f);
 
     return f;
 }
@@ -83,6 +79,8 @@ function cartesianAxes() {
  * - numTicks(number) - get/set the number of ticks per axis, default = 6
  * - useGrid(boolean) - get/set whether to draw a grid or not, default = false
  * - backdropOpacity(number) - get/set the opacity of the backdrop behind the radial labels, default = 1
+ * - backdropColor(string) - get/set the color of the backdrop behind the radial labels, default = "white"
+ * - arrowheads(string) - get/set the arrowheads to use for the axes: "end", "start", "both", "none"; default = "none"
  *
  */
 function radialAxes() {
@@ -94,9 +92,10 @@ function radialAxes() {
     let useGrid = false;
     let backdropOpacity = 1;
     let backdropColor = "white";
+    let arrowheads = "none";
 
     function f() {
-        return __drawRadialAxes(container, aScale, rScale, angularData, numTicks, useGrid, backdropOpacity, backdropColor);
+        return __drawRadialAxes(container, aScale, rScale, angularData, numTicks, useGrid, backdropOpacity, backdropColor, arrowheads);
     }
 
     f.container = arg => (arguments.length) ? container : (container = arg, f);
@@ -107,6 +106,7 @@ function radialAxes() {
     f.useGrid = arg => (arguments.length) ? useGrid : (useGrid = arg, f);
     f.backdropOpacity = arg => (arguments.length) ? backdropOpacity : (backdropOpacity = arg, f);
     f.backdropColor = arg => (arguments.length) ? backdropColor : (backdropColor = arg, f);
+    f.arrowheads = arg => (arguments.length) ? arrowheads : (arrowheads = arg, f);
 
     return f;
 }
@@ -195,6 +195,45 @@ function updateTextLabels(opacity = 1, color = "white") {
         .attr("transform", "rotate(90)");
 }
 
+/**
+ * Creates a pie labels generator function.
+ *
+ * @returns A function that when called will place labels on a pie chart.
+ *
+ * Methods:
+ * - container(selection) - get/set the container (e.g. <svg> or <g>), required
+ * - arc(function) - get/set the arc generator function for the pie slices, required
+ * - property(string) - get/set the property of the data to display, required
+ * - direction(number) - get/set the direction of the labels (direction.RADIAL, direction.TANGENTIAL, or direction.NONE), default = direction.NONE
+ * - radius(number) - get/set the radius of the labels, default = 1
+ * - format(function) - get/set the format function for the labels, default = null
+ *
+ */
+function pieLabels() {
+    let container = null;
+    let arc = null;
+    let property = null;
+    let direction = 0;
+    let radius = 1;
+    let format = null;
+
+    function f() {
+        return __placePieLabels(container, arc, property, direction, radius, format);
+    }
+
+    f.container = arg => (arguments.length) ? container : (container = arg, f);
+    f.arc = arg => (arguments.length) ? arc : (arc = arg, f);
+    f.property = arg => (arguments.length) ? property : (property = arg, f);
+    f.direction = arg => (arguments.length) ? direction : (direction = arg, f);
+    f.radius = arg => (arguments.length) ? radius : (radius = arg, f);
+    f.format = arg => (arguments.length) ? format : (format = arg, f);
+
+    return f;
+}
+
+
+const direction = {TANGENTIAL: 1, RADIAL: 2, NONE: 0};
+
 
 /**
  * Display a legend
@@ -224,8 +263,6 @@ const __displayLegend = function(container, data, color, useDataAsIndex = false,
         });
 }
 
-
-
 /**
  * @param container The container where to draw the axes (top-left corner at the origin)
  * @param xScale  The scale for the x-axis
@@ -241,7 +278,8 @@ const __drawCartesianAxes = function(container, xScale, yScale,
                                    xLabel = 'x values',
                                    yLabel = 'y values',
                                    showHorizontalGrid = false,
-                                   showVerticalGrid = false) {
+                                   showVerticalGrid = false,
+                                   arrowheads = "none") {
 
     const g = container.append("g")
         .attr("class", "chart cartesian")
@@ -255,13 +293,13 @@ const __drawCartesianAxes = function(container, xScale, yScale,
     const tickBleed = 5;
 
     const axisX = d3.axisBottom(xScale)
-        .tickPadding(tickBleed);
+                    .tickPadding(tickBleed);
     const axisY = d3.axisLeft(yScale)
-        .tickPadding(tickBleed);
+                    .tickPadding(tickBleed);
     const axisZero = d3.axisRight(yScale)
-        .tickValues([0])
-        .tickSizeOuter(0)
-        .tickSizeInner(right - left);
+                       .tickValues([0])
+                       .tickSizeOuter(0)
+                       .tickSizeInner(right - left);
 
     if (showHorizontalGrid) {
         axisY.tickSize(left - right)
@@ -297,7 +335,25 @@ const __drawCartesianAxes = function(container, xScale, yScale,
         .text(yLabel)
         .attr("transform", `translate(${[labelPadding, (top + bottom)/2]}) rotate(90)`);
 
+    if(arrowheads !== "none") {
+        setArrows(container, arrowheads, xG);
+        setArrows(container, arrowheads, yG);
+    }
+
     return [axisX,axisY];
+}
+
+function setArrows(container, arrowheads, g) {
+    const svg = d3.select(container.node() ? container.node() : container.node().ownerSVGElement);
+    const defs = svg.select("defs");
+    addArrows(defs.node() ? defs : svg.append("defs"), "arrowhead", 10, 5);
+
+    if (arrowheads === "end" || arrowheads === "both") {
+        g.selectAll(".domain").attr("marker-end", "url(#arrowhead)");
+    }
+    if (arrowheads === "start" || arrowheads === "both") {
+        g.selectAll(".domain").attr("marker-start", "url(#arrowhead)");
+    }
 }
 
 /**
@@ -311,6 +367,7 @@ const __drawCartesianAxes = function(container, xScale, yScale,
  * @param useGrid Whether to draw a grid or not, default = false
  * @param backdropOpacity The opacity of the backdrop behind the text, default = 1
  * @param backdropColor The color of the backdrop behind the text, default = "white"
+ * @param arrowheads The arrowheads to use for the axes: "end", "start", "both", "none"; default = "none"
  *
  * @returns The axis object
  */
@@ -320,37 +377,38 @@ const __drawRadialAxes = function(container, aScale, rScale,
                                 numTicks = 6,
                                 useGrid = false,
                                 backdropOpacity = 1,
-                                backdropColor = "white") {
+                                backdropColor = "white",
+                                arrowheads = "none") {
 
     const axis = d3.axisBottom(rScale)
-        .ticks(numTicks)
-        .tickSize(0)
-        .tickPadding(0)
-        .tickSizeOuter(0);
+                    .ticks(numTicks)
+                    .tickSize(0)
+                    .tickPadding(0)
+                    .tickSizeOuter(0);
 
     // Rotate 90 degrees counterclockwise so that ticks appear vertically
     const g = container.append("g")
-        .attr("class", "chart radial")
-        .attr("transform","rotate(-90)");
+                        .attr("class", "chart radial")
+                        .attr("transform","rotate(-90)");
 
     // Draw concentric circles if useGrid is true
     if(useGrid) {
         g.selectAll("circle.grid")
-            .data(axis.scale().ticks(numTicks))
+         .data(axis.scale().ticks(numTicks))
             .join("circle")
-            .attr("class", d => d === 0 ? "grid zero" : "grid") // different style for zero line
-            .attr("r", rScale);
+                .attr("class", d => d === 0 ? "grid zero" : "grid") // different style for zero line
+                .attr("r", rScale);
     }
 
     // This will render an axis every 360/angularData.length degrees
     // Only the first axis will have text labels (the rest will be blank)
     g.selectAll("g.axis")
-        .data(angularData)
+      .data(angularData)
         .join("g")
-        .attr("class", "axis")
-        .classed("blank",(d,i) => i !== 0) // blank labels in all except first (via CSS)
-        .call(axis)
-        .attr("transform", (d,i) => `rotate(${(i * 360/angularData.length)})`);
+            .attr("class", "axis")
+            .classed("blank",(d,i) => i !== 0) // blank labels in all except first (via CSS)
+            .call(axis)
+            .attr("transform", (d,i) => `rotate(${(i * 360/angularData.length)})`);
 
     // Don't show tick lines for blank axes if useGrid is true
     if(useGrid) {
@@ -362,42 +420,31 @@ const __drawRadialAxes = function(container, aScale, rScale,
 
     // Labels for each axis
     g.selectAll("text.angle.label")
-        .data(angularData)
+     .data(angularData)
         .join("text")
-        .attr("class", "angle label")
-        .text(d => d)
-        .attr("x", (d,i) => p2c(aScale(i), rScale.range()[1] + 15)[0])
-        .attr("y", (d,i) => p2c(aScale(i), rScale.range()[1] + 15)[1])
-        .attr("transform", "rotate(90)");
+            .attr("class", "angle label")
+            .text(d => d)
+            .attr("x", (d,i) => p2c(aScale(i), rScale.range()[1] + 15)[0])
+            .attr("y", (d,i) => p2c(aScale(i), rScale.range()[1] + 15)[1])
+            .attr("transform", "rotate(90)");
+
+    if(arrowheads !== "none") {
+        setArrows(container, arrowheads, g);
+    }
 
     return axis;
 }
 
-function pieLabels() {
-    let container = null;
-    let arc = null;
-    let property = null;
-    let direction = 0;
-    let radius = 1;
-    let format = null;
-
-    function f() {
-        return __placePieLabels(container, arc, property, direction, radius, format);
-    }
-
-    f.container = arg => (arguments.length) ? container : (container = arg, f);
-    f.arc = arg => (arguments.length) ? arc : (arc = arg, f);
-    f.property = arg => (arguments.length) ? property : (property = arg, f);
-    f.direction = arg => (arguments.length) ? direction : (direction = arg, f);
-    f.radius = arg => (arguments.length) ? radius : (radius = arg, f);
-    f.format = arg => (arguments.length) ? format : (format = arg, f);
-
-    return f;
-}
-
-
-const direction = {TANGENTIAL: 1, RADIAL: 2, NONE: 0};
-
+/**
+ * Places pie labels on pie chart.
+ *
+ * @param container The container where to place the labels
+ * @param arc The arc generator function for the pie slices
+ * @param property The property of the data to display
+ * @param dir The direction of the labels (direction.RADIAL, direction.TANGENTIAL, or direction.NONE)
+ * @param radius The radius of the labels (default = 1)
+ * @param format The format function for the labels (default = null)
+ */
 const __placePieLabels = function(container, arc, property,
                               dir = direction.NONE,
                               radius = 1,
@@ -440,73 +487,32 @@ const __placePieLabels = function(container, arc, property,
 }
 
 /**
- * A custom symbol for a zig-zag line. Can be used with fill, stroke, or both.
- * @type {{draw: (function(*, number=): null|string)}}
+ * Sets arrows that can be placed at the tips of axes used in charts.
+ * You must create a <defs> element in the SVG container, set an ID, width and height.
+ * Axis should also have outer ticks set to 0.
+ * To use an arrow, add the marker-end attribute to the path with the ID of the arrow. You can also
+ * use marker-start to place an arrowhead at the beginning of the path.
+ *
+ * @param defs
+ * @param id
+ * @param width
+ * @param height
+ * @param fill
  */
-const symbolZigZag = {
-    draw: function(context, size = 64) {
-        const side = Math.sqrt(size)/16;
-        context.moveTo(12*side,0);
-        context.lineTo(side,-3*side);
-        context.lineTo(12*side,-16*side);
-        context.lineTo(-12*side,0);
-        context.lineTo(-side,3*side);
-        context.lineTo(-12*side,16*side);
-        context.closePath();
-
-        return context.canvas ? null : context.toString();
+export function addArrows(defs, id, width, height, fill = "black") {
+    if(defs.select(`#${id}`).empty()) {
+        defs.append("marker")
+            .attr("id", id)
+            .attr("viewBox", `${-width/2} ${-height/2} ${width*2} ${height*2}`)
+            .attr("refX", width/2)
+            .attr("refY", height)
+            .attr("markerWidth", width)
+            .attr("markerHeight", height*2)
+            .attr("orient", "auto-start-reverse")
+            .append("path")
+               .attr("d", "M0,0 L15,5 L0,10 z")
+               .attr("fill", fill);
     }
 }
-
-const symbolDrop = {
-    draw: function(context, size = 64) {
-        const side = Math.sqrt(size)/16;
-        context.arc(0,4*side,8*side,-Math.PI*.2,Math.PI*1.2);
-        context.lineTo(0,-12*side);
-        context.lineTo(0,-12*side);
-        context.closePath();
-
-        return context.canvas ? null : context.toString();
-    }
-}
-
-/**
- * A custom symbol for the Venus symbol. Best for use with stroke and no fill.
- * @type {{draw: (function(*, number=): null|string)}}
- */
-const symbolVenus = {
-    draw: function(context, size = 64) {
-        const side = Math.sqrt(size)/16;
-        context.arc(0,-6*side,8*side,0,2*Math.PI);
-        context.moveTo(-6*side,8*side);
-        context.lineTo(6*side,8*side);
-        context.moveTo(0,14*side);
-        context.lineTo(0,2*side);
-
-        return context.canvas ? null : context.toString();
-    }
-}
-
-/**
- * A custom symbol for the Mars symbol. Best for use with stroke and no fill.
- * @type {{draw: (function(*, number=): null|string)}}
- */
-const symbolMars = {
-    draw: function(context, size = 64) {
-        const side = Math.sqrt(size)/16;
-        context.arc(-3*side,3*side,8*side,0,2*Math.PI);
-        context.moveTo(2.5*side,-2.5*side);
-        context.lineTo(11*side,-11*side);
-        context.moveTo(side,-11*side);
-        context.lineTo(11*side,-11*side);
-        context.lineTo(11*side,-side);
-
-        return context.canvas ? null : context.toString();
-    }
-}
-
-const symbolsFill = [symbolZigZag, symbolDrop];
-const symbolsStroke = [symbolVenus, symbolMars];
-
 
 

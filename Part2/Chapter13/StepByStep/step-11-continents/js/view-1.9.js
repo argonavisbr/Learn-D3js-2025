@@ -55,9 +55,7 @@ function showLegend() {
 }
 
 // Create an ID usable in HTML
-function makeID(country) {
-    return country.replace(/ /g,"_");
-}
+const makeID = country => country.replace(/ /g,"_");
 
 function createClipping() {
     svg.append("defs")

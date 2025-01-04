@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Exponential Scales</title>
+    <title>Linear scales plotted in Cartesian axes</title>
     <style>
         circle {
             fill-opacity: .1;
@@ -14,17 +14,14 @@
 <script type="module">
     import * as d3 from "https://cdn.skypack.dev/d3@7";
 
+    // Generate a sequence from -2500 to 2500
     const data = d3.range(-2500,2500,1);
 
+    // Create the scales
     const scaleX = d3.scaleLinear().domain([-2500,2500]).range([50,910]);
-    const scaleY = d3.scaleLinear()
-            .domain([-2500,2500])
-            .range([500,0]);
-    // same as d3.scalePow().exponent(.5);
+    const scaleY = d3.scaleLinear().domain([-2500,2500]).range([500,0]);
 
-    const xAxis = d3.axisBottom().scale(scaleX).tickSize(500);
-    const yAxis = d3.axisRight().scale(scaleY).tickSize(860);
-
+    // Testing the scale
     console.log("y", 0, scaleY(0));
     console.log("y", 500, scaleY(500));
     console.log("y", 1000, scaleY(1000));
@@ -34,22 +31,25 @@
     console.log("y", 5000, scaleY(5000));
 
     d3.select("body")
-            .append("svg").attr("height", 550).attr("width", 960)
-            .selectAll("circle")
+      .append("svg").attr("height", 550).attr("width", 960)
+         .selectAll("circle")
             .data(data).enter()
-            .append("circle")
-            .attr("r", 1)
-            .attr("cx", (d,i)=>scaleX(d))
-    .attr("cy", d=>scaleY(d)+25);
+               .append("circle")
+                 .attr("r", 1)
+                 .attr("cx", (d,i)=>scaleX(d))
+                 .attr("cy", d=>scaleY(d)+25);
 
+    // Simple axes
+    const xAxis = d3.axisBottom().scale(scaleX).tickSize(500);
+    const yAxis = d3.axisRight().scale(scaleY).tickSize(860);
     d3.select("svg")
-            .append("g")
-            .attr("transform","translate(50,25)")
-            .call(yAxis)
+      .append("g")
+          .attr("transform","translate(50,25)")
+          .call(yAxis)
     d3.select("svg")
-            .append("g")
-            .attr("transform","translate(0,25)")
-            .call(xAxis)
+      .append("g")
+          .attr("transform","translate(0,25)")
+          .call(xAxis)
     
 </script>
 

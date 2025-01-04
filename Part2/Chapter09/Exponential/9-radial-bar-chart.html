@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Radial bar chart - Uses arcs and stacks (Chapter 11)</title>
+    <title>Radial bar chart - Uses arcs and stacks (Chapter 12)</title>
     <link rel="stylesheet" href="../css/radial-axes-2.0.0.css" type="text/css">
     <style>
         text, .tick text{
@@ -82,34 +82,31 @@
     // render the stacked bar chart on the radial scales
     svg.selectAll("g.layer")
         .data(stackedData)
-        .join("g")
-        .attr("class", "layer")
-        .attr("fill", (d, i) => colors[i])
-        .selectAll("path")
-        .data(d => d)
-        .join("path")
-        .attr("d", arc);
+          .join("g")
+             .attr("class", "layer")
+             .attr("fill", (d, i) => colors[i])
+             .selectAll("path")
+                .data(d => d)
+                   .join("path")
+                      .attr("d", arc);
 
     // Legend
     const legend = svg.append("g").attr("class", "legend");
     legend.selectAll("rect")
-        .data(stages.map((d,i) => i))
-        .join("rect")
-        .attr("width", 10)
-        .attr("height", 10)
-        .attr("x", -35)
-        .attr("y", (d,i) => i*20 -25)
-        .attr("fill", (i, j) => colors[j]);
+          .data(stages.map((d,i) => i))
+            .join("rect")
+                .attr("width", 10)
+                .attr("height", 10)
+                .attr("x", -35)
+                .attr("y", (d,i) => i*20 -25)
+                .attr("fill", (i, j) => colors[j]);
 
     legend.selectAll("text")
-        .data(stages.map((d,i) => i))
-        .join("text")
-        .attr("x", -20)
-        .attr("y", (d,i) => i*20 -16)
-        .text(i => stages[i]);
-
-
-
+          .data(stages.map((d,i) => i))
+            .join("text")
+                .attr("x", -20)
+                .attr("y", (d,i) => i*20 -16)
+                .text(i => stages[i]);
 
 </script>
 
