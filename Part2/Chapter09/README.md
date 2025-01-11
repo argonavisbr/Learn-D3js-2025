@@ -4,30 +4,64 @@ Files and exercises for chapter 9.
 
 ## 1) Description of each subfolder in this folder
 
-__`TODO/`__
+__`Continuous/`__
 
-Description.
+Examples using continuous scales and a file to experiment using the console.
 
-__`TODO/`__
+__`Compare/`__
 
-Description.
+Different types of scales compared.
 
-__`TODO/`__
+__`Linear/`__
 
-Description.
+Examples using linear scales and their configuration.
 
-__`TODO/`__
+__`Exponential/`__
 
-Description.
+Examples using power, square root and radial scales.
 
-__`StepByStep/`__
+__`Logarithmic/`__
 
-Description.
+Examples using Logarithmic scales.
+
+__`DateTime/`__
+
+Examples using date and time scales.
+
+__`Interpolated/`__
+
+Examples using sequential and diverging interpolated scales.
+
+__`Partition/`__
+
+Examples using threshold, quantize and quantile scales.
+
+__`Ordinal/`__
+
+Examples using ordinal, band and point scales.
+
+__`Examples/`__
+
+Additional examples.
+
+__`Exercises/`__
+
+Exercises using scales.
 
 __`data/`__
 
-Description.
+Data files used in examples and exercises.
 
-Resources used by examples and exercises in the other folders (they are loaded using relative URLs).
+__`css/`__
 
+Style sheets used in examples and exercises.
 
+__`data/`__
+
+Scripts, modules and libraries used in examples and exercises.
+
+## 2) Observable notebooks
+
+- [Comparing continuous scales]()
+- [Comparing partitioned scales]()
+- [Using band and point scales]()

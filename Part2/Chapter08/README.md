@@ -4,30 +4,43 @@ Files and exercises for chapter 8.
 
 ## 1) Description of each subfolder in this folder
 
-__`TODO/`__
+__`Axes/`__
 
-Description.
+Examples using different types of axis functions.
 
-__`TODO/`__
+__`ConfigStyle/`__
 
-Description.
+Examples showing how to configure and style axes.
 
-__`TODO/`__
+__`Composite/`__
 
-Description.
+Examples of Cartesian and Radial axes.
 
-__`TODO/`__
+__`Templates/`__
 
-Description.
+Examples using the chart-utils.js library to create Cartesian and Radial axes.
 
-__`StepByStep/`__
+__`Examples/`__
 
-Description.
+Additional examples showing how to use axes with a data visualization.
+
+__`Exercises/`__
+
+Exercises using axes.
 
 __`data/`__
 
-Description.
+Data files used in examples and exercises.
 
-Resources used by examples and exercises in the other folders (they are loaded using relative URLs).
+__`js/`__
 
+Scripts, libraries and modules used in examples and exercises
 
+__`css/`__
+
+Style sheets used in examples and exercises
+
+## 2) Observable notebooks for this chapter
+
+- [Examples using axes with standard D3]()
+- [Examples using axes with the `chart.utils.js` module]()

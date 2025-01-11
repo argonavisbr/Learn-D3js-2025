@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Using a simple axis</title>
+    <style>
+        svg {
+            border: solid 1px lightblue;
+        }
+    </style>
+</head>
+<body>
+<script type="module">
+    import * as d3 from 'https://cdn.skypack.dev/d3@7';
+
+    const dim = {width: 450, height: 100, margin: 25};
+
+    const svg = d3.select("body").append("svg")
+                  .attr("width", dim.width).attr("height",dim.height);
+
+    const dataSize = d3.randomInt(5,20)();
+    const data = d3.range(dataSize).map(() => d3.randomInt(-50,50)());
+
+    const scale = d3.scaleLinear()
+                    .domain(d3.extent(data))
+                    .range([dim.margin, dim.width - dim.margin * 2]);
+
+    svg.selectAll("circle")
+       .data(data)
+         .join("circle")
+           .attr("cx", d => scale(d))
+           .attr("cy", dim.height/2)
+           .attr("r", 3)
+           .style("fill", d => d >= 0 ? "darkviolet" : "deeppink");
+
+    // EXERCISE 1: Add a simple axis to a visualization and configure some styles.
+    // a) Create an axis generator function with the current scale.
+    const axisB = d3.axisBottom(scale);
+
+    // b) Use the following container for the axis (call the axis generator)
+    svg.append("g")
+        .attr("transform", `translate(${[0, dim.height - dim.margin]})`)
+        .call(axisB);
+
+    // c) Apply styles so that the negative ticks (lines and labels) are red.
+    d3.selectAll(".tick")
+        .style("color", d => d < 0 ? "red" : "black");
+
+</script>
+</body>
+</html>

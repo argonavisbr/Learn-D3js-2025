@@ -49,7 +49,12 @@
     d3.select("svg")
       .append("g")
           .attr("transform","translate(0,25)")
-          .call(xAxis)
+          .call(xAxis);
+
+    // bypassing module scope for use in the console
+    window.d3 = d3;
+    window.scaleX = scaleX;
+    window.scaleY = scaleY;
     
 </script>
 

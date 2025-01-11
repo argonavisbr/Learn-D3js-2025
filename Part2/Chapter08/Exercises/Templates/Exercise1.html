@@ -18,13 +18,12 @@
     const svg = d3.select("body").append("svg")
                   .attr("width", dim.width).attr("height",dim.height);
 
-    const scale = d3.scaleLinear()
-                    .range([dim.margin, dim.width - dim.margin * 2]);
-    const axisB = d3.axisBottom(scale);
-
     const dataSize = d3.randomInt(5,20)();
-    const data = d3.range(dataSize).map(() => d3.randomInt(1,100)());
-    scale.domain([0, d3.max(data)]);
+    const data = d3.range(dataSize).map(() => d3.randomInt(-50,50)());
+
+    const scale = d3.scaleLinear()
+                    .domain(d3.extent(data))
+                    .range([dim.margin, dim.width - dim.margin * 2]);
 
     svg.selectAll("circle")
        .data(data)
@@ -32,11 +31,19 @@
            .attr("cx", d => scale(d))
            .attr("cy", dim.height/2)
            .attr("r", 3)
-           .style("fill", "steelblue");
+           .style("fill", d => d >= 0 ? "darkviolet" : "deeppink");
 
+    // EXERCISE 1: Add a simple axis to a visualization and configure some styles.
+    // a) Create an axis generator function with the current scale.
+    // ADD CODE HERE
+
+    // b) Use the following container for the axis (call the axis generator)
     svg.append("g")
-        .attr("transform", `translate(${[0, dim.height - dim.margin]})`)
-        .call(axisB);
+        .attr("transform", `translate(${[0, dim.height - dim.margin]})`);
+
+    // c) Apply styles so that the negative ticks (lines and labels) are red.
+    // ADD CODE HERE
+
 </script>
 </body>
 </html>

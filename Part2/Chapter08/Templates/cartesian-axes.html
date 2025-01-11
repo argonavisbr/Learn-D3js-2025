@@ -47,7 +47,16 @@
                                       .showHorizontalGrid(true)
                                       .showVerticalGrid(true)
                                       .arrowheads("end");
-    axes();
+
+    // To render the axes, you must call the function that is returned.
+    const [xAxis, yAxis] = axes();  // (if you need to customize the axes, use the returned array)
+
+    // Changing the configuration for the y-axis
+    xAxis.tickFormat(d3.format(".1f"));
+
+    // Then you need to call the axis to apply any changes.
+    // Use the .x-axis or .y-axis classes:
+    d3.select(".x-axis").call(xAxis);
 
 
     // Line function

@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Exercise 9.6: relative frequency of letters</title>
+    <style>
+        text {
+            font-family: sans-serif;
+            font-size: 8px;
+        }
+        svg {
+            border: solid 1px gray;
+        }
+    </style>
+</head>
+<body>
+
+<svg width="100%" height="100%" viewBox="0 0 500 300"/>
+<script type="module">
+    import * as d3 from "https://cdn.skypack.dev/d3@7";
+
+    const datafile = "../../data/common-letters.json";
+    const jsonData = await d3.json(datafile);
+
+    console.log(jsonData);  // inspect the data
+
+    // The data contains the letter and the % of times it appears in the sample
+    const data = jsonData.frequencies
+                         .map(d => ({letter: d.letter, frequency: d.frequency/jsonData.sample}))
+                         .sort((a, b) => d3.ascending(a.letter, b.letter));
+
+    const dim = {w: 500, h: 300, margin: {top: 50, left: 25}};
+
+    // EXERCISE 7.
+    // a) Configure a band scale for the x-axis
+    const scaleX = d3.scaleBand()                               // SOLUTION: use scaleBand()
+                     .domain(data.map(data => data.letter))     // The domain is the set of letters
+                     .range([dim.margin.left, dim.w - dim.margin.left])
+                     .paddingInner(.1);
+
+    // The y-scale is provided
+    const scaleY = d3.scaleLinear()
+                     .domain([0, d3.max(data, d => d.frequency)])
+                     .range([dim.h - dim.margin.top, dim.margin.top]);
+
+    const color = d => "aeiou".includes(d.letter) ? "orange" : d.letter === "y" ? "lightcoral" : "lightseagreen";
+
+    d3.select("svg").selectAll(".bar")
+        .data(data)
+        .join("g").attr("class", "bar")
+        .each(function(d) {
+            d3.select(this).append("rect")
+                .attr("x", scaleX(d.letter))  // b) use the scale to position the bars. SOLUTION.
+                .attr("y", scaleY(d.frequency))
+                .attr("height", scaleY(0) - scaleY(d.frequency))
+                .attr("width", scaleX.bandwidth())  // c) use the scale to compute the width. SOLUTION.
+                .style("fill", color(d));
+
+            // d) get the x position using scaleBand properties to center the labels
+            const xLabelPos = scaleX(d.letter) + scaleX.bandwidth()/2;  // SOLUTION.
+            const yLabelPos = scaleY(d.frequency);
+
+            // no more changes required
+
+            d3.select(this).append("text")
+                .text(d3.format(".1%")(d.frequency))
+                .attr("x", xLabelPos)
+                .attr("y", yLabelPos)
+                .attr("transform", `rotate(-90,${[xLabelPos, yLabelPos]}) translate(12,0)`)
+                .style("font-size", "7px")
+                .style("alignment-baseline", "middle")
+                .style("text-anchor", "middle");
+
+            d3.select(this).append("text")
+                .text(d.letter)
+                .attr("x", xLabelPos)
+                .attr("y", scaleY(0) + 6) // under the bars
+                .style("alignment-baseline", "hanging")
+                .style("text-anchor", "middle");
+        });
+
+</script>
+</body>
+</html>

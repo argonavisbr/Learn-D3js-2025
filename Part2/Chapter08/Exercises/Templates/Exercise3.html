@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Exercise 8.3</title>
+    <style>
+        svg {
+            background-color: #cceaff;
+        }
+        polygon {
+            stroke: white;
+            stroke-width: .2px;
+        }
+        .tick {
+            font-size: 4px;
+        }
+        .tick line {
+            stroke-width: .25px;
+            stroke: blue;
+            stroke-opacity: 1;
+        }
+        .domain {
+            stroke-width: 2px;
+            stroke: seagreen;
+            stroke-opacity: .3;
+        }
+    </style>
+</head>
+<body>
+<svg id="world-map"
+     width="800" height="400"
+     viewBox="-200 -100 400 200"
+     transform="scale(1,-1)"></svg>
+
+<script type="module">
+    import * as d3 from 'https://cdn.skypack.dev/d3@7';
+
+    const url = "../../data/world-lowres.geojson";
+    const rand = d3.randomUniform(256);
+
+    d3.json(url)
+      .then(function(data) {
+          console.log(data.features)
+          drawMap(data.features);
+          drawAxes(data.features);
+      });
+
+    function drawMap(countries) {
+        const shapes = d3.select("#world-map")
+            .selectAll(".country")
+            .data(countries) // many countries
+            .join("g")
+            .attr("class", "country");
+
+        shapes.selectAll("polygon")
+            .data(s => s.geometry.coordinates) // many points
+            .join("polygon")
+            .attr("points", d => d)
+            .style("fill", () => `rgb(${rand()},${rand()},${rand()})`);
+    }
+
+    // EXERCISE 3.
+    // Add custom graticules for the map using axes.
+    function drawAxes(countries) {
+        const scaleLatN = d3.scaleIdentity().domain([90, -90]);
+        const scaleLatS = d3.scaleIdentity().domain([-90, 90]);
+        const scaleLonW = d3.scaleIdentity().domain([-180, 180]);
+        const scaleLonE = d3.scaleIdentity().domain([-180, 180]);
+
+        // a) Create four axis generators, one for each quadrant and scale above.
+        //    Use 20 ticks for the longitudes and 10 for the latitudes.
+        //    Remove outer ticks.
+        //    Use full length inner ticks (90 or 180, depending on the axis).
+        // ADD CODE HERE
+
+        // b) Call the generators in the proper containers
+        // Place the EAST Longitudes axis here
+        d3.select("#world-map")
+            .append("g").attr("transform", "scale(1,-1)")
+
+        // Place the NORTH Latitudes axis here
+        d3.select("#world-map")
+            .append("g").attr("transform", "scale(1,-1)")
+
+        // Place the WEST Longitudes axis here
+        d3.select("#world-map")
+            .append("g").attr("transform", "scale(1,-1)")
+
+        // Place the SOUTH Latitudes axis here
+        d3.select("#world-map")
+            .append("g").attr("transform", "scale(1,-1)")
+    }
+</script>
+
+</body>
+</html>

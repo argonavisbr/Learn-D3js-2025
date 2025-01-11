@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Using a simple axis</title>
+    <style>
+        svg {
+            border: solid 1px lightblue;
+        }
+    </style>
+</head>
+<body>
+<script type="module">
+    import * as d3 from 'https://cdn.skypack.dev/d3@7';
+
+    const dim = {width: 450, height: 100, margin: 25};
+
+    const svg = d3.select("body").append("svg")
+                  .attr("width", dim.width).attr("height",dim.height);
+
+    const datasets = generateData();
+
+    const scales = datasets.map(d => d3.scaleLinear()
+                                       .domain(d3.extent(d))
+                                       .range([dim.margin, dim.width - dim.margin * 2]));
+
+    // EXERCISE 2: Create and update the axis for a visualization that updates its data every second.
+
+    // a) Configure an axis generator function with the current scale
+    const axisB = d3.axisBottom(scales[0]);
+
+    // b) Call the axis generator from a container selection
+    svg.append("g")
+        .attr("transform", `translate(${[0, dim.height - dim.margin]})`)
+        .call(axisB);
+
+    update(0);
+    repeat(1);
+
+    // c) Implement this method to update the axis with a new scale (+use a transition with duration 1000)
+    function updateAxis(scale) {
+        d3.select("g")
+            .transition().duration(1000)
+            .call(axisB.scale(scale));
+    }
+
+    // No changes necessary after this point
+
+    function repeat(item) {
+        svg.transition().duration(1000)
+            .end()
+            .then(() => {
+                update(item);
+                updateAxis(scales[item])
+                repeat((item + 1) % datasets.length);
+            });
+    }
+
+    function update(item) {
+        svg.selectAll("circle")
+            .data(datasets[item])
+            .join(enter => enter.append("circle")
+                                .attr("r", 3)
+                                .attr("cx", dim.width/2)
+                                .attr("cy", dim.height/2),
+                update=> update,
+                exit => exit.remove()
+            )
+            .transition().duration(1000)
+            .attr("cx", d=> scales[item](d))
+            .style("fill", d => d >= 0 ? "darkviolet" : "deeppink");
+    }
+
+    function generateData() {
+        const sampleSize = 7;
+        const datasets = [];
+        for (let i = 0; i < sampleSize; i++) {
+            const series = d3.range(d3.randomInt(5,20)()).map(() => d3.randomInt(-50,50)());
+            datasets.push(series);
+        }
+        return datasets;
+    }
+</script>
+</body>
+</html>

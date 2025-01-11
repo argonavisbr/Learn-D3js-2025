@@ -1,41 +1,82 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Linear scales - example using clamp</title>
+    <title>Linear scales</title>
     <style>
-        circle {
-            fill-opacity: 1;
-            fill: red;
-        }
         line, path {
             stroke: #ccc;
         }
     </style>
 </head>
 <body>
-<h1>See console for results</h1>
+
 <script type="module">
     import * as d3 from "https://cdn.skypack.dev/d3@7";
 
+    // Generating the data array
+    const data = d3.range(-20,21);
+
+    // Creating the scale
     const scale = d3.scaleLinear()
-            .domain([-10,10])
-            .range([0,1000]);
+                    .domain([-10,10])
+                    .range([250,750]);
 
-    // Without clamp
-    const result1 = scale(64);  // returns 3700
-    console.log("no clamp - above", result1);
+    // Creating a clamped  scale
+    const scaleClamped = d3.scaleLinear()
+                           .domain([-10,10])
+                           .range([250,750])
+                           .clamp(true);
 
-    const result2 = scale(-20); // returns -500
-    console.log("no clamp - below", result2);
+    // Examples using the scale (see results in the JavaScript console)
+    console.log("Not clamped");
+    console.log(-20, scale(-20));
+    console.log(-10, scale(-10));
+    console.log(0, scale(0));
+    console.log(5, scale(5));
+    console.log(10, scale(10));
+    console.log(25, scale(25));
 
-    // With clamp
-    scale.clamp(true);
-    const result3 = scale(64);  // returns 1000
-    console.log("clamp above", result3);
+    // Examples using the clamped scale (see results in the JavaScript console)
+    console.log("Clamped");
+    console.log(-20, scaleClamped(-20));
+    console.log(-10, scaleClamped(-10));
+    console.log(0, scaleClamped(0));
+    console.log(5, scaleClamped(5));
+    console.log(10, scaleClamped(10));
+    console.log(25, scaleClamped(25));
 
-    const result4 = scale(-20); // returns 0
-    console.log("clamp below", result4);
+    // Rendering the chart
+    const svg = d3.select("body").append("svg").attr("height", 550).attr("width", 1050);
 
+    // Configuring an axis with the scale
+    const xAxis = d3.axisBottom().scale(scale).tickSize(25);
+    // Rendering an axis
+    svg.append("g")
+       .attr("transform","translate(25,25)")
+       .call(xAxis);
+
+    // Rendering the data for the clamped scale
+    svg.selectAll("circle.clamped")
+       .data(data)
+         .join("circle").attr("class", "clamped")
+            .attr("r", 5)
+            .attr("cx", d=>scaleClamped(d)+25)
+            .attr("cy", 25)
+            .style("fill", "red");
+
+    // Rendering the data for the non clamped scale (just outlines)
+    svg.selectAll("circle.not-clamped")
+        .data(data)
+          .join("circle").attr("class", "not-clamped")
+            .attr("r", 5)
+            .attr("cx", d=>scale(d)+25)
+            .attr("cy", 25)
+            .style("fill", "none")
+            .style("stroke", "blue");
+
+    // bypassing module scope for use in the console
+    window.d3 = d3;
+    window.scale = scale;
 </script>
 
 </body>

@@ -18,7 +18,7 @@
     const scale = d3.scaleLinear()
                     .range([0, dim.width - 100]);
     const axisB = d3.axisBottom(scale)
-                    .ticks(5, ',%');
+                    .ticks(5, '%');
 
     const svg = d3.select("body")
                   .append("svg")

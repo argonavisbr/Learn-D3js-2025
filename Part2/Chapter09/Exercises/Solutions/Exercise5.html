@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Exercise 9.4: HDI quartiles</title>
+</head>
+<body>
+
+<script type="module">
+    import * as d3 from 'https://cdn.skypack.dev/d3@7';
+    import {load, getData, drawMap, makeLegend} from './js/world-map.js';
+
+    // EXERCISE 5.
+    // HDI quartiles. Divide the data into four sets countries containing
+    // approximately the same amount of countries (quartiles), and
+    // apply a color for each one. Print the computed thresholds.
+    const colors = ["#d73027", "#fc8d59", "#fee08b", "#1a9850"];
+
+    // Load the data
+    await load();
+    const data = getData();
+
+    // a) Configure the scale here (choose a scale type and define its domain and range).
+    const colorScale = d3.scaleQuantile()   // SOLUTION: to obtain quartiles, use a quantile scale
+                         .domain(data.map(d => d.properties.hdi))   // The domain is data-driven
+                         .range(colors);
+
+    // b) Print the computed thresholds.
+    const thresholds = colorScale.quantiles();  // SOLUTION: this method returns the computed thresholds
+    console.log("Thresholds: ", thresholds);
+
+    // No changes required beyond this point
+
+    // Set a properties.color property for each datum, based on the scaled hdi value, then draw the map.
+    data.map(d => d.properties.color = colorScale(d.properties.hdi));
+    drawMap();
+    makeLegend(thresholds, colors);
+</script>
+
+</body>
+</html>

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>GISS World temperatures</title>
+    <link rel="stylesheet" href="../../css/chart-utils.css">
+</head>
+<style>
+    .y-axis .label {
+        alignment-baseline: hanging;
+    }
+    .zero-axis line {
+        stroke-opacity: 0;
+    }
+</style>
+<body>
+<h1>Average global temperature variation</h1>
+<p>Deviation from mean temperature of 1951-1980. Source GISTEMP.</p>
+<script type="module">
+   import * as d3 from 'https://cdn.skypack.dev/d3@7';
+   import * as utils from '../../js/chart-utils.js';
+
+   const dim = {width: 800, height: 600, margin: 120};
+
+   const result = await d3.csv('../../data/GLB.Ts.1880.2024.csv', row => {
+       return Object.entries(row)
+                    .filter(e => e[0] !== "Year")
+                    .map(e => ({Value: +e[1], Date: `${row.Year}-${e[0]}-15`}));
+   });
+   const data = result.flat();
+   console.log(data);  // inspect the data!
+
+   // EXERCISE 3.
+   // Configure scales to plot the data points for the average global temperature anomaly data.
+   // Inspect the data to understand the structure. The data is an array of objects with two properties:
+   // Date (ISO date string) and Value (temperature anomaly in °C).
+   // For the x-scale, it's probably best to use a time scale. It also works with a point scale
+   // or a linear scale, but this will demand extra work to handle dates and configure axis ticks.
+   // For the y-scale, a linear scale is the best choice.
+   // Hint: use d3.isoParse to parse the ISO date strings to valid Date objects.
+
+   // a) Set up the scales (choose the appropriate scale types and define their domains)
+   //    The ranges are already set up.
+   const scale = {
+       x: d3.scaleLinear()       // replace with the correct scale (if necessary)
+            .domain([0,1])       // replace with the correct domain
+            .range([dim.margin / 2, dim.width - dim.margin / 2]),
+       y: d3.scaleLinear()       // replace with the correct scale (if necessary)
+            .domain([0,1])       // replace with the correct domain
+            .range([dim.height - dim.margin / 2, dim.margin / 2])
+   }
+
+    // Viewport configuration - no changes are necessary here
+    const svg = d3.select("body")
+                  .append("svg")
+                    .attr("height", dim.height)
+                    .attr("width", dim.width);
+
+    // Axis configuration - no changes are necessary here
+    utils.cartesianAxes()
+         .container(svg)
+         .xScale(scale.x)
+         .yScale(scale.y)
+         .xLabel("Years")
+         .yLabel("Average global temperature anomaly (°C)")
+         .showHorizontalGrid(true)
+         ();
+
+    // b) Render points (use scaled values to place them)
+    svg.selectAll("circle")
+       .data(data)
+          .join("circle")
+            .attr("r", 1)
+            .attr("cx", 0)             // Compute the x position using a scaled data property
+            .attr("cy", 0)             // Compute the y position using a scaled data property
+            .style("fill", d => d.Value < 0 ? "blue" : "red");
+
+</script>
+</body>
+</html>

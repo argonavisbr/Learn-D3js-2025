@@ -18,11 +18,18 @@
     import * as d3 from "https://cdn.skypack.dev/d3@7";
 
     const scale = d3.scaleLinear()
-            .domain([-10,10])
-            .range([0,1000]);
+                    .domain([-10,10])
+                    .range([0,1000]);
 
-    const invert = scale.invert(300);  // returns 16
-    console.log("invert(500)", invert)
+    console.log("invert(500)", scale.invert(500));  // returns 0
+    console.log("invert(1000)", scale.invert(1000));  // returns 10
+    console.log("invert(0)", scale.invert(0));  // returns -10
+    console.log("invert(300)", scale.invert(500));  // returns -4
+    console.log("invert(750)", scale.invert(750));  // returns 5
+
+    // bypassing module scope for use in the console
+    window.d3 = d3;
+    window.scale = scale;
 
 </script>
 

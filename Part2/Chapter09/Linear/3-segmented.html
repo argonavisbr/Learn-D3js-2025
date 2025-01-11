@@ -52,6 +52,10 @@
         .attr("cx", d=>scale(d)+25)
         .attr("cy", 25);
 
+    // bypassing module scope for use in the console
+    window.d3 = d3;
+    window.scale = scale;
+
 </script>
 
 </body>

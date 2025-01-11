@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Exercise 9.5: HDI quantization</title>
+</head>
+<body>
+
+<script type="module">
+    import * as d3 from 'https://cdn.skypack.dev/d3@7';
+    import {load, getData, drawMap, makeLegend} from './js/world-map.js';
+
+    // EXERCISE 6: HDI partition (divide extent in equal parts).
+    // Divide the domain into four equal parts using the HDI domain [0,1]
+    // and apply a color for each one. Print the thresholds.
+    const colors = ["#d73027", "#fc8d59", "#fee08b", "#1a9850"];
+
+    // Load the data
+    await load();
+    const data = getData();
+
+    // a) Configure the scale here (choose a scale type and define its domain and range).
+    const colorScale = d3.scaleQuantize()   // SOLUTION: to divide the domain in equal parts, use a quantize scale
+                         .domain([0,1])     // The domain is fixed (does not depend on the data)
+                         .range(colors);
+
+    // b) Print the computed thresholds.
+    const thresholds = colorScale.thresholds(); // SOLUTION: this method returns the computed thresholds
+    console.log("Thresholds: ", thresholds);
+
+    // No changes required beyond this point
+
+    // Set a properties.color property for each datum, based on the scaled hdi value, then draw the map.
+    data.map(d => d.properties.color = colorScale(d.properties.hdi));
+    drawMap();
+    makeLegend(thresholds, colors);
+</script>
+
+</body>
+</html>
