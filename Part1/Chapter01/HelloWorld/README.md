@@ -62,23 +62,32 @@ easy to use and require minimum configuration (you just need to configure it inf
 You can start by forking the following examples, which are already set up. They contain the code from
 `Chapter01/HelloWorld/2-d3-append.html`:
 
-- JSFiddle: https://jsfiddle.net/helderdarocha/93fty6zh/1/
-- CodePen:  https://codepen.io/helderdarocha/pen/xxazVeN
+- JSFiddle: [Single circle](https://jsfiddle.net/helderdarocha/93fty6zh/1/)
+- CodePen:  [Single circle](https://codepen.io/helderdarocha/pen/xxazVeN)
 
 (You can also use these environments without any configuration, importing the ESM modules directly in the code window, 
 but you may encounter some limitations or bugs.)
 
+Other steps are also available in the following links:
+- CodePen: [Many circles](https://codepen.io/helderdarocha/pen/ZYzmaOE), [Updating circles](https://codepen.io/helderdarocha/pen/ZYzmapY)
+- JSFiddle: [Many circles](https://jsfiddle.net/ux07qkaL/), [Updating circles](https://jsfiddle.net/6s4Lvpnb/)
+
+Note: the D3 library is not imported via code in the JS tab in these examples (it is added as a resource via the platform's configuration tools).
+
 These are great to experiment with the code as you learn. Both have a console that help with debugging. You can
 modify the code as much as you want, save it and share it. External files, however, will need to be loaded via a
 separate URL. You can use these environments to start using D3 quickly, and to share your code, but you should have
-a local enviroment set up by the time you finish Chapter 4.
+a local environment set up by the time you finish Chapter 4.
 
 ## 4) Observable notebooks
 
 _Observable_ notebooks are a playground where you can run code interactively. You can use them to experiment with code
-and see the results immediately. You can the examples from this chapter here:
+and see the results immediately. You can view and interact with the examples from this chapter here:
 
-https://observablehq.com/d/90d319473e8012ae
+[HelloWorld examples](https://observablehq.com/d/1e3acb60dca93ea6)
+
+More examples and exercises are also available here:
+[More examples](https://observablehq.com/d/90d319473e8012ae)
 
 Programming for a notebook is slightly different from programming in a code editor, but it's a great way to learn and
 share your code. In all chapters, selected examples will also be available in *Observable* notebooks.

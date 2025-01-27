@@ -5,6 +5,7 @@
     text-anchor: end;
 }
 text {
-    font-size: 10pt;
-    alignment-baseline: hanging;
+    font-family: sans-serif;
+    font-size: 12px;
+    alignment-baseline: middle;
 }

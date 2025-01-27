@@ -4,74 +4,45 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="88ab0fd2-922d-4b26-894c-0ae61af44502" name="Changes" comment="Updated files after reviewing Chapter 8.">
-      <change afterPath="$PROJECT_DIR$/Part2/Chapter08/Exercises/Solutions/Exercise1.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Part2/Chapter08/Exercises/Solutions/Exercise2.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Part2/Chapter08/Exercises/Solutions/Exercise3.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Part2/Chapter08/Exercises/Templates/Exercise2.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Part2/Chapter08/Exercises/Templates/Exercise3.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Part2/Chapter08/data/world-lowres.geojson" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Part2/Chapter09/Continuous/1-empty.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Part2/Chapter09/Exercises/Solutions/Exercise1.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Part2/Chapter09/Exercises/Solutions/Exercise2.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Part2/Chapter09/Exercises/Solutions/Exercise3.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Part2/Chapter09/Exercises/Solutions/Exercise4.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Part2/Chapter09/Exercises/Solutions/Exercise5.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Part2/Chapter09/Exercises/Solutions/Exercise6.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Part2/Chapter09/Exercises/Solutions/Exercise7.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Part2/Chapter09/Exercises/Solutions/js/density-chart.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Part2/Chapter09/Exercises/Solutions/js/world-map.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Part2/Chapter09/Exercises/Templates/Exercise1.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Part2/Chapter09/Exercises/Templates/Exercise2.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Part2/Chapter09/Exercises/Templates/Exercise3.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Part2/Chapter09/Exercises/Templates/Exercise4.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Part2/Chapter09/Exercises/Templates/Exercise5.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Part2/Chapter09/Exercises/Templates/Exercise6.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Part2/Chapter09/Exercises/Templates/Exercise7.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Part2/Chapter09/Exercises/Templates/js/density-chart.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Part2/Chapter09/Exercises/Templates/js/world-map.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Part2/Chapter09/data/GLB.Ts.1880.2024.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Part2/Chapter09/data/world-lowres.geojson" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Part2/Chapter12/data/GLB.Ts.1880.2024.csv" afterDir="false" />
+    <list default="true" id="88ab0fd2-922d-4b26-894c-0ae61af44502" name="Changes" comment="Updated files after reviewing Chapter 9.">
+      <change afterPath="$PROJECT_DIR$/Part1/Chapter04/Exercises_TODO/Templates-TODO/Exercise4.1-area.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Part1/Chapter04/Exercises_TODO/Templates-TODO/Exercise4.1-population.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Part1/Chapter04/Exercises_TODO/Templates-TODO/Exercise4.2.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Part1/Chapter04/Exercises_TODO/Templates-TODO/Exercise4.3.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Part1/Chapter04/Exercises_TODO/Templates-TODO/Exercise4.4.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Part1/Chapter04/Exercises_TODO/Templates-TODO/Exercise4.5.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Part1/Chapter04/WorldMap/2-map-list-data.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Part1/Chapter04/WorldMap/6-polygon-map-colors.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Part2/Chapter12/Polygons/1-polygon-geometry.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Part2/Chapter14/Quadtree/1-quadtree-example.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part2/Chapter07/data/common-letters.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part2/Chapter08/ConfigStyle/6-tick-formatting.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter08/ConfigStyle/6-tick-formatting.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part2/Chapter08/Exercises_TODO/Exercise2.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter08/Exercises/Templates/Exercise1.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part2/Chapter08/Exercises_TODO/Exercise3.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part2/Chapter08/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter08/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part2/Chapter08/Templates/cartesian-axes.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter08/Templates/cartesian-axes.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part2/Chapter08/_OLD_Chapter8/12-domain-styling-just-css.html" beforeDir="false" afterPath="$PROJECT_DIR$/Tools/_OLD_Part_2/_OLD_Chapter8/12-domain-styling-just-css.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part2/Chapter08/_OLD_Chapter8/12-domain-styling.html" beforeDir="false" afterPath="$PROJECT_DIR$/Tools/_OLD_Part_2/_OLD_Chapter8/12-domain-styling.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part2/Chapter08/_OLD_Chapter8/13-tick-styling-just-css.html" beforeDir="false" afterPath="$PROJECT_DIR$/Tools/_OLD_Part_2/_OLD_Chapter8/13-tick-styling-just-css.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part2/Chapter08/data/common-letters.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part2/Chapter08/data/monthly_json.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part2/Chapter08/data/sol_2016.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part2/Chapter08/data/un_regions_gdp.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part2/Chapter09/Exercises-TODO/Solutions/Exercise1.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part2/Chapter09/Exercises-TODO/Solutions/Exercise2.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part2/Chapter09/Exercises-TODO/Solutions/Exercise3.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part2/Chapter09/Exercises-TODO/Solutions/Exercise4.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part2/Chapter09/Exercises-TODO/Solutions/Exercise5.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part2/Chapter09/Exercises-TODO/Solutions/Exercise6.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part2/Chapter09/Exercises-TODO/Templates/Exercise1.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part2/Chapter09/Exercises-TODO/giss-bar-full.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part2/Chapter09/Exercises-TODO/giss-bar-scale-band.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part2/Chapter09/Exercises-TODO/giss-scale-point.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part2/Chapter09/Linear/1-linear.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter09/Linear/1-linear.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part2/Chapter09/Linear/2-linear-cartesian.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter09/Linear/2-linear-cartesian.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part2/Chapter09/Linear/3-segmented.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter09/Linear/3-segmented.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part2/Chapter09/Linear/4-segmented-cartesian.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter09/Linear/4-segmented-cartesian.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part2/Chapter09/Linear/5-linear-clamp.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter09/Linear/5-linear-clamp.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part2/Chapter09/Linear/6-linear-invert.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter09/Linear/6-linear-invert.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part2/Chapter09/Linear/7-identity.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter09/Linear/7-identity.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part2/Chapter09/Linear/8-linear-scale-not-d3.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter09/Continuous/2-custom-linear-scale.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part2/Chapter09/Partition/4-threshold-hurricane.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter09/Examples/1-threshold-hurricane.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part2/Chapter09/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter09/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part2/Chapter09/_OLD_Chapter9/TOOLS/5-scales-method-test.html" beforeDir="false" afterPath="$PROJECT_DIR$/Tools/_OLD_Part_2/_OLD_Chapter9/TOOLS/5-scales-method-test.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part2/Chapter09/data/monthly_json.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part2/Chapter10/data/GLB.Ts+dSST.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter10/data/GLB.Ts+dSST.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part2/Chapter11/data/GLB.Ts.1880.2024.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter11/data/GLB.Ts.1880.2024.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part2/Chapter13/data/GLB.Ts.1880.2024.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter13/data/GLB.Ts.1880.2024.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part1/Chapter01/HelloWorld/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/Part1/Chapter01/HelloWorld/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part1/Chapter01/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/Part1/Chapter01/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part1/Chapter03/Shapes/D3/1-shapes.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part1/Chapter03/Shapes/D3/1-shapes.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part1/Chapter04/DynamicBar/1-refactoring.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part1/Chapter04/DynamicBar/1-refactoring.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part1/Chapter04/DynamicBar/2-more-data.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part1/Chapter04/DynamicBar/2-more-data.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part1/Chapter04/DynamicBar/3.1-update-values.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part1/Chapter04/DynamicBar/3.1-update-values.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part1/Chapter04/DynamicBar/3.2-update-dataset.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part1/Chapter04/DynamicBar/3.2-update-dataset.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part1/Chapter04/DynamicBar/4-transitions.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part1/Chapter04/DynamicBar/4-transitions.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part1/Chapter04/DynamicBar/5-modules/js/main.js" beforeDir="false" afterPath="$PROJECT_DIR$/Part1/Chapter04/DynamicBar/5-modules/js/main.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part1/Chapter04/DynamicBar/5-modules/js/render.js" beforeDir="false" afterPath="$PROJECT_DIR$/Part1/Chapter04/DynamicBar/5-modules/js/render.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part1/Chapter04/Exercises_TODO/Examples-TODO-Update-old-code/CH5-Exercise-6-d3-resizing-data-GUP.html" beforeDir="false" afterPath="$PROJECT_DIR$/Tools/OLD_Part_1/_OLD_Chapter4/Filtering-Data.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part1/Chapter04/Exercises_TODO/Examples-TODO-Update-old-code/orbital-period.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part1/Chapter04/Examples/Bar-chart-orbital-period.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part1/Chapter04/Exercises_TODO/Examples-TODO-Update-old-code/rotation-period.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part1/Chapter04/Examples/Bar-chart-rotation-period.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part1/Chapter04/Exercises_TODO/Solutions/Exercise4.3.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part1/Chapter04/Exercises_TODO/Solutions/Exercise4.3.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part1/Chapter04/Exercises_TODO/Solutions/Exercise4.4.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part1/Chapter04/Exercises_TODO/Solutions/Exercise4.4.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part1/Chapter04/Exercises_TODO/Solutions/Exercise4.5.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part1/Chapter04/Exercises_TODO/Solutions/Exercise4.5.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part1/Chapter04/Exercises_TODO/Templates/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/Part1/Chapter04/Exercises_TODO/Templates-TODO/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part1/Chapter04/Exercises_TODO/Templates/css/main.css" beforeDir="false" afterPath="$PROJECT_DIR$/Part1/Chapter04/Exercises_TODO/Templates-TODO/css/main.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part1/Chapter04/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/Part1/Chapter04/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part1/Chapter04/StaticBar/6.2-xscale.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part1/Chapter04/StaticBar/6.2-xscale.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part1/Chapter04/StaticBar/6.3-yscale.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part1/Chapter04/StaticBar/6.3-yscale.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part1/Chapter04/StaticBar/6.4-more-data.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part1/Chapter04/StaticBar/6.4-more-data.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part1/Chapter04/StaticBar/7-colors.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part1/Chapter04/StaticBar/7-colors.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part1/Chapter04/WorldMap/1-map-list-data.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part1/Chapter04/WorldMap/1-load-data.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part1/Chapter04/WorldMap/2-polygon-map.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part1/Chapter04/WorldMap/3-polygon-map.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part1/Chapter04/WorldMap/3-polygon-map-viewbox.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part1/Chapter04/WorldMap/4-polygon-map-viewbox.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part1/Chapter04/WorldMap/4-polygon-map-viewbox-transform.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part1/Chapter04/WorldMap/5-polygon-map-viewbox-transform.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -84,8 +55,8 @@
         <option value="package" />
         <option value="Kotlin Script" />
         <option value="CSS File" />
-        <option value="HTML File" />
         <option value="JavaScript File" />
+        <option value="HTML File" />
       </list>
     </option>
   </component>
@@ -111,46 +82,46 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ASKED_ADD_EXTERNAL_FILES": "true",
-    "DefaultHtmlFileTemplate": "HTML File",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "git-widget-placeholder": "main",
-    "javascript.nodejs.core.library.configured.version": "18.13.0",
-    "javascript.nodejs.core.library.typings.version": "18.13.0",
-    "last_opened_file_path": "/Users/helderdarocha/IdeaProjects/Learn-D3js-2023/Part2/Chapter08/Exercises/Templates",
-    "list.type.of.created.stylesheet": "CSS",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs.jest.jest_package": "/Users/helderdarocha/IdeaProjects/Learn-D3js-2023/node_modules/jest",
-    "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Project",
-    "project.structure.proportion": "0.0",
-    "project.structure.side.proportion": "0.0",
-    "run.code.analysis.last.selected.profile": "pProject Default",
-    "settings.editor.selected.configurable": "Settings.JavaScript",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
+    &quot;DefaultHtmlFileTemplate&quot;: &quot;HTML File&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;javascript.nodejs.core.library.configured.version&quot;: &quot;18.13.0&quot;,
+    &quot;javascript.nodejs.core.library.typings.version&quot;: &quot;18.13.0&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/helderdarocha/IdeaProjects/Learn-D3js-2023/Part1/Chapter04/WorldMap&quot;,
+    &quot;list.type.of.created.stylesheet&quot;: &quot;CSS&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs.jest.jest_package&quot;: &quot;/Users/helderdarocha/IdeaProjects/Learn-D3js-2023/node_modules/jest&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
+    &quot;run.code.analysis.last.selected.profile&quot;: &quot;pProject Default&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;Settings.JavaScript&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/Part1/Chapter04/WorldMap" />
+      <recent name="$PROJECT_DIR$/Part1/Chapter04/Exercises_TODO/Templates" />
       <recent name="$PROJECT_DIR$/Part2/Chapter08/Exercises/Templates" />
       <recent name="$PROJECT_DIR$/Part2/Chapter08/Exercises_TODO/Templates" />
       <recent name="$PROJECT_DIR$/Part2/Chapter08/Exercises_TODO/Solutions" />
-      <recent name="$PROJECT_DIR$/Part2/Chapter08/data" />
-      <recent name="$PROJECT_DIR$/Part2/Chapter09/Exercises-TODO/Templates" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/Part2/Chapter08/Exercises_TODO/Solutions" />
-      <recent name="$PROJECT_DIR$/Tools/_OLD_Part_2" />
-      <recent name="$PROJECT_DIR$/Part2/Chapter10/data" />
-      <recent name="$PROJECT_DIR$/Part2/Chapter09/Exercises-TODO/Solutions" />
-      <recent name="$PROJECT_DIR$/Part2/Chapter09/Exercises-TODO/Solutions/js" />
+      <recent name="$PROJECT_DIR$/Part1/Chapter04" />
+      <recent name="$PROJECT_DIR$/Part1/Chapter04/Exercises_TODO" />
+      <recent name="$PROJECT_DIR$/Tools/OLD_Part_1/_OLD_Chapter4" />
+      <recent name="$PROJECT_DIR$/Tools/OLD_Part_1" />
+      <recent name="$PROJECT_DIR$/Tools" />
     </key>
   </component>
   <component name="RunManager" selected="JavaScript Debug.1-bar-chart-race-UN-GDP.html">
@@ -482,7 +453,13 @@
       <workItem from="1736006757728" duration="9698000" />
       <workItem from="1736087578519" duration="6312000" />
       <workItem from="1736172525103" duration="23088000" />
-      <workItem from="1736265810833" duration="56387000" />
+      <workItem from="1736265810833" duration="56792000" />
+      <workItem from="1736610732101" duration="3369000" />
+      <workItem from="1736628204928" duration="1367000" />
+      <workItem from="1737756451375" duration="8002000" />
+      <workItem from="1737817180557" duration="8884000" />
+      <workItem from="1737856313836" duration="4724000" />
+      <workItem from="1737940807098" duration="3235000" />
     </task>
     <task id="LOCAL-00001" summary="Example files for Chapter 1">
       <created>1678932902809</created>
@@ -784,7 +761,15 @@
       <option name="project" value="LOCAL" />
       <updated>1736031999581</updated>
     </task>
-    <option name="localTasksCounter" value="41" />
+    <task id="LOCAL-00041" summary="Updated files after reviewing Chapter 9.">
+      <option name="closed" value="true" />
+      <created>1736562539965</created>
+      <option name="number" value="00041" />
+      <option name="presentableId" value="LOCAL-00041" />
+      <option name="project" value="LOCAL" />
+      <updated>1736562539965</updated>
+    </task>
+    <option name="localTasksCounter" value="42" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -802,7 +787,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Example files for Chapter 1" />
     <MESSAGE value="Example files for Chapter 1 - Updated readme files" />
     <MESSAGE value="Updated readme files" />
     <MESSAGE value="Updated exercises and module examples" />
@@ -827,7 +811,8 @@
     <MESSAGE value="Updated files after reviewing Chapter 13." />
     <MESSAGE value="Updated files after reviewing Chapters 2 and 3." />
     <MESSAGE value="Updated files after reviewing Chapter 8." />
-    <option name="LAST_COMMIT_MESSAGE" value="Updated files after reviewing Chapter 8." />
+    <MESSAGE value="Updated files after reviewing Chapter 9." />
+    <option name="LAST_COMMIT_MESSAGE" value="Updated files after reviewing Chapter 9." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

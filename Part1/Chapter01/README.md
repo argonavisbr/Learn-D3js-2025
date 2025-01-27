@@ -12,3 +12,6 @@ __`Imports/`__
 
 Simple examples showing how to load and use the D3 library in a frontend environment, using ESM and legacy techniques.
 
+## 2) Observable notebooks
+
+See [HelloWorld/README.md](HelloWorld/README.md).

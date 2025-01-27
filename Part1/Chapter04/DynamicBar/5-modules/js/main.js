@@ -1,7 +1,7 @@
 import * as d3 from "https://cdn.jsdelivr.net/npm/d3@7/+esm";
 
 import {app} from "./constants.js";
-import {renderChart, renderControls} from "./render.js";
+import {drawChart, renderControls} from "./render.js";
 
 // Load and render
 const url = "../../data/sol_2019.json";
@@ -10,7 +10,7 @@ const data = await d3.json(url);
 
 makeDataset(data, 'planets'); // populates the dataset array with selected data
 
-renderChart();     // draws the initial chart
+drawChart();     // draws the initial chart
 renderControls();  // draws the chart selector panel
 
 /**
@@ -18,16 +18,13 @@ renderControls();  // draws the chart selector panel
  * @param section May be 'planets', 'asteroids', 'tnos', 'centaurs' or 'comets'
  */
 function makeDataset(data, section) {
-    let i = 0;
-    data[section].forEach(object => {
-        app.data.push(
-            {
-                name: object.name,
-                avg: +object.semiMajorAxisAU,
-                min: +object.periheliumAU,
-                max: +object.apheliumAU,
-                color: app.color(i++)
-            }
-        );
+    data[section].forEach((object, i) => {
+        app.data.push({
+            name: object.name,
+            avg: +object.semiMajorAxisAU,
+            min: +object.periheliumAU,
+            max: +object.apheliumAU,
+            color: app.color(i)
+        });
     });
 }

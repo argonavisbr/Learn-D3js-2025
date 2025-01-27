@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Examples using d3-polygon</title>
+    <style>
+        svg {
+            border: 1px solid lightgray;
+        }
+    </style>
+</head>
+<body>
+<h1>Examples using tools from d3-polygon</h1>
+<p>Computing a polygon hull from a set of random points, plotting the result and computing area, perimeter,
+   centroid and testing if a point is in the polygon. See console for more results. Click anywhere in the
+   SVG to draw a circle. It will be green if in the polygon, or purple if outside the polygon.</p>
+<script type="module">
+    import * as d3 from "https://cdn.skypack.dev/d3@7";
+
+    const width = 400, height = 400;
+
+    // Obtain the convex hull of a set of 25 random points
+    const points = Array.from({length: 25}, () => [Math.random() * width, Math.random() * height]);
+    const polygon = d3.polygonHull(points);
+
+    // Check if a point is inside the polygon
+    const point = [50, 50];
+    const isInside = d3.polygonContains(polygon, point);
+
+    console.log("(50,50) is in the polygon", isInside);
+
+    // Compute the polygon's area
+    const area = d3.polygonArea(polygon);
+
+    console.log("The area of the polygon is", area);
+
+    // Compute the polygon's centroid
+    const centroid = d3.polygonCentroid(polygon);
+
+    console.log("The centroid is at", centroid);
+
+    // Compute the polygon's length
+    const length = d3.polygonLength(polygon);
+
+    console.log("The perimeter is", length);
+
+    const svg = d3.select("body").append("svg")
+        .attr("width", width)
+        .attr("height", height);
+
+    // Plot the hull points (green dots)
+    svg.selectAll("circle.vertex")
+       .data(polygon)
+         .join("circle").attr("class", "vertex")
+            .attr("cx", p => p[0])
+            .attr("cy", p => p[1])
+            .attr("r", 6)
+            .attr("fill", "orange");
+
+    // Plot the points (blue dots)
+    svg.selectAll("circle.point")
+       .data(points)
+         .join("circle").attr("class", "point")
+            .attr("cx", p => p[0])
+            .attr("cy", p => p[1])
+            .attr("r", 2)
+            .attr("fill", "blue");
+
+    // Plot the point to check if it's inside the polygon
+    svg.append("circle")
+        .attr("cx", point[0])
+        .attr("cy", point[1])
+        .attr("r", 4)
+        .attr("fill", isInside ? "green" : "purple");
+
+    // Draw the polygon
+    svg.append("polygon")
+        .attr("points", polygon)
+        .attr("fill", "none")
+        .attr("stroke", "black");
+
+    // Draw a circle at the centroid
+    svg.append("circle")
+        .attr("cx", centroid[0])
+        .attr("cy", centroid[1])
+        .attr("r", 4)
+        .attr("fill", "red");
+
+    // click in the SVG to draw a point and check if it's inside the polygon
+    svg.on("click", function(e) {
+        const point = d3.pointer(e);
+        const isInside = d3.polygonContains(polygon, point);
+
+        console.log("Clicked point", point);
+        console.log("Is the point inside the polygon?", isInside);
+
+        svg.append("circle")
+            .attr("cx", point[0])
+            .attr("cy", point[1])
+            .attr("r", 4)
+            .attr("fill", isInside ? "green" : "purple");
+    });
+
+</script>
+</body>
+</html>

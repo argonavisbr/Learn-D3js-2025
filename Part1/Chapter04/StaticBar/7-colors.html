@@ -25,12 +25,12 @@
     const barHeight = dim.height / dataset.length - 2;
 
     const xscale = d3.scaleLinear()
-                     .domain([0, d3.max(dataset)])
-                     .range([0, dim.width-100]);
+                     .range([0, dim.width-100])
+                     .domain([0, d3.max(dataset)]);
 
     const yscale = d3.scaleLinear()
-                     .domain([0, dataset.length])
-                     .range([1, dim.height]);
+                     .range([1, dim.height])
+                     .domain([0, dataset.length]);
 
     const color = d3.scaleOrdinal(d3.schemeTableau10)
                     .domain(yscale.domain());

@@ -27,8 +27,8 @@
     const dataset = [225, 425, 125, 50, 450, 75, 325];
 
     const xscale = d3.scaleLinear()
-                     .domain([0, 450])
-                     .range([0, dim.width-100]);
+                     .range([0, dim.width-100])
+                     .domain([0, 450]);
 
     // Using xscale()
     console.log('xscale(50)', xscale(50));

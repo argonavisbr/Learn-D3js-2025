@@ -7,7 +7,7 @@ const body = d3.select("body");
 /**
  * Renders a bar chart with average, maximum or minimum orbital distances in AU.
  */
-export function renderChart() {
+export function drawChart() {
     sortData();
 
     // computations

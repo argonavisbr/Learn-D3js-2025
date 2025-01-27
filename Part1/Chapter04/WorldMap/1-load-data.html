@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>List of countries from GeoJSON file</title>
+</head>
+<body>
+<p>Open the console to inspect the data.</p>
+<script type="module">
+    import * as d3 from "https://cdn.jsdelivr.net/npm/d3@7/+esm";
+
+    const url = "../data/world-lowres.geojson";
+
+    d3.json(url)
+        .then(function(data) {
+            console.log(data.features);  // inspect the data in the features array
+        });
+</script>
+
+</body>
+</html>

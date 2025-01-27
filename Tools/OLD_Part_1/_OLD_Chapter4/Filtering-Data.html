@@ -1,8 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Title</title>
-    <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+    <title>Example filtering data</title>
     <style>
         #bar-chart {
             border: solid 1px gray;
@@ -29,7 +28,9 @@
     </style>
 </head>
 <body>
-<script>
+<script type="module">
+    import * as d3 from 'https://cdn.skypack.dev/d3@7';
+
     const width = 600;
     const height = 300;
     const url = "../../data/sol_2019.json";
