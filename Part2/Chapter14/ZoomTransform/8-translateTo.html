@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Using programmatic pan with d3.zoom().translateTo()</title>
+<body>
+<h3>Using programmatic pan with d3.zoom().translateTo()</h3>
+<p>Pans the viewport (not the contents). Since the viewport is fixed
+its contents will move in the opposite direction.</p>
+<p>Transforms (moves the viewport center to):</p>
+<ol>
+    <li><code>zoom.translateTo(0,0)</code></li>
+    <li><code>zoom.translateTo(400,300)</code></li>
+    <li><code>zoom.translateTo(200,150)</code></li>
+</ol>
+<script type="module">
+    import * as d3 from "https://cdn.skypack.dev/d3@7";
+    import {makeChart, drawGrid, drawSquare} from "../js/grid-squares.js";
+
+    const chart = makeChart(10,420,320);
+    drawGrid(chart.width, chart.height);
+    drawSquare(300,200,50,50,"orange");
+    drawSquare(50,50,50,50,"teal");
+
+    const zoom = d3.zoom()
+        .extent([[0, 0], [chart.width, chart.height]])   // necessary to center the panning
+        .on('zoom', evt =>
+            d3.selectAll(".square, .grid")
+                .attr("transform", evt.transform));
+
+    // The coordinates are relative to the viewport (not the selection)
+    d3.select(".chart")
+        .transition().duration(1000).delay(1000)
+            .call(zoom.translateTo, 0, 0)   // moves the center of the viewport to (0,0) - top-left of the selection (moves selection down and right)
+                .transition().delay(1000)
+                    .call(zoom.translateTo, 400, 300)   // moves the center to (400,300) - bottom-right of the selection (moves selection up and left)
+                        .transition().delay(1000)
+                            .call(zoom.translateTo, 200, 150);  // moves the center to (200,150) - center of the selection (initial position)
+
+    // highlight the HTML list items
+    d3.selectAll("li:nth-child(1)").transition().delay(1000).duration(1000)
+        .style("background-color", "yellow")
+        .transition().delay(1000)
+        .style("background-color", "white");
+    d3.selectAll("li:nth-child(2)").transition().delay(3000).duration(1000)
+        .style("background-color", "yellow")
+        .transition().delay(1000)
+        .style("background-color", "white");
+    d3.selectAll("li:nth-child(3)").transition().delay(5000).duration(1000)
+        .style("background-color", "yellow")
+        .transition().delay(1000)
+        .style("background-color", "white");
+</script>
+
+</body>
+</html>

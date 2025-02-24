@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Simple zoom - filtering events</title>
+    <style>
+        svg {
+            border: 1px solid black;
+        }
+    </style>
+</head>
+<body>
+<h3>Simple zoom - filtering events</h3>
+<p>Zooming is only possible using the wheel (includes pinching). Double-click and panning is disabled.</p>
+<script type="module">
+    import * as d3 from "https://cdn.skypack.dev/d3@7";
+
+    const dim = {width: 600, height: 300};
+    const svg = d3.select("body").append("svg")
+                    .attr("width", dim.width)
+                    .attr("height", dim.height);
+    const color = d3.scaleOrdinal(d3.schemeCategory10);
+
+    // Add a zoomable container (to clip the zooming within SVG bounds)
+    const container = svg.append("g");
+
+    // Add objects to the container
+    container.selectAll("circle")
+            .data(d3.range(50))
+                .join("circle")
+                    .attr("cx", d => Math.random(d)*dim.width)
+                    .attr("cy", d => Math.random(d)*dim.height)
+                    .attr("r", 10)
+                    .style("fill", color);
+
+    container.append("rect")
+            .attr("width", dim.width)
+            .attr("height", dim.height)
+            .style("fill", "none")
+            .style("stroke-width", 2)
+            .style("stroke", "olive");
+
+    svg.call(d3.zoom()
+                .filter(e => e.type==='wheel' || e.shiftKey)   // only wheel and no shift key
+                .on('zoom', evt => {
+                    container.attr("transform", evt.transform);
+                }));
+</script>
+
+</body>
+</html>

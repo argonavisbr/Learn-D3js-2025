@@ -13,7 +13,7 @@
  * Exported constants:
  * direction
  *
- * @version 3.3 2025-01-03
+ * @version 3.4 2025-03-05
  */
 
 import * as d3 from "https://cdn.jsdelivr.net/npm/d3@7/+esm";
@@ -283,6 +283,7 @@ const __drawCartesianAxes = function(container, xScale, yScale,
 
     const g = container.append("g")
         .attr("class", "chart cartesian")
+        .style("pointer-events", "none");
 
     const top = yScale.range()[0];
     const left = xScale.range()[0];

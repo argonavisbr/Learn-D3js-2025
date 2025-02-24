@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Simple xy brush - selection</title>
+    <style>
+        canvas, svg {
+            position: absolute;
+            pointer-events: none;   /* necessary if Canvas is placed after the SVG */
+        }
+        svg {
+            border: solid 1px lightgray;
+        }
+        p {
+            position: relative;
+            top: 10px; left: 10px;
+            font-family: sans-serif;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+<h2>Simple xy brush - selecting objects</h2>
+<svg></svg>
+<canvas></canvas> <!-- Put it before the SVG or use pointer-events: none -->
+<p><span id="count">0</span> points selected</p>
+<script type="module">
+    import * as d3 from "https://cdn.skypack.dev/d3@7";
+    import * as utils from "../js/chart-utils.js";
+    import {isValid, inBrush} from "./js/brush-utils.js";
+
+    const dim = {width: 800, height: 500, margin: 50};
+    const svg = d3.select("svg").attr("width", dim.width).attr("height", dim.height);
+
+    // A normal distribution of 10000 points
+    let data = d3.range(10000).map(() => [d3.randomNormal(50, 5)(), d3.randomNormal(50, 5)()]);
+    const xScale = d3.scaleLinear()
+                     .domain([0,100])
+                     .range([dim.margin, dim.width - dim.margin]);
+    const yScale = d3.scaleLinear()
+                     .domain([0,100])
+                     .range([dim.height - dim.margin, dim.margin]);
+
+    const [xAxis, yAxis] = utils.cartesianAxes()
+                                .container(d3.select("svg"))
+                                .xScale(xScale)
+                                .yScale(yScale)();
+
+    // A container for the axis and the brush
+    const container = d3.select("svg").append("g").datum(data);
+
+    // Plot the points in the canvas
+    const canvas = d3.select("canvas").attr("width", dim.width).attr("height", dim.height);
+    const ctx = canvas.node().getContext("2d");
+    ctx.fillStyle = "blue";
+    ctx.beginPath();
+    ctx.rect(dim.margin, dim.margin, dim.width-dim.margin*2, dim.height-dim.margin*2);
+    ctx.clip();
+    data.forEach(d => drawPoint(xScale(d[0]), yScale(d[1]), 1));
+
+    // Brush implementation
+    const brush = d3.brush()
+        .extent([[dim.margin, dim.margin],[dim.width-dim.margin, dim.height-dim.margin]])    // Maximum size of the brush
+        .on("brush", function(evt, dat) {
+            if (!isValid(evt)) return;  // return if selection is invalid
+            d3.select(this)
+                .datum(data.filter(d => inBrush(evt.selection, [xScale(d[0]), yScale(d[1])])))
+            d3.select("#count").text(dat.length);
+
+            ctx.clearRect(0, 0, dim.width, dim.height);
+            data.forEach(d => {
+                ctx.fillStyle = dat.includes(d) ? "red" : "blue";
+                drawPoint(xScale(d[0]), yScale(d[1]), 1);
+            });
+        })
+        .on("end", function(evt, dat) {
+            if (!isValid(evt)) return;
+            d3.select("#count").text(dat.length);
+            if(dat.length > 0) {
+                rescale(evt.selection);
+                updateView();
+            }
+            d3.selectAll("circle").style("fill", "blue");   // Reset circle color
+        });
+
+    container.call(brush);      // attach the brush to the <g> container
+
+    function drawPoint(cx, cy, r) {
+        ctx.beginPath();
+        ctx.arc(cx, cy, r, 0, 2 * Math.PI);
+        ctx.fill();
+    }
+
+    // Rescale the chart based on the brush selection
+    function rescale([start, end]) {
+        const x0 = xScale.invert(start[0]);
+        const y1 = yScale.invert(start[1]);
+        const x1 = xScale.invert(end[0]);
+        const y0 = yScale.invert(end[1]);
+
+        xScale.domain([x0, x1]);
+        yScale.domain([y0, y1]);
+    }
+
+    function updateView() {
+        d3.select(".x-axis").transition().call(xAxis);
+        d3.select(".y-axis").transition().call(yAxis);
+
+        ctx.clearRect(0, 0, dim.width, dim.height);
+        ctx.fillStyle = "blue";
+        container.datum().forEach(d => {
+            drawPoint(xScale(d[0]), yScale(d[1]), 1);
+        });
+        container.call(brush.clear);
+    }
+
+</script>
+</body>
+</html>

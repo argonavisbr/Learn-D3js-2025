@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Simple one-dimensional brush - histogram</title>
+    <link rel="stylesheet" href="../css/chart-utils.css">
+    <style>
+      svg {
+        border: solid 1px lightgray;
+      }
+    </style>
+</head>
+<body>
+<h2>Simple one-dimensional brush - histogram</h2>
+<p>Use the brush to select an interval. Open console for more information.</p>
+<svg></svg>
+<p><span id="percent">0%</span> of the population selected <span id="detail"></span></p>
+<script type="module">
+    import * as d3 from "https://cdn.skypack.dev/d3@7";
+    import * as utils from "../js/chart-utils.js";
+    import {isValid} from "./js/brush-utils.js";
+
+    const dim = {width: 800, height: 500, margin: 50};
+    const svg = d3.select("svg").attr("width", dim.width).attr("height", dim.height);
+
+    // A normal distribution, centered in 100 with a standard deviation of 15
+    const data = d3.range(200000).map(() => d3.randomNormal(100, 15)());
+    const xScale = d3.scaleBand()
+                     .range([dim.margin, dim.width - dim.margin]);
+    const yScale = d3.scaleLinear().range([dim.height - dim.margin, dim.margin]);
+    const color = d3.scaleLinear().range(["orange", "blue"]);
+
+    // make a histogram
+    const bins = d3.bin().thresholds(data.length/50)(data);
+
+    xScale.domain(bins.map(d => d.x0));
+    yScale.domain([0, d3.max(bins, d => d.length)]);
+    color.domain(d3.extent(bins, d => d.x0));
+
+    const [axisX, axisY] = utils.cartesianAxes()
+                                .container(svg)
+                                .xScale(xScale)
+                                .yScale(yScale)
+                                .yLabel("Population")
+                                .xLabel("Value")();
+
+    axisX.tickValues(xScale.domain().filter((d, i) => i%(200)===0 )).tickFormat(d3.format("d"));
+    d3.select(".x-axis").call(axisX);
+
+    // A container for the chart and the brush
+    const container = svg.append("g").datum(bins);
+
+    // plot the histogram as a bar chart
+    container.selectAll(".bar")
+        .data(d => d)
+        .join("rect").attr("class", "bar")
+            .attr("x", d => xScale(d.x0))
+            .attr("y", d => yScale(d.length))
+            .attr("width", xScale.bandwidth())
+            .attr("height", d => yScale(0) - yScale(d.length))
+            .attr("fill", d => color(d.x0)); // use attr here, so that it can be overriden by style when brushed
+
+
+    // BRUSH IMPLEMENTATION
+
+    // Function to check if bin is brushed
+    const brushed = (bin, sel) => xScale(bin.x0) >= sel[0] && xScale(bin.x1) <= sel[1];
+
+    // Brush configuration
+    const brush = d3.brushX()
+        .extent([[dim.margin, dim.margin],[dim.width-dim.margin, dim.height-dim.margin]])     // Maximum size of the brush
+        .on("brush end", function(evt, dat) {
+            if (!isValid(evt)) return;
+            // store the selected bins
+            container.datum(bins.filter(bin => brushed(bin, evt.selection)));
+            // show the selection
+            d3.selectAll(".bar")
+                .style("fill", bin => dat.includes(bin) ? "red" : null);
+            // print stats
+            if(dat && dat.length > 0) {
+                const population =  dat.map(d => d.length).reduce((a,b) => a+b);
+                const percent = d3.format(".2%")(population / data.length);
+                console.log("Population selected: " + population);
+                d3.select("#percent").text(percent);
+                d3.select("#detail").text(`from ${dat[0].x0} to ${dat[dat.length-1].x1}`);
+            }
+         });
+
+    container.call(brush);      // attach the brush
+
+</script>
+</body>
+</html>

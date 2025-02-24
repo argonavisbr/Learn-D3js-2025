@@ -14,7 +14,7 @@
     fill: black;
 }
 
-.tick line{
+.tick line {
     stroke: gray;
     stroke-dasharray: 5 5;
 }

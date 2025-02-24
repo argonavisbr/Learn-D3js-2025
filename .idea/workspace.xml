@@ -4,45 +4,160 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="88ab0fd2-922d-4b26-894c-0ae61af44502" name="Changes" comment="Updated files after reviewing Chapter 9.">
-      <change afterPath="$PROJECT_DIR$/Part1/Chapter04/Exercises_TODO/Templates-TODO/Exercise4.1-area.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Part1/Chapter04/Exercises_TODO/Templates-TODO/Exercise4.1-population.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Part1/Chapter04/Exercises_TODO/Templates-TODO/Exercise4.2.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Part1/Chapter04/Exercises_TODO/Templates-TODO/Exercise4.3.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Part1/Chapter04/Exercises_TODO/Templates-TODO/Exercise4.4.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Part1/Chapter04/Exercises_TODO/Templates-TODO/Exercise4.5.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Part1/Chapter04/WorldMap/2-map-list-data.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Part1/Chapter04/WorldMap/6-polygon-map-colors.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Part2/Chapter12/Polygons/1-polygon-geometry.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Part2/Chapter14/Quadtree/1-quadtree-example.html" afterDir="false" />
+    <list default="true" id="88ab0fd2-922d-4b26-894c-0ae61af44502" name="Changes" comment="Updated files after full Part I review.">
+      <change afterPath="$PROJECT_DIR$/.idea/easycode.ignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/easycode/codebase-v2.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Part2/Chapter10/css/chart-utils.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Part2/Chapter11/Examples/Global-temp-line.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Part2/Chapter12/Exercise4.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Part2/Chapter14/Brush/0-histogram.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Part2/Chapter14/Brush/0-scatterplot.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Part2/Chapter14/Brush/1-xy-minimal.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Part2/Chapter14/Brush/2-xy-select.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Part2/Chapter14/Brush/3-xy-move.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Part2/Chapter14/Brush/4-xy-data.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Part2/Chapter14/Brush/5-xy-rescale.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Part2/Chapter14/Brush/6-xy-canvas.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Part2/Chapter14/Brush/7-styles.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Part2/Chapter14/Brush/8-filter.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Part2/Chapter14/Brush/9-x-histogram.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Part2/Chapter14/Brush/js/brush-utils.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Part2/Chapter14/Drag/5-drag-scaled-data.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Part2/Chapter14/Events-TODO/1-simple-handler.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Part2/Chapter14/Events-TODO/11-custom-event.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Part2/Chapter14/Events-TODO/2-handlers-per-element.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Part2/Chapter14/Events-TODO/3-handlers-per-element-stop-bubbles.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Part2/Chapter14/Events-TODO/3-handlers-per-element-stop-immediate-TODO.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Part2/Chapter14/Events-TODO/js/bouncing-ball.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Part2/Chapter14/Exercises/Solutions/Exercise-3.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Part2/Chapter14/Exercises/Solutions/Exercise-5.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Part2/Chapter14/Exercises/Solutions/Exercise-6/css/main-1.4.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Part2/Chapter14/Exercises/Solutions/Exercise-6/css/tooltips-1.0.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Part2/Chapter14/Exercises/Solutions/Exercise-6/index.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Part2/Chapter14/Exercises/Solutions/Exercise-6/js/brush-1.0.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Part2/Chapter14/Exercises/Solutions/Exercise-6/js/common-1.5.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Part2/Chapter14/Exercises/Solutions/Exercise-6/js/data-1.3.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Part2/Chapter14/Exercises/Solutions/Exercise-6/js/legend-1.0.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Part2/Chapter14/Exercises/Solutions/Exercise-6/js/tooltips-1.0.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Part2/Chapter14/Exercises/Solutions/Exercise-6/js/view-1.5.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Part2/Chapter14/Exercises/Solutions/Exercise-zoom-x.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Part2/Chapter14/Exercises/Solutions/Exercise-zoom-xy/css/main-1.4.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Part2/Chapter14/Exercises/Solutions/Exercise-zoom-xy/css/tooltips-1.0.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Part2/Chapter14/Exercises/Solutions/Exercise-zoom-xy/index.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Part2/Chapter14/Exercises/Solutions/Exercise-zoom-xy/js/common-1.5.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Part2/Chapter14/Exercises/Solutions/Exercise-zoom-xy/js/data-1.3.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Part2/Chapter14/Exercises/Solutions/Exercise-zoom-xy/js/legend-1.0.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Part2/Chapter14/Exercises/Solutions/Exercise-zoom-xy/js/tooltips-1.0.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Part2/Chapter14/Exercises/Solutions/Exercise-zoom-xy/js/view-1.5.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Part2/Chapter14/Exercises/Solutions/Exercise-zoom-xy/js/zoom-1.0.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Part2/Chapter14/Exercises/Solutions/js/grid-squares.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Part2/Chapter14/Exercises/Templates/Exercise-3.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Part2/Chapter14/Exercises/Templates/Exercise-4.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Part2/Chapter14/Exercises/Templates/js/grid-squares.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Part2/Chapter14/Quadtree/7-brush-2D-quadtree-TODO.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Part2/Chapter14/Zoom/1-svg-zoom.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Part2/Chapter14/Zoom/10-remove-listener.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Part2/Chapter14/Zoom/11-html-transform.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Part2/Chapter14/Zoom/12-zoom-transform.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Part2/Chapter14/Zoom/2-basic-zoom.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Part2/Chapter14/Zoom/3-element-zoom.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Part2/Chapter14/Zoom/4-scale-extent.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Part2/Chapter14/Zoom/5-translate-extent.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Part2/Chapter14/Zoom/6-area-unrestricted.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Part2/Chapter14/Zoom/7-area-viewport.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Part2/Chapter14/Zoom/8-area-clipped.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Part2/Chapter14/Zoom/9-filter-zoom.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Part2/Chapter14/ZoomSemantic/1-semantic-zoom.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Part2/Chapter14/ZoomSemantic/2-apply.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Part2/Chapter14/ZoomSemantic/3-invert.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Part2/Chapter14/ZoomSemantic/4-rescale-geometric.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Part2/Chapter14/ZoomSemantic/5-rescale-semantic.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Part2/Chapter14/ZoomSemantic/6-rescale-geometric-canvas.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Part2/Chapter14/ZoomSemantic/7-rescale-semantic-canvas.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Part2/Chapter14/ZoomTransform/1-interactive-zoom.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Part2/Chapter14/ZoomTransform/10-interpolator.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Part2/Chapter14/ZoomTransform/11-interpolateZoom.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Part2/Chapter14/ZoomTransform/2-transforms-svg.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Part2/Chapter14/ZoomTransform/3-transforms-canvas.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Part2/Chapter14/ZoomTransform/4-scaleBy.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Part2/Chapter14/ZoomTransform/5-scaleTo.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Part2/Chapter14/ZoomTransform/6-scaleBy-limited.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Part2/Chapter14/ZoomTransform/7-translateBy.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Part2/Chapter14/ZoomTransform/8-translateTo.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Part2/Chapter14/ZoomTransform/9-translate-absolute.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Part2/Chapter14/_OLD_Chapter14/12-multi-transform.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Part2/Chapter14/data/GLB.Ts.1880.2024.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Part2/Chapter14/data/un_regions_2017.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Part2/Chapter14/js/brush-utils.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Part2/Chapter14/js/grid-data.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Part2/Chapter14/js/grid-squares-canvas.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Part2/Chapter14/js/grid-squares.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part1/Chapter01/HelloWorld/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/Part1/Chapter01/HelloWorld/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part1/Chapter01/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/Part1/Chapter01/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part1/Chapter03/Shapes/D3/1-shapes.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part1/Chapter03/Shapes/D3/1-shapes.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part1/Chapter04/DynamicBar/1-refactoring.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part1/Chapter04/DynamicBar/1-refactoring.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part1/Chapter04/DynamicBar/2-more-data.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part1/Chapter04/DynamicBar/2-more-data.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part1/Chapter04/DynamicBar/3.1-update-values.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part1/Chapter04/DynamicBar/3.1-update-values.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part1/Chapter04/DynamicBar/3.2-update-dataset.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part1/Chapter04/DynamicBar/3.2-update-dataset.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part1/Chapter04/DynamicBar/4-transitions.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part1/Chapter04/DynamicBar/4-transitions.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part1/Chapter04/DynamicBar/5-modules/js/main.js" beforeDir="false" afterPath="$PROJECT_DIR$/Part1/Chapter04/DynamicBar/5-modules/js/main.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part1/Chapter04/DynamicBar/5-modules/js/render.js" beforeDir="false" afterPath="$PROJECT_DIR$/Part1/Chapter04/DynamicBar/5-modules/js/render.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part1/Chapter04/Exercises_TODO/Examples-TODO-Update-old-code/CH5-Exercise-6-d3-resizing-data-GUP.html" beforeDir="false" afterPath="$PROJECT_DIR$/Tools/OLD_Part_1/_OLD_Chapter4/Filtering-Data.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part1/Chapter04/Exercises_TODO/Examples-TODO-Update-old-code/orbital-period.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part1/Chapter04/Examples/Bar-chart-orbital-period.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part1/Chapter04/Exercises_TODO/Examples-TODO-Update-old-code/rotation-period.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part1/Chapter04/Examples/Bar-chart-rotation-period.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part1/Chapter04/Exercises_TODO/Solutions/Exercise4.3.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part1/Chapter04/Exercises_TODO/Solutions/Exercise4.3.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part1/Chapter04/Exercises_TODO/Solutions/Exercise4.4.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part1/Chapter04/Exercises_TODO/Solutions/Exercise4.4.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part1/Chapter04/Exercises_TODO/Solutions/Exercise4.5.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part1/Chapter04/Exercises_TODO/Solutions/Exercise4.5.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part1/Chapter04/Exercises_TODO/Templates/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/Part1/Chapter04/Exercises_TODO/Templates-TODO/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part1/Chapter04/Exercises_TODO/Templates/css/main.css" beforeDir="false" afterPath="$PROJECT_DIR$/Part1/Chapter04/Exercises_TODO/Templates-TODO/css/main.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part1/Chapter04/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/Part1/Chapter04/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part1/Chapter04/StaticBar/6.2-xscale.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part1/Chapter04/StaticBar/6.2-xscale.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part1/Chapter04/StaticBar/6.3-yscale.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part1/Chapter04/StaticBar/6.3-yscale.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part1/Chapter04/StaticBar/6.4-more-data.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part1/Chapter04/StaticBar/6.4-more-data.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part1/Chapter04/StaticBar/7-colors.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part1/Chapter04/StaticBar/7-colors.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part1/Chapter04/WorldMap/1-map-list-data.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part1/Chapter04/WorldMap/1-load-data.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part1/Chapter04/WorldMap/2-polygon-map.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part1/Chapter04/WorldMap/3-polygon-map.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part1/Chapter04/WorldMap/3-polygon-map-viewbox.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part1/Chapter04/WorldMap/4-polygon-map-viewbox.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part1/Chapter04/WorldMap/4-polygon-map-viewbox-transform.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part1/Chapter04/WorldMap/5-polygon-map-viewbox-transform.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter10/StepByStep/final/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter10/StepByStep/final/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter10/css/cartesian-axes.css" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter10/css/cartesian-axes.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter12/Exercises/Solutions/Exercise4.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter12/Exercises/Solutions/Exercise4.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter14/Brush/1-brush-x.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter14/Brush/2-brush-xy.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter14/Brush/3-brush-xy-move.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter14/Dispatch/1-selection-dispatch.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter14/Events-TODO/12-selection-dispatch.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter14/Dispatch/10-custom-event.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter14/Dispatch/2-d3-dispatch.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter14/Events-TODO/13-d3-dispatch.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter14/Dispatch/3-custom-event.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter14/Dispatch/dispatch-apply.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter14/Examples/7-brush-with-zoom.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter14/Dispatch/dispatch-call.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter14/Exercises/Solutions/Exercise-4.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter14/Drag/1-drag-origin.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter14/Drag/1-drag-origin.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter14/Drag/2-drag-basic.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter14/Drag/2-drag-basic.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter14/Drag/3-drag-data.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter14/Drag/4-drag-scaled-data.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter14/Drag/5-drag-transform.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter14/Drag/3-drag-transform.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter14/Drag/6-drag-scaled-data-transform.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter14/Drag/4-drag-data.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter14/Drag/7-drag-multiple.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter14/Drag/8-drag-multiple-data.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter14/Drag/6-drag-line-chart.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter14/Drag/9-drag-canvas.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter14/Drag/7-drag-subject.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter14/Drag/css/grid-squares.css" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter14/Exercises/Solutions/css/grid-squares.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter14/Drag/js/grid-squares.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter14/Events/1-simple-handler.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter14/Events/10-event-types.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter14/Events-TODO/10-event-types.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter14/Events/11-custom-event.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter14/Events/2-handlers-per-element.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter14/Events/3-handlers-per-element-no-bubbling.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter14/Events/4-coordinates.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter14/Events-TODO/4-coordinates.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter14/Events/5-prevent-default.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter14/Events-TODO/5-prevent-default.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter14/Events/6-pointer-events.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter14/Events-TODO/6-pointer-events.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter14/Events/7-pointer-events-none.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter14/Events-TODO/7-pointer-events-none.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter14/Events/8-pointer-events-all.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter14/Events-TODO/8-pointer-events-all.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter14/Events/9-d3-pointer-events-all.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter14/Events-TODO/9-d3-pointer-events-all.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter14/Events/js/events-panel.js" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter14/Events-TODO/js/events-panel.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter14/Pointer/1-d3.pointer.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter14/Pointer-TODO/1-d3.pointer.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter14/Pointer/2-d3.pointer-coords.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter14/Pointer-TODO/2-d3.pointer-coords.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter14/Pointer/3-cartesian-coords.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter14/Pointer-TODO/3-cartesian-coords.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter14/Pointer/js/pointer-coords.js" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter14/Pointer-TODO/js/pointer-coords.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter14/Pointer/js/pointer.js" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter14/Pointer-TODO/js/pointer.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter14/Zoom/1-basic.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter14/Zoom/10-translate-by.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter14/Zoom/11-translate-to.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter14/Zoom/12-transforms-svg.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter14/Zoom/13-transforms-canvas.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter14/Zoom/14-transforms-apply.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter14/Zoom/15-zoom-xy.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter14/Examples/15-zoom-xy.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter14/Zoom/16-zoom-x.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter14/Zoom/17-interpolate-zoom.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter14/Zoom/18-interpolate-zoom-2.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter14/Zoom/2-element-grid.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter14/Zoom/2-element-square.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter14/Zoom/2-elements-select.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter14/Zoom/3-translate-extent.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter14/Zoom/4-extent.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter14/Zoom/5-events.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter14/Zoom/6-events-no-dblclick.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter14/Zoom/7-events-wheel.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter14/Zoom/8-scale-by.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter14/Zoom/9-drag-with-zoom.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter14/Examples/6-drag-with-zoom.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter14/Zoom/9-scale-to.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter14/Zoom/css/grid-squares.css" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter14/Exercises/Templates/css/grid-squares.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter14/Zoom/js/grid-squares.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter14/css/chart-utils.css" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter14/css/chart-utils.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter14/js/chart-utils.js" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter14/js/chart-utils.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -55,14 +170,26 @@
         <option value="package" />
         <option value="Kotlin Script" />
         <option value="CSS File" />
-        <option value="JavaScript File" />
         <option value="HTML File" />
+        <option value="JavaScript File" />
       </list>
     </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;helderdarocha&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/argonavisbr/Learn-D3js-2023.git&quot;,
+    &quot;accountId&quot;: &quot;ca4d8ae2-4f40-4bdf-b32e-86183ab79c10&quot;
+  }
+}</component>
   <component name="KotlinScriptingSettings" supportWarning="false" />
   <component name="MacroExpansionManager">
     <option name="directoryName" value="hmbxihw1" />
@@ -88,11 +215,14 @@
     &quot;DefaultHtmlFileTemplate&quot;: &quot;HTML File&quot;,
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
     &quot;git-widget-placeholder&quot;: &quot;main&quot;,
     &quot;javascript.nodejs.core.library.configured.version&quot;: &quot;18.13.0&quot;,
     &quot;javascript.nodejs.core.library.typings.version&quot;: &quot;18.13.0&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/Users/helderdarocha/IdeaProjects/Learn-D3js-2023/Part1/Chapter04/WorldMap&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/helderdarocha/IdeaProjects/Learn-D3js-2023/Part2/Chapter14/ZoomSemantic&quot;,
     &quot;list.type.of.created.stylesheet&quot;: &quot;CSS&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
@@ -100,31 +230,32 @@
     &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
     &quot;nodejs.jest.jest_package&quot;: &quot;/Users/helderdarocha/IdeaProjects/Learn-D3js-2023/node_modules/jest&quot;,
     &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;org.rust.cargo.project.model.impl.CargoExternalSystemProjectAware.subscribe.first.balloon&quot;: &quot;&quot;,
     &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
     &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
     &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
     &quot;run.code.analysis.last.selected.profile&quot;: &quot;pProject Default&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;Settings.JavaScript&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/Part1/Chapter04/WorldMap" />
-      <recent name="$PROJECT_DIR$/Part1/Chapter04/Exercises_TODO/Templates" />
-      <recent name="$PROJECT_DIR$/Part2/Chapter08/Exercises/Templates" />
-      <recent name="$PROJECT_DIR$/Part2/Chapter08/Exercises_TODO/Templates" />
-      <recent name="$PROJECT_DIR$/Part2/Chapter08/Exercises_TODO/Solutions" />
+      <recent name="$PROJECT_DIR$/Part2/Chapter14/ZoomSemantic" />
+      <recent name="$PROJECT_DIR$/Part2/Chapter14/Brush" />
+      <recent name="$PROJECT_DIR$/Part2/Chapter14/Zoom-Programmatic" />
+      <recent name="$PROJECT_DIR$/Part2/Chapter14/Zoom-Semantic" />
+      <recent name="$PROJECT_DIR$/Part2/Chapter14/js" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/Part1/Chapter04" />
-      <recent name="$PROJECT_DIR$/Part1/Chapter04/Exercises_TODO" />
-      <recent name="$PROJECT_DIR$/Tools/OLD_Part_1/_OLD_Chapter4" />
-      <recent name="$PROJECT_DIR$/Tools/OLD_Part_1" />
-      <recent name="$PROJECT_DIR$/Tools" />
+      <recent name="$PROJECT_DIR$/Part2/Chapter14/_OLD_Chapter14" />
+      <recent name="$PROJECT_DIR$/Part2/Chapter14/Examples" />
+      <recent name="$PROJECT_DIR$/Part2/Chapter14/Zoom" />
+      <recent name="$PROJECT_DIR$/Part2/Chapter14/Zoom-Transform" />
+      <recent name="$PROJECT_DIR$/Part2/Chapter14/Zoom-Programmatic" />
     </key>
   </component>
-  <component name="RunManager" selected="JavaScript Debug.1-bar-chart-race-UN-GDP.html">
+  <component name="RunManager" selected="JavaScript Debug.Exercise12.html">
     <configuration name="1-bar-chart-race-UN-GDP.html" type="JavascriptDebugType" temporary="true" nameIsGenerated="true" uri="http://localhost:63342/Learn-D3js-2023/Part2/Chapter12/Examples/1-bar-chart-race-UN-GDP.html" useBuiltInWebServerPort="true">
       <method v="2" />
     </configuration>
@@ -148,6 +279,14 @@
         <item itemvalue="Node.js.checkCodes.js" />
       </list>
     </recent_temporary>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-jdk-9823dce3aa75-125ca727e0f0-intellij.indexing.shared.core-IU-243.23654.153" />
+        <option value="bundled-js-predefined-d6986cc7102b-822845ee3bb5-JavaScript-IU-243.23654.153" />
+      </set>
+    </attachedChunks>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -459,7 +598,35 @@
       <workItem from="1737756451375" duration="8002000" />
       <workItem from="1737817180557" duration="8884000" />
       <workItem from="1737856313836" duration="4724000" />
-      <workItem from="1737940807098" duration="3235000" />
+      <workItem from="1737940807098" duration="3606000" />
+      <workItem from="1737980228258" duration="500000" />
+      <workItem from="1737980868438" duration="17570000" />
+      <workItem from="1738073497866" duration="17619000" />
+      <workItem from="1738110425804" duration="3164000" />
+      <workItem from="1738586823683" duration="23464000" />
+      <workItem from="1738628629493" duration="4959000" />
+      <workItem from="1738691137201" duration="21948000" />
+      <workItem from="1738757172210" duration="23944000" />
+      <workItem from="1738841860902" duration="26849000" />
+      <workItem from="1738927083535" duration="17776000" />
+      <workItem from="1739018852245" duration="36512000" />
+      <workItem from="1739213960286" duration="19209000" />
+      <workItem from="1739387618942" duration="7892000" />
+      <workItem from="1739457086372" duration="10795000" />
+      <workItem from="1739493734770" duration="13480000" />
+      <workItem from="1739571877369" duration="8790000" />
+      <workItem from="1739652790248" duration="15003000" />
+      <workItem from="1739758486773" duration="10689000" />
+      <workItem from="1739818756199" duration="9050000" />
+      <workItem from="1739917911075" duration="38215000" />
+      <workItem from="1740067268802" duration="6093000" />
+      <workItem from="1740144001718" duration="5263000" />
+      <workItem from="1740149911000" duration="63000" />
+      <workItem from="1740159538386" duration="14222000" />
+      <workItem from="1740181715721" duration="9834000" />
+      <workItem from="1740233677587" duration="18143000" />
+      <workItem from="1740266915330" duration="3770000" />
+      <workItem from="1740316054720" duration="44881000" />
     </task>
     <task id="LOCAL-00001" summary="Example files for Chapter 1">
       <created>1678932902809</created>
@@ -769,7 +936,15 @@
       <option name="project" value="LOCAL" />
       <updated>1736562539965</updated>
     </task>
-    <option name="localTasksCounter" value="42" />
+    <task id="LOCAL-00042" summary="Updated files after full Part I review.">
+      <option name="closed" value="true" />
+      <created>1737947001193</created>
+      <option name="number" value="00042" />
+      <option name="presentableId" value="LOCAL-00042" />
+      <option name="project" value="LOCAL" />
+      <updated>1737947001193</updated>
+    </task>
+    <option name="localTasksCounter" value="43" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -787,7 +962,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Example files for Chapter 1 - Updated readme files" />
     <MESSAGE value="Updated readme files" />
     <MESSAGE value="Updated exercises and module examples" />
     <MESSAGE value="Added examples with modules (temporary)" />
@@ -812,7 +986,8 @@
     <MESSAGE value="Updated files after reviewing Chapters 2 and 3." />
     <MESSAGE value="Updated files after reviewing Chapter 8." />
     <MESSAGE value="Updated files after reviewing Chapter 9." />
-    <option name="LAST_COMMIT_MESSAGE" value="Updated files after reviewing Chapter 9." />
+    <MESSAGE value="Updated files after full Part I review." />
+    <option name="LAST_COMMIT_MESSAGE" value="Updated files after full Part I review." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -833,8 +1008,8 @@
           <option name="timeStamp" value="3" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
-          <url>file://$PROJECT_DIR$/Part2/Chapter14/Events/1-simple-handler.html</url>
-          <line>50</line>
+          <url>file://$PROJECT_DIR$/Part2/Chapter14/Events-TODO/1-simple-handler.html</url>
+          <line>87</line>
           <option name="timeStamp" value="4" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
@@ -861,6 +1036,21 @@
           <url>file://$PROJECT_DIR$/Part1/Chapter03/Containers/D3/2-groups.html</url>
           <line>29</line>
           <option name="timeStamp" value="9" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/Part2/Chapter14/Exercises/Solutions/Exercise-zoom-xy/index.html</url>
+          <line>13</line>
+          <option name="timeStamp" value="11" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/Part2/Chapter14/Exercises/Solutions/Exercise-zoom-xy/index.html</url>
+          <line>18</line>
+          <option name="timeStamp" value="12" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/Part2/Chapter14/ZoomTransform/8-scale-by.html</url>
+          <line>17</line>
+          <option name="timeStamp" value="14" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Using brush overlay to draw rectangles</title>
+    <style>
+        svg {
+            border: solid 1px lightgray;
+            position: absolute;
+            pointer-events: none;   /* avoids conflicts with the brush (if appears within extent) */
+        }
+        p {
+            position: relative;
+            top: 10px; left: 10px;
+            font-family: sans-serif;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+<h2>Using brush overlay to draw rectangles</h2>
+<p>Drag the selection after resizing to select another area of the same size. Press the Alt
+    key while resizing to scale from the center. Press the space key while dragging an edge or corner
+    to move the area. See console for more details.</p>
+<svg height="300" width="1000"></svg>
+<script type="module">
+    import * as d3 from "https://cdn.skypack.dev/d3@7";
+
+    const dim = {width: 800, height: 500, margin: 50};
+    const svg = d3.select("svg").attr("width", dim.width).attr("height", dim.height);
+
+    // A container for the chart and the brush
+    const container = d3.select("svg").append("g");
+
+    // Brush extent:
+    const overlay = [[dim.margin, dim.margin],[dim.width-dim.margin, dim.height-dim.margin]];
+
+    // Configure the brush behavior
+    const brush = d3.brush()
+        .extent(overlay)     // Maximum size of the brush
+        .on("start", function(e) {
+            e.target.move(d3.select(this), [[0,0],[1,1]]);
+            //brush.move(container, [[0,0],[1,1]]);  // same as above
+            console.log("Brush started");
+        })
+        .on("brush", function(e) {
+            if (!isValid(e)) return;  // return if brush is invalid
+            const [start, end] = e.selection;
+            console.log(`Selected from ${start} to ${end}`);
+        })
+        .on("end", e => {
+            if (!isValid(e)) return;  // return if brush is invalid
+            console.log("Brush finished");
+
+            // Using selection coords to draw a rectangle
+            svg.append("rect")
+                .attr("x", e.selection[0][0])
+                .attr("y", e.selection[0][1])
+                .attr("width", e.selection[1][0] - e.selection[0][0])
+                .attr("height", e.selection[1][1] - e.selection[0][1])
+                .style("fill", color())
+                .style("opacity", .5);
+        });
+
+    container.call(brush);      // attach the brush
+
+    // Draw an orange rectangle around brushable area
+    d3.select(".overlay").style("stroke", "orange");
+
+    function color() {
+        return `rgb(${Math.random()*255},${Math.random()*255},${Math.random()*255})`;
+    }
+
+    // Checks if the brush is valid
+    export function isValid(e) {
+        if (!e.selection) return false;         // return false if brush is null
+        if (!e.sourceEvent) return false;       // return false if brush is not triggered by a user event
+        const [[x0, y0], [x1, y1]] = e.selection;
+        return !(x0 === x1 && y0 === y1);       // return false if area is not defined
+    }
+
+</script>
+</body>
+</html>

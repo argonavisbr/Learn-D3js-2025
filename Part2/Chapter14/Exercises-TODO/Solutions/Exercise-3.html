@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Drag and drop</title>
+    <link rel="stylesheet" href="css/grid-squares.css">
+</head>
+<body>
+<h2>Exercise</h2>
+<p>Drag and drop squares. Add a dragging behavior to all of them.</p>
+<script type="module">
+    import * as d3 from "https://cdn.skypack.dev/d3@7";
+    import {makeGrid, drawSquare, drawSquares} from "./js/grid-squares.js";
+
+    makeGrid();
+    drawSquares();                        // draws several squares bound to data
+    drawSquare(500,500,100,100,"black");  // draws a single square not bound to any data
+
+    // EXERCISE 3: Implement the drag behavior for all squares
+    // a) Implement the event listeners
+    const drag = d3.drag()
+        .on('start', function() {
+            // Place the object on top and change the cursor
+            d3.select(this).raise();
+            d3.select(this).style("cursor", "move") // you can also use classed to toggle
+        })
+        .on('drag', function(e) {
+            // Move the object while it is dragged
+            const obj = d3.select(this);
+            const ctm = obj.node().getCTM();
+            obj.attr("transform", `translate(${[ctm.e + e.dx, ctm.f + e.dy]})`);
+        })
+        .on('end', function() {
+            // Change the cursor back to default
+            d3.select(this).style("cursor", "auto")
+        });
+
+    // b) Select all squares (rect.square) and attach the drag behavior to all of them.
+    d3.selectAll("rect.square").call(drag);
+
+</script>
+
+</body>
+</html>

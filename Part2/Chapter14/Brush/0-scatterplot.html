@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>A simple scatterplot (add interactive features to it!)</title>
+    <style>
+        svg {
+            border: solid 1px lightgray;
+            position: absolute;
+        }
+    </style>
+</head>
+<body>
+<h2>A simple scatterplot (add interactive features to it!)</h2>
+<svg height="300" width="1000"></svg>
+
+<script type="module">
+    import * as d3 from "https://cdn.skypack.dev/d3@7";
+    import * as utils from "../js/chart-utils.js";
+
+    const dim = {width: 800, height: 500, margin: 50};
+    const svg = d3.select("svg").attr("width", dim.width).attr("height", dim.height);
+
+    // A normal distribution of 10000 points
+    const data = d3.range(10000).map(() => [d3.randomNormal(50, 15)(), d3.randomNormal(50, 15)()]);
+    const xScale = d3.scaleLinear().clamp(true)
+                     .domain([0,100])
+                     .range([dim.margin, dim.width - dim.margin]);
+    const yScale = d3.scaleLinear().clamp(true)
+                     .domain([0,100])
+                     .range([dim.height - dim.margin, dim.margin]);
+
+    // Add the axes
+    utils.cartesianAxes().container(d3.select("svg")).xScale(xScale).yScale(yScale)();
+
+    // Plot the data points
+    const container = d3.select("svg").append("g");
+    container.selectAll("circle")
+        .data(data)
+        .join("circle")
+        .attr("cx", d => xScale(d[0]))
+        .attr("cy", d => yScale(d[1]))
+        .attr("r", 1)
+        .style("fill", "blue");
+
+</script>
+</body>
+</html>

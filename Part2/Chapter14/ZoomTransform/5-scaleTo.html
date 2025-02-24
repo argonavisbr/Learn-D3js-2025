@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Using programmatic zoom with d3.zoom().scaleTo(). Scaling only the square.</title>
+</head>
+<body>
+<h3>Using programmatic zoom with d3.zoom().scaleTo()</h3>
+<p>Transforms:</p>
+<ol>
+    <li><code>zoom.scaleTo(2)</code></li>
+    <li><code>zoom.scaleTo(4)</code></li>
+    <li><code>zoom.scaleTo(1)</code></li>
+</ol>
+<script type="module">
+    import * as d3 from "https://cdn.skypack.dev/d3@7";
+    import {makeChart, drawGrid, drawSquare} from "../js/grid-squares.js";
+
+    const chart = makeChart(10,420,320);
+    drawGrid(chart.width, chart.height);
+    drawSquare(175,125,50,50,"violet");
+
+    const zoom = d3.zoom()
+                   .extent([[0, 0], [chart.width, chart.height]]) // necessary to center the zoom
+                   .on('zoom', evt =>
+                        d3.select(".square").attr("transform", evt.transform));
+
+    d3.select(".chart")
+        .transition().duration(1000).delay(500)
+            .call(zoom.scaleTo, 2)
+                .transition().delay(500)
+                    .call(zoom.scaleTo, 4)
+                        .transition().delay(500)
+                            .call(zoom.scaleTo, 1);
+
+    // highlight the HTML list items
+    d3.selectAll("li:nth-child(1)").transition().delay(500).duration(1000)
+        .style("background-color", "yellow")
+            .transition().delay(500)
+                .style("background-color", "white");
+    d3.selectAll("li:nth-child(2)").transition().delay(2000).duration(1000)
+        .style("background-color", "yellow")
+            .transition().delay(500)
+                .style("background-color", "white");
+    d3.selectAll("li:nth-child(3)").transition().delay(3500).duration(1000)
+        .style("background-color", "yellow")
+            .transition().delay(500)
+                .style("background-color", "white");
+
+
+</script>
+
+</body>
+</html>

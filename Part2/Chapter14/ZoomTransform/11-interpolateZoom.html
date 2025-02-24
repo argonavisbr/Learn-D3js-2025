@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Using d3.interpolateZoom()</title>
+    <style>
+        code {
+            font-weight: bold;
+        }
+        span {
+            color: navy;
+            font-family: monospace
+        }
+    </style>
+</head>
+<body>
+<h3>Using d3.interpolateZoom()</h3>
+<p>Using the native zoom interpolator to create an animation. </p>
+<ul>
+    <li><code>t</code>: <span id="step"></span></li>
+    <li><code>interpolator(t)</code>: <span id="view"></span></li>
+    <li><code>transform(t)</code>: <span id="transform"></span></li>
+</ul>
+<script type="module">
+    import * as d3 from "https://cdn.skypack.dev/d3@7";
+    import {makeChart, drawGrid, drawSquare} from "../js/grid-squares.js";
+
+    const chart = makeChart(10,420,320);
+    drawGrid(chart.width, chart.height);
+    drawSquare(300,200,50,50,"orange");
+    drawSquare(50,50,50,50,"blue");
+
+    let start = [75,75,75];     // the initial viewport center is at (75,75) and width/height is 75
+    let end = [325,225,75];     // the final viewport center is at (325,225) and width/height is 75
+    const interpolator = d3.interpolateZoom(start, end);
+
+    // Computes a transform for each interpolation step
+    function transform(t) {
+        const view = interpolator(t);
+        const k = Math.min(chart.width, chart.height) / view[2];
+        const [x,y] = [chart.width/2 - view[0] * k, chart.height/2 - view[1] * k];
+        return d3.zoomIdentity.translate(x,y).scale(k);
+    }
+
+    console.log("Initial transform: ", transform(0));   // center on blue square
+    console.log("Middle: ", transform(0.5));            // peak - this is the untransformed view
+    console.log("Final transform: ", transform(1));     // center and zoom in to orange square
+
+    const f = d3.format(".2f");
+
+    d3.select(".container")
+        .attr("transform", transform(0))            // starting point
+        .transition().delay(500)
+            .duration(interpolator.duration*2)      // use interpolator duration * 2
+            .attrTween("transform", () => t => {
+                d3.select("#view").text(`[${interpolator(t).map(n => d3.format(".0f")(n)).join(", ")}]`);
+                d3.select("#transform").text(`translate(${[f(transform(t).x), f(transform(t).y)]} scale(${f(transform(t).k)})`);
+                d3.select("#step").text(f(t));
+
+                return transform(t);
+            });
+
+</script>
+
+</body>
+</html>

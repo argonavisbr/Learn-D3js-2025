@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Exercise 4</title>
+  <style>
+    svg {border: 1px solid black}
+  </style>
+</head>
+<body>
+<h2>Exercise</h2>
+<p>Click anywhere to add a point. A line will be connected from the last point to the current point.
+  Double-click near a point to remove it.
+  Implement a dragging behavior so that points can be dragged.</p>
+<script type="module">
+    import * as d3 from "https://cdn.skypack.dev/d3@7";
+
+    const svg = d3.select("body").append("svg")
+                  .attr("width", 800).attr("height", 500);
+
+    const data = new Set();
+
+    const line = d3.line()
+                   .x(d => d[0])
+                   .y(d => d[1]);
+
+    svg.on("click", function(e) {  console.log("clk")
+          const [x,y] = d3.pointer(e);
+          data.add([x,y]);
+          update();
+    });
+
+    // EXERCISE: Make the points draggable.
+
+    // a) Add the dragging behavior and implement the event listeners
+    // ADD CODE HERE
+
+    // Updated the elements after the data changes
+    function update() {
+      svg.selectAll("path")
+         .data([data])
+            .join("path")
+              .attr("d", line)
+              .style("fill", "none")
+              .style("stroke", "red");
+
+        svg.selectAll("circle")
+          .data(data)
+            .join("circle")
+              .attr("transform", d => `translate(${d})`)
+              .attr("r", 5)
+              .on("click", function(e,d) {
+                  e.stopPropagation();
+                  data.delete(d);
+                  update();
+              });
+
+        // b) Attach the dragging behavior to all circles after they are created
+        // ADD CODE HERE
+    }
+</script>
+</body>
+</html>

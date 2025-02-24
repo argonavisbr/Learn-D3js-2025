@@ -15,8 +15,8 @@
 <script type="module">
     import * as d3 from "https://cdn.skypack.dev/d3@7";
 
-    const dim = {w: 500, h: 500};
-    const container = d3.select("body")
+    const dim = {w: 500, h: 250};
+    const svg = d3.select("body")
                   .append("svg")
                   .attr("width", dim.w)
                   .attr("height", dim.h);
@@ -27,10 +27,10 @@
                          d3.select(this).attr("transform", `translate(${[e.x,e.y]})`);
                      });
 
-    container.append("circle").attr("r", 120);
-    container.append("rect").attr("width", 100).attr("height", 100);
+    svg.append("rect").attr("width", 100).attr("height", 100);
+    svg.append("circle").attr("r", 50);
 
-    container.selectAll("circle, rect").call(dragme);
+    svg.selectAll("*").call(dragme);
 
 </script>
 

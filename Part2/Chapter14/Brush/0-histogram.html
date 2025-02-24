@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Simple one-dimensional brush - histogram</title>
+    <link rel="stylesheet" href="../css/chart-utils.css">
+    <style>
+      svg {
+        border: solid 1px lightgray;
+      }
+    </style>
+</head>
+<body>
+<h2>Simple histogram (add interactive features to it!)</h2>
+<svg></svg>
+<script type="module">
+    import * as d3 from "https://cdn.skypack.dev/d3@7";
+    import * as utils from "../js/chart-utils.js";
+    import {isValid} from "./js/brush-utils.js";
+
+    const dim = {width: 800, height: 500, margin: 50};
+    const svg = d3.select("svg").attr("width", dim.width).attr("height", dim.height);
+
+    // A normal distribution, centered in 100 with a standard deviation of 15
+    const data = d3.range(200000).map(() => d3.randomNormal(100, 15)());
+    const xScale = d3.scaleBand()
+                     .range([dim.margin, dim.width - dim.margin]);
+    const yScale = d3.scaleLinear().range([dim.height - dim.margin, dim.margin]);
+    const color = d3.scaleLinear().range(["orange", "blue"]);
+
+    // make a histogram
+    const bins = d3.bin().thresholds(data.length/50)(data);
+
+    xScale.domain(bins.map(d => d.x0));
+    yScale.domain([0, d3.max(bins, d => d.length)]);
+    color.domain(d3.extent(bins, d => d.x0));
+
+    const [axisX, axisY] = utils.cartesianAxes()
+                                .container(svg)
+                                .xScale(xScale)
+                                .yScale(yScale)
+                                .yLabel("Population")
+                                .xLabel("Value")();
+
+    axisX.tickValues(xScale.domain().filter((d, i) => i%(200)===0 )).tickFormat(d3.format("d"));
+    d3.select(".x-axis").call(axisX);
+
+    // A container for the chart
+    const container = svg.append("g").datum(bins);
+
+    // plot the histogram as a bar chart
+    container.selectAll(".bar")
+        .data(d => d)
+        .join("rect").attr("class", "bar")
+            .attr("x", d => xScale(d.x0))
+            .attr("y", d => yScale(d.length))
+            .attr("width", xScale.bandwidth())
+            .attr("height", d => yScale(0) - yScale(d.length))
+            .attr("fill", d => color(d.x0)); // use attr here, so that it can be overriden by style when brushed
+
+</script>
+</body>
+</html>

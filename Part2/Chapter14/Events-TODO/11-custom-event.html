@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Native custom events</title>
+    <style>
+        rect, .target {
+            fill: none;
+        }
+        svg {
+            background-color: #eee;
+            border: solid 1px black;
+        }
+    </style>
+</head>
+<body>
+<h1>Example using native custom events</h1>
+<p>Every time the ball is completely surrounded by a square, a 'dots' event is dispatched,
+   which is handled by the space on the right. It will draw random circles using the data
+   sent with the event.
+</p>
+<script type="module">
+    import * as d3 from "https://cdn.jsdelivr.net/npm/d3@7/+esm";
+    import {start, width, height, svg} from "./js/bouncing-ball.js";
+
+    /** Creates a target element to receive a custom event (called 'dots') and use its data to draw random circles */
+    svg.append("g").attr("class", "target")
+                   .attr("transform", `translate(${width/2+10},${10})`)
+                   .on("dots", evt => {
+                       const [x,y,r,delay,color] = evt.detail;
+                       d3.select(".target")
+                           .append("circle").attr("class", "dot")
+                           .attr("cx", x)
+                           .attr("cy", y)
+                           .transition().delay(delay)
+                              .attr("r", r)
+                              .style("stroke", color);
+                   });
+
+
+    /** Starts the animation and passes a callback function containing what to do when the ball hits the trap */
+    start((ball, trap) => {
+        ball.style("fill", trap.attr("class"));
+        trap.style("fill", trap.attr("class"))
+            .transition().duration(1000)
+            .style("fill", "transparent");
+        strikeTarget(trap.attr("class"));
+    });
+
+    /** This function dispatches a custom event to the target element */
+    function strikeTarget(color) {
+        const randX = d3.randomUniform(0,width/2-10);
+        const randY = d3.randomUniform(0,height-10);
+        const randR = d3.randomUniform(0.5,10);
+        const randD = d3.randomInt(0,2000);
+        const ce = new CustomEvent("dots", {detail: [randX(),randY(),randR(),randD(),color]});
+        d3.select(".target").node().dispatchEvent(ce);
+    }
+
+</script>
+</body>
+</html>

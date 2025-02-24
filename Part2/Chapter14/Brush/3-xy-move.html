@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Moving and hiding a brush programmatically</title>
+    <style>
+        svg {
+            border: solid 1px lightgray;
+            position: absolute;
+        }
+        p {
+            position: relative;
+            top: 10px; left: 10px;
+            font-family: sans-serif;
+            font-size: 14px;
+        }
+        button {
+            position: relative;
+            top: 480px;
+            font-size: 12px;
+        }
+    </style>
+</head>
+<body>
+<h2>Moving and hiding a brush programmatically</h2>
+<svg height="300" width="1000"></svg>
+<p><span id="count">0</span> points selected</p>
+<script type="module">
+    import * as d3 from "https://cdn.skypack.dev/d3@7";
+    import * as utils from "../js/chart-utils.js";
+    import {isValid, inBrush} from "./js/brush-utils.js";
+
+    const dim = {width: 800, height: 500, margin: 50};
+    const svg = d3.select("svg").attr("width", dim.width).attr("height", dim.height);
+
+    // A normal distribution of 10000 points
+    const data = d3.range(10000).map(() => [d3.randomNormal(50, 15)(), d3.randomNormal(50, 15)()]);
+    const xScale = d3.scaleLinear().clamp(true)
+                     .domain([0,100])
+                     .range([dim.margin, dim.width - dim.margin]);
+    const yScale = d3.scaleLinear().clamp(true)
+                     .domain([0,100])
+                     .range([dim.height - dim.margin, dim.margin]);
+
+    utils.cartesianAxes().container(d3.select("svg")).xScale(xScale).yScale(yScale)();
+
+    // A container for the chart and the brush
+    const container = d3.select("svg").append("g");
+
+    // The selected points
+    let selectedData;
+
+    // Plot the points in the container
+    container.selectAll("circle")
+      .data(data)
+        .join("circle")
+            .attr("cx", d => xScale(d[0]))
+            .attr("cy", d => yScale(d[1]))
+            .attr("r", 1)
+            .style("fill", "blue");
+
+    // Configure the brush behavior
+    const brush = d3.brush()
+        .extent([[dim.margin, dim.margin],[dim.width-dim.margin, dim.height-dim.margin]])     // Maximum size of the brush
+        .on("start", function() {
+            d3.selectAll("circle")
+                .style("fill", "blue");   // Reset the color of the circles
+        })
+        .on("brush", function(e) {
+            if (!isValid(e)) return;  // return if selection is invalid
+            d3.selectAll("circle")
+              .style("fill", d => inBrush(e.selection, [xScale(d[0]), yScale(d[1])]) ? "red" : "blue");
+        })
+        .on("end", function(e) {
+            if (!isValid(e)) return;  // return if selection is invalid
+            selectedData = data.filter(d => inBrush(e.selection, [xScale(d[0]), yScale(d[1])]));  // store the selection
+            d3.select("#count").text(selectedData.length);
+        });
+
+    container.call(brush);      // attach the brush
+
+    // shows the brush at 0,0
+    d3.select("body").append("button")
+        .text("Show 200x200 brush at 0,0")
+        .on("click", function() {
+            brush.move(container, [[0,0],[200,200]]);
+        });
+
+    // shows the brush at 200,200
+    d3.select("body").append("button")
+        .text("Show 100x100 brush at 200,200 and resize to 100x100")
+        .on("click", function() {
+            brush.move(container, [[200,200],[300,300]]);
+        });
+
+    // hides the brush
+    d3.select("body").append("button")
+        .text("Hide brush")
+        .on("click", function() {
+            brush.move(container, [[0,0],[1,1]]);
+            brush.clear(container);
+        });
+
+</script>
+</body>
+</html>

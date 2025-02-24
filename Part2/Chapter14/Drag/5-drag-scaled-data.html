@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Drag and drop</title>
+    <style>
+        circle {fill: red}
+        svg {border: 1px solid black}
+        text {
+            text-anchor: middle;
+            alignment-baseline: middle;
+            font: bold 12pt sans-serif;
+        }
+    </style>
+</head>
+<body>
+<script type="module">
+    import * as d3 from "https://cdn.skypack.dev/d3@7";
+
+    const dim = {w: 500, h: 250};
+    const svg = d3.select("body")
+                  .append("svg")
+                  .attr("width", dim.w)
+                  .attr("height", dim.h);
+
+    const fmt = d3.format(".2f"); // to format the fractional values
+
+    // A reference circle that stays in the original position
+    svg.append("circle")
+        .attr("transform", `translate(${dim.w/2},${dim.h/2})`)
+        .attr("r", 50).style("fill", "none").style("stroke", "pink");
+
+    // The container with a circle and text
+    svg.append("g").attr("class", "container")
+        .each(function() { // objects dragged with the container
+            d3.select(this).append("circle").attr("r", 50);
+            d3.select(this).append("text");
+        });
+
+    const data = [1, 1];
+
+    const scale = {
+        x: d3.scaleLinear().domain([0, 2]).range([0, dim.w]),
+        y: d3.scaleLinear().domain([0, 2]).range([0, dim.h])
+    };
+
+    update();
+
+    // Using scales and CTM to get transform coordinates - simpler and more efficient
+    const drag = d3.drag()
+                    .on('start', function() {
+                        d3.select(this).style("cursor", "move");
+                    })
+                    .on('drag', function(e,d) {
+                        const ctm = d3.select(this).node().getCTM();
+                        d[0] = scale.x.invert(ctm.e + e.dx);
+                        d[1] = scale.y.invert(ctm.f + e.dy);
+                        update();
+                    })
+                    .on('end', function() {
+                        d3.select(this).style("cursor", null);
+                    });
+
+    // Attach the dragging behavior to the container
+    d3.select(".container").call(drag);
+
+    function update() {
+        d3.select(".container")
+          .datum(data)
+          .attr("transform", d => `translate(${[scale.x(d[0]), scale.y(d[1])]})`)
+          .select("text")
+              .text(d => `(${fmt(d[0])}, ${fmt(d[1])})`);
+    }
+</script>
+
+</body>
+</html>

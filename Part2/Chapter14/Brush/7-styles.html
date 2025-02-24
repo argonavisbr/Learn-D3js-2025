@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Moving and hiding a brush - applying styles</title>
+    <style>
+        svg {
+            border: solid 1px lightgray;
+            position: absolute;
+        }
+        p.inchart {
+            position: relative;
+            top: 10px; left: 10px;
+            font-family: sans-serif;
+            font-size: 14px;
+        }
+        button {
+            position: relative;
+            top: 480px;
+            font-size: 12px;
+        }
+
+        /* Styles for the brush selection rectangle */
+        .selection {
+            fill: none;
+            stroke: black;
+            fill-opacity: 0.75;
+        }
+
+        /* Styles for all handles */
+        .handle {
+            opacity: 0.75;
+        }
+        .handle:hover {
+            stroke: white;
+            fill: red;
+        }
+
+        /* Styles for the corner handles */
+        .handle--ne, .handle--sw, .handle--nw, .handle--se {
+            fill: black;
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+<h2>Moving and hiding a brush - applying styles</h2>
+<p>See CSS for styles applied to brush handles and selection rectangles. To activate different
+selection modes, use the following gestures and keys:</p>
+<ul>
+    <li>Mode <code>handle</code> (yellow): resize dragging the border or corner handles of the selection rectangle.</li>
+    <li>Mode <code>drag</code> (orange): move the selection rectangle by dragging its center.</li>
+    <li>Mode <code>center</code> (green): resize from the center by dragging a handle while holding the <b>Alt</b> (<b>⌥</b>) key.</li>
+    <li>Mode <code>space</code> (blue): move by dragging a handle while holding the space bar.</li>
+</ul>
+
+<svg height="300" width="1000"></svg>
+<p class="inchart"><span id="count">0</span> points selected. Mode: <span id="mode"></span></p>
+<script type="module">
+    import * as d3 from "https://cdn.skypack.dev/d3@7";
+    import * as utils from "../js/chart-utils.js";
+    import {isValid, inBrush} from "./js/brush-utils.js";
+
+    const dim = {width: 800, height: 500, margin: 50};
+    const svg = d3.select("svg").attr("width", dim.width).attr("height", dim.height);
+
+    // A normal distribution of 10000 points
+    const data = d3.range(10000).map(() => [d3.randomNormal(50, 15)(), d3.randomNormal(50, 15)()]);
+    const xScale = d3.scaleLinear().clamp(true)
+                     .domain([0,100])
+                     .range([dim.margin, dim.width - dim.margin]);
+    const yScale = d3.scaleLinear().clamp(true)
+                     .domain([0,100])
+                     .range([dim.height - dim.margin, dim.margin]);
+
+    utils.cartesianAxes().container(d3.select("svg")).xScale(xScale).yScale(yScale)();
+
+    // A container for the chart and the brush
+    const container = d3.select("svg").append("g").datum(data);
+
+    // Plot the points in the container
+    container.selectAll("circle")
+      .data(d => d)
+        .join("circle")
+            .attr("cx", d => xScale(d[0]))
+            .attr("cy", d => yScale(d[1]))
+            .attr("r", 1)
+            .style("fill", "blue");
+
+    // Configure the brush behavior
+    const brush = d3.brush()
+        .extent([[dim.margin, dim.margin],[dim.width-dim.margin, dim.height-dim.margin]])     // Maximum size of the brush
+        .handleSize(10)     // changes the size of the handles
+        .on("start", function() {
+            d3.selectAll("circle")
+                .style("fill", "blue");       // Reset the color of the circles
+        })
+        .on("brush", function(evt, dat) {
+            if (!isValid(evt)) return;  // return if selection is invalid
+
+            d3.select(this)
+                .datum(data.filter(d => inBrush(evt.selection, [xScale(d[0]), yScale(d[1])])))
+            d3.select("#count").text(dat.length);
+            d3.selectAll("circle")
+                .style("fill", p => dat.includes(p) ? "red" : "blue");
+
+            // Examples of different brush modes
+            console.log("mode:", evt.mode);
+            d3.select("#mode").text(evt.mode + ".");
+
+            if(evt.mode === "drag") {      // if brush is dragged by moving its center
+                d3.selectAll(".selection").style("fill", "orange").style("fill-opacity", 0.8);
+            } else if(evt.mode === "handle") {    // if brush is resized by moving the handles
+                d3.selectAll(".selection").style("fill", "yellow").style("fill-opacity", 0.8);
+            } else if(evt.mode === "center") {    // if brush is resized by center (grabbing handle with the Alt key)
+                d3.selectAll(".selection").style("fill", "green").style("fill-opacity", 0.8);
+            } else if(evt.mode === "space") {     // if brush is moved by grabbing a handle + space bar
+                d3.selectAll(".selection").style("fill", "blue").style("fill-opacity", 0.8);
+            }
+        })
+        .on("end", function() {
+            d3.selectAll(".selection")
+                .style("fill-opacity", 0.3)
+                .style("fill", "none");     // Reset the color of the selection rectangle
+        });
+
+    container.call(brush);      // attach the brush
+
+    // add a button to show the brush at 0,0
+    d3.select("body").append("button")
+        .text("Show 200x200 brush at 0,0")
+        .on("click", function() {
+            brush.move(container, [[0,0],[200,200]]);
+        });
+
+    // add a button to move the brush to 200,200
+    d3.select("body").append("button")
+        .text("Show 100x100 brush at 200,200 and resize to 100x100")
+        .on("click", function() {
+            brush.move(container, [[200,200],[300,300]]);
+        });
+
+    // add a button to hide the brush
+    d3.select("body").append("button")
+        .text("Hide brush")
+        .on("click", function() {
+            brush.move(container, [[0,0],[1,1]]);
+            brush.clear(container);
+        });
+
+</script>
+</body>
+</html>

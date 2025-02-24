@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Simple xy brush - rescaling</title>
+    <style>
+        svg {
+            border: solid 1px lightgray;
+            position: absolute;
+        }
+        p {
+            position: relative;
+            top: 10px; left: 10px;
+            font-family: sans-serif;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+<h2>Simple xy brush - uses a quadtree to find selected objects - TODO</h2>
+<svg></svg>
+<p><span id="count">0</span> points selected</p>
+<script type="module">
+    import * as d3 from "https://cdn.skypack.dev/d3@7";
+    import * as utils from "../js/chart-utils.js";
+
+    const dim = {width: 800, height: 500, margin: 50};
+    const svg = d3.select("svg").attr("width", dim.width).attr("height", dim.height);
+
+    // A normal distribution of 10000 points
+    const data = d3.range(10000).map(() => [d3.randomNormal(50, 5)(), d3.randomNormal(50, 5)()]);
+    const xScale = d3.scaleLinear()
+                     .domain([0,100])
+                     .range([dim.margin, dim.width - dim.margin]);
+    const yScale = d3.scaleLinear()
+                     .domain([0,100])
+                     .range([dim.height - dim.margin, dim.margin]);
+
+    const [xAxis, yAxis] = utils.cartesianAxes()
+                                .container(d3.select("svg"))
+                                .xScale(xScale)
+                                .yScale(yScale)();
+
+    // A container for the chart and the brush
+    const container = d3.select("svg").append("g");
+
+    // Plot the points in the container
+    container.selectAll("circle")
+        .data(data)
+           .join("circle")
+              .attr("cx", d => xScale(d[0]))
+              .attr("cy", d => yScale(d[1]))
+              .attr("r", 1)
+              .attr("fill", "blue");
+
+    // Configure the brush behavior
+    const brush = d3.brush()
+        .extent([[dim.margin, dim.margin],[dim.width-dim.margin, dim.height-dim.margin]])    // Maximum size of the brush
+        .on("brush", function(e) {
+            if (!isValid(e.selection)) return;  // return if selection is invalid
+            d3.selectAll("circle")
+                .style("fill", d => inBrush(e.selection, d) ? "red" : "blue");
+        })
+        .on("end", function(e) {
+            if (!isValid(e.selection)) return;
+            const domains = [xScale.domain(), yScale.domain()];  // save current domains
+            const selectedData = rescale(e.selection);
+            d3.select("#count").text(selectedData.length);
+            if(selectedData.length > 0) {
+                updateView();
+            }
+            else {
+                xScale.domain(domains[0]);       // restore previous domains
+                yScale.domain(domains[1]);
+                container.call(e.target.clear);  // clear the brush selection (e.target === the current brush object)
+               // e.target.clear(container);     // clear the brush selection (alternative syntax)
+            }
+            d3.selectAll("circle").style("fill", null);   // Reset color of selected circles
+        });
+
+    container.call(brush);  // attach the brush
+
+    // Rescale the chart based on the brush selection
+    function rescale([start, end]) {
+        // get domain values from the selection
+        const x0 = xScale.invert(start[0]);
+        const y1 = yScale.invert(start[1]);  // inverse direction for y
+        const x1 = xScale.invert(end[0]);
+        const y0 = yScale.invert(end[1]);    // inverse direction for y
+
+        // update the scale domains and the axes
+        xScale.domain([x0, x1]);
+        yScale.domain([y0, y1]);
+
+        // return selected data
+        return data.filter(d => inChart(xScale(d[0]), yScale(d[1])));
+    }
+
+    function updateView() {
+        d3.select(".x-axis").transition().call(xAxis);
+        d3.select(".y-axis").transition().call(yAxis);
+
+        // update positions with new scale and remove the circles that are outside the range
+        d3.select("svg").selectAll("circle").transition()
+            .attr("cx", d => xScale(d[0]))
+            .attr("cy", d => yScale(d[1]))
+            .filter(d => !inChart(xScale(d[0]), yScale(d[1]))).remove();    // removes circles outside the chart area
+
+        // Instead of removing the circles, as shown above, you can also hide them,
+        // e.g., by setting their opacity or radius to zero, display to none, etc.
+        // You can also define a clip-path, which doesn't require filtering the points
+        // that are outside the chart area, for example, you just need to set the clip-path:
+        //      d3.select("svg").selectAll("circle").attr("clip-path", "url(#clip)");
+        //
+        // But first you need to declare the clip-path in the svg element:
+        //      d3.select("svg").append("defs").append("clipPath").attr("id", "clip")
+        //         .append("rect")
+        //             .attr("x", dim.margin)
+        //             .attr("y", dim.margin)
+        //             .attr("width", dim.width - 2*dim.margin)
+        //             .attr("height", dim.height - 2*dim.margin);
+
+        //container.call(brush.clear);  // clear the brush selection (alternative syntax)
+        brush.clear(container);         // clear the brush selection
+    }
+
+    // Checks if a point is within the brush selection
+    function inBrush(selection, d) {
+        const [[x0,y0],[x1,y1]] = selection;
+        const [cx,cy] = [xScale(d[0]), yScale(d[1])];
+        return x0 <= cx && cx <= x1 && y0 <= cy && cy <= y1;
+    }
+
+    // Checks if a point is in the chart area
+    function inChart(cx, cy) {
+        const [x0, x1] = xScale.range(),
+              [y1, y0] = yScale.range();
+        return x0 <= cx && cx <= x1 && y0 <= cy && cy <= y1;
+    }
+
+    // Checks if the brush is valid
+    function isValid(selection) {
+        if (!selection) return false;           // return false if brush is null
+        const [[x0, y0], [x1, y1]] = selection;
+        return !(x0 === x1 && y0 === y1);       // return false if area is not defined
+    }
+
+</script>
+</body>
+</html>

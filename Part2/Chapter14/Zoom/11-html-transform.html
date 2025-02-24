@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Transforms with CSS</title>
+    <style>
+        div {
+            width: 600px;
+            font-family: sans-serif;
+            margin: 50px;
+            padding: 20px;
+            border: solid 1px lightgray;
+            text-align: center;
+            background-color: lightyellow;
+            filter: drop-shadow(2px 2px 2px rgba(0,0,0,0.5));
+        }
+    </style>
+</head>
+<body>
+<div>
+    <h1>HTML Transforms with CSS:<br>move and scale this object</h1>
+    <p>Zooming works best with SVG. To use it with HTML, you must convert the transform
+        to CSS and use <code>transform-origin</code> to define the origin. Here it is applied
+        to the <code>&lt;div></code>element that contains this text.</p>
+    <p>Double-click to zoom in, shift-double-click to zoom out, or use mouse wheel / pinch touchscreen, drag to pan.<p>
+</div>
+<script type="module">
+    import * as d3 from "https://cdn.skypack.dev/d3@7";
+
+    d3.select("body")
+        .call(d3.zoom()
+            .duration(1000)
+            .on('zoom', function(evt) {
+                const cssTransform = `translate(${evt.transform.x}px, ${evt.transform.y}px)
+                                      scale(${evt.transform.k})`;
+                d3.selectAll("div")
+                    .style("transform", cssTransform)
+                    .style("transform-origin", "0 0");  // necessary to center the zoom
+            }));
+
+</script>
+
+</body>
+</html>
