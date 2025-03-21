@@ -4,160 +4,233 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="88ab0fd2-922d-4b26-894c-0ae61af44502" name="Changes" comment="Updated files after full Part I review.">
-      <change afterPath="$PROJECT_DIR$/.idea/easycode.ignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/easycode/codebase-v2.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Part2/Chapter10/css/chart-utils.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Part2/Chapter11/Examples/Global-temp-line.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Part2/Chapter12/Exercise4.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Part2/Chapter14/Brush/0-histogram.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Part2/Chapter14/Brush/0-scatterplot.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Part2/Chapter14/Brush/1-xy-minimal.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Part2/Chapter14/Brush/2-xy-select.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Part2/Chapter14/Brush/3-xy-move.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Part2/Chapter14/Brush/4-xy-data.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Part2/Chapter14/Brush/5-xy-rescale.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Part2/Chapter14/Brush/6-xy-canvas.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Part2/Chapter14/Brush/7-styles.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Part2/Chapter14/Brush/8-filter.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Part2/Chapter14/Brush/9-x-histogram.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Part2/Chapter14/Brush/js/brush-utils.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Part2/Chapter14/Drag/5-drag-scaled-data.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Part2/Chapter14/Events-TODO/1-simple-handler.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Part2/Chapter14/Events-TODO/11-custom-event.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Part2/Chapter14/Events-TODO/2-handlers-per-element.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Part2/Chapter14/Events-TODO/3-handlers-per-element-stop-bubbles.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Part2/Chapter14/Events-TODO/3-handlers-per-element-stop-immediate-TODO.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Part2/Chapter14/Events-TODO/js/bouncing-ball.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Part2/Chapter14/Exercises/Solutions/Exercise-3.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Part2/Chapter14/Exercises/Solutions/Exercise-5.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Part2/Chapter14/Exercises/Solutions/Exercise-6/css/main-1.4.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Part2/Chapter14/Exercises/Solutions/Exercise-6/css/tooltips-1.0.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Part2/Chapter14/Exercises/Solutions/Exercise-6/index.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Part2/Chapter14/Exercises/Solutions/Exercise-6/js/brush-1.0.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Part2/Chapter14/Exercises/Solutions/Exercise-6/js/common-1.5.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Part2/Chapter14/Exercises/Solutions/Exercise-6/js/data-1.3.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Part2/Chapter14/Exercises/Solutions/Exercise-6/js/legend-1.0.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Part2/Chapter14/Exercises/Solutions/Exercise-6/js/tooltips-1.0.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Part2/Chapter14/Exercises/Solutions/Exercise-6/js/view-1.5.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Part2/Chapter14/Exercises/Solutions/Exercise-zoom-x.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Part2/Chapter14/Exercises/Solutions/Exercise-zoom-xy/css/main-1.4.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Part2/Chapter14/Exercises/Solutions/Exercise-zoom-xy/css/tooltips-1.0.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Part2/Chapter14/Exercises/Solutions/Exercise-zoom-xy/index.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Part2/Chapter14/Exercises/Solutions/Exercise-zoom-xy/js/common-1.5.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Part2/Chapter14/Exercises/Solutions/Exercise-zoom-xy/js/data-1.3.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Part2/Chapter14/Exercises/Solutions/Exercise-zoom-xy/js/legend-1.0.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Part2/Chapter14/Exercises/Solutions/Exercise-zoom-xy/js/tooltips-1.0.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Part2/Chapter14/Exercises/Solutions/Exercise-zoom-xy/js/view-1.5.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Part2/Chapter14/Exercises/Solutions/Exercise-zoom-xy/js/zoom-1.0.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Part2/Chapter14/Exercises/Solutions/js/grid-squares.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Part2/Chapter14/Exercises/Templates/Exercise-3.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Part2/Chapter14/Exercises/Templates/Exercise-4.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Part2/Chapter14/Exercises/Templates/js/grid-squares.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Part2/Chapter14/Quadtree/7-brush-2D-quadtree-TODO.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Part2/Chapter14/Zoom/1-svg-zoom.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Part2/Chapter14/Zoom/10-remove-listener.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Part2/Chapter14/Zoom/11-html-transform.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Part2/Chapter14/Zoom/12-zoom-transform.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Part2/Chapter14/Zoom/2-basic-zoom.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Part2/Chapter14/Zoom/3-element-zoom.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Part2/Chapter14/Zoom/4-scale-extent.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Part2/Chapter14/Zoom/5-translate-extent.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Part2/Chapter14/Zoom/6-area-unrestricted.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Part2/Chapter14/Zoom/7-area-viewport.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Part2/Chapter14/Zoom/8-area-clipped.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Part2/Chapter14/Zoom/9-filter-zoom.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Part2/Chapter14/ZoomSemantic/1-semantic-zoom.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Part2/Chapter14/ZoomSemantic/2-apply.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Part2/Chapter14/ZoomSemantic/3-invert.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Part2/Chapter14/ZoomSemantic/4-rescale-geometric.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Part2/Chapter14/ZoomSemantic/5-rescale-semantic.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Part2/Chapter14/ZoomSemantic/6-rescale-geometric-canvas.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Part2/Chapter14/ZoomSemantic/7-rescale-semantic-canvas.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Part2/Chapter14/ZoomTransform/1-interactive-zoom.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Part2/Chapter14/ZoomTransform/10-interpolator.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Part2/Chapter14/ZoomTransform/11-interpolateZoom.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Part2/Chapter14/ZoomTransform/2-transforms-svg.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Part2/Chapter14/ZoomTransform/3-transforms-canvas.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Part2/Chapter14/ZoomTransform/4-scaleBy.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Part2/Chapter14/ZoomTransform/5-scaleTo.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Part2/Chapter14/ZoomTransform/6-scaleBy-limited.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Part2/Chapter14/ZoomTransform/7-translateBy.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Part2/Chapter14/ZoomTransform/8-translateTo.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Part2/Chapter14/ZoomTransform/9-translate-absolute.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Part2/Chapter14/_OLD_Chapter14/12-multi-transform.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Part2/Chapter14/data/GLB.Ts.1880.2024.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Part2/Chapter14/data/un_regions_2017.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Part2/Chapter14/js/brush-utils.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Part2/Chapter14/js/grid-data.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Part2/Chapter14/js/grid-squares-canvas.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Part2/Chapter14/js/grid-squares.js" afterDir="false" />
+    <list default="true" id="88ab0fd2-922d-4b26-894c-0ae61af44502" name="Changes" comment="Updated files after Chapter 14.">
+      <change afterPath="$PROJECT_DIR$/Part2/Chapter14/Drag/2-basic-drag.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Part2/Chapter14/Drag/5-transform-data.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Part2/Chapter14/Drag/7-scaled-data.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Part2/Chapter14/Events/1-event-propagation.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Part2/Chapter14/Events/2-stop-propagation.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Part2/Chapter14/Events/3-pointer-events.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Part2/Chapter14/Events/4-native-dispatching.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Part2/Chapter14/Events/5-d3-dispatching.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Part2/Chapter14/Events/6-d3-dispatch.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Part2/Chapter14/Events/7-native-custom-event.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Part2/Chapter14/Examples/1.1-drag-with-zoom-ctm.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Part2/Chapter14/Examples/1.2-drag-with-zoom-subject.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Part2/Chapter14/Examples/10-zoom-scrollbars.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Part2/Chapter14/Examples/2-brush-zoom-canvas.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Part2/Chapter14/Examples/2-tooltips-apply-invert.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Part2/Chapter14/Examples/3-drag-brush-zoom-click.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Part2/Chapter14/Examples/4-brush-select-zoomable.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Part2/Chapter14/Examples/6-semantic-zoom-stars.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Part2/Chapter14/Examples/7-semantic-zoom-cities.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Part2/Chapter14/Examples/8-zoom-pan-controls.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Part2/Chapter14/Examples/9-zoom-contextbars.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Part2/Chapter14/Exercises-TODO/Solutions/Exercise-1.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Part2/Chapter14/Exercises-TODO/Solutions/Exercise-2-ctm.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Part2/Chapter14/Exercises-TODO/Solutions/Exercise-2.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Part2/Chapter14/Exercises-TODO/Solutions/Exercise-6.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Part2/Chapter14/Exercises-TODO/Templates/Exercise-5.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Part2/Chapter14/Exercises-TODO/Templates/Exercise-6.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Part2/Chapter14/Pointer/1-simple-handler.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Part2/Chapter14/Pointer/2-box-coords.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Part2/Chapter14/Pointer/3-ctm-coords.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Part2/Chapter14/Pointer/4-pointer.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Part2/Chapter14/Pointer/5-pointer-canvas.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Part2/Chapter14/Pointer/6-pointer-group.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Part2/Chapter14/Pointer/7-pointer-scaled.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Part2/Chapter14/ZoomSemantic/1-scaling.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Part2/Chapter14/ZoomSemantic/2-detail.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Part2/Chapter14/ZoomSemantic/3-apply.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Part2/Chapter14/ZoomSemantic/4-invert.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Part2/Chapter14/ZoomSemantic/5-invert-scales.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Part2/Chapter14/ZoomSemantic/6-rescale.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Part2/Chapter14/_OLD_Chapter14/0-empty-photo.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Part2/Chapter14/data/cities1000.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Part2/Chapter14/data/hygfull.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Part2/Chapter14/data/world-lowres.geojson" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part2/Chapter10/StepByStep/final/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter10/StepByStep/final/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part2/Chapter10/css/cartesian-axes.css" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter10/css/cartesian-axes.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part2/Chapter12/Exercises/Solutions/Exercise4.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter12/Exercises/Solutions/Exercise4.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part2/Chapter14/Brush/1-brush-x.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part2/Chapter14/Brush/2-brush-xy.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part2/Chapter14/Brush/3-brush-xy-move.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part2/Chapter14/Dispatch/1-selection-dispatch.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter14/Events-TODO/12-selection-dispatch.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part2/Chapter14/Dispatch/10-custom-event.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part2/Chapter14/Dispatch/2-d3-dispatch.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter14/Events-TODO/13-d3-dispatch.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part2/Chapter14/Dispatch/3-custom-event.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part2/Chapter14/Dispatch/dispatch-apply.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter14/Examples/7-brush-with-zoom.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part2/Chapter14/Dispatch/dispatch-call.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter14/Exercises/Solutions/Exercise-4.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part2/Chapter14/Drag/1-drag-origin.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter14/Drag/1-drag-origin.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part2/Chapter14/Drag/2-drag-basic.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter14/Drag/2-drag-basic.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part2/Chapter14/Drag/3-drag-data.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part2/Chapter14/Drag/4-drag-scaled-data.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part2/Chapter14/Drag/5-drag-transform.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter14/Drag/3-drag-transform.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part2/Chapter14/Drag/6-drag-scaled-data-transform.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter14/Drag/4-drag-data.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part2/Chapter14/Drag/7-drag-multiple.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part2/Chapter14/Drag/8-drag-multiple-data.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter14/Drag/6-drag-line-chart.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part2/Chapter14/Drag/9-drag-canvas.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter14/Drag/7-drag-subject.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part2/Chapter14/Drag/css/grid-squares.css" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter14/Exercises/Solutions/css/grid-squares.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part2/Chapter14/Drag/js/grid-squares.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part2/Chapter14/Events/1-simple-handler.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part2/Chapter14/Events/10-event-types.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter14/Events-TODO/10-event-types.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part2/Chapter14/Events/11-custom-event.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part2/Chapter14/Events/2-handlers-per-element.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part2/Chapter14/Events/3-handlers-per-element-no-bubbling.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part2/Chapter14/Events/4-coordinates.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter14/Events-TODO/4-coordinates.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part2/Chapter14/Events/5-prevent-default.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter14/Events-TODO/5-prevent-default.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part2/Chapter14/Events/6-pointer-events.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter14/Events-TODO/6-pointer-events.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part2/Chapter14/Events/7-pointer-events-none.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter14/Events-TODO/7-pointer-events-none.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part2/Chapter14/Events/8-pointer-events-all.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter14/Events-TODO/8-pointer-events-all.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part2/Chapter14/Events/9-d3-pointer-events-all.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter14/Events-TODO/9-d3-pointer-events-all.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part2/Chapter14/Events/js/events-panel.js" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter14/Events-TODO/js/events-panel.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part2/Chapter14/Pointer/1-d3.pointer.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter14/Pointer-TODO/1-d3.pointer.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part2/Chapter14/Pointer/2-d3.pointer-coords.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter14/Pointer-TODO/2-d3.pointer-coords.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part2/Chapter14/Pointer/3-cartesian-coords.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter14/Pointer-TODO/3-cartesian-coords.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part2/Chapter14/Pointer/js/pointer-coords.js" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter14/Pointer-TODO/js/pointer-coords.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part2/Chapter14/Pointer/js/pointer.js" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter14/Pointer-TODO/js/pointer.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part2/Chapter14/Zoom/1-basic.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part2/Chapter14/Zoom/10-translate-by.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part2/Chapter14/Zoom/11-translate-to.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part2/Chapter14/Zoom/12-transforms-svg.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part2/Chapter14/Zoom/13-transforms-canvas.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part2/Chapter14/Zoom/14-transforms-apply.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part2/Chapter14/Zoom/15-zoom-xy.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter14/Examples/15-zoom-xy.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part2/Chapter14/Zoom/16-zoom-x.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part2/Chapter14/Zoom/17-interpolate-zoom.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part2/Chapter14/Zoom/18-interpolate-zoom-2.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part2/Chapter14/Zoom/2-element-grid.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part2/Chapter14/Zoom/2-element-square.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part2/Chapter14/Zoom/2-elements-select.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part2/Chapter14/Zoom/3-translate-extent.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part2/Chapter14/Zoom/4-extent.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part2/Chapter14/Zoom/5-events.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part2/Chapter14/Zoom/6-events-no-dblclick.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part2/Chapter14/Zoom/7-events-wheel.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part2/Chapter14/Zoom/8-scale-by.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part2/Chapter14/Zoom/9-drag-with-zoom.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter14/Examples/6-drag-with-zoom.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part2/Chapter14/Zoom/9-scale-to.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part2/Chapter14/Zoom/css/grid-squares.css" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter14/Exercises/Templates/css/grid-squares.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part2/Chapter14/Zoom/js/grid-squares.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part2/Chapter14/css/chart-utils.css" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter14/css/chart-utils.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part2/Chapter14/js/chart-utils.js" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter14/js/chart-utils.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter14/Brush/0-histogram.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter14/Brush/0-histogram.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter14/Brush/1-xy-minimal.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter14/Brush/1-xy-minimal.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter14/Brush/2-xy-select.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter14/Brush/2-xy-select.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter14/Brush/3-xy-move.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter14/Brush/3-xy-move.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter14/Brush/4-xy-data.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter14/Brush/4-xy-data.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter14/Brush/5-xy-rescale.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter14/Brush/5-xy-rescale.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter14/Brush/6-xy-canvas.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter14/Brush/6-xy-canvas.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter14/Brush/7-styles.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter14/Brush/7-styles.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter14/Brush/8-filter.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter14/Brush/8-filter.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter14/Brush/9-x-histogram.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter14/Brush/9-x-histogram.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter14/Brush/js/brush-utils.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter14/Drag/1-drag-origin.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter14/Drag/1-origin.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter14/Drag/2-drag-basic.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter14/Drag/3-relative.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter14/Drag/3-drag-transform.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter14/Drag/4-transform.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter14/Drag/4-drag-data.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter14/Drag/6-transform-subject.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter14/Drag/5-drag-scaled-data.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter14/Drag/8-scaled-data-ctm.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter14/Drag/6-drag-line-chart.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter14/Drag/9-line-chart.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter14/Drag/7-drag-subject.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter14/Drag/10-canvas-subject.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter14/Events-TODO/1-simple-handler.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter14/EventsNative/1-body-handler.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter14/Events-TODO/10-event-types.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter14/Events-TODO/11-custom-event.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter14/Examples/11-custom-event.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter14/Events-TODO/12-selection-dispatch.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter14/Events-TODO/13-d3-dispatch.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter14/Events-TODO/2-handlers-per-element.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter14/EventsNative/2-local-handlers.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter14/Events-TODO/3-handlers-per-element-stop-bubbles.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter14/EventsNative/3-stop-propagation.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter14/Events-TODO/3-handlers-per-element-stop-immediate-TODO.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter14/Events-TODO/4-coordinates.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter14/EventsNative/4-coordinates.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter14/Events-TODO/5-prevent-default.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter14/EventsNative/5-prevent-default.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter14/Events-TODO/6-pointer-events.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter14/EventsNative/6-pointer-events.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter14/Events-TODO/7-pointer-events-none.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter14/EventsNative/7-pointer-events-none.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter14/Events-TODO/8-pointer-events-all.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter14/EventsNative/8-pointer-events-all.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter14/Events-TODO/9-d3-pointer-events-all.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter14/_OLD_Chapter14/9-d3-pointer-events-all.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter14/Events-TODO/js/bouncing-ball.js" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter14/Examples/js/bouncing-ball.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter14/Events-TODO/js/events-panel.js" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter14/EventsNative/js/events-panel.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter14/Examples-TODO/15-zoom-xy.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter14/_OLD_Chapter14/15-zoom-xy.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter14/Examples-TODO/6-drag-with-zoom.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter14/Examples-TODO/7-brush-with-zoom.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter14/Examples-TODO/Resizable-bar-with-drag.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter14/Examples/5-resizable-bar-with-drag.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter14/Exercises-TODO/Solutions/Exercise-3.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter14/Exercises-TODO/Solutions/Exercise-3.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter14/Exercises-TODO/Solutions/Exercise-4.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter14/Exercises-TODO/Solutions/Exercise-4.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter14/Exercises-TODO/Solutions/Exercise-5.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter14/Exercises-TODO/Templates/Exercise-7.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter14/Exercises-TODO/Solutions/Exercise-6/css/main-1.4.css" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter14/Exercises-TODO/Solutions/Exercise-5/css/main-1.4.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter14/Exercises-TODO/Solutions/Exercise-6/css/tooltips-1.0.css" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter14/Exercises-TODO/Solutions/Exercise-5/css/tooltips-1.0.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter14/Exercises-TODO/Solutions/Exercise-6/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter14/Exercises-TODO/Solutions/Exercise-5/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter14/Exercises-TODO/Solutions/Exercise-6/js/brush-1.0.js" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter14/Exercises-TODO/Solutions/Exercise-5/js/brush-1.0.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter14/Exercises-TODO/Solutions/Exercise-6/js/common-1.5.js" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter14/Exercises-TODO/Solutions/Exercise-5/js/common-1.5.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter14/Exercises-TODO/Solutions/Exercise-6/js/data-1.3.js" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter14/Exercises-TODO/Solutions/Exercise-5/js/data-1.3.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter14/Exercises-TODO/Solutions/Exercise-6/js/legend-1.0.js" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter14/Exercises-TODO/Solutions/Exercise-5/js/legend-1.0.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter14/Exercises-TODO/Solutions/Exercise-6/js/tooltips-1.0.js" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter14/Exercises-TODO/Solutions/Exercise-5/js/tooltips-1.0.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter14/Exercises-TODO/Solutions/Exercise-6/js/view-1.5.js" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter14/Exercises-TODO/Solutions/Exercise-5/js/view-1.5.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter14/Exercises-TODO/Solutions/Exercise-zoom-x.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter14/Exercises-TODO/Solutions/css/grid-squares.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter14/Exercises-TODO/Solutions/js/grid-squares.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter14/Exercises-TODO/Templates/Exercise-3.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter14/Exercises-TODO/Templates/Exercise-3.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter14/Exercises-TODO/Templates/Exercise-4.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter14/Exercises-TODO/Templates/Exercise-4.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter14/Exercises-TODO/Templates/css/grid-squares.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter14/Exercises-TODO/Templates/js/grid-squares.js" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter14/_OLD_Chapter14/grid-squares-2.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter14/Pointer-TODO/1-d3.pointer.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter14/_OLD_Chapter14/1-d3.pointer.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter14/Pointer-TODO/2-d3.pointer-coords.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter14/_OLD_Chapter14/2-d3.pointer-coords.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter14/Pointer-TODO/3-cartesian-coords.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter14/_OLD_Chapter14/3-cartesian-coords.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter14/Pointer-TODO/js/pointer-coords.js" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter14/_OLD_Chapter14/pointer-coords.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter14/Pointer-TODO/js/pointer.js" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter14/_OLD_Chapter14/js/pointer.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter14/Zoom/12-zoom-transform.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter14/Zoom/12-zoom-transform.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter14/Zoom/3-element-zoom.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter14/Zoom/3-element-zoom.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter14/Zoom/5-translate-extent.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter14/Zoom/5-translate-extent.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter14/ZoomSemantic/1-semantic-zoom.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter14/ZoomSemantic/2-apply.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter14/ZoomSemantic/3-invert.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter14/ZoomSemantic/4-rescale-geometric.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter14/ZoomSemantic/9-geometric-scatter.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter14/ZoomSemantic/5-rescale-semantic.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter14/ZoomSemantic/7-semantic-scatter.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter14/ZoomSemantic/6-rescale-geometric-canvas.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter14/ZoomSemantic/10-geometric-scatter-canvas.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter14/ZoomSemantic/7-rescale-semantic-canvas.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter14/ZoomSemantic/8-semantic-scatter-canvas.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter14/ZoomTransform/2-transforms-svg.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter14/ZoomTransform/2-transforms-svg.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter14/ZoomTransform/3-transforms-canvas.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter14/ZoomTransform/3-transforms-canvas.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter14/ZoomTransform/7-translateBy.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter14/ZoomTransform/7-translateBy.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter14/ZoomTransform/9-translate-absolute.html" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter14/ZoomTransform/9-translate-absolute.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Chapter14/js/brush-utils.js" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Chapter14/js/brush-utils.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part3/Chapter19/Data/NY_subway.geojson" beforeDir="false" afterPath="$PROJECT_DIR$/Part3/Chapter19/data/NY_subway.geojson" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part3/Chapter19/Data/World_Cities_Location_table.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Part3/Chapter19/data/World_Cities_Location_table.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part3/Chapter19/Data/africa-10-cities.geojson" beforeDir="false" afterPath="$PROJECT_DIR$/Part3/Chapter19/data/africa-10-cities.geojson" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part3/Chapter19/Data/africa-1500-cities.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Part3/Chapter19/data/africa-1500-cities.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part3/Chapter19/Data/africa-continental-simple-polygon.geojson" beforeDir="false" afterPath="$PROJECT_DIR$/Part3/Chapter19/data/africa-continental-simple-polygon.geojson" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part3/Chapter19/Data/africa-madagascar.geojson" beforeDir="false" afterPath="$PROJECT_DIR$/Part3/Chapter19/data/africa-madagascar.geojson" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part3/Chapter19/Data/africa-rivers-simple-multiline.geojson" beforeDir="false" afterPath="$PROJECT_DIR$/Part3/Chapter19/data/africa-rivers-simple-multiline.geojson" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part3/Chapter19/Data/africa-rivers.geojson" beforeDir="false" afterPath="$PROJECT_DIR$/Part3/Chapter19/data/africa-rivers.geojson" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part3/Chapter19/Data/africa-simple-multipolygon.geojson" beforeDir="false" afterPath="$PROJECT_DIR$/Part3/Chapter19/data/africa-simple-multipolygon.geojson" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part3/Chapter19/Data/africa-simple.geojson" beforeDir="false" afterPath="$PROJECT_DIR$/Part3/Chapter19/data/africa-simple.geojson" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part3/Chapter19/Data/africa-simple.topojson" beforeDir="false" afterPath="$PROJECT_DIR$/Part3/Chapter19/data/africa-simple.topojson" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part3/Chapter19/Data/africa.geojson" beforeDir="false" afterPath="$PROJECT_DIR$/Part3/Chapter19/data/africa.geojson" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part3/Chapter19/Data/africa.topojson" beforeDir="false" afterPath="$PROJECT_DIR$/Part3/Chapter19/data/africa.topojson" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part3/Chapter19/Data/airports-selected.json" beforeDir="false" afterPath="$PROJECT_DIR$/Part3/Chapter19/data/airports-selected.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part3/Chapter19/Data/airports.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Part3/Chapter19/data/airports.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part3/Chapter19/Data/americas.geojson" beforeDir="false" afterPath="$PROJECT_DIR$/Part3/Chapter19/data/americas.geojson" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part3/Chapter19/Data/asian_russia.geojson" beforeDir="false" afterPath="$PROJECT_DIR$/Part3/Chapter19/data/asian_russia.geojson" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part3/Chapter19/Data/border-example.geojson" beforeDir="false" afterPath="$PROJECT_DIR$/Part3/Chapter19/data/border-example.geojson" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part3/Chapter19/Data/border-example.topojson" beforeDir="false" afterPath="$PROJECT_DIR$/Part3/Chapter19/data/border-example.topojson" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part3/Chapter19/Data/cities.geojson" beforeDir="false" afterPath="$PROJECT_DIR$/Part3/Chapter19/data/cities.geojson" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part3/Chapter19/Data/cities1000.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Part3/Chapter19/data/cities1000.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part3/Chapter19/Data/cities1000.json" beforeDir="false" afterPath="$PROJECT_DIR$/Part3/Chapter19/data/cities1000.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part3/Chapter19/Data/earth-waterbodies-10km.geojson" beforeDir="false" afterPath="$PROJECT_DIR$/Part3/Chapter19/data/earth-waterbodies-10km.geojson" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part3/Chapter19/Data/estados_br.geojson" beforeDir="false" afterPath="$PROJECT_DIR$/Part3/Chapter19/data/estados_br.geojson" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part3/Chapter19/Data/estados_br_pop.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Part3/Chapter19/data/estados_br_pop.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part3/Chapter19/Data/europe-russia.topojson" beforeDir="false" afterPath="$PROJECT_DIR$/Part3/Chapter19/data/europe-russia.topojson" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part3/Chapter19/Data/europe_russia.geojson" beforeDir="false" afterPath="$PROJECT_DIR$/Part3/Chapter19/data/europe_russia.geojson" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part3/Chapter19/Data/european-russia.topojson" beforeDir="false" afterPath="$PROJECT_DIR$/Part3/Chapter19/data/european-russia.topojson" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part3/Chapter19/Data/european_russia.geojson" beforeDir="false" afterPath="$PROJECT_DIR$/Part3/Chapter19/data/european_russia.geojson" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part3/Chapter19/Data/example.geojson" beforeDir="false" afterPath="$PROJECT_DIR$/Part3/Chapter19/data/example.geojson" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part3/Chapter19/Data/hygfull.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Part3/Chapter19/data/hygfull.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part3/Chapter19/Data/mars.topojson" beforeDir="false" afterPath="$PROJECT_DIR$/Part3/Chapter19/data/mars.topojson" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part3/Chapter19/Data/minard-cities.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Part3/Chapter19/data/minard-cities.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part3/Chapter19/Data/minard-steps.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Part3/Chapter19/data/minard-steps.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part3/Chapter19/Data/minard-temperatures.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Part3/Chapter19/data/minard-temperatures.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part3/Chapter19/Data/minard-troops.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Part3/Chapter19/data/minard-troops.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part3/Chapter19/Data/mortes_acidentes_transito_2016.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Part3/Chapter19/data/mortes_acidentes_transito_2016.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part3/Chapter19/Data/mortes_acidentes_transito_2016_estados.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Part3/Chapter19/data/mortes_acidentes_transito_2016_estados.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part3/Chapter19/Data/municipios.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Part3/Chapter19/data/municipios.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part3/Chapter19/Data/municipios_br.geojson" beforeDir="false" afterPath="$PROJECT_DIR$/Part3/Chapter19/data/municipios_br.geojson" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part3/Chapter19/Data/nyc.topojson" beforeDir="false" afterPath="$PROJECT_DIR$/Part3/Chapter19/data/nyc.topojson" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part3/Chapter19/Data/planetary-data.json" beforeDir="false" afterPath="$PROJECT_DIR$/Part3/Chapter19/data/planetary-data.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part3/Chapter19/Data/populacao_2016_municipios.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Part3/Chapter19/data/populacao_2016_municipios.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part3/Chapter19/Data/routes-selected.json" beforeDir="false" afterPath="$PROJECT_DIR$/Part3/Chapter19/data/routes-selected.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part3/Chapter19/Data/russia.geojson" beforeDir="false" afterPath="$PROJECT_DIR$/Part3/Chapter19/data/russia.geojson" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part3/Chapter19/Data/russia.topojson" beforeDir="false" afterPath="$PROJECT_DIR$/Part3/Chapter19/data/russia.topojson" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part3/Chapter19/Data/un_regions.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Part3/Chapter19/data/un_regions.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part3/Chapter19/Data/world-lowres.geojson" beforeDir="false" afterPath="$PROJECT_DIR$/Part3/Chapter19/data/world-lowres.geojson" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part3/Chapter19/Data/world-lowres.topojson" beforeDir="false" afterPath="$PROJECT_DIR$/Part3/Chapter19/data/world-lowres.topojson" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part3/Chapter19/Data/world-medres.geojson" beforeDir="false" afterPath="$PROJECT_DIR$/Part3/Chapter19/data/world-medres.geojson" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part3/Chapter19/Data/world-medres.topojson" beforeDir="false" afterPath="$PROJECT_DIR$/Part3/Chapter19/data/world-medres.topojson" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part3/Chapter19/Data/worldcities.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Part3/Chapter19/data/worldcities.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part3/Chapter20/Data/NY_subway.geojson" beforeDir="false" afterPath="$PROJECT_DIR$/Part3/Chapter20/data/NY_subway.geojson" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part3/Chapter20/Data/World_Cities_Location_table.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Part3/Chapter20/data/World_Cities_Location_table.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part3/Chapter20/Data/africa-10-cities.geojson" beforeDir="false" afterPath="$PROJECT_DIR$/Part3/Chapter20/data/africa-10-cities.geojson" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part3/Chapter20/Data/africa-1500-cities.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Part3/Chapter20/data/africa-1500-cities.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part3/Chapter20/Data/africa-continental-simple-polygon.geojson" beforeDir="false" afterPath="$PROJECT_DIR$/Part3/Chapter20/data/africa-continental-simple-polygon.geojson" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part3/Chapter20/Data/africa-madagascar.geojson" beforeDir="false" afterPath="$PROJECT_DIR$/Part3/Chapter20/data/africa-madagascar.geojson" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part3/Chapter20/Data/africa-rivers-simple-multiline.geojson" beforeDir="false" afterPath="$PROJECT_DIR$/Part3/Chapter20/data/africa-rivers-simple-multiline.geojson" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part3/Chapter20/Data/africa-rivers.geojson" beforeDir="false" afterPath="$PROJECT_DIR$/Part3/Chapter20/data/africa-rivers.geojson" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part3/Chapter20/Data/africa-simple-multipolygon.geojson" beforeDir="false" afterPath="$PROJECT_DIR$/Part3/Chapter20/data/africa-simple-multipolygon.geojson" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part3/Chapter20/Data/africa-simple.geojson" beforeDir="false" afterPath="$PROJECT_DIR$/Part3/Chapter20/data/africa-simple.geojson" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part3/Chapter20/Data/africa-simple.topojson" beforeDir="false" afterPath="$PROJECT_DIR$/Part3/Chapter20/data/africa-simple.topojson" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part3/Chapter20/Data/africa.geojson" beforeDir="false" afterPath="$PROJECT_DIR$/Part3/Chapter20/data/africa.geojson" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part3/Chapter20/Data/africa.topojson" beforeDir="false" afterPath="$PROJECT_DIR$/Part3/Chapter20/data/africa.topojson" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part3/Chapter20/Data/airports-selected.json" beforeDir="false" afterPath="$PROJECT_DIR$/Part3/Chapter20/data/airports-selected.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part3/Chapter20/Data/airports.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Part3/Chapter20/data/airports.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part3/Chapter20/Data/americas.geojson" beforeDir="false" afterPath="$PROJECT_DIR$/Part3/Chapter20/data/americas.geojson" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part3/Chapter20/Data/asian_russia.geojson" beforeDir="false" afterPath="$PROJECT_DIR$/Part3/Chapter20/data/asian_russia.geojson" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part3/Chapter20/Data/border-example.geojson" beforeDir="false" afterPath="$PROJECT_DIR$/Part3/Chapter20/data/border-example.geojson" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part3/Chapter20/Data/border-example.topojson" beforeDir="false" afterPath="$PROJECT_DIR$/Part3/Chapter20/data/border-example.topojson" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part3/Chapter20/Data/cities.geojson" beforeDir="false" afterPath="$PROJECT_DIR$/Part3/Chapter20/data/cities.geojson" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part3/Chapter20/Data/cities1000.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Part3/Chapter20/data/cities1000.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part3/Chapter20/Data/cities1000.json" beforeDir="false" afterPath="$PROJECT_DIR$/Part3/Chapter20/data/cities1000.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part3/Chapter20/Data/earth-waterbodies-10km.geojson" beforeDir="false" afterPath="$PROJECT_DIR$/Part3/Chapter20/data/earth-waterbodies-10km.geojson" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part3/Chapter20/Data/estados_br.geojson" beforeDir="false" afterPath="$PROJECT_DIR$/Part3/Chapter20/data/estados_br.geojson" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part3/Chapter20/Data/estados_br_pop.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Part3/Chapter20/data/estados_br_pop.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part3/Chapter20/Data/europe-russia.topojson" beforeDir="false" afterPath="$PROJECT_DIR$/Part3/Chapter20/data/europe-russia.topojson" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part3/Chapter20/Data/europe_russia.geojson" beforeDir="false" afterPath="$PROJECT_DIR$/Part3/Chapter20/data/europe_russia.geojson" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part3/Chapter20/Data/european-russia.topojson" beforeDir="false" afterPath="$PROJECT_DIR$/Part3/Chapter20/data/european-russia.topojson" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part3/Chapter20/Data/european_russia.geojson" beforeDir="false" afterPath="$PROJECT_DIR$/Part3/Chapter20/data/european_russia.geojson" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part3/Chapter20/Data/example.geojson" beforeDir="false" afterPath="$PROJECT_DIR$/Part3/Chapter20/data/example.geojson" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part3/Chapter20/Data/hygfull.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Part3/Chapter20/data/hygfull.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part3/Chapter20/Data/mars.topojson" beforeDir="false" afterPath="$PROJECT_DIR$/Part3/Chapter20/data/mars.topojson" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part3/Chapter20/Data/minard-cities.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Part3/Chapter20/data/minard-cities.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part3/Chapter20/Data/minard-steps.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Part3/Chapter20/data/minard-steps.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part3/Chapter20/Data/minard-temperatures.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Part3/Chapter20/data/minard-temperatures.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part3/Chapter20/Data/minard-troops.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Part3/Chapter20/data/minard-troops.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part3/Chapter20/Data/mortes_acidentes_transito_2016.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Part3/Chapter20/data/mortes_acidentes_transito_2016.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part3/Chapter20/Data/mortes_acidentes_transito_2016_estados.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Part3/Chapter20/data/mortes_acidentes_transito_2016_estados.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part3/Chapter20/Data/municipios.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Part3/Chapter20/data/municipios.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part3/Chapter20/Data/municipios_br.geojson" beforeDir="false" afterPath="$PROJECT_DIR$/Part3/Chapter20/data/municipios_br.geojson" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part3/Chapter20/Data/nyc.topojson" beforeDir="false" afterPath="$PROJECT_DIR$/Part3/Chapter20/data/nyc.topojson" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part3/Chapter20/Data/planetary-data.json" beforeDir="false" afterPath="$PROJECT_DIR$/Part3/Chapter20/data/planetary-data.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part3/Chapter20/Data/populacao_2016_municipios.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Part3/Chapter20/data/populacao_2016_municipios.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part3/Chapter20/Data/routes-selected.json" beforeDir="false" afterPath="$PROJECT_DIR$/Part3/Chapter20/data/routes-selected.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part3/Chapter20/Data/russia.geojson" beforeDir="false" afterPath="$PROJECT_DIR$/Part3/Chapter20/data/russia.geojson" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part3/Chapter20/Data/russia.topojson" beforeDir="false" afterPath="$PROJECT_DIR$/Part3/Chapter20/data/russia.topojson" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part3/Chapter20/Data/un_regions.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Part3/Chapter20/data/un_regions.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part3/Chapter20/Data/world-lowres.geojson" beforeDir="false" afterPath="$PROJECT_DIR$/Part3/Chapter20/data/world-lowres.geojson" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part3/Chapter20/Data/world-lowres.topojson" beforeDir="false" afterPath="$PROJECT_DIR$/Part3/Chapter20/data/world-lowres.topojson" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part3/Chapter20/Data/world-medres.geojson" beforeDir="false" afterPath="$PROJECT_DIR$/Part3/Chapter20/data/world-medres.geojson" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part3/Chapter20/Data/world-medres.topojson" beforeDir="false" afterPath="$PROJECT_DIR$/Part3/Chapter20/data/world-medres.topojson" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part3/Chapter20/Data/worldcities.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Part3/Chapter20/data/worldcities.csv" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -170,8 +243,8 @@
         <option value="package" />
         <option value="Kotlin Script" />
         <option value="CSS File" />
-        <option value="HTML File" />
         <option value="JavaScript File" />
+        <option value="HTML File" />
       </list>
     </option>
   </component>
@@ -209,50 +282,50 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
-    &quot;DefaultHtmlFileTemplate&quot;: &quot;HTML File&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;javascript.nodejs.core.library.configured.version&quot;: &quot;18.13.0&quot;,
-    &quot;javascript.nodejs.core.library.typings.version&quot;: &quot;18.13.0&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/Users/helderdarocha/IdeaProjects/Learn-D3js-2023/Part2/Chapter14/ZoomSemantic&quot;,
-    &quot;list.type.of.created.stylesheet&quot;: &quot;CSS&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs.jest.jest_package&quot;: &quot;/Users/helderdarocha/IdeaProjects/Learn-D3js-2023/node_modules/jest&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;org.rust.cargo.project.model.impl.CargoExternalSystemProjectAware.subscribe.first.balloon&quot;: &quot;&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
-    &quot;run.code.analysis.last.selected.profile&quot;: &quot;pProject Default&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ASKED_ADD_EXTERNAL_FILES": "true",
+    "DefaultHtmlFileTemplate": "HTML File",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "git-widget-placeholder": "main",
+    "javascript.nodejs.core.library.configured.version": "18.13.0",
+    "javascript.nodejs.core.library.typings.version": "18.13.0",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "/Users/helderdarocha/IdeaProjects/Learn-D3js-2023/Part2/Chapter14/Events",
+    "list.type.of.created.stylesheet": "CSS",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs.jest.jest_package": "/Users/helderdarocha/IdeaProjects/Learn-D3js-2023/node_modules/jest",
+    "nodejs_package_manager_path": "npm",
+    "org.rust.cargo.project.model.impl.CargoExternalSystemProjectAware.subscribe.first.balloon": "",
+    "project.structure.last.edited": "Project",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.0",
+    "run.code.analysis.last.selected.profile": "pProject Default",
+    "settings.editor.selected.configurable": "preferences.pluginManager",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/Part2/Chapter14/ZoomSemantic" />
-      <recent name="$PROJECT_DIR$/Part2/Chapter14/Brush" />
-      <recent name="$PROJECT_DIR$/Part2/Chapter14/Zoom-Programmatic" />
-      <recent name="$PROJECT_DIR$/Part2/Chapter14/Zoom-Semantic" />
-      <recent name="$PROJECT_DIR$/Part2/Chapter14/js" />
+      <recent name="$PROJECT_DIR$/Part2/Chapter14/Events" />
+      <recent name="$PROJECT_DIR$/Part2/Chapter14/Dispatch" />
+      <recent name="$PROJECT_DIR$/Part2/Chapter14/Examples" />
+      <recent name="$PROJECT_DIR$/Part2/Chapter14/Events-TODO/Dispatch" />
+      <recent name="$PROJECT_DIR$/Part2/Chapter14/Pointer" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/Part2/Chapter14/_OLD_Chapter14" />
+      <recent name="$PROJECT_DIR$/Part2/Chapter14/EventsNative" />
       <recent name="$PROJECT_DIR$/Part2/Chapter14/Examples" />
-      <recent name="$PROJECT_DIR$/Part2/Chapter14/Zoom" />
-      <recent name="$PROJECT_DIR$/Part2/Chapter14/Zoom-Transform" />
-      <recent name="$PROJECT_DIR$/Part2/Chapter14/Zoom-Programmatic" />
+      <recent name="$PROJECT_DIR$/Part2/Chapter14/Events" />
+      <recent name="$PROJECT_DIR$/Part2/Chapter14/Dispatch" />
     </key>
   </component>
   <component name="RunManager" selected="JavaScript Debug.Exercise12.html">
@@ -627,6 +700,15 @@
       <workItem from="1740233677587" duration="18143000" />
       <workItem from="1740266915330" duration="3770000" />
       <workItem from="1740316054720" duration="44881000" />
+      <workItem from="1740406722965" duration="12830000" />
+      <workItem from="1740595057104" duration="26768000" />
+      <workItem from="1740662891694" duration="31141000" />
+      <workItem from="1740741772043" duration="116609000" />
+      <workItem from="1741091334357" duration="27950000" />
+      <workItem from="1741187935341" duration="26292000" />
+      <workItem from="1742308721258" duration="15736000" />
+      <workItem from="1742415943883" duration="6641000" />
+      <workItem from="1742470730406" duration="25657000" />
     </task>
     <task id="LOCAL-00001" summary="Example files for Chapter 1">
       <created>1678932902809</created>
@@ -944,7 +1026,15 @@
       <option name="project" value="LOCAL" />
       <updated>1737947001193</updated>
     </task>
-    <option name="localTasksCounter" value="43" />
+    <task id="LOCAL-00043" summary="Updated files after Chapter 14.">
+      <option name="closed" value="true" />
+      <created>1740407014079</created>
+      <option name="number" value="00043" />
+      <option name="presentableId" value="LOCAL-00043" />
+      <option name="project" value="LOCAL" />
+      <updated>1740407014079</updated>
+    </task>
+    <option name="localTasksCounter" value="44" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -962,7 +1052,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Updated readme files" />
     <MESSAGE value="Updated exercises and module examples" />
     <MESSAGE value="Added examples with modules (temporary)" />
     <MESSAGE value="Added Chapter 2" />
@@ -987,7 +1076,8 @@
     <MESSAGE value="Updated files after reviewing Chapter 8." />
     <MESSAGE value="Updated files after reviewing Chapter 9." />
     <MESSAGE value="Updated files after full Part I review." />
-    <option name="LAST_COMMIT_MESSAGE" value="Updated files after full Part I review." />
+    <MESSAGE value="Updated files after Chapter 14." />
+    <option name="LAST_COMMIT_MESSAGE" value="Updated files after Chapter 14." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1008,7 +1098,7 @@
           <option name="timeStamp" value="3" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
-          <url>file://$PROJECT_DIR$/Part2/Chapter14/Events-TODO/1-simple-handler.html</url>
+          <url>file://$PROJECT_DIR$/Part2/Chapter14/EventsNative/1-body-handler.html</url>
           <line>87</line>
           <option name="timeStamp" value="4" />
         </line-breakpoint>
@@ -1038,12 +1128,12 @@
           <option name="timeStamp" value="9" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
-          <url>file://$PROJECT_DIR$/Part2/Chapter14/Exercises/Solutions/Exercise-zoom-xy/index.html</url>
+          <url>file://$PROJECT_DIR$/Part2/Chapter14/Exercises-TODO/Solutions/Exercise-zoom-xy/index.html</url>
           <line>13</line>
           <option name="timeStamp" value="11" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
-          <url>file://$PROJECT_DIR$/Part2/Chapter14/Exercises/Solutions/Exercise-zoom-xy/index.html</url>
+          <url>file://$PROJECT_DIR$/Part2/Chapter14/Exercises-TODO/Solutions/Exercise-zoom-xy/index.html</url>
           <line>18</line>
           <option name="timeStamp" value="12" />
         </line-breakpoint>
@@ -1051,6 +1141,11 @@
           <url>file://$PROJECT_DIR$/Part2/Chapter14/ZoomTransform/8-scale-by.html</url>
           <line>17</line>
           <option name="timeStamp" value="14" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/Part2/Chapter14/Events/3-pointer-events.html</url>
+          <line>52</line>
+          <option name="timeStamp" value="15" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
