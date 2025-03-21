@@ -28,7 +28,7 @@
 <script type="module">
     import * as d3 from "https://cdn.skypack.dev/d3@7";
     import * as utils from "../js/chart-utils.js";
-    import {isValid, inBrush} from "./js/brush-utils.js";
+    import {isValid, inBrush} from "../js/brush-utils.js";
 
     const dim = {width: 800, height: 500, margin: 50};
     const svg = d3.select("svg").attr("width", dim.width).attr("height", dim.height);
@@ -62,18 +62,18 @@
     // Configure the brush behavior
     const brush = d3.brush()
         .extent([[dim.margin, dim.margin],[dim.width-dim.margin, dim.height-dim.margin]])     // Maximum size of the brush
-        .on("start", function() {
+        .on("start", () => {
             d3.selectAll("circle")
                 .style("fill", "blue");   // Reset the color of the circles
         })
-        .on("brush", function(e) {
-            if (!isValid(e)) return;  // return if selection is invalid
+        .on("brush", evt => {
+            if (!isValid(evt)) return;  // return if selection is invalid
             d3.selectAll("circle")
-              .style("fill", d => inBrush(e.selection, [xScale(d[0]), yScale(d[1])]) ? "red" : "blue");
+              .style("fill", d => inBrush(evt.selection, [xScale(d[0]), yScale(d[1])]) ? "red" : "blue");
         })
-        .on("end", function(e) {
-            if (!isValid(e)) return;  // return if selection is invalid
-            selectedData = data.filter(d => inBrush(e.selection, [xScale(d[0]), yScale(d[1])]));  // store the selection
+        .on("end", evt => {
+            if (!isValid(evt)) return;  // return if selection is invalid
+            selectedData = data.filter(d => inBrush(evt.selection, [xScale(d[0]), yScale(d[1])]));  // store the selection
             d3.select("#count").text(selectedData.length);
         });
 

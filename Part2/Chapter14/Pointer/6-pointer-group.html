@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Pointer coordinates - relative to a group</title>
+    <style>
+        div {
+            border: 1px solid black;
+            width: 542px;
+            height: 342px;
+            position: absolute;
+            left: 20px;
+            top: 100px;
+        }
+        svg {
+            border: solid 1px green;
+            margin: 20px;
+        }
+        p.label {
+            font-variant: "small-caps";
+            font-size: 10pt;
+            font-family: monospace;
+            position: absolute;
+        }
+        text.label {
+            font-size: 10pt;
+            font-family: monospace;
+        }
+    </style>
+</head>
+<body>
+<h3>Pointer coordinates - relative to a group</h3>
+<p>Click to see the result of using local coordinates.</p>
+<p class="label" style="top: 90px; left: 271px;">div</p>
+<p class="label" style="top: 110px; left: 271px; color: darkgreen">svg</p>
+<div>
+    <svg width="500" height="300"></svg>
+</div>
+<script type="module">
+    import * as d3 from "https://cdn.skypack.dev/d3@7";
+
+    const color = new Map([["svg","green"], ["g","red"]]);
+
+    d3.select("svg").append("g").attr("transform", "translate(100,100)")
+        .append("rect")
+        .attr("width", 150)
+        .attr("height", 150)
+        .attr("fill", "rgba(255,32,32,0.1)");
+
+    d3.selectAll("svg")
+        .on("click", function(evt) {
+            d3.selectAll("circle, text").remove();
+            const [x,y] = d3.pointer(evt, d3.select("g").node()); // always relative to the <g>
+            drawPoint(d3.select("g"), x, y, "red", `<g> coordinates`);
+        });
+
+    function drawPoint(container,x,y,color,ref) {
+        container.append("circle")
+            .attr("cx", x)
+            .attr("cy", y)
+            .attr("r", 5)
+            .attr("fill", color);
+
+        container.append("text").attr("class", "label")
+            .attr("x", x)
+            .attr("y", y+1)
+            .attr("dx", 10)
+            .attr("text-anchor", "left")
+            .attr("alignment-baseline", "hanging")
+            .text(`${ref} (${x},${y})`)
+    }
+</script>
+
+</body>
+</html>

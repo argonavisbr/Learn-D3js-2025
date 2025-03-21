@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Event handler for each element</title>
+    <style>
+        svg {
+            background-color: rgba(0,255,0,0.1);
+            border: green 3px solid;
+        }
+        rect.red {
+            stroke: red;
+            fill: rgba(255,0,0,0.1);
+            stroke-width: 3;
+        }
+        rect.blue {
+            stroke: blue;
+            fill: rgba(0,0,255,0.1);
+            stroke-width: 3;
+        }
+        #panel {
+            width: 300px;
+            height: 492px;
+            border: solid 1px teal;
+            position: absolute;
+            top: 100px;
+            left: 800px;
+            padding: 5px;
+        }
+        li {
+            font-family: monospace;
+        }
+        ul:nth-child(2) li:nth-child(even) {
+            padding-bottom: 15px;
+        }
+        h3 {
+            font-family: sans-serif;
+        }
+    </style>
+</head>
+<body>
+<h3>Event pointer coordinates</h3>
+<p>Move pointerover or click anywhere in the page</p>
+<svg style="position:absolute; left:100px; top:100px" height="500" width="600">
+    <g transform="translate(100,400)">
+        <rect class="red"  width="400" height="300" y="-300"/>
+        <rect class="blue" width="200" height="100" x="100" y="-200"/>
+    </g>
+</svg>
+<div id="panel"></div>
+
+<script type="module">
+    import {log, handler, createPanel} from "./js/events-panel.js";
+
+    const tags = ["html", "body", "svg", "g", "rect", "div"];
+    const elements =
+        [window, tags.map(d => [...document.getElementsByTagName(d)].flat())].flat(2);
+    elements.forEach(d => d.addEventListener('click', log));
+    elements.forEach(d => d.addEventListener('pointermove', handler));
+    elements.forEach(d => d.addEventListener('click', handler));
+
+    createPanel();
+
+</script>
+
+</body>
+</html>

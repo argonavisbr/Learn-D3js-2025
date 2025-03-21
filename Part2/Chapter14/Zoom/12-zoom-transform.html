@@ -42,17 +42,17 @@
             .style("stroke-width", 2)
             .style("stroke", "olive");
 
-    // 1) Identity transform - creating from node
-    const trsf1 = d3.zoomTransform(container.node())
-    console.log(trsf1);           // {x: 0, y: 0, k: 1}
+    // 1) Creating a new transform
+    const trsf1 = new d3.ZoomTransform(2, 25, 10);
+    console.log("Transform 1: "+trsf1, trsf1);        // translate(25,10) scale(2)
 
-    // 2) Creating a new transform
-    const trsf2 = new d3.ZoomTransform(2, 25, 10);
-    console.log(""+trsf2);        // translate(25,10) scale(2)
+    // 2) Deriving a new transform
+    const trsf2 = trsf1.translate(50, 50).scale(2);
+    console.log("Transform 2: "+trsf2, trsf2);        // translate(75,60) scale(3)
 
-    // 3) Deriving a new transform
-    const trsf3 = trsf2.translate(50, 50).scale(2);
-    console.log(""+trsf3);        // translate(75,60) scale(3)
+    // 3) Obtaining a transform from a node
+    const trsf3 = d3.zoomTransform(container.node())
+    console.log("Transform 3: "+trsf3, trsf3);           // {x: 0, y: 0, k: 1}
 
     // A simple zoom handler
     const zoom = d3.zoom()
@@ -65,7 +65,7 @@
     controls.append("button")
             .text("Translate to (75,60), Scale 3x")
             .on("click", () => {
-                container.transition().call(zoom.transform, trsf3);
+                container.transition().call(zoom.transform, trsf2);
             });
     controls.append("button")
             .text("Reset to zoom.identity")

@@ -50,7 +50,7 @@ selection modes, use the following gestures and keys:</p>
 <ul>
     <li>Mode <code>handle</code> (yellow): resize dragging the border or corner handles of the selection rectangle.</li>
     <li>Mode <code>drag</code> (orange): move the selection rectangle by dragging its center.</li>
-    <li>Mode <code>center</code> (green): resize from the center by dragging a handle while holding the <b>Alt</b> (<b>⌥</b>) key.</li>
+    <li>Mode <code>center</code> (green): resize from the center by dragging a handle while holding the <b>Alt/Option</b> (<b>⌥</b>) key.</li>
     <li>Mode <code>space</code> (blue): move by dragging a handle while holding the space bar.</li>
 </ul>
 
@@ -59,7 +59,7 @@ selection modes, use the following gestures and keys:</p>
 <script type="module">
     import * as d3 from "https://cdn.skypack.dev/d3@7";
     import * as utils from "../js/chart-utils.js";
-    import {isValid, inBrush} from "./js/brush-utils.js";
+    import {isValid, inBrush} from "../js/brush-utils.js";
 
     const dim = {width: 800, height: 500, margin: 50};
     const svg = d3.select("svg").attr("width", dim.width).attr("height", dim.height);

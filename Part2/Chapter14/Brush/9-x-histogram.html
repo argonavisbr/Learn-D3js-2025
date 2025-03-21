@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <title>Simple one-dimensional brush - histogram</title>
-    <link rel="stylesheet" href="../css/chart-utils.css">
     <style>
       svg {
         border: solid 1px lightgray;
@@ -18,9 +17,11 @@
 <script type="module">
     import * as d3 from "https://cdn.skypack.dev/d3@7";
     import * as utils from "../js/chart-utils.js";
-    import {isValid} from "./js/brush-utils.js";
+    import {isValid} from "../js/brush-utils.js";
 
     const dim = {width: 800, height: 500, margin: 50};
+    const cht = {width: dim.width - 2*dim.margin, height: dim.height - 2*dim.margin};
+
     const svg = d3.select("svg").attr("width", dim.width).attr("height", dim.height);
 
     // A normal distribution, centered in 100 with a standard deviation of 15
@@ -63,7 +64,7 @@
 
     // BRUSH IMPLEMENTATION
 
-    // Function to check if bin is brushed
+    // Function to check if bin is brushed (values must be within the brush)
     const brushed = (bin, sel) => xScale(bin.x0) >= sel[0] && xScale(bin.x1) <= sel[1];
 
     // Brush configuration
@@ -72,17 +73,19 @@
         .on("brush end", function(evt, dat) {
             if (!isValid(evt)) return;
             // store the selected bins
-            container.datum(bins.filter(bin => brushed(bin, evt.selection)));
-            // show the selection
-            d3.selectAll(".bar")
-                .style("fill", bin => dat.includes(bin) ? "red" : null);
-            // print stats
-            if(dat && dat.length > 0) {
-                const population =  dat.map(d => d.length).reduce((a,b) => a+b);
+            const selectedData = bins.filter(bin => brushed(bin, evt.selection));
+
+            if(selectedData && selectedData.length > 0) {
+                // show the selection
+                d3.selectAll(".bar")
+                    .style("fill", bin => selectedData.includes(bin) ? "red" : null);
+                // print stats
+                const [min, max] = [selectedData[0].x0, selectedData[selectedData.length-1].x1];
+                const population =  selectedData.map(d => d.length).reduce((a,b) => a+b);
                 const percent = d3.format(".2%")(population / data.length);
                 console.log("Population selected: " + population);
                 d3.select("#percent").text(percent);
-                d3.select("#detail").text(`from ${dat[0].x0} to ${dat[dat.length-1].x1}`);
+                d3.select("#detail").text(`from ${min} to ${max}`);
             }
          });
 

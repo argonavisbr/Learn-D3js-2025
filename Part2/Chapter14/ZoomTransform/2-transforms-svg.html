@@ -34,8 +34,8 @@
     d3.select(".chart").call(zoom); // for interactive zooming
 
     // order of scale and translate is significant when generating SVG string!!
-    console.log("t.scale(2).translate(100,100)", "Result: '"+d3.zoomIdentity.scale(2).translate(100,100)+"'");
-    console.log("t.translate(100,100).scale(2)", "Result: '"+d3.zoomIdentity.translate(100,100).scale(2)+"'");
+    console.log("scale(2).translate(100,100)", "Result: '"+d3.zoomIdentity.scale(2).translate(100,100)+"'");
+    console.log("translate(100,100).scale(2)", "Result: '"+d3.zoomIdentity.translate(100,100).scale(2)+"'");
 
     // 2x scale + (-400,-300)
     const trsf1 =

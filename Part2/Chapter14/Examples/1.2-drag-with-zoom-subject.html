@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Simple drag and drop with zoom</title>
+</head>
+<body>
+<p>Drag and drop squares. Double-click to zoom in, shift-double-click to zoom out.
+   Since dragging is subject-based, no transform compensation is necessary.</p>
+<script type="module">
+    import * as d3 from "https://cdn.skypack.dev/d3@7";
+    import {makeChart, drawGrid} from "../js/grid-squares.js";
+
+    const colors = [['#e41a1c','#377eb8','#4daf4a'],
+        ['#984ea3','#ff7f00','#ffff33'],
+        ['#a65628','#f781bf','#999999']];
+    const data = colors.map((p,i) => p.map((q,j) => ({color: q, row: i, col: j}) )).flat();
+    const side = 48; // side of the square
+
+    const chart = makeChart(10,420,320);
+    drawGrid(chart.width, chart.height);
+    drawSquares();
+
+    function drawSquares() {
+        d3.select(".container")
+           .selectAll("rect.square")
+            .data(data)
+              .join("rect").attr("class","square")
+                .datum((d) => ({...d, x:0, y:0})) // inserting {x,y} into datum (subject)
+                .attr("x", d => 1 + 50 * (d.row + 1))
+                .attr("y", d => 1 + 50 * (d.col + 1))
+                .attr("width", side)
+                .attr("height", side)
+                .style("fill", d => d.color);
+    }
+
+    const dragBehavior = d3.drag()
+        .on('start', function() {
+            d3.dragDisable(window);  // disable native window dragging during operation
+            d3.select(this).raise();
+            d3.select(this).style("cursor", "move")
+        })
+        .on('drag', function(evt, d) {   // using standard data object - doesn't require transform compensation
+            d3.select(this).attr("transform", `translate(${[d.x, d.y]})`);
+            d.x = evt.x;
+            d.y = evt.y;
+        })
+        .on('end', function() {
+            d3.dragEnable(window);  // re-enable window dragging
+            d3.select(this).style("cursor", "auto")
+        });
+
+    const zoomBehavior = d3.zoom()
+            .duration(1000)
+            .on('zoom', function(evt) {
+                console.log(evt.transform.toString())
+                d3.select(".container").attr("transform", evt.transform);
+            })
+
+    d3.select(".chart").call(zoomBehavior);
+    d3.selectAll("rect.square").call(dragBehavior);
+
+</script>
+
+</body>
+</html>

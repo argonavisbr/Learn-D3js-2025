@@ -54,21 +54,21 @@
     // Configure the brush behavior
     const brush = d3.brush()
         .extent([[dim.margin, dim.margin],[dim.width-dim.margin, dim.height-dim.margin]])     // Maximum size of the brush
-        .on("start", function() {
-            e.target.move(d3.select(this), [[0,0],[1,1]]);  // move the brush to the initial position
+        .on("start", function(evt) {
+            evt.target.move(d3.select(this), [[0,0],[1,1]]);  // move the brush to the initial position
             d3.selectAll("circle")
                 .style("fill", "blue");   // Reset the color of the circles
         })
-        .on("brush", function(e) {
-            if (!isValid(e)) return;  // return if brush is invalid
+        .on("brush", evt => {
+            if (!isValid(evt)) return;  // return if brush is invalid
             d3.selectAll("circle")
-              .style("fill", d => inBrush(e.selection, [xScale(d[0]), yScale(d[1])]) ? "red" : "blue");
+              .style("fill", d => inBrush(evt.selection, [xScale(d[0]), yScale(d[1])]) ? "red" : "blue");
         })
-        .on("end", function(e) {
-            if (!isValid(e)) return;  // return if brush is invalid
-            const selectedData = data.filter(d => inBrush(e.selection, [xScale(d[0]), yScale(d[1])]));  // store the selection
+        .on("end", function(evt) {
+            if (!isValid(evt)) return;  // return if brush is invalid
+            const selectedData = data.filter(d => inBrush(evt.selection, [xScale(d[0]), yScale(d[1])]));  // store the selection
             d3.select("#count").text(selectedData.length);
-            console.log(d3.brushSelection(this));  // print the selection
+            console.log("Selection: " + JSON.stringify(d3.brushSelection(this)));  // print the selection
         });
 
     container.call(brush);      // attach the brush

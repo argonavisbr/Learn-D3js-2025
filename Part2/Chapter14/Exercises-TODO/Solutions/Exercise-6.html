@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Exercise: Brush select elements in a separate chart</title>
+    <style>
+        svg {border: solid 1px black;}
+    </style>
+</head>
+<body>
+<h2>Exercise: Brush select elements in a separate chart</h2>
+<p>Uses a brushable histogram to highlight selected data points in a scatterplot.</p>
+<p>Selected points: <span id="population">0</span> (<span id="percent">0%</span> of the population<span id="detail"></span>)</p>
+<svg id="histogram"></svg>
+<svg id="scatterplot"></svg>
+<script type="module">
+    import * as d3 from "https://cdn.skypack.dev/d3@7";
+    import * as utils from "../../js/chart-utils.js";
+    import {isValid} from "../../js/brush-utils.js";
+
+    // If you moved this file, check if the above URIs are still valid.
+
+    // DATA: A sample dataset, ith x,y coordinates and an arbitrary value n
+    const data1 = d3.range(5000).map(() => ({
+        x: d3.randomNormal(50, 7)(),
+        y: d3.randomNormal(50, 8)(),
+        n: d3.randomNormal(20, 10)()
+    }));
+    const data2 = d3.range(2500).map(() => ({
+        x: d3.randomUniform(0, 100)(),
+        y: d3.randomUniform(0, 100)(),
+        n: d3.randomNormal(60, 6)()
+    }));
+    const data = data1.concat(data2).filter(d => d.n > 0);
+
+
+    // Dimensions
+    const dim = {width: 500, height: 400, margin: 50};
+    const cht = {width: dim.width - 2*dim.margin, height: dim.height - 2*dim.margin};
+
+    // 1) SCATTERPLOT
+    const scatter = {
+        context: d3.select("#scatterplot").attr("width", dim.width).attr("height", dim.height)
+                   .append("g").attr("transform", `translate(${dim.margin}, ${dim.margin})`),
+        x: d3.scaleLinear().domain([0,100]).range([0, cht.width]),
+        y: d3.scaleLinear().domain([0,100]).range([cht.height, 0])
+    }
+    scatter.container = scatter.context.append("g");
+
+    // Axes
+    utils.cartesianAxes()
+         .container(scatter.context)
+         .xScale(scatter.x)
+         .yScale(scatter.y)();
+
+    // Plot the points in the container
+    scatter.container.selectAll("circle")
+                     .data(data)
+                       .join("circle")
+                          .attr("cx", d => scatter.x(d.x))
+                          .attr("cy", d => scatter.y(d.y))
+                          .attr("r", 1.5);
+
+
+    // HISTOGRAM - viewport and scales
+    const histogram = {
+        chart: d3.select("#histogram").attr("width", dim.width).attr("height", dim.height)
+                 .append("g").attr("transform", `translate(${dim.margin}, ${dim.margin})`),
+        x: d3.scaleBand().range([0, cht.width]),
+        y: d3.scaleLinear().range([cht.height, 0]),
+        color: d3.scaleLinear().range(["orange", "blue"])
+    }
+
+    // Bin the data
+    const bins = d3.bin().thresholds(data.length/50)(data.map(d => d.n));
+
+    histogram.x.domain(bins.map(d => d.x0));
+    histogram.y.domain([0, d3.max(bins, d => d.length)]);
+    histogram.color.domain(d3.extent(bins, d => d.x0));
+
+    // Axes
+    const [axisX] = utils.cartesianAxes().container(histogram.chart)
+                         .xScale(histogram.x)
+                         .yScale(histogram.y)
+                         .yLabel("Population")
+                         .xLabel("Value")();
+    axisX.tickValues(histogram.x.domain().filter((d, i) => i%(10)===0 )).tickFormat(d3.format("d"));
+    d3.select(".x-axis").call(axisX);
+
+    // Brush container
+    histogram.container = histogram.chart.append("g").datum(bins);
+
+    // plot the histogram
+    histogram.container.selectAll(".bar")
+                       .data(d => d)
+                          .join("rect").attr("class", "bar")
+                            .attr("x", d => histogram.x(d.x0))
+                            .attr("y", d => histogram.y(d.length))
+                            .attr("width", histogram.x.bandwidth())
+                            .attr("height", d => histogram.y(0) - histogram.y(d.length))
+                            .attr("fill", d => histogram.color(d.x0));
+
+
+    // EXERCISE: Implement a horizontal brush behavior for the histogram. Use provided functions and
+    //           the histogram.container declared above.
+    // a) Define an extent so the brush stays within the displayable chart's dimensions (cht).
+    // b) Reset the chart before brushing.
+    // c) On 'brush' and 'end', obtain the selected data filtering the bins that are within the brush's range.
+    //    If the data array is not empty, highlight the selected bars, highlight the corresponding points in
+    //    the scatterplot and update the stats.
+    // d) Attach (call) the behavior from the histogram's chart container.
+    const brush = d3.brushX()
+        .extent([[0, 0],[cht.width, cht.height]])       // Maximum size of the brush
+        .on("start", reset)                             // Reset the chart before brushing
+        .on("brush end", function(evt) {                // Filter and highlight selected data
+            if (!isValid(evt)) return;                  // Check if the brush is valid
+
+            // Obtain the selected data filtering the bins that are within the brush's range
+            const selectedData = bins.filter(bin => brushed(bin, evt.selection));
+
+            // If there is data and data is not empty, show stats, selected histogram bars and selected points
+            if(selectedData && selectedData.length > 0) {
+                showStats(selectedData);
+                showSelectedBars(selectedData);
+                showSelectedPoints(selectedData);
+            }
+        });
+    histogram.container.call(brush);      // attach the brush
+
+    // FUNCTIONS
+
+    // This function returns true if the bin is within the brushed range (use it to filter selected points)
+    const brushed = (bin, sel) => histogram.x(bin.x0) >= sel[0] && histogram.x(bin.x1) <= sel[1];
+
+    // Use this function to print the selected data in the page above the histogram.
+    function showStats(selectedData) {
+        const [min, max] = [selectedData[0].x0, selectedData[selectedData.length-1].x1];
+        d3.select("#detail").html(` from <i>n</i>=${min} to <i>n</i>=${max}`);
+
+        const population =  selectedData.map(d => d.length).reduce((a,b) => a+b);
+        d3.select("#population").text(population);
+
+        const percent = d3.format(".2%")(population / data.length);
+        d3.select("#percent").text(percent);
+    }
+
+    // Use this function to reset the chart before brushing
+    function reset() {
+        d3.select("#population").text(0);
+        d3.select("#percent").text("0%");
+        d3.select("#detail").text("");
+        d3.selectAll(".bar").style("fill", null);
+        scatter.container.selectAll("circle").style("fill", "black");
+    }
+
+    // Highlight the selected bars in the histogram
+    function showSelectedBars(selectedData) {
+        d3.selectAll(".bar")
+          .style("fill", bin => selectedData.includes(bin) ? "red" : null);
+    }
+
+    // Highlight the selected data in the scatterplot
+    function showSelectedPoints(selectedData) {
+        const allPoints = scatter.container.selectAll("circle")
+                                           .style("fill", "black");  // restore color
+
+        // Get the histogram range [min, max] from the selected data
+        const [min, max] = [selectedData[0].x0, selectedData[selectedData.length-1].x1];
+
+        // Filter and highlight points that have their d.n property within the range
+        allPoints.filter(d => d.n >= min && d.n <= max).raise()
+                 .style("fill", "red");
+    }
+
+</script>
+</body>
+</html>

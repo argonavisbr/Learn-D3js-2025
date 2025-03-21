@@ -71,8 +71,8 @@
         return `rgb(${Math.random()*255},${Math.random()*255},${Math.random()*255})`;
     }
 
-    // Checks if the brush is valid
-    export function isValid(e) {
+    // Checks if the brush is valid (use this function from brush-utils.js)
+    function isValid(e) {
         if (!e.selection) return false;         // return false if brush is null
         if (!e.sourceEvent) return false;       // return false if brush is not triggered by a user event
         const [[x0, y0], [x1, y1]] = e.selection;

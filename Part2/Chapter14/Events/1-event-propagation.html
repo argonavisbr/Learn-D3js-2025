@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Native event dispatching</title>
+    <style>
+        svg {
+            border: solid 1px lightgray;
+            position: absolute;
+        }
+        canvas, #svg {
+            position: absolute;
+            top: 180px;
+            left: 10px;
+        }
+    </style>
+</head>
+<body>
+<h2>Using event propagation to handle events on stacked layers</h2>
+<p>The SVG layer sits on top of the Canvas layer. Clicks are propagated to the body layer, which
+draws the points either on the Canvas or on the SVG.</p>
+<p id="canvas-p">CLICK to draw RED dots in CANVAS.</p>
+<p id="svg-p">SHIFT-CLICK To draw GREEN dots in SVG.</p>
+<div>
+    <canvas></canvas>
+    <svg id="svg"></svg> <!-- SVG is placed on top of canvas -->
+</div>
+<script type="module">
+    import * as d3 from "https://cdn.skypack.dev/d3@7";
+    import {isValid, inBrush} from "../js/brush-utils.js";
+    import * as utils from "../js/chart-utils.js";
+
+    // DIMENSIONS
+    const dim = {width: 500, height: 300};
+
+    // CANVAS and SVG layers
+    const canvas = d3.select("canvas")
+                     .attr("width", dim.width).attr("height", dim.height);
+    const svg = d3.select("#svg")
+                  .attr("width", dim.width).attr("height", dim.height);
+    const body = d3.select("body");
+
+    // Event handling
+    // Since the SVG is on top, it can handle pointer events.
+    svg.on("mousedown", function(evt) {
+        if(!evt.shiftKey) {
+            const [x,y] = d3.pointer(evt, canvas.node());
+            paintPoint(x,y,"red");
+        } else {
+            const [x,y] = d3.pointer(evt);
+            drawPoint(x,y,"green");
+        }
+    });
+
+    // The event propagates um the DOM tree and can also be handled by the body.
+    body.on("mousedown", evt => {
+        d3.select("#canvas-p").style("color", evt.shiftKey ? "black" : "red");
+        d3.select("#svg-p").style("color", evt.shiftKey ? "green" : "black");
+    });
+
+    // CANVAS: Paint the points
+    function paintPoint(x,y,color) {
+        const ctx = canvas.node().getContext("2d");
+        ctx.beginPath();
+        ctx.arc(x, y, 5, 0, 2 * Math.PI);
+        ctx.fillStyle = color;
+        ctx.fill();
+    }
+
+    // SVG: Draw the points
+    function drawPoint(x,y,color) {
+        svg.append("circle")
+            .attr("cx", x)
+            .attr("cy", y)
+            .attr("r", 5)
+            .attr("fill", color);
+    }
+
+</script>
+</body>
+</html>

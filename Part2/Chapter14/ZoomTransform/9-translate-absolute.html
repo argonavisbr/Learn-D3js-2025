@@ -6,7 +6,7 @@
 </head>
 <body>
 <h3>Using programmatic pan with d3.zoom().transform()</h3>
-<p>Using <code>d3.zoom().transform()</code>. Compare this with the <code>translateTo()</code> example, which translates relative to the viewport.</p>
+<p>Performing translations with <code>d3.zoom().transform()</code>. Compare this with the <code>translateTo()</code> example, which translates relative to the viewport.</p>
 <p>Transforms:</p>
 <ol>
     <li><code>zoom.transform(200,150)</code></li>
@@ -28,15 +28,11 @@
                     .attr("transform", evt.transform));
 
     // Compare with translateTo example, which uses viewport coords
-    const trsf1 = d3.zoomTransform(d3.select(".chart").node())
-                    .translate(200,150);
+    const trsf1 = d3.zoomIdentity.translate(200,150);
 
-    const trsf2 = d3.zoomTransform(d3.select(".chart").node())
-                    .translate(-200,-150);
+    const trsf2 = d3.zoomIdentity.translate(-200,-150);
 
-    // zoom identity
-    const trsf3 = d3.zoomTransform(d3.select(".chart").node())
-                    .translate(0,0);
+    const trsf3 = d3.zoomIdentity;  // same as d3.zoomIdentity.translate(0,0);
 
     // transforms
     d3.select(".chart").transition().delay(1000).duration(1000)

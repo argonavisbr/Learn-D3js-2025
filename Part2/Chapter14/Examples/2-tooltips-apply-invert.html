@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Using transform apply() and invert()</title>
+  <style>
+    svg {border: 1px solid black}
+  </style>
+</head>
+<body>
+<h2>Using transform apply() and invert()</h2>
+<p>Click to create draggable dots. Click on them to remove them. Double-click or use wheel to zoom. Drag the empty space to pan.</p>
+<p>Adding points to the zoomable container stores their screen coordinates. After a zoom or pan, screen coordinates
+point to a different place. This example uses <i>transform</i><code>.invert()</code> to obtain the untransformed coordinates.</p>
+<p>Tooltips are attached to a fixed container which is not transformed. After zooming, their coordinates are no longer
+near their subjects. This examples uses <i>transform</i><code>.apply()</code> to obtain the transformed coordinates.</p>
+<p>Zoom: <span id="zoom">1x</span></p>
+<script type="module">
+    import * as d3 from "https://cdn.skypack.dev/d3@7";
+
+    // DATA
+    const data = new Set();
+
+    // LAYERS
+    // SVG dimensions
+    const dim = {width: 600, height: 500, margin: 50};
+    const cht = {width: dim.width - 2*dim.margin, height: dim.height - 2*dim.margin};
+
+    const svg = d3.select("body").append("svg")
+                  .attr("width", dim.width)
+                  .attr("height", dim.height);
+    const context = svg.append("g")
+                       .attr("class", "context")
+                       .attr("transform", `translate(${dim.margin}, ${dim.margin})`) ;
+    const chart = context.append("svg")
+                         .attr("class", "chart")
+                         .attr("width", cht.width)
+                         .attr("height", cht.height);
+    chart.append("rect")
+         .attr("width", cht.width)
+         .attr("height", cht.height)
+         .style("fill", "none")
+         .style("stroke", "teal")
+         .style("pointer-events", "all"); // important to make empty space responsive to zoom and clicks
+
+    // Zoomable container used for data points
+    const container = chart.append("g").attr("class", "container");
+
+    // These tooltips are placed on the context object (they are not zoomed)
+    // Their positions, however, need to be updated after a zoom event (with apply)
+    context.append("g").attr("class", "tooltip")
+        .style("pointer-events", "none")
+        .append("text")
+            .style("font-size", 12)
+            .style("font-family", "sans-serif")
+            .style("text-anchor", "middle")
+            .attr("y", -15);
+
+    let currentTransform = d3.zoomIdentity;
+
+    // (1) CLICK to add a point
+    // The click is handled in the chart, but the point is added as data.
+    // The update function will draw the circle in the zoomable container.
+    // After a zoom or pan, the point's position no longer reflects its data, so it must
+    // be corrected with invert.
+    chart.on("click", evt => {
+        data.add(currentTransform.invert(d3.pointer(evt)));     // adding untransformed data
+        //data.add(d3.pointer(evt));                            // adding transformed data
+        update();  // plots the dots
+    });
+
+    // (2) DRAG to move a point (attached to circles after creation - see update())
+    const drag = d3.drag()
+                    .subject((evt,d) => ({x: d[0], y: d[1]}))
+                    .on('start', function () {
+                        d3.select(this).style("cursor", "move");
+                    })
+                    .on('drag', (evt, d) => {
+                        update();
+                        d[0] = evt.x;
+                        d[1] = evt.y;
+                    })
+                    .on('end', function() {
+                        d3.select(this).style("cursor", null);
+                    });
+
+    // (3) ZOOM. Use the wheel to zoom and drag outside points to pan
+    const zoom = d3.zoom()
+         .extent([[0, 0], [cht.width, cht.height]])
+         .on('zoom', evt => {
+             currentTransform = evt.transform;
+             container.attr("transform", currentTransform);
+             d3.select("#zoom").text(`${currentTransform.k.toFixed(2)}x`);
+             update();
+         });
+    chart.call(zoom);
+    svg.on("wheel", event => event.preventDefault());  // Prevent the default zoom behavior (scrolling the page) when in the SVG
+
+    // FUNCTIONS
+
+    // Updates the elements after the data changes
+    function update() {
+        const k = currentTransform.k;
+
+        // Hide tooltip
+        d3.select('.tooltip').style("opacity", 0);
+
+        // Draw points
+        container.selectAll("circle")
+          .data(data, d => d)
+            .join("circle")
+              .attr("transform", d => `translate(${d})`)
+              .attr("r", 10/k)
+              .style("stroke-width", 2/k)
+              .style("fill-opacity", .5)
+              .call(drag)      // attach drag behavior
+              .on("click", function(evt,d) {  // (1) Remove point
+                  evt.stopPropagation();  // don't propagate clicks (necessary to enable dragging)
+                  data.delete(d);
+                  update();
+              })
+              .on("pointerover", function(evt,d) {  // (5) Show tooltip
+                  d3.select(this).style("stroke", "red");
+
+                  d3.select('.tooltip text')
+                    .text(`(${d[0].toFixed(0)}, ${d[1].toFixed(0)})`);
+
+                  // const [x,y] = d;  // tooltip position (without transform)
+                  const [x,y] = d3.zoomTransform(d3.select(".chart")).apply(d); // apply the current transform to tooltip position
+
+                  d3.select('.tooltip').raise()
+                    .style("opacity", 1)
+                    .attr("transform", `translate(${[x,y]})`);
+              })
+              .on("pointerout", function() {  // (5) Hide tooltip
+                  d3.select(this).style("stroke", "none");
+                  d3.select('.tooltip').style("opacity", 0);
+              });
+        
+        // Update the count
+        d3.select("#count").text(data.size);
+    }
+</script>
+</body>
+</html>

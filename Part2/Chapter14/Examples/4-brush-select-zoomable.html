@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Brush select with zoom</title>
+    <style>
+        svg {border: solid 1px black;}
+    </style>
+</head>
+<body>
+<h2>Brush select with zoom</h2>
+<p>Uses a brushable histogram to highlight selected data points in a scatterplot, which is zoomable.</p>
+<p>Selected points: <span id="population">0</span> (<span id="percent">0%</span> of the population<span id="detail"></span>)</p>
+<svg id="histogram"></svg>
+<svg id="scatterplot"></svg>
+<script type="module">
+    import * as d3 from "https://cdn.skypack.dev/d3@7";
+    import * as utils from "../js/chart-utils.js";
+    import {isValid} from "../js/brush-utils.js";
+
+    // DATA: A sample dataset, ith x,y coordinates and an arbitrary value n
+    const data1 = d3.range(5000).map(() => ({
+        x: d3.randomNormal(50, 7)(),
+        y: d3.randomNormal(50, 8)(),
+        n: d3.randomNormal(20, 10)()
+    }));
+    const data2 = d3.range(2500).map(() => ({
+        x: d3.randomUniform(0, 100)(),
+        y: d3.randomUniform(0, 100)(),
+        n: d3.randomNormal(60, 6)()
+    }));
+    const data = data1.concat(data2).filter(d => d.n > 0);
+
+
+    // Dimensions
+    const dim = {width: 500, height: 400, margin: 50};
+    const cht = {width: dim.width - 2*dim.margin, height: dim.height - 2*dim.margin};
+
+    // 1) SCATTERPLOT
+    const scatter = {
+        context: d3.select("#scatterplot").attr("width", dim.width).attr("height", dim.height)
+                   .append("g").attr("transform", `translate(${dim.margin}, ${dim.margin})`),
+        x: d3.scaleLinear().domain([0,100]).range([0, cht.width]),
+        y: d3.scaleLinear().domain([0,100]).range([cht.height, 0])
+    }
+    scatter.chart = scatter.context.append("svg")
+                                   .attr("width", cht.width)
+                                   .attr("height", cht.height);
+    scatter.container = scatter.chart.append("g");
+
+    // Background for zooming (so user can click and pan/zoom from an empty spot)
+    scatter.container.append("rect")
+                     .attr("width", cht.width)
+                     .attr("height", cht.height)
+                     .style("fill", "white")
+                     .style("pointer-events", "all");
+
+    // Axes
+    [scatter.axisX, scatter.axisY] = utils.cartesianAxes()
+                                          .container(scatter.context)
+                                          .xScale(scatter.x)
+                                          .yScale(scatter.y)();
+
+    // Plot the points in the container
+    scatter.container.selectAll("circle")
+                     .data(data)
+                       .join("circle")
+                          .attr("cx", d => scatter.x(d.x))
+                          .attr("cy", d => scatter.y(d.y))
+                          .attr("r", 1.5);
+
+
+    // HISTOGRAM - viewport and scales
+    const histogram = {
+        svg: d3.select("#histogram").attr("width", dim.width).attr("height", dim.height),
+        x: d3.scaleBand().range([dim.margin, dim.width - dim.margin]),
+        y: d3.scaleLinear().range([dim.height - dim.margin, dim.margin]),
+        color: d3.scaleLinear().range(["orange", "blue"])
+    }
+
+    // Bin the data
+    const bins = d3.bin().thresholds(data.length/50)(data.map(d => d.n));
+
+    histogram.x.domain(bins.map(d => d.x0));
+    histogram.y.domain([0, d3.max(bins, d => d.length)]);
+    histogram.color.domain(d3.extent(bins, d => d.x0));
+
+    // Axes
+    [histogram.axisX] = utils.cartesianAxes().container(histogram.svg)
+                                             .xScale(histogram.x)
+                                             .yScale(histogram.y)
+                                             .yLabel("Population")
+                                             .xLabel("Value")();
+    histogram.axisX.tickValues(histogram.x.domain().filter((d, i) => i%(10)===0 )).tickFormat(d3.format("d"));
+    d3.select(".x-axis").call(histogram.axisX);
+
+    // Brush container
+    histogram.container = histogram.svg.append("g").datum(bins);
+
+    // plot the histogram
+    histogram.container.selectAll(".bar")
+                       .data(d => d)
+                          .join("rect").attr("class", "bar")
+                            .attr("x", d => histogram.x(d.x0))
+                            .attr("y", d => histogram.y(d.length))
+                            .attr("width", histogram.x.bandwidth())
+                            .attr("height", d => histogram.y(0) - histogram.y(d.length))
+                            .attr("fill", d => histogram.color(d.x0));
+
+    // BRUSHING
+    // Function to check if bin is brushed
+    const brushed = (bin, sel) => histogram.x(bin.x0) >= sel[0] && histogram.x(bin.x1) <= sel[1];
+
+    // Brush configuration
+    const brush = d3.brushX()
+        .extent([[dim.margin, dim.margin],[dim.width-dim.margin, dim.height-dim.margin]])     // Maximum size of the brush
+        .on("start", function() {
+            d3.selectAll(".bar").style("fill", null);
+            d3.select("#population").text(0);
+            d3.select("#percent").text("0%");
+            d3.select("#detail").text("");
+            scatter.container.selectAll("circle").style("fill", "black");
+        })
+        .on("brush end", function(evt) {
+            if (!isValid(evt)) return;
+
+            // Update container datum with selected bins (use the brushed function to check if a bin is in brush)
+            const selectedData = bins.filter(bin => brushed(bin, evt.selection));
+
+            // Highlight the selected bars, print stats and show in scatterplot (if there is data and if data.length is > 0)
+            if(selectedData && selectedData.length > 0) {
+                d3.selectAll(".bar").style("fill", bin => selectedData.includes(bin) ? "red" : null);
+                showStats(selectedData);
+                showInPlot(selectedData);
+            }
+        });
+    histogram.container.call(brush);      // attach the brush
+
+    // ZOOMING - for the scatter chart
+    const zextent = [[0, 0],[cht.width, cht.height]];
+    const zoom = d3.zoom()
+        .extent(zextent)
+        .translateExtent(zextent)
+        .scaleExtent([1,100])
+        .on("zoom", evt => {
+            scatter.container.attr("transform", evt.transform)
+                             .selectAll("circle")
+                                .attr("r", 1.5 / evt.transform.k);
+            d3.select("#k").text(d3.format(".2f")(evt.transform.k));
+
+            scatter.axisX.scale(evt.transform.rescaleX(scatter.x));
+            scatter.axisY.scale(evt.transform.rescaleY(scatter.y));
+            d3.select("#scatterplot .x-axis").call(scatter.axisX);
+            d3.select("#scatterplot .y-axis").call(scatter.axisY);
+        });
+    scatter.chart.call(zoom);
+
+    // FUNCTIONS
+
+    function showStats(selectedData) {
+        const [min, max] = [selectedData[0].x0, selectedData[selectedData.length-1].x1];
+        d3.select("#detail").html(` from <i>n</i>=${min} to <i>n</i>=${max}`);
+
+        const population =  selectedData.map(d => d.length).reduce((a,b) => a+b);
+        d3.select("#population").text(population);
+
+        const percent = d3.format(".2%")(population / data.length);
+        d3.select("#percent").text(percent);
+    }
+
+    // Highlight the selected data in the scatterplot
+    function showInPlot(selectedData) {
+        const allPoints = scatter.container.selectAll("circle")
+                                           .style("fill", "black");  // restore color
+
+        // Get the histogram range [min, max] from the selected data
+        const [min, max] = [selectedData[0].x0, selectedData[selectedData.length-1].x1];
+
+        // Filter and highlight points that have their d.n property within the range
+        allPoints.filter(d => d.n >= min && d.n <= max).raise()
+                 .style("fill", "red");
+    }
+
+</script>
+</body>
+</html>

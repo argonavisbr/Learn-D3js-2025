@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Zooming with interactive scrollbars</title>
+    <style>
+        svg {
+            border: solid 1px lightgray;
+            position: absolute;
+        }
+        #stats {
+            position: relative;
+            top: 10px; left: 10px;
+            font-family: sans-serif;
+            font-size: 14px;
+        }
+        canvas, #svg {
+            position: absolute;
+            top: 120px;
+            left: 10px;
+        }
+        .ctxbar {
+            pointer-events: all;
+        }
+        .ctxbar.fixed {
+            fill: #eee;
+        }
+        .ctxbar.mobile {
+            fill: lightcoral;
+        }
+    </style>
+</head>
+<body>
+<h2>Zooming with interactive scrollbars</h2>
+<p>This example shows relative position of the viewport in a zoomable area using passive context bars,
+    which also function as interactive scrollbars by dragging the inner bar, or clicking in the
+    outer bars.</p>
+<svg id="svg"></svg>
+<canvas></canvas>
+<p id="stats">Zoom: <span id="k">0.00</span>x</p>
+<script type="module">
+    import * as d3 from "https://cdn.skypack.dev/d3@7";
+    import * as utils from "../js/chart-utils.js";
+
+
+    // DATA
+    // The cluster: a normal distribution of 25000 points
+    const data1 = d3.range(25000).map(() => ({
+        x: d3.randomNormal(50, 2)(),
+        y: d3.randomNormal(50, 3)(),
+        n: d3.randomExponential(1/100)() / 600
+    }));
+
+    // The background: a uniform distribution of 25000 points
+    const data2 = d3.range(25000).map(() => ({
+        x: d3.randomUniform(0, 100)(),
+        y: d3.randomUniform(0, 100)(),
+        n: d3.randomExponential(1/100)() / 600
+    }));
+    const data = data1.concat(data2);
+
+
+    const dim = {width: 800, height: 500, margin: 50};
+    const cht = {width: dim.width - 2*dim.margin, height: dim.height - 2*dim.margin};
+
+    const canvas = d3.select("canvas")
+                     .style("margin", `${dim.margin}px`);
+    const ctx = canvas.node().getContext("2d");
+
+    // LAYERS for zooming
+    // 1) Add the axes to the <g> context layer
+    const svg = d3.select("#svg")
+                  .attr("width", dim.width).attr("height", dim.height)
+    const context = svg.append("g")
+                     .attr("transform", `translate(${dim.margin}, ${dim.margin})`)
+
+    // 2) This is the fixed SVG for the chart (within the axes' bounds)
+    canvas.attr("width", cht.width).attr("height", cht.height)
+
+    // Scales are relative to the chart
+    const xScale = d3.scaleLinear()
+                     .domain([0,100])
+                     .range([0, cht.width]);
+    const yScale = d3.scaleLinear()
+                     .domain([0,100])
+                     .range([cht.height, 0]);
+
+    // We will need the axes to update them after zooming
+    const [xAxis, yAxis] = utils.cartesianAxes()
+                                .container(context)
+                                .xScale(xScale)
+                                .yScale(yScale)();
+
+    // ZOOM CONTEXT BARS
+    const bar = {horz: cht.width, vert: cht.height};
+
+    const horz = context.append("g").attr("transform", `translate(0, -12)`);
+    horz.append("rect").attr("class", "ctxbar horizontal fixed")
+                .attr("width", bar.horz)
+                .attr("height", 12);
+    horz.append("rect").attr("class", "ctxbar horizontal mobile")
+                .attr("width", bar.horz)
+                .attr("height", 10)
+                .attr("transform", `translate(0, 1)`);
+
+    const vert = context.append("g").attr("transform", `translate(${cht.width}, 0)`);
+    vert.append("rect").attr("class", "ctxbar vertical fixed")
+                .attr("width", 12)
+                .attr("height", bar.vert);
+    vert.append("rect").attr("class", "ctxbar vertical mobile")
+                .attr("width", 10)
+                .attr("height", bar.vert)
+                .attr("transform", `translate(1, 0)`);
+
+    // Zooming parameters
+    let currentTransform = d3.zoomIdentity;
+    let isRendering = false; // flag to prevent rendering while zooming (performance)
+
+    // Plot the points in the container
+    paint();
+
+    // INTERACTIVE ZOOMING
+
+    // Configure the zoom behavior
+    const zextent = [[0, 0],[cht.width, cht.height]];
+    const zoom = d3.zoom()
+        .extent(zextent)
+        .translateExtent(zextent)
+        .scaleExtent([1,100])
+        .on("zoom", evt => {
+            let {x,y,k} = currentTransform = evt.transform;
+            if (!isRendering) {
+                isRendering = true;
+                requestAnimationFrame(() => paint()); // improve performance for rendering
+            }
+
+            // Update context bars
+            d3.select(".ctxbar.horizontal.mobile")
+                .attr("width", bar.horz / k)
+                .attr("transform", `translate(${-x/k}, 1)`);
+            d3.select(".ctxbar.vertical.mobile")
+                .attr("height", bar.vert / k)
+                .attr("transform", `translate(1, ${-y/k})`);
+
+            d3.select("#k").text(d3.format(".2f")(k));
+            updateAxes();
+        });
+    canvas.call(zoom);
+
+    // PANNING WITH SCROLL BARS
+
+    // 1) Panning controls by clicking in the outer bars
+    // Using dispatch to create custom panning events for scroll object
+    const scroll = d3.dispatch("pan-x", "pan-y");
+
+    // Handling click events on outer bars to trigger custom pan events
+    horz.select(".ctxbar.horizontal.fixed")
+        .on("click", function(evt) {
+            const x = d3.pointer(evt)[0] - cht.width/2;
+            scroll.call("pan-x", null, x);  // trigger custom event in scroll object
+        });
+    vert.select(".ctxbar.vertical.fixed")
+        .on("click", function(evt) {
+            const y = d3.pointer(evt)[1] - cht.height/2;
+            scroll.call("pan-y", null, y);  // trigger custom event in scroll object
+        });
+
+    // Handling custom pan events received by scroll object
+    scroll.on("pan-x", scrollX)
+          .on("pan-y", scrollY);
+
+    // 2) Panning controls by dragging the inner bars
+    horz.select(".ctxbar.horizontal.mobile")
+        .call(d3.drag()
+                .on("drag", evt => scrollX(evt.dx * currentTransform.k)));
+    vert.select(".ctxbar.vertical.mobile")
+        .call(d3.drag()
+                .on("drag", evt => scrollY(evt.dy * currentTransform.k)));
+
+    // FUNCTIONS
+
+    // Scrolls the canvas vertically
+    function scrollY(pos) {
+        let {k,x,y} = currentTransform;
+        const newY = getPoint(y, pos, k, cht.height);
+        const transform = d3.zoomIdentity.translate(x, newY).scale(k);
+        canvas.call(zoom.transform, transform);
+    }
+
+    // Scrolls the canvas horizontally
+    function scrollX(pos) {
+        let {k,x,y} = currentTransform;
+        const newX = getPoint(x, pos, k, cht.width);
+        const transform = d3.zoomIdentity.translate(newX, y).scale(k);
+        canvas.call(zoom.transform, transform);
+    }
+
+    // Compute distance to translate (considering extent limits)
+    function getPoint(current, position, k, dim) {
+        const dist = current - position;    // distance to translate
+        const a = Math.min(dist, 0);        // select left/top limit
+        const b = dim * (1 - k);            // right/bottom limit considering scale
+        return Math.max(a, b);              // return value within extent limits
+    }
+
+    // Semantic radius function (arbitrary)
+    function radius(d, k) {
+        if(d.n * k > 1) {
+            return 1/k + d.n * k / 2000;
+        } else if(d.n * k < 0.02) {
+            return 0;
+        } else {
+            return d.n/k;
+        }
+    }
+
+    // Update graphical elements based on the new scales and data
+    function updateAxes() {
+        xAxis.scale(currentTransform.rescaleX(xScale));
+        yAxis.scale(currentTransform.rescaleY(yScale));
+        d3.select(".x-axis").call(xAxis);
+        d3.select(".y-axis").call(yAxis);
+    }
+
+    // CANVAS: Paint the points
+    function paint() {
+        isRendering = false;
+        const {x, y, k} = currentTransform;
+
+        ctx.save();
+        ctx.clearRect(0, 0, cht.width, cht.height);
+        ctx.translate(x, y);
+        ctx.scale(k, k);
+        data.forEach(d => {
+            ctx.beginPath();
+            ctx.arc(xScale(d.x), yScale(d.y), radius(d,k), 0, 2*Math.PI);
+            ctx.fillStyle = "black";
+            ctx.fill();
+        });
+        ctx.restore();
+    }
+
+</script>
+</body>
+</html>

@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>A multi-series area chart with draggable points</title>
+    <link rel="stylesheet" href="../css/chart-utils.css">
+    <style>
+        path { fill:none }
+        .active {
+            cursor: ns-resize;
+        }
+    </style>
+</head>
+<body>
+<h3>A multi-series area chart with y-draggable points</h3>
+<script type="module">
+    import * as d3 from "https://cdn.skypack.dev/d3@7";
+    import * as utils from "../js/chart-utils.js";
+
+    const dim = { width: 800, height: 400, margin: 50 };
+    const scale = {
+        x: d3.scaleLinear().range([dim.margin, dim.width - dim.margin]),
+        y: d3.scaleLinear().range([dim.height - dim.margin, dim.margin])
+    }
+    const svg = d3.select("body")
+        .append("svg")
+        .attr("height", dim.height)
+        .attr("width", dim.width);
+
+    const series = 3;
+    const datasets = [];
+    const steps = d3.range(0,21,5); // [0,5,10,15,20]
+    for (let i = 0; i < series; i++) {
+        datasets.push(steps.map(d => [d, Math.random() * 50]));
+    }
+
+    scale.x.domain(d3.extent(d3.merge(datasets), d => d[0]));
+    scale.y.domain([0,d3.max(d3.merge(datasets), d => d[1])]);
+
+    const color = d3.scaleOrdinal(d3.schemeCategory10)
+                    .domain([0,datasets.length]);
+
+    const line = d3.area()
+                   .x(d => scale.x(d[0]))
+                   .y(d => scale.y(d[1]));
+
+    // Drag behavior
+    const drag = d3.drag()
+        .on("start", function() {
+            d3.select(this.parentNode)
+              .raise()                  // bring to front
+              .classed("active", true); // change the cursor to a 'move' cursor
+        })
+        .on("drag", function(evt,d) {
+            // updates current y data point (bound to group) by reference
+            d[1] = scale.y.invert(evt.y);
+            // updates this object (the point) with changed data
+            d3.select(this).attr("cy", scale.y(d[1]));
+            // updates the line
+            d3.select(this.parentNode).select(".line").attr("d", line);
+        })
+        .on("end", function() {
+            d3.select(this.parentNode)
+              .classed("active", false); // change the cursor back to normal (auto)
+        });
+
+    // Render chart
+    svg.selectAll("g.dataset")
+       .data(datasets)
+         .join("g")
+            .attr("class", "dataset")
+            .each(function(d) {
+                d3.select(this)
+                  .append("path")
+                    .datum(d) // for single line
+                        .attr("class", "line")
+                        .attr("d", line)
+                        .style("stroke", color);
+
+                d3.select(this)
+                  .selectAll("circle.point")
+                    .data(d) // for multiple points
+                      .join("circle")
+                        .attr("class", "point")
+                        .attr("cx", p => scale.x(p[0]))
+                        .attr("cy", p => scale.y(p[1]))
+                        .attr("r", 5)
+                        .style("fill", color(d))
+
+            });
+
+    d3.selectAll("circle.point").call(drag);  // call the drag behavior on the point
+
+    // Draw the axes
+    utils.cartesianAxes()
+        .container(svg)
+        .xScale(scale.x)
+        .yScale(scale.y)()
+
+    d3.selectAll(".dataset")
+
+</script>
+</body>
+</html>

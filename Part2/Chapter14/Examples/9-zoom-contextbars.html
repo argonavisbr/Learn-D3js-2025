@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Zooming with passive context bars</title>
+    <style>
+        svg {
+            border: solid 1px lightgray;
+            position: absolute;
+        }
+        #stats {
+            position: relative;
+            top: 10px; left: 10px;
+            font-family: sans-serif;
+            font-size: 14px;
+        }
+        canvas, #svg {
+            position: absolute;
+            top: 100px;
+            left: 10px;
+        }
+        .ctxbar.fixed {
+            fill: #eee;
+        }
+        .ctxbar.mobile {
+            fill: lightcoral;
+        }
+    </style>
+</head>
+<body>
+<h2>Zooming with context bars</h2>
+<p>This example shows relative position of the viewport in a zoomable area using context bars. Use double-click and wheel to zoom in and out.</p>
+<svg id="svg"></svg>
+<canvas></canvas>
+<p id="stats">Zoom: <span id="k">0.00</span>x</p>
+<script type="module">
+    import * as d3 from "https://cdn.skypack.dev/d3@7";
+    import * as utils from "../js/chart-utils.js";
+
+
+    // DATA
+    // The cluster: a normal distribution of 25000 points
+    const data1 = d3.range(25000).map(() => ({
+        x: d3.randomNormal(50, 2)(),
+        y: d3.randomNormal(50, 3)(),
+        n: d3.randomExponential(1/100)() / 600
+    }));
+
+    // The background: a uniform distribution of 25000 points
+    const data2 = d3.range(25000).map(() => ({
+        x: d3.randomUniform(0, 100)(),
+        y: d3.randomUniform(0, 100)(),
+        n: d3.randomExponential(1/100)() / 600
+    }));
+    const data = data1.concat(data2);
+
+
+    const dim = {width: 800, height: 500, margin: 50};
+    const cht = {width: dim.width - 2*dim.margin, height: dim.height - 2*dim.margin};
+
+    const canvas = d3.select("canvas")
+                     .style("margin", `${dim.margin}px`);
+    const ctx = canvas.node().getContext("2d");
+
+    // LAYERS for zooming
+    // 1) Add the axes to the <g> context layer
+    const svg = d3.select("#svg")
+                  .attr("width", dim.width).attr("height", dim.height)
+    const context = svg.append("g")
+                     .attr("transform", `translate(${dim.margin}, ${dim.margin})`)
+
+    // 2) This is the fixed SVG for the chart (within the axes' bounds)
+    canvas.attr("width", cht.width).attr("height", cht.height)
+
+    // Scales are relative to the chart
+    const xScale = d3.scaleLinear()
+                     .domain([0,100])
+                     .range([0, cht.width]);
+    const yScale = d3.scaleLinear()
+                     .domain([0,100])
+                     .range([cht.height, 0]);
+
+    // We will need the axes to update them after zooming
+    const [xAxis, yAxis] = utils.cartesianAxes()
+                                .container(context)
+                                .xScale(xScale)
+                                .yScale(yScale)();
+
+    // ZOOM CONTEXT BARS
+    const bar = {horz: cht.width, vert: cht.height};
+
+    const horz = context.append("g").attr("transform", `translate(0, -12)`);
+    horz.append("rect").attr("class", "ctxbar horizontal fixed")
+                .attr("width", bar.horz)
+                .attr("height", 12);
+    horz.append("rect").attr("class", "ctxbar horizontal mobile")
+                .attr("width", bar.horz)
+                .attr("height", 10)
+                .attr("transform", `translate(0, 1)`);
+
+    const vert = context.append("g").attr("transform", `translate(${cht.width}, 0)`);
+    vert.append("rect").attr("class", "ctxbar vertical fixed")
+                .attr("width", 12)
+                .attr("height", bar.vert);
+    vert.append("rect").attr("class", "ctxbar vertical mobile")
+                .attr("width", 10)
+                .attr("height", bar.vert)
+                .attr("transform", `translate(1, 0)`);
+
+    // Zooming parameters
+    let currentTransform = d3.zoomIdentity;
+    let isRendering = false; // flag to prevent rendering while zooming (performance)
+
+    // Plot the points in the container
+    paint();
+
+    // Configure the zoom behavior
+    const zextent = [[0, 0],[cht.width, cht.height]];
+    canvas.call(d3.zoom()
+        .extent(zextent)
+        .translateExtent(zextent)
+        .scaleExtent([1,100])
+        .on("zoom", evt => {
+            let {x,y,k} = currentTransform = evt.transform;
+            if (!isRendering) {
+                isRendering = true;
+                requestAnimationFrame(() => paint()); // improve performance for rendering
+            }
+
+            // Update context bnars
+            d3.select(".ctxbar.horizontal.mobile")
+                .attr("width", bar.horz / k)
+                .attr("transform", `translate(${-x/k}, 1)`);
+            d3.select(".ctxbar.vertical.mobile")
+                .attr("height", bar.vert / k)
+                .attr("transform", `translate(1, ${-y/k})`);
+
+            d3.select("#k").text(d3.format(".2f")(k));
+            updateAxes();
+        }));
+
+    // Semantic radius function
+    function radius(d, k) {
+        if(d.n * k > 1) {
+            return 1/k + d.n * k / 2000;
+        } else if(d.n * k < 0.02) {
+            return 0;
+        } else {
+            return d.n/k;
+        }
+    }
+
+    // Update graphical elements based on the new scales and data
+    function updateAxes() {
+        xAxis.scale(currentTransform.rescaleX(xScale));
+        yAxis.scale(currentTransform.rescaleY(yScale));
+        d3.select(".x-axis").call(xAxis);
+        d3.select(".y-axis").call(yAxis);
+    }
+
+    // CANVAS: Paint the points
+    function paint() {
+        isRendering = false;
+        const {x, y, k} = currentTransform;
+
+        ctx.save();
+        ctx.clearRect(0, 0, cht.width, cht.height);
+        ctx.translate(x, y);
+        ctx.scale(k, k);
+        data.forEach(d => {
+            ctx.beginPath();
+            ctx.arc(xScale(d.x), yScale(d.y), radius(d,k), 0, 2*Math.PI);
+            ctx.fillStyle = "black";
+            ctx.fill();
+        });
+        ctx.restore();
+    }
+
+</script>
+</body>
+</html>

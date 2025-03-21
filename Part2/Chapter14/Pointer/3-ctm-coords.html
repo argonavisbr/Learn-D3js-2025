@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Pointer coordinates</title>
+    <style>
+        div {
+            border: 1px solid black;
+            width: 542px;
+            height: 342px;
+            position: absolute;
+            left: 20px;
+            top: 100px;
+        }
+        svg {
+            border: solid 1px green;
+            margin: 20px;
+        }
+        p.label {
+            font-variant: "small-caps";
+            font-size: 10pt;
+            font-family: monospace;
+            position: absolute;
+        }
+        text.label {
+            font-size: 10pt;
+            font-family: monospace;
+        }
+    </style>
+</head>
+<body>
+<h3>Pointer coordinates - SVG using inverse Screen CTM</h3>
+<p>Click to see the result of using clientX/Y or local SVG coordinates, using an inverse CTM transform.</p>
+<p class="label" style="top: 90px; left: 271px;">div</p>
+<p class="label" style="top: 110px; left: 271px; color: darkgreen">svg</p>
+<div>
+    <svg width="500" height="300"></svg>
+</div>
+<script type="module">
+    import * as d3 from "https://cdn.skypack.dev/d3@7";
+
+    const svg = d3.select("svg")
+        .on("click", function(evt) {
+            svg.selectAll("circle, text").remove();
+
+            // Using screen coordinates (places the dot in the wrong place)
+            drawPoint(d3.select(this), evt.clientX, evt.clientY, "red", "event.clientX/Y coordinates");
+
+            // Using local coordinates (places the dot in the right place)
+            const pt = this.createSVGPoint();
+            pt.x = evt.clientX;
+            pt.y = evt.clientY;
+            const inverseCTM = svg.node().getScreenCTM().inverse();
+            const {x,y} = pt.matrixTransform(inverseCTM);
+
+            drawPoint(d3.select(this), x, y, "green", "SVG coordinates");
+        });
+
+    function drawPoint(container,x,y,color,ref) {
+        container.append("circle")
+            .attr("cx", x)
+            .attr("cy", y)
+            .attr("r", 5)
+            .attr("fill", color);
+
+        container.append("text").attr("class", "label")
+            .attr("x", x)
+            .attr("y", y+1)
+            .attr("dx", 10)
+            .attr("text-anchor", "left")
+            .attr("alignment-baseline", "hanging")
+            .text(`${ref} (${x},${y})`)
+    }
+</script>
+
+</body>
+</html>

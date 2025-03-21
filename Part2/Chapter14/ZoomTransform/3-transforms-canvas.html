@@ -32,12 +32,14 @@
             .translateExtent([[0, 0], [chart.width, chart.height]])
             .scaleExtent([0.25, 4])
             .on('zoom', evt => {
-                ctx.save();
-                ctx.clearRect(0, 0, chart.width, chart.height);
-                ctx.translate(evt.transform.x, evt.transform.y);
-                ctx.scale(evt.transform.k, evt.transform.k);
-                paint();
-                ctx.restore();
+                requestAnimationFrame( () => {
+                    ctx.save();
+                    ctx.clearRect(0, 0, chart.width, chart.height);
+                    ctx.translate(evt.transform.x, evt.transform.y);
+                    ctx.scale(evt.transform.k, evt.transform.k);
+                    paint();
+                    ctx.restore();
+                });
             });
     d3.select("canvas").call(zoom); // for interactive zooming
 

@@ -44,7 +44,7 @@
 
     svg.call(d3.zoom()
             .on('zoom', function(evt) {
-                d3.selectAll(".circle").attr("transform", evt.transform); // only zoom the circles
+                d3.selectAll("circle").attr("transform", evt.transform); // only zoom the circles
             }));
 </script>
 

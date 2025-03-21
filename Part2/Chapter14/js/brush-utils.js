@@ -14,10 +14,9 @@ export function inBrush(selection, point) {
 export function isValid(e) {
     if (!e.selection || !e.sourceEvent)
         return false;               // brush is not null and is triggered by a user event
-
     const [start, end] = e.selection;
     if(Array.isArray(start) && Array.isArray(end)) {            // is 2D brush
-        return start[0] !== start[1] && end[0] !== end[1];      // brush is an area
+        return start[0] !== end[0] && start[1] !== end[1];      // brush is an area
     } else {                                                    // 1D brush
         return start !== end;                                   // brush is an interval
     }

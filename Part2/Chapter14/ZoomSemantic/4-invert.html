@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Simple semantic zoom: detail</title>
+    <style>
+        text {
+            font-family: monospace;
+            text-anchor: middle;
+        }
+        .stats {
+            font-family: sans-serif;
+            font-size: 16px;
+        }
+        #zoom {
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+<h3>Simple semantic zoom: showing more/less detail</h3>
+<p>This chart can be zoomed in or out, but less detail is shown when zooming out.</p>
+<p class="stats">Zoom: <span id="zoom">1</span>x.</p>
+<script type="module">
+    import * as d3 from "https://cdn.skypack.dev/d3@7";
+    import {makeChart, drawGrid, drawSquare} from "../js/grid-squares.js";
+
+    const chart = makeChart(25,450,350);
+    drawGrid(chart.width, chart.height);
+
+    const dots = [[241,106],[298,172],[327,292],[71,104],[170,180],[354,46],[87,238],[227,248],[190,127],[329,112]];
+    const color = d3.scaleOrdinal(d3.schemeCategory10);
+
+    // Creating an invisible tooltip attached to the fixed context layer
+    d3.select(".context")
+        .append("text").attr("class", "tooltip")
+        .attr("y", -12)          // Fixed relative position
+        .style("font-size", 10); // Fixed font-size
+
+    let currentTransform = d3.zoomIdentity;
+
+    update(); // Initial update
+
+    // Add new points
+    d3.select(".chart")
+        .on("click", function(evt) {
+            const [x,y] = d3.pointer(evt);
+            //const [x,y] = currentTransform.invert(d3.pointer(evt));
+            dots.push([x,y]);
+            update();
+        });
+
+    d3.select(".chart").call(d3.zoom()
+            .extent([[0, 0], [chart.width, chart.height]])
+            .translateExtent([[0, 0], [chart.width, chart.height]])
+            .scaleExtent([0.25, 20])
+            .on('zoom', function(evt) {
+                currentTransform = evt.transform;
+                d3.select("#zoom").text(currentTransform.k.toFixed(2));
+                d3.selectAll(".container").attr("transform", currentTransform);
+                update();   // comment to see the effect without semantic scaling
+            }));
+
+    // This version adds detail filtering for scales < than 1
+    function update() {
+        const {x,y,k} = currentTransform;
+
+        d3.selectAll("path.grid.major")
+            .style("stroke-width", k < 0.5 ? 1/k : 3/k);
+        d3.selectAll("path.grid.minor")
+            .style("stroke-width", 1/k)
+            .style("opacity", k < 0.5 ? 0 : 1/k);
+
+        d3.select(".container")
+            .selectAll("circle")
+            .data(dots, d => d)
+            .join("circle")
+            .attr("cx", d => d[0])
+            .attr("cy", d => d[1])
+            .attr("r", k < 0.5 ? 2.5/k : 5/k)  // semantic radius
+            .style("fill", color)
+            .style("stroke", "black")
+            .style("stroke-width", k < 0.9 ? 0 : 1/k)  // semantic stroke width
+            .on("pointerover", function(evt, d) {
+                d3.select(this).style("stroke", "red");
+                d3.select(".tooltip")
+                    .text(`(${d[0].toFixed(0)},${d[1].toFixed(0)})`)
+                    .style("opacity", 1)
+                    .attr("transform", `translate(${[currentTransform.apply(d)]})`)
+                    //.attr("transform", `translate(${d})`)
+            })
+            .on("pointerout", function(evt, d) {
+                d3.select(this).style("stroke", "black");
+                d3.select(".tooltip").style("opacity", 0);
+            });
+    }
+
+</script>
+
+</body>
+</html>
