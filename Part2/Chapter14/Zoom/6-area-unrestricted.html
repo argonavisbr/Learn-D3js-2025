@@ -44,7 +44,7 @@
 
     // This is the zoomable container within the SVG
     // Any transform applied to it here will be reset by the zoom behavior
-    const container = chart.append("g");
+    const container = chart.append("g").attr("class", "container");
 
     // This rectangle shows the bounds of the ZOOMABLE contents
     container.append("rect")

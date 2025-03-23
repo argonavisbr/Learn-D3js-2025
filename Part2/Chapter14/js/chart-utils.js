@@ -13,7 +13,7 @@
  * Exported constants:
  * direction
  *
- * @version 3.4 2025-03-05
+ * @version 4.0 2025-03-22
  */
 
 import * as d3 from "https://cdn.jsdelivr.net/npm/d3@7/+esm";
@@ -260,7 +260,14 @@ const __displayLegend = function(container, data, color, useDataAsIndex = false,
                 .attr("x", 15)
                 .attr("y", 9)
                 .text(d);
-        });
+        })
+
+    // These are XML attributes and can be overriden using CSS styles
+    container.selectAll(".legend text.label")
+        .attr("font-family", "sans-serif")
+        .attr("font-size", "12px")
+        .attr("text-anchor", "start");
+
 }
 
 /**
@@ -283,7 +290,6 @@ const __drawCartesianAxes = function(container, xScale, yScale,
 
     const g = container.append("g")
         .attr("class", "chart cartesian")
-        .style("pointer-events", "none");
 
     const top = yScale.range()[0];
     const left = xScale.range()[0];
@@ -340,6 +346,21 @@ const __drawCartesianAxes = function(container, xScale, yScale,
         setArrows(container, arrowheads, xG);
         setArrows(container, arrowheads, yG);
     }
+
+    // These are XML attributes and can be overriden using CSS styles
+    container.selectAll(".label")
+        .attr("text-anchor", "middle")
+        .attr("font-size", "11px")
+        .attr("fill", "black");
+
+    container.selectAll(".tick line")
+        .attr("stroke", "lightgray");
+
+    container.selectAll(".zero-axis line")
+        .attr("stroke", "darkslategray");
+
+    container.selectAll(".tick text")
+        .attr("font-size", "10px");
 
     return [axisX,axisY];
 }
@@ -432,6 +453,33 @@ const __drawRadialAxes = function(container, aScale, rScale,
     if(arrowheads !== "none") {
         setArrows(container, arrowheads, g);
     }
+
+    // These are XML attributes and can be overriden using CSS styles
+    container.selectAll(".blank text, .tick:first-of-type")
+        .attr("display", "none");
+
+    container.selectAll(".radial .tick rect")
+        .attr("fill", "white")
+
+
+    container.selectAll(".radial .tick text")
+        .attr("font-size", "10px")
+
+
+    container.selectAll(".radial .grid")
+        .attr("fill", "none")
+        .attr("stroke", "lightgray")
+        .attr("stroke-dasharray", "5 5")
+
+
+    container.selectAll(".radial .grid.zero")
+        .attr("stroke", "black")
+        .attr("stroke-dasharray", 0)
+
+    container.selectAll(".radial .angle.label")
+        .attr("font-size", "12px")
+        .attr("text-anchor", "middle")
+        .attr("alignment-baseline", "middle")
 
     return axis;
 }

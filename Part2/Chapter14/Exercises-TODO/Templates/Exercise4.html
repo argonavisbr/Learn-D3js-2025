@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Exercise: horizontal brush - global temperatures</title>
+    <link rel="stylesheet" href="../../css/chart-utils.css">
+    <style>
+        path.line {
+            stroke-width: .5px;
+            fill: none;
+            pointer-events: none;  /* avoid blocking the brush, since lines cross the selectable area */
+        }
+        h1, p {
+            font-family: sans-serif;
+        }
+        svg {
+            pointer-events: none;  /* if you don't treat svg events, turn them off to avoid bugs */
+            border: solid 1px #ccc;
+            position: absolute;
+        }
+        button {
+            position: relative;
+            top: 10px;
+            left: 10px;
+        }
+    </style>
+</head>
+<body>
+<h2>Global temperatures from 1880 to 2024 - with range zooming</h2>
+<p>Based on the NASA GISS reference (https://data.giss.nasa.gov/gistemp/)</p>
+
+<script type="module">
+    import * as d3 from "https://cdn.skypack.dev/d3@7";
+    import * as utils from "../../js/chart-utils.js";
+    import {isValid} from "../../js/brush-utils.js";
+
+    // Global temperatures 1880 to 2024 (Source: https://data.giss.nasa.gov/gistemp/)
+    const file = "../../data/GLB.Ts.1880.2024.csv";     // If you moved this file, check that this URI still works
+
+    const dim = {
+        width: 800, height: 500,
+        margin: {x: 75, y: 50}
+    };
+
+    // Configure view
+    const svg = d3.select("body").append("svg").attr("height", dim.height).attr("width", dim.width);
+    const view = svg.append("g").attr("transform", `translate(${dim.margin.x}, ${dim.margin.y})`);
+
+    // Get and prepare data
+    const text = await d3.text(file);
+    const dataByYear = d3.csvParseRows(text, d3.autoType)
+                      .filter((d,i) => i > 0)           // get rid of header
+                      .map(d => [d[0], d.slice(1)]);    // separate year from data
+
+    const isoDateString = (year,month) => `${year}-${month}-27`;
+    const data = dataByYear.map(d => d[1].map((v,i) => [isoDateString(d[0], i+1), v])
+                          .filter(v => v[1] !== null)); // remove null months);
+
+    // Scales
+    const extent = d3.extent(data.flat(), d => d[1]);
+    const scale = {
+        date: d3.scaleTime().clamp(true)
+                .range([0, dim.width - dim.margin.x * 2])
+                .domain([d3.isoParse(data[0][0][0]),
+                         d3.isoParse(data[data.length-1][data[data.length-1].length-1][0])]),
+        temp: d3.scaleLinear()
+                .range([dim.height - dim.margin.y * 2, 0])
+                .domain([extent[0] -.1, extent[1] +.1])
+    }
+
+    // Line function
+    const line = d3.line().x(d => scale.date(d3.isoParse(d[0])))
+                          .y(d => scale.temp(d[1]))
+                          .defined(d => d && !isNaN(d[1]));
+
+    // Render temperature line
+    view.append("path").attr("class", "line")
+        .datum(data.flat())
+           .attr("d", line)
+           .style("stroke", "red");
+
+    // Render axes (save x-axis to update after brushing)
+    const [axisX] = utils.cartesianAxes()
+                         .container(view)
+                         .xScale(scale.date)
+                         .yScale(scale.temp)
+                         .showHorizontalGrid(true)
+                         .xLabel("Years")
+                         .yLabel("Anomaly (˚C")();
+    // END OF STATIC CHART
+
+
+    // EXERCISE: use a brush to add a range zooming feature to this chart
+    // 1) Configure an x-axis brush:
+    // a) Declare a brush constant and define a brush behavior.
+    // b) Define an extent that contains the part of the chart where the data is displayed, relative to the
+    //    `view` container.
+    // c) Implement the 'end' event: get the domain for the selection area and call update().
+    // ADD CODE HERE
+
+    // 2) Attach brush to the view (<g>) container
+    // ADD CODE HERE
+
+    // 3) Implement a function to updates the view with new domain after brushing (or resetting). Update the
+    //    scale's domain, call functions that use the domain (axisX and line), then update the selections.
+    //    ADD CODE IN FUNCTION BELOW
+    function update(domain) {
+        // a) update date scale with provided domain
+        // b) update the x-axis with transition
+        // c) update the line with transition
+        // d) hide the brush rectangle
+    }
+
+    // EXTRA: Add a Reset button
+    // 4) Save initial date domain before brushing
+    // ADD CODE HERE
+
+    // 5) Add a hidden button to reset the domain to its initial value, and call update with the saved domain.
+    // Hide reset button when done.
+    // ADD CODE HERE
+
+    // 6) Add a command to show the reset button (after an update with a different domain).
+    // (ADD CODE TO THE 'end' EVENT OF THE BRUSH)
+
+</script>
+
+</body>
+</html>

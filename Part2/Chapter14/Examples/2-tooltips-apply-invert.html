@@ -126,7 +126,7 @@ near their subjects. This examples uses <i>transform</i><code>.apply()</code> to
                     .text(`(${d[0].toFixed(0)}, ${d[1].toFixed(0)})`);
 
                   // const [x,y] = d;  // tooltip position (without transform)
-                  const [x,y] = d3.zoomTransform(d3.select(".chart")).apply(d); // apply the current transform to tooltip position
+                  const [x,y] = currentTransform.apply(d); // apply the current transform to tooltip position
 
                   d3.select('.tooltip').raise()
                     .style("opacity", 1)

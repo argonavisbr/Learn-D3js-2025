@@ -39,36 +39,36 @@ are appended to. See comments in code. </p>
 
     // This is in the fixed chart area - use this layer to add fixed objects that
     // shouldn't be clipped by the chart's viewport, such as axes or grids
-    const layer = svg.append("g")
-                     .attr("class", "layer")
-                     .attr("transform", `translate(${dim.margin}, ${dim.margin})`)
+    const context = svg.append("g")
+                       .attr("class", "context")
+                       .attr("transform", `translate(${dim.margin}, ${dim.margin})`)
 
     // This is the viewport that will display the zoomable content. Anything outside
     // will be clipped by its bounds
-    const chart = layer.append("svg")
-                        .attr("class", "chart")
-                        .attr("width", cht.width)
-                        .attr("height", cht.height);
+    const chart = context.append("svg")
+                         .attr("class", "chart")
+                         .attr("width", cht.width)
+                         .attr("height", cht.height);
 
     // This rectangle shows the FIXED chart bounds. You can also add it to 'chart',
     // but it will be clipped by the chart's viewport (you will see half the stroke width)
-    layer.append("rect")
-        .attr("width", cht.width)
-        .attr("height", cht.height)
-        .style("fill", "none")
-        .style("stroke-width", 2)  // 2px border (you will only see 1px if appended to 'chart')
-        .style("stroke", "blue");
+    context.append("rect")
+           .attr("width", cht.width)
+           .attr("height", cht.height)
+           .style("fill", "none")
+           .style("stroke-width", 2)  // 2px border (you will only see 1px if appended to 'chart')
+           .style("stroke", "blue");
 
     // This is the zoomable container - zooming will happen within its bounds
     const container = chart.append("g");
 
     // This rectangle shows the bounds of the ZOOMABLE contents
     container.append("rect")
-            .attr("width", cht.width)
-            .attr("height", cht.height)
-            .style("fill", "none")
-            .style("stroke-width", 2)
-            .style("stroke", "olive");
+             .attr("width", cht.width)
+             .attr("height", cht.height)
+             .style("fill", "none")
+             .style("stroke-width", 2)
+             .style("stroke", "olive");
 
     // Add zoomable objects to the container
     container.selectAll("circle")
