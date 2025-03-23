@@ -38,25 +38,32 @@ function draw() {
 function show(event, d) {
     d3.select(event.target).style("stroke-width", 2);
 
-    const position = [app.scale.x(d.hdi) + 7,
-                             app.scale.y(d.gdp) + padding - fields.length * lineH/2];
-
-    d3.select(".tooltip")
-        .attr("opacity", 1)
-    d3.select(".tooltip")
-        .attr("transform", `translate(${position})`)
-
     fields.forEach(f => d3.select(".tooltip ." + f.field)
-                                   .text(f.text(d)));
+                                    .text(f.text(d)));
 
     const lengths = d3.selectAll(".tooltip text")
                       .nodes()
                       .map(t => t.getComputedTextLength());
 
     const boxWidth = d3.max(lengths) + padding * 2;
+    const boxHeight = d3.select(".tooltip rect").attr("height");
 
-    d3.select(".tooltip rect")
-        .attr("width", boxWidth);
+    // Resize the tooltip box to fit the text
+    d3.select(".tooltip rect").attr("width", boxWidth);
+
+    // Compute where to place the tooltip so that it isn't cropped off the screen
+    const dx   = app.scale.x.range()[1] - app.scale.x(d.hdi);
+    const xPos = dx < boxWidth ? app.scale.x(d.hdi) - boxWidth - 5
+                               : app.scale.x(d.hdi) + 10;
+
+    const dy   = app.scale.y(d.gdp) - app.scale.y.range()[1];
+    const yPos = app.scale.y(d.gdp) > boxHeight/2 ? app.scale.y(d.gdp) - boxHeight/4 - 10
+                                                  : boxHeight/4 + app.scale.y(d.gdp) - dy;
+
+    // Place the tooltip near the object
+    d3.select(".tooltip")
+      .attr("opacity", 1)
+      .attr("transform", `translate(${[xPos, yPos]})`)
 }
 
 function clear(event) {

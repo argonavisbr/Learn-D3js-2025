@@ -36,10 +36,6 @@ __`js/`__
 
 Scripts, libraries and modules used in examples and exercises
 
-__`css/`__
-
-Style sheets used in examples and exercises
-
 ## 2) Observable notebooks for this chapter
 
 - [Examples using axes with standard D3]()

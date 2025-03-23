@@ -48,10 +48,6 @@ __`data/`__
 
 Resources used in examples and exercises.
 
-__`css/`__
-
-Stylesheets used in examples and exercises.
-
 __`js/`__
 
 JavaScript modules and scripts used in examples and exercises.

@@ -52,10 +52,6 @@ __`data/`__
 
 Data files used in examples and exercises.
 
-__`css/`__
-
-Style sheets used in examples and exercises.
-
 __`data/`__
 
 Scripts, modules and libraries used in examples and exercises.

@@ -4,7 +4,7 @@ Files and exercises for chapter 10.
 
 ## 1) Description of each subfolder in this folder
 
-__`CSS-Color-4/`__
+__`CSS-4/`__
 
 Description.
 

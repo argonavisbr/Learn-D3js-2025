@@ -64,10 +64,6 @@ __`js/`__
 
 Scripts and modules used by several examples.
 
-__`css/`__
-
-Stylesheets used by several examples.
-
 __`data/`__
 
 Resources used by examples and exercises in the other folders (they are loaded using relative URLs).

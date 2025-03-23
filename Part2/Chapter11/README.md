@@ -40,10 +40,6 @@ __`data/`__
 
 Description.
 
-__`css/`__
-
-Description.
-
 __`js/`__
 
 Description.
