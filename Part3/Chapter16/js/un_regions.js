@@ -1,4 +1,4 @@
-function makeRoot(items, nesting) {
+export function makeRoot(items, nesting) {
     const object = {
         key: 'World',
         values: items
@@ -19,7 +19,7 @@ function makeSubtree(item, nesting) {
     };
     if (item.values) {
         if (nesting) {
-            if (item.values.length == 1) { // remove unnecessary nesting
+            if (item.values.length === 1) { // remove unnecessary nesting
                 object = makeSubtree(item.values[0], nesting);
             } else {
                 object.children = [];
@@ -42,5 +42,6 @@ function makeSubtree(item, nesting) {
     } else if(item.value) {
         object.data = item.value[0];
     }
+    console.log(object)
     return object;
 }

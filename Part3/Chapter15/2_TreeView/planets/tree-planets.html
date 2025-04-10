@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Hierarchies</title>
+    <link rel="stylesheet" href="css/planets.css">
+</head>
+<body>
+<script type="module">
+    import * as d3 from "https://cdn.skypack.dev/d3@7";
+    import {draw} from "./js/draw-node-link-planets.js";
+
+    const dim = {width: 1800, height: 600};
+    const margin = {top: 150, right: 100, bottom: 150, left: 100};
+    const cht = {w: dim.width - margin.left - margin.right, h: dim.height - margin.top - margin.bottom};
+
+    const planetScale = d3.scaleLinear().range([1,40]);
+
+    const result = await d3.json("../../data/planets.json");
+    console.log("Loaded hierarchy", result);
+
+        // convert existing hierarchy to standard format
+    const hierarchy = d3.hierarchy(result, function(d) {
+        if (['rocky', 'gaseous', 'dwarf'].includes(d.category)) {
+            return d.satellites
+                ? d.satellites.filter(s => s.diameterKm > d3.max(d.satellites, t => t.diameterKm) / 20)
+                : undefined;
+        }
+        return d.planets;
+    });
+
+    // tree
+    const tree = d3.tree().size([cht.w,cht.h]);
+    const treeData = tree(hierarchy.sort((a,b) => a.data.semiMajorAxisAU - b.data.semiMajorAxisAU));
+
+    planetScale.domain([0,d3.max(hierarchy.data.planets, d => d.diameterKm)]);
+
+    const link = d3.linkVertical()
+        .x(function(d) { return d.x; })
+        .y(function(d) { return d.y; });
+
+    const chart = d3.select("body")
+                    .append("svg")
+                    .attr("height", dim.height)
+                    .attr("width", dim.width)
+                    .attr("viewBox", [0, 0, dim.width*1.2, dim.height*1.2])
+                       .append("g")
+                       .attr("transform", `translate(${margin.left},${margin.top})`);
+
+    draw(hierarchy, chart, planetScale);
+
+</script>
+</body>
+</html>
+

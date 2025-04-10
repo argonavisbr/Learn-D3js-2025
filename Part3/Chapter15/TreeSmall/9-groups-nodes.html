@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Hierarchies</title>
+    <style>
+        line {
+            stroke: black;
+        }
+        text {
+            font-family: 'arial narrow', sans-serif;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+<script type="module">
+    import * as d3 from "https://cdn.skypack.dev/d3@7";
+
+    const dim = {width: 800, height: 300, margin: 60};
+    const cht = {w: dim.width - 2 * dim.margin, h: dim.height - 2 * dim.margin};
+
+    const svg = d3.select("body").append("svg")
+        .attr("height", dim.height)
+        .attr("width", dim.width);
+    const chart = svg.append("g")
+        .attr("transform", d => `translate(${[dim.margin,dim.margin]})`);
+
+    const tabular = await d3.csv("../data/venue-link.csv", d3.autoType);
+
+    const root = d3.stratify().id(d => d.name).parentId(d => d.location)(tabular);
+    const tree = d3.tree().size([cht.w, cht.h]).separation(a => 1 / a.depth)(root);
+    const nodes = tree.descendants();
+    const links = tree.links();
+
+    const colorScale = d3.scaleOrdinal(d3.schemeCategory10)
+            .domain(d3.extent(nodes, n => n.depth));
+    const widthScale = d3.scaleLinear().range([5,12])
+        .domain(d3.extent(links, k => k.target.height));
+
+
+    drawLinks();
+    drawNodes();
+    drawLabels();
+
+    function drawNodes() {
+        chart.selectAll("g")
+            .data(nodes)
+            .join("g").attr("class", "node")
+            .attr("transform", d => `translate(${[d.x, d.y]})`)
+            .append("ellipse")
+            .attr("rx", d => (root.height+1 - d.depth) * 25)
+            .attr("ry", d => (root.height+1 - d.depth) * 12)
+            .style("fill", d => colorScale(d.depth));
+    }
+
+    function drawLinks() {
+        chart.selectAll("line")
+            .data(links)
+            .join("line")
+            .attr("x1", d => d.source.x)
+            .attr("y1", d => d.source.y)
+            .attr("x2", d => d.target.x)
+            .attr("y2", d => d.target.y)
+            .style("stroke-width", d => (root.height+1-d.target.depth) * (root.height+1-d.target.depth));
+    }
+
+    function drawLabels() { // relative to node <g>
+        chart.selectAll("g.node")
+            .append("text")
+            .text(d => d.data.name)
+            .style("fill", d => d.depth <= 1 ? 'white' : 'black')
+            .attr("transform", d => d.depth > 1 ? `translate(0,25)` : `translate(0,${(d.height + 1) * 3})`)
+            .style("text-anchor", "middle")
+            .style("font-size", d => widthScale(3 - d.depth));
+    }
+
+</script>
+</body>
+</html>

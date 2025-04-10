@@ -1,5 +1,5 @@
 // Simple 4-level hierarchy
-const simpleHierarchy = {
+export const simpleHierarchy = {
     id: "root",
     name:"Root Level",
     children: [
@@ -129,7 +129,7 @@ const simpleHierarchy = {
 };
 
 // Simple tabular with references (can be stratified)
-const refTable = `Id,Name,Context,Value1,Value2
+export const refTable = `Id,Name,Context,Value1,Value2
 root,Root,,,,
 group_1,First Group,root,,,
 group_2,Second Group,root,,,
@@ -149,7 +149,7 @@ leaf_8,Eighth Leaf,subg_3,7,4
 leaf_9,Ninth Leaf,subg_3,4,9
 leaf_10,Tenth Leaf,subg_3,1,1
 leaf_11,Eleventh Leaf,subg_3,6,1
-leaf_12,Twelvth Leaf,subg_3,1,5
+leaf_12,Twelfth Leaf,subg_3,1,5
 leaf_13,Thirteenth Leaf,subsubg_1,6,5
 leaf_14,Fourteenth Leaf,group_2,4,1
 leaf_15,Fifteenth Leaf,root,8,8

@@ -1,0 +1,10 @@
+name,location,capacity
+Auditorium,,
+Building1,,
+Building2,,
+Auditorium,Auditorium,500
+Room1,Building1,50
+Room2,Building1,100
+Room3,Building1,200
+Room1,Building2,75
+Room2,Building2,150

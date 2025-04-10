@@ -1,0 +1,27 @@
+circle {
+    fill: #def;
+    stroke: #237;
+    stroke-width: 1px;
+}
+path {
+    fill: none;
+    stroke: #698;
+    stroke-width: .5px;
+}
+rect {
+    stroke: blue;
+    fill: none;
+}
+text {
+    font-family: sans-serif;
+    font-size: 14px;
+}
+.leaf {
+    transform: rotate(90deg) translate(3px,-2px);
+}
+.node {
+    transform: rotate(-20deg) translate(3px,-2px);
+}
+.root {
+    transform: rotate(0deg) translate(3px,-2px);
+}

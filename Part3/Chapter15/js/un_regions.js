@@ -1,4 +1,4 @@
-function makeRoot(items, nesting) {
+export function makeRoot(items, nesting) {
     const object = {
         key: 'World',
         values: items

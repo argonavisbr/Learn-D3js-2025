@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Hierarchies</title>
+    <link rel="stylesheet" href="../css/table-styles.css">
+</head>
+<body>
+<h1>Hierarchy with d3.nest (d3 version 5)</h1>
+<script type="module">
+    import * as d3 from "https://cdn.skypack.dev/d3@5";
+    import {makeTable, display} from "../js/table-view.js";
+    import {rootFromNest} from "../js/nest.js";
+
+    const file = "../../data/venue-level.csv";
+    d3.csv(file, d3.autoType).then(function(result) {
+        console.log("tabular data", result);
+
+        const nested = d3.nest()
+                         .key(d => d.location)
+                         .key(d => d.name)
+                         .rollup(d => d[0])
+                         .entries(result)
+                         .filter(d => d.key !== 'null'); // remove empty top level
+        console.log("nested data", nested);
+
+        // convert to custom hierarchy (id/children and data fields)
+        const hier = rootFromNest(nested, "Campus");
+        //const root = makeRoot2(nested);
+        console.log("hierarchical data", hier);
+
+        // wrap into d3.hierarchy object (generates depth and length)
+        const root = d3.hierarchy(hier);
+        console.log("D3 hierarchy", root);
+
+        root.sum(d => d.capacity);
+        root.descendants().forEach(d => d.capacity = d.value);
+
+        draw(root);
+    });
+
+    // Visual presentation as a table
+    function draw(root) {
+        const displayMap = new Map();
+        displayMap.set("capacity", d => display(d.capacity, "Capacity"))
+        makeTable(d3.select("body"), root, displayMap);
+    }
+
+</script>
+</body>
+</html>

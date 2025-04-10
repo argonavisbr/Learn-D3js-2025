@@ -1,0 +1,40 @@
+table,td {
+    border: solid 1px gray;
+    vertical-align: top;
+}
+table {
+    width: 600px;
+}
+.bold {
+    font-weight: bold;
+}
+
+table table table {
+    margin-left: 25px;
+}
+
+table table .bold {
+    color: blue;
+}
+table table table .bold {
+    color: green;
+}
+table table table table .bold {
+    color: red;
+}
+table table table table table .bold {
+    color: orange;
+}
+
+table table {
+    border-color: blue;
+}
+table table table {
+    border-color: green;
+}
+table table table table {
+    border-color: red;
+}
+table table table table table {
+    border-color: orange;
+}
