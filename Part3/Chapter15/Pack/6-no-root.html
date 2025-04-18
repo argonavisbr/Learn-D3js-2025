@@ -21,39 +21,35 @@
     const nestedFile = "../data/sample-hierarchy.json";
     const simpleHierarchy = await d3.json(nestedFile);
 
-    //.join(enter => enter.filter(d => d.parent).append("g"))
-    const width = 1000, height = 550;
-    const svg = d3.select("body").append("svg")
-                                 .attr("height", height).attr("width", width);
-    const chart = svg.append("g")
-                     .attr("transform", d => `translate(${[25,25]})`);
+    const width = 1200, height = 800, margin = 50;
+    const chart = d3.select("body").append("svg")
+                    .attr("height", height).attr("width", width)
+                       .append("g")
+                       .attr("transform", `translate(${[margin,margin]})`);
 
     const root = d3.hierarchy(simpleHierarchy)
                    .sum(d => d.content ? (d.content[0] * d.content[0]) : 0)
                    .sort((a,b) => b.height - a.height || a.value - b.value);
 
-    root.eachBefore(function(d) {
-        d.number = d.parent ? `${d.parent.number}.${d.parent.children.indexOf(d) + 1}` : 1;
-    });
+    root.eachBefore(d => d.number = d.parent ? `${d.parent.number}.${d.parent.children.indexOf(d) + 1}` : 1);
 
     const pack = d3.pack()
-                   .size([width-50,height-50])
+                   .size([width-(margin*2),height-(margin*2)])
                    .radius(d => d.value + 5)
-                   .padding(5);
+                   .padding(20);
 
-    const nodes = pack(root).descendants();
+    pack(root);
 
     const colorScale = d3.scaleOrdinal(d3.schemeGnBu[5])
-                         .domain(d3.extent(nodes, n => n.height));
+                         .domain(d3.extent(root, n => n.height));
 
-    draw();
+    draw(root.descendants().filter(d => d.parent));  // draw all but the root node
 
-    function draw() {
-        console.log("pack data", nodes);
+    function draw(nodes) {
         const cell = chart.selectAll("g")
                 .data(nodes)
-                .join(enter => enter.filter(d => d.parent).append("g"))
-                .attr("transform", d => `translate(${[d.x, d.y]})`);
+                .join("g")
+                    .attr("transform", d => `translate(${[d.x, d.y]})`);
 
         cell.append("circle")
                 .attr("r", d => d.r)
@@ -62,8 +58,8 @@
         cell.append("text")
                 .text(d => d.number)
                 .attr("font-size", 14)
-                .attr("y", d => d.height == 0 ? 3 : -d.r + 14) // places in center if leaf
-                .style("fill", d => d.height == 0 ? 'black' : 'white')
+                .attr("y", d => d.height === 0 ? 3 : -d.r + 14) // places in center if leaf
+                .style("fill", d => d.height === 0 ? 'black' : 'white')
                 .style("opacity", d => d.r > 10 ? 1 : 0);
     }
 </script>

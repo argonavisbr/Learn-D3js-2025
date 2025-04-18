@@ -19,36 +19,32 @@
     import * as d3 from "https://cdn.skypack.dev/d3@7";
 
     const nestedFile = "../data/sample-hierarchy.json";
-    const simpleHierarchy = await d3.json(nestedFile);
+    const hierarchy = await d3.json(nestedFile);
 
-    const width = 800, height = 800;
-    const svg = d3.select("body").append("svg")
-                                 .attr("height", height).attr("width", width);
-    const chart = svg.append("g")
-                     .attr("transform", d => `translate(${[50,50]})`);
+    const width = 800, height = 800, margin = 50;
+    const chart = d3.select("body").append("svg")
+                    .attr("height", height).attr("width", width)
+                        .append("g")
+                           .attr("transform", `translate(${[margin,margin]})`);
 
-    const root = d3.hierarchy(simpleHierarchy)
-                   .sum(d => d.content ? (d.content[0] * d.values[0]) : 0);
+    const root = d3.hierarchy(hierarchy)
+                   .sum(d => d.content ? (d.content[0] * d.content[0]) : 0);
 
     const colorScale = d3.scaleOrdinal(d3.schemeGnBu[5])
-            .domain(d3.extent(root, n => n.height));
+                         .domain(d3.extent(root, n => n.height));
 
-    const pack = d3.pack()
-                   .size([width-100,height-100]);
+    const pack = d3.pack().size([width-(margin*2),height-(margin*2)])
 
-    const nodes = pack(root).descendants();
+    pack(root);
 
-    draw();
+    chart.selectAll("circle")
+        .data(root)
+        .join("circle")
+           .attr("cx", d => d.x)
+           .attr("cy", d => d.y)
+           .attr("r", d => d.r)
+           .style("fill", d => colorScale(d.height));
 
-    function draw() {
-        chart.selectAll("circle")
-            .data(nodes)
-            .join("circle")
-              .attr("cx", d => d.x)
-              .attr("cy", d => d.y)
-              .attr("r", d => d.r)
-              .style("fill", d => colorScale(d.height));
-    }
 </script>
 </body>
 </html>

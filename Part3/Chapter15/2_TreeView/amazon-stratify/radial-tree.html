@@ -2,10 +2,11 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Hierarchies</title>
+    <title>Radial dendrogram of the Amazon tributaries</title>
     <link rel="stylesheet" href="css/radial.css">
 </head>
 <body>
+<h1>Amazon tributaries</h1>
 <script type="module">
     import * as d3 from "https://cdn.skypack.dev/d3@7";
 
@@ -23,8 +24,7 @@
     const root = stratify(result);
 
     // tree
-    const tree = d3.tree().size([180,dim.width/2]);  // use only 180 degrees
-    const treeData = tree(root);
+    d3.tree().size([180,dim.width/2])(root);  // use only 180 degrees
 
     const chart = d3.select("body")
                     .append("svg")
@@ -33,7 +33,7 @@
                         .append("g")
                         .attr("transform", `translate(${dim.width/2},${margin.top})`);
 
-    draw(treeData, chart);
+    draw(root, chart);
 
     // FUNCTIONS
     function draw(data, container) {

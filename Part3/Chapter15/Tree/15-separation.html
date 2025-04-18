@@ -46,12 +46,12 @@
     const tree = d3.tree()
             .nodeSize([100,220]) // nodesize instead of size
             .separation((a,b) => (a.parent == b.parent ? 1 : 2) / (a.depth));;
-    const treeData = tree(root);
+    tree(root);
 
-    console.log(treeData);
+    console.log(root);
 
-    const nodes = treeData.descendants();
-    const links = treeData.links();
+    const nodes = root.descendants();
+    const links = root.links();
 
     const colorScale = d3.scaleOrdinal(d3.schemeCategory10)
             .domain(d3.extent(nodes, n => n.height));

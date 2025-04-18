@@ -24,32 +24,29 @@
     const nestedFile = "../data/sample-hierarchy.json";
     const simpleHierarchy = await d3.json(nestedFile);
 
-    const width = 1000, height = 600;
-    const svg = d3.select("body").append("svg")
-            .attr("height", height)
-            .attr("width", width);
-    const chart = svg.append("g")
-                    .attr("transform", d => `translate(${[60,60]})`);
+    const width = 1000, height = 600, margin = 60;
+    const chart = d3.select("body").append("svg")
+                    .attr("height", height)
+                    .attr("width", width)
+                    .append("g")
+                       .attr("transform", `translate(${[margin, margin]})`);
 
     const root = d3.hierarchy(simpleHierarchy);
 
     const colorScale = d3.scaleOrdinal(d3.schemeCategory10)
-            .domain(d3.extent(root.descendants(), n => n.depth));
+                         .domain(d3.extent(root.descendants(), n => n.depth));
     const widthScale = d3.scaleLinear().range([1,16])
-            .domain(d3.extent(root.links(), k => k.target.height));
+                         .domain(d3.extent(root.links(), k => k.target.height));
 
-    const tree = d3.cluster()
-            .size([width-120,height-120]); // top-down
+    const tree = d3.cluster().size([width-margin*2, height-margin*2]);
 
-    const verticalLink = d3.linkVertical()
-            .x(function(d) { return d.x; })
-            .y(function(d) { return d.y; });
+    const verticalLink = d3.linkVertical().x(d => d.x).y(d => d.y);
 
     changeRoot(null, root);
 
     function changeRoot(evt, d) {
-        const treeData = tree(d);
-        draw(treeData.descendants(), treeData.links());
+        tree(d);
+        draw(d.descendants(), d.links());
     }
 
     function draw(nodes, links) {
@@ -58,7 +55,7 @@
                 .data(links).join("path")
                 .attr("d", verticalLink)
                 .style("stroke-width", d => (d.target.height + 1) * (d.target.height + 1))
-                .style("opacity", d => d.target.depth *.25 * .6 + .4);
+                .style("opacity", d => d.target.depth *.15 + .4);
 
         // nodes
         chart.selectAll("g.node")
@@ -72,10 +69,10 @@
                          .style("fill", colorScale(d.depth));
                         n.append("text").attr("transform", "translate(0,5)")
                          .text(d.data.id)
-                         .style("fill", d.height != 0 ? 'white' : 'black')
+                         .style("fill", d.height !== 0 ? 'white' : 'black')
                          .style("font-size", 12 + (d.height*d.height))
-                         .attr("transform", d.height == 0 ? `rotate(-90) translate(-15,5)` : "translate(0,5)")
-                         .style("text-anchor", d.height != 0 ? "middle" : "end")
+                         .attr("transform", d.height === 0 ? `rotate(-90) translate(-15,5)` : "translate(0,5)")
+                         .style("text-anchor", d.height !== 0 ? "middle" : "end")
                      }),
             )
             .attr("transform", d => `translate(${[d.x, d.y]})`)

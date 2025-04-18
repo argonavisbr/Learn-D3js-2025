@@ -56,8 +56,8 @@
                     .paddingInner(5)
                     .paddingOuter(5)
                     .paddingBottom(20);
-    const mapData = treemap(root);
-    const nodes = mapData.descendants();
+    treemap(root);
+    const nodes = root.descendants();
 
     colorScale.domain(d3.extent(nodes, n => n.height));
 

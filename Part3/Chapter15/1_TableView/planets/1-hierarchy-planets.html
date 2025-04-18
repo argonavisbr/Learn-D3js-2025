@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Hierarchies</title>
+</head>
+<body>
+<script type="module">
+    import * as d3 from "https://cdn.skypack.dev/d3@7";
+
+    const file = "../data/planets.json";
+
+    const result = await d3.json(file);
+    console.log("Loaded hierarchy", result);
+
+    // convert existing hierarchy to standard format - name of "children" property depends on the category
+    const h = d3.hierarchy(result,
+                           d => ['rocky', 'gaseous', 'dwarf'].includes(d.category) ? d.satellites : d.planets);
+    console.log("Converted hierarchy", h);
+    drawTable(h);
+
+    function drawTable(h) {
+        const table = d3.select("body").append("table").attr("border",1);
+        table.selectAll("tr")
+            .data(h.children).join("tr")
+            .each(function(d) {
+                const tr = d3.select(this);
+                tr.append("td").text(d.data.name);
+                if(d.children) {
+                    tr.append("td")
+                        .text(d.children.map(s=>s.data.name));
+                }
+            });
+
+    }
+
+</script>
+<h1>See console for results</h1>
+</body>
+</html>

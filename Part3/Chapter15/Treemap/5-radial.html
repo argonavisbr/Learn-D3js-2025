@@ -51,8 +51,8 @@
                     .size([360, height/2 - 10]) // angles in degrees
                     .paddingInner(d => d.height * 2 + 5)
                     .paddingOuter(5)
-    const mapData = treemap(root);
-    const nodes = mapData.descendants();
+    treemap(root);
+    const nodes = root.descendants();
 
     colorScale.domain(d3.extent(nodes, n => n.height));
 

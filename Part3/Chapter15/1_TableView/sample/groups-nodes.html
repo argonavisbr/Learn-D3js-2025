@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>A sample hierarchical table view</title>
+    <link rel="stylesheet" href="../css/table-styles.css">
+    <style>
+        path {
+            stroke: black;
+            fill: none;
+        }
+        text {
+            font-family: 'Arial narrow', sans-serif;
+            font-weight: bold;
+            font-size: 16px;
+        }
+        svg {
+            border: solid 1px black;
+        }
+    </style>
+</head>
+<body>
+<h1>A sample hierarchical table view</h1>
+<script type="module">
+    import * as d3 from "https://cdn.skypack.dev/d3@7";
+    import {makeTable, display} from "../js/table-view.js";
+
+    const nestedFile = "../../data/sample-hierarchy.json";
+    const simpleHierarchy = await d3.json(nestedFile);
+
+    const root = d3.hierarchy(simpleHierarchy);
+
+    // generate labels
+    root.eachBefore(function(d) {
+        if(!d.parent) {
+            d.number = 1;
+        } else {
+            d.number = d.parent.number + "." + (d.parent.children.indexOf(d) + 1);
+        }
+    });
+
+    console.log(root)
+
+    // sum some values
+    root.sum(d => d.content ? d.content[0] + d.content[1] : 0);
+    root.descendants().forEach(d => d.total = d.value);
+
+    draw(root);
+
+    // Visual presentation as a table
+    function draw(root) {
+        const displayMap = new Map();
+        displayMap.set("total", d => display(d.total, "Total"));
+
+        makeTable(d3.select("body"), root, displayMap);
+    }
+
+
+</script>
+</body>
+</html>

@@ -21,29 +21,28 @@
     const nestedFile = "../data/sample-hierarchy.json";
     const simpleHierarchy = await d3.json(nestedFile);
 
-    const width = 1000, height = 1000;
-    const svg = d3.select("body").append("svg")
-                                 .attr("height", height).attr("width", width);
-    const chart = svg.append("g")
-                     .attr("transform", d => `translate(${[25,25]})`);
+    const width = 1000, height = 1000, margin = 50;
+    const chart = d3.select("body").append("svg")
+                    .attr("height", height).attr("width", width)
+                        .append("g")
+                        .attr("transform", `translate(${[0,0]})`);
 
     const root = d3.hierarchy(simpleHierarchy)
                    .count()
                    .sort((a,b) => b.height - a.height || a.value - b.value);
 
     const pack = d3.pack()
-                   .size([width-50,height-50])
+                   .size([width-(margin*2),height-(margin*2)])
                    .padding(20);
 
-    const nodes = pack(root).descendants();
+    pack(root);
 
     const colorScale = d3.scaleOrdinal(d3.schemeGnBu[5])
-                         .domain(d3.extent(nodes, n => n.height));
-    draw();
+                         .domain(d3.extent(root, n => n.height));
+    draw(root);
 
-    function draw() {
-        const cell = chart.selectAll("g")
-                          .data(nodes).join("g");
+    function draw(nodes) {
+        const cell = chart.selectAll("g").data(nodes).join("g");
 
         cell.append("circle")
             .attr("cx", d => d.x)

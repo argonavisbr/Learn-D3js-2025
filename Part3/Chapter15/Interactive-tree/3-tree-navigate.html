@@ -26,89 +26,74 @@
     const nestedFile = "../data/sample-hierarchy.json";
     const simpleHierarchy = await d3.json(nestedFile);
 
-    const width = 1000, height = 600;
-    const svg = d3.select("body").append("svg")
-            .attr("height", height)
-            .attr("width", width);
-    const chart = svg.append("g")
-                    .attr("transform", d => `translate(${[60,60]})`);
+    const width = 1000, height = 600, margin = 60;
+    const chart = d3.select("body").append("svg")
+                    .attr("height", height)
+                    .attr("width", width)
+                    .append("g")
+                       .attr("transform", `translate(${[margin, margin]})`);
 
     const root = d3.hierarchy(simpleHierarchy).count();
 
-    const MAX_DEPTH = d3.max(root.descendants(), d => d.depth);
-
-    root.each(d => d.expand = d.depth); // add to control expanding nodes
-
     const colorScale = d3.scaleOrdinal(d3.schemeCategory10)
-            .domain(d3.extent(root.descendants(), n => n.depth));
-    const widthScale = d3.scaleLinear().range([1,16])
-            .domain(d3.extent(root.links(), k => k.target.height));
+                         .domain(d3.extent(root.descendants(), n => n.depth));
+    const widthScale = d3.scaleLinear().range([1,root.descendants().length])
+                         .domain(d3.extent(root.links(), k => k.target.height));
 
-    const tree = d3.tree()
-            .size([width-120,height-120])
-            .separation((a,b) => (a.parent == b.parent ? 1 : 2) / (a.depth));;;
-    const treeData = tree(root);
+    d3.tree().size([width - margin*2, height - margin*2])
+             .separation((a,b) => (a.parent === b.parent ? 1 : 2) / (a.depth))(root);
 
-    const verticalLink = d3.linkVertical()
-            .x(function(d) { return d.x; })
-            .y(function(d) { return d.y; });
+    const verticalLink = d3.linkVertical().x(d => d.x).y(d => d.y);
 
-    draw(treeData)
+    draw(root, 0);
 
-    function draw(d) {
-        const nodes = treeData.descendants()
-                        .filter(n => n.ancestors().indexOf(d) >= 0 ||
-                                     n.descendants().indexOf(d) >= 0)
-                        .filter(n => n.depth <= d.expand);
+    function draw(node, maxDepth) {
 
-        const links = treeData.links()
-                        .filter(k => k.target.depth <= d.expand)
-                        .filter(k => k.target.ancestors().indexOf(d) >= 0 ||
-                                     k.target.descendants().indexOf(d) >= 0)
-        // links
+        // Nodes to show
+        const nodes = [...node.descendants().filter(d => d.depth <= maxDepth),             // direct descendants
+                       ...node.ancestors(),                                                // ancestors
+                       ...root.descendants().filter(d => d.parent && d.parent.expanded)];  // already expanded
+
+        const links = root.links().filter(d => nodes.includes(d.source) && nodes.includes(d.target));
+
         chart.selectAll("path")
-             .data(links).join("path")
-             .attr("d", verticalLink)
-             .style("stroke-width", d => (d.target.height + 1) * (d.target.height + 1))
-             .style("opacity", d => d.target.depth *.25 * .6 + .4);
+             .data(links)
+                .join("path")
+                   .attr("d", verticalLink)
+                   .style("stroke-width", d => (d.target.height + 1) * (d.target.height + 1))
+                   .style("opacity", d => d.target.depth *.15 + .4)
+                   .lower();
 
-        // nodes
         chart.selectAll("g.node")
-            .data(nodes, d => d.data.id) // key is necessary since nodes are added/removed out of order!
-            .join(
-                function(enter) {
-                    const g = enter.append("g").attr("class","node")
-                         .attr("transform", d => `translate(${[d.x, d.y]})`)
-                         .classed("leaf", d => !d.children)
-                         .on("click", toggle)
-                    g.append("circle")
-                         .attr("r", d => (d.height + 1) * 10)
-                         .style("fill", d => colorScale(d.depth));
-                    g.append("text")
-                         .text(d => d.children ? d.value : '')
-                         .attr("transform", "translate(0,5)")
-                         .style("font-size", d => 14 + (d.height*d.height));
-                },
-                 function(update) {
-                     update.select("text").text(n => n.depth != d.expand ? "" : d.children ? d.value : '');
-                 },
-                 function(exit) {
-                     exit.remove();
-                 }
+             .data(nodes, d => d.data.id) // key is necessary since nodes are added/removed out of order!
+                .join("g").attr("class","node")
+                   .attr("transform", d => `translate(${[d.x, d.y]})`)
+                   .classed("leaf", d => !d.children)
+                   .each(function(d) {
+                        const g = d3.select(this);
+                        g.append("circle")
+                           .attr("r", (d.height + 1) * 10)
+                           .style("fill", colorScale(d.depth));
+                        g.append("text")
+                           .text(!d.expanded && d.children ? d.value : '')
+                           .attr("transform", "translate(0,5)")
+                           .style("font-size", 14 + (d.height*d.height));
+                }
             );
 
-        chart.selectAll("g.node").raise();
+        chart.selectAll("g.node").on("click", toggle);
     }
 
     // show or hide descendants
-    function toggle(evt, d) {
-        if(d.expand <= d.depth) { // expand
-            d.expand = d.depth == MAX_DEPTH ? MAX_DEPTH : d.expand + 1;
-        } else { // collapse
-            d.descendants().forEach(k => k.expand = k.depth)
-        }
-        draw(d);
+function toggle(evt, d) {
+    if (d.expanded) {
+        d.each(d => d.expanded = false);
+        draw(d, d.depth);
+    } else {
+        d.expanded = true;
+        draw(d, d.depth + 1);
     }
+}
 
 </script>
 </body>

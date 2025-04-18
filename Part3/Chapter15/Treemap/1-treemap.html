@@ -37,8 +37,8 @@
 
     const treemap = d3.treemap()
                       .size([width - 100, height - 100]);
-    const mapData = treemap(root);
-    const nodes = mapData.descendants();
+    treemap(root);
+    const nodes = root.descendants();
 
     const colorScale = d3.scaleOrdinal(d3.schemeCategory10)
                          .domain(d3.extent(nodes, n => n.height));

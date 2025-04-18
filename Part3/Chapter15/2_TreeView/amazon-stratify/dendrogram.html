@@ -2,10 +2,11 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Hierarchies</title>
+    <title>Simple dendrogram of the Amazon tributaries</title>
     <link rel="stylesheet" href="css/linear.css">
 </head>
 <body>
+<h1>Amazon tributaries</h1>
 <script type="module">
     import * as d3 from "https://cdn.skypack.dev/d3@7";
 
@@ -34,10 +35,7 @@
     const tree = d3.cluster()
                    .size([cht.h, cht.w])
                    .separation((a,b) => (a.parent === b.parent ? 1 : 2));
-    const treeData = tree(root.sort((a,b) => b.height - a.height));
-
-    // Inspect tree data
-    console.log("treeData", treeData);
+    tree(root.sort((a,b) => b.height - a.height));
 
     const chart = d3.select("body")
         .append("svg")
@@ -47,7 +45,7 @@
           .attr("transform", `translate(${dim.width - margin.left},${margin.top})`);
 
     // Draw the chart
-    draw(chart, treeData, lengthScale);
+    draw(chart, root, lengthScale);
 
 
     // Functions

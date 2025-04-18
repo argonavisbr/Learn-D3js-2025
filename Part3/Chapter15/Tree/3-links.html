@@ -27,11 +27,11 @@
 
     const tree = d3.tree()
             .size([width-120,height-120]); // top-down
-    const treeData = tree(root);
+    tree(root);
 
-    console.log(treeData);
+    console.log(root);
 
-    const links = treeData.links();
+    const links = root.links();
 
     const widthScale = d3.scaleLinear().range([1,16])
             .domain(d3.extent(links, k => k.target.height));

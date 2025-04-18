@@ -41,8 +41,8 @@
 
     const partition = d3.partition()
                         .size([360, height/2-50]) // angle in degrees (easier to rotate in CSS)
-    const partitionData = partition(root);
-    const nodes = partitionData.descendants();
+    partition(root);
+    const nodes = root.descendants();
 
     const arc = d3.arc()
                     .startAngle(d => d.x0 * Math.PI / 180) // must convert angles to radians

@@ -20,51 +20,50 @@
     const margin = {top: 100, right: 10, bottom: 300, left: 150};
     const cht = {w: dim.width - margin.left - margin.right, h: dim.height - margin.top - margin.bottom};
 
+    const chart = d3.select("body").append("svg")
+                    .attr("width", dim.width)
+                    .attr("height", dim.height)
+                    .style("font", "10px sans-serif")
+                    .append("g")
+                        .attr("transform", `translate(${dim.width/2}, ${dim.height/2})`);
+
+    chart.append("circle")
+         .attr("r", cht.h *.9)
+         .attr("fill", "white")
+         .style("cursor", "grab");
+
     const tabular = await d3.csv("../../data/Kellner.csv");
-    console.log('tabular data', tabular);
 
     const root = d3.stratify()
-                         .id(d => d.node)
-                         .parentId(d => d.parent)(tabular);
-    console.log(root);
+                   .id(d => d.node)
+                   .parentId(d => d.parent)(tabular);
 
     root.count();
     root.sort((a,b) => b.height - a.height || a.value - b.value);
 
-    const partition = d3.partition().size([2 * Math.PI, 480])
-    const data = partition(root);
+    d3.partition().size([2 * Math.PI, 480])(root);
 
-    const svg = d3.select("body").append("svg")
-                  .attr("width", dim.width)
-                  .attr("height", dim.height)
-                  .style("font", "10px sans-serif");
-
-    const chart = svg.append("g")
-                     .attr("transform", `translate(${dim.width/2}, ${dim.height/2})`);
-    chart.append("circle")
-        .attr("r", cht.h *.9)
-        .attr("fill", "white");
-
-    drawPartition(chart.append("g").attr("class", "partition"), data.descendants());
+    draw(chart.append("g").attr("class", "partition"), root.descendants());
     d3.selectAll("g.slice").filter(d => !d.data.name || d.height === 0).lower();
 
     addRotateDrag(chart, dim);
 
-    function drawPartition(g, data) {
+    function draw(g, data) {
         const colorScale = d3.scaleSequential(d3.interpolateYlGnBu)
                              .domain([30, -40]);
 
         const arc = d3.arc().startAngle(d => d.x0)
-            .endAngle(d => d.x1)
-            .innerRadius(d => d.y0)
-            .outerRadius(d => d.y1);
+                            .endAngle(d => d.x1)
+                            .innerRadius(d => d.y0)
+                            .outerRadius(d => d.y1);
         const start = arc.startAngle();
         const end   = arc.endAngle();
 
         const cell = g.selectAll("g.slice")
-            .data(data)
-            .join("g")
-            .attr("class", "slice");
+                      .data(data)
+                      .join("g")
+                      .attr("class", "slice")
+            .style("pointer-events", "none");
 
         cell.append('path')
             .attr('d', arc)
@@ -72,10 +71,10 @@
 
         // get the arc that runs between the inner and outer radius of the path above
         const midArc = d3.arc()
-            .startAngle(d => d.x0 - 90 * Math.PI / 180)     // to fit all text
-            .endAngle(d => d.x1 + 90 * Math.PI / 180)
-            .innerRadius(d => (d.y0 + d.y1) / 2)
-            .outerRadius(d => (d.y0 + d.y1) / 2);
+                         .startAngle(d => d.x0 - 90 * Math.PI / 180)     // to fit all text
+                         .endAngle(d => d.x1 + 90 * Math.PI / 180)
+                         .innerRadius(d => (d.y0 + d.y1) / 2)
+                         .outerRadius(d => (d.y0 + d.y1) / 2);
 
         cell.append('path')
             .attr('id', d => `${d.data.name}`)
@@ -99,6 +98,7 @@
                     `translate(${arc.centroid(d)}) rotate(${(180/Math.PI * (start(d) + end(d))/2 - 90)})`)
             .style("pointer-events", "none")
             .style("alignment-baseline", "middle");
+
     }
 
 </script>

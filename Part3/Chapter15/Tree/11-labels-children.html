@@ -33,12 +33,12 @@
 
     const tree = d3.cluster()
             .size([width-120,height-120]); // top-down
-    const treeData = tree(root).count();
+    tree(root).count();
 
-    console.log(treeData);
+    console.log(root);
 
-    const nodes = treeData.descendants();
-    const links = treeData.links();
+    const nodes = root.descendants();
+    const links = root.links();
 
     const colorScale = d3.scaleOrdinal(d3.schemeCategory10)
             .domain(d3.extent(nodes, n => n.depth));

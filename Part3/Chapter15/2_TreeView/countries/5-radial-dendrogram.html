@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Hierarchies</title>
+    <title>Radial dendrogram</title>
     <link rel="stylesheet" href="css/countries.css">
     <style>
         .continent {
@@ -19,8 +19,9 @@
 <body>
 <script type="module">
     import * as d3 from "https://cdn.skypack.dev/d3@7";
-    import {tabularToHierarchy} from "./js/hierarchy-utils.js";
-    import {draw} from "./js/draw-node-link-countries.js";
+    import {rootFromRollup} from "../../js/nest.js";
+    import {draw} from "./js/tree-countries.js";
+    import {addRotateDrag} from "../../js/rotate-drag.js";
 
     const dim = {width: 1200, height: 1200};
     const margin = {top: 150, right: 150, bottom: 150, left: 150};
@@ -35,8 +36,13 @@
 
     // Convert tabular data to hierarchy
     const keyFunctions = [d => d.Supercontinent, d => d.Continent, d => d.UN_Region, d => d.Country];
-    const hierarchy = tabularToHierarchy(tabular, "World", ...keyFunctions)
-                       .sort((a,b) => b.parent.id - a.parent.id); // sort it
+    const rollupRoot = d3.rollup(tabular, d => d, ...keyFunctions);
+    const hierarchy = rootFromRollup(rollupRoot, "World");
+    console.log("Hierarchical data", hierarchy);
+
+    const root = d3.hierarchy(hierarchy)
+                   .sort((a,b) => b.parent.id - a.parent.id); // sort it
+    console.log('D3 hierarchy', root);
 
     // Create a dendrogram layout
     const dendrogram = d3.cluster()
@@ -44,8 +50,8 @@
                          .separation((a,b) => (a.parent === b.parent ? 1 : 2) / a.depth);
 
     // Obtain the chart data
-    const data = dendrogram(hierarchy);
-    console.log('\nChart data', data);
+    dendrogram(root);
+    console.log('D3 hierarchy', root);
 
     // Prepare SVG
     const chart = d3.select("body")
@@ -55,12 +61,19 @@
         .append("g")
         .attr("transform", `translate(${[dim.width/2,dim.height/2]})`);  // center it
 
+    // background circle for drag-rotation
+    chart.append("circle")
+        .attr("r", cht.h/2)
+        .style("fill", "lightyellow")
+        .style("cursor", "grab");
+
     const link = d3.linkRadial()
             .angle(function(d) { return (d.x * Math.PI / 180) + Math.PI/2; })
             .radius(function(d) { return d.y; });
 
     // 8) Draw the chart
-    draw('radial', data, chart, 'link', link);
+    draw('radial', root, chart, 'link', link);
+    addRotateDrag(chart, dim);
 
 </script>
 </body>

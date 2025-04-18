@@ -36,8 +36,8 @@
 
     const partition = d3.partition()
                         .size([Math.PI * 2, height/2-50])
-    const partitionData = partition(root);
-    const nodes = partitionData.descendants();
+    partition(root);
+    const nodes = root.descendants();
 
     const arc = d3.arc()
                   .startAngle(d => d.x0)

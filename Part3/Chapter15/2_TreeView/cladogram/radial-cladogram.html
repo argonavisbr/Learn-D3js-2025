@@ -11,39 +11,25 @@
 <h2>Radial cladogram: Kellner's phylogeny of pterosaurs</h2>
 <script type="module">
     import * as d3 from "https://cdn.skypack.dev/d3@7";
-    import {addRotateDrag} from "./js/rotate-drag.js";
+    import {addRotateDrag} from "../../js/rotate-drag.js";
     import {addHighlightPath} from "./js/highlight-path.js";
 
     const dim = {width: 1100, height: 1000};
     const margin = {top: 100, right: 10, bottom: 300, left: 150};
     const cht = {w: dim.width - margin.left - margin.right, h: dim.height - margin.top - margin.bottom};
 
-    const tabular = await d3.csv("../../data/Kellner.csv");
-    console.log('tabular data', tabular);
+    const chart = d3.select("body").append("svg")
+                    .attr("width", dim.width)
+                    .attr("height", dim.height)
+                    .style("font", "10px sans-serif")
+                    .append("g")
+                       .attr("transform", `translate(${dim.width/2}, ${dim.height/2})`);
 
-    const root = d3.stratify()
-                         .id(d => d.node)
-                         .parentId(d => d.parent)(tabular);
-    console.log(root);
-
-    const makeTree = d3.cluster()
-                       .separation((a, b) => (a.parent === b.parent ? 1 : 3))
-                       .size([360, cht.h * .6]);
-
-    const tree = makeTree(root);
-    console.log('root', tree);
-
-    const svg = d3.select("body").append("svg")
-                  .attr("width", dim.width)
-                  .attr("height", dim.height)
-                  .style("font", "10px sans-serif");
-
-    const chart = svg.append("g")
-                     .attr("transform", `translate(${dim.width/2}, ${dim.height/2})`);
     chart.append("circle")
          .attr("r", cht.h * .6)
          .attr("fill", "lightsalmon")
-         .attr("stroke", "#ccc");
+         .attr("stroke", "#ccc")
+         .style("cursor", "grab");
 
     const styles = {
         leafRadius: 4,
@@ -54,7 +40,21 @@
         pathColor: "white"
     }
 
-    draw(chart, tree);
+    const tabular = await d3.csv("../../data/Kellner.csv");
+    console.log('tabular data', tabular);
+
+    const root = d3.stratify()
+                   .id(d => d.node)
+                   .parentId(d => d.parent)(tabular);
+
+    const tree = d3.cluster()
+                    .separation((a, b) => (a.parent === b.parent ? 1 : 3))
+                    .size([360, cht.h * .6]);
+
+    tree(root);
+    console.log('hierarchy', root);
+
+    draw(chart, root);
     addRotateDrag(chart, dim);
     addHighlightPath(chart, styles);
 

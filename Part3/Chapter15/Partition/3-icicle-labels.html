@@ -39,8 +39,8 @@
 
     const partition = d3.partition()
             .size([width - 100, height - 100])
-    const partitionData = partition(root);
-    const nodes = partitionData.descendants();
+    partition(root);
+    const nodes = root.descendants();
 
     const colorScale = d3.scaleOrdinal(d3.schemeCategory10)
                          .domain(d3.extent(nodes, n => n.depth));

@@ -16,82 +16,65 @@
 <body>
 <script type="module">
     import * as d3 from "https://cdn.skypack.dev/d3@7";
-    import {nest} from "../../js/nest-2.js";
-    import {makeRoot} from "../../js/un_regions.js";
+    import {rootFromRollup} from "../../js/nest.js";
 
-    const width = 1000;
-    const height = 800;
+    const width = 1000, height = 800, margin = 25;
 
-    d3.csv("../../data/un_regions.csv").then(function(result) {
-        console.log("tabular data", result);
-
-        const keyFunctions = [
-            d => d.Supercontinent,
-            d => d.Continent,
-            d => d.UN_Region,
-            d => d.Country
-        ];
-        const reductionFunction = d => ([{area: +d[0].Area_km2, population: +d[0].Pop_2016, hdi: +d[0].HDI_2017}]);
-        const grouped = d3.rollups(result, reductionFunction, ...keyFunctions);
-        const nested = nest(grouped, keyFunctions.length);   // creates nested data format (see js/nest-2.js)
-
-        const root = d3.hierarchy(makeRoot(nested, true));
-       // root.sort((a,b) => b.height - a.height || a.value - b.value);
-        root.sum(d => d.children ? d.value : d.data.population);
-
-        console.log("Sorted", root);
-
-        const partition = d3.partition()
-                .size([width-50,height-50])
-                .padding(1);
-        const data = partition(root)
-        // rounding
-        // padding
-
-        draw(data.descendants());
-    });
+    const chart = d3.select("body")
+                    .append("svg")
+                        .attr("height", height)
+                        .attr("width", width)
+                        .append("g")
+                            .attr("transform", `translate(${[margin, margin]})`);
 
     const colorScale = d3.scaleOrdinal(d3.schemeCategory10);
 
-    function draw(data) {
-        const svg = d3.select("body").append("svg").attr("height", height).attr("width", width);
-        const chart = svg.append("g").attr("transform", d => `translate(${[25,25]})`);
+    const result = await d3.csv("../../data/un_regions.csv");
 
-        drawPartition(chart.append("g").attr("class", "partition"), data);
-    }
+    const keyFunctions = [
+        d => d.Supercontinent,
+        d => d.Continent,
+        d => d.UN_Region,
+        d => d.Country
+    ];
+    const reductionFunction = d => ({area: +d[0].Area_km2, population: +d[0].Pop_2016});
+    const rollupRoot = d3.rollup(result, reductionFunction, ...keyFunctions);
+    const hierarchy = rootFromRollup(rollupRoot, "World");
+    const root = d3.hierarchy(hierarchy);
+
+    root.count();
+    root.sort((a,b) => b.height - a.height || a.value - b.value);
+
+    d3.partition().size([width-margin*2, height-margin*2]).padding(1)(root);
+
+    drawPartition(chart.append("g").attr("class", "partition"), root);
 
     function drawPartition(g, data) {
-        console.log("Partition data", data);
         const cell = g.selectAll("g.cell")
-                .data(data)
-                .enter()
-                .append("g")
-                .attr("class", "cell")
-                .on("mouseover", showLabel)
-                .on("mouseout", hideLabel);
+                      .data(data)
+                        .join("g")
+                          .attr("class", "cell")
+                          .on("mouseover", showLabel)
+                          .on("mouseout", hideLabel);
 
         cell.append("rect")
                 .attr("x", d => d.x0)
                 .attr("y", d => d.y0)
                 .attr("width", d => d.x1 - d.x0)
                 .attr("height", d => d.y1 - d.y0)
-                .attr("fill", function(d) {
-                    return colorScale(d.height);
-                });
-
+                .attr("fill", d => colorScale(d.height));
 
         cell.append("text")
                 .attr("x", d => (d.x1 + d.x0)/2)
                 .attr("y", d => (d.y1 + d.y0)/2)
                 .text("");
-
     }
 
-    function showLabel(evt, d) { console.log(d.id)
+    function showLabel(evt, d) {
         d3.select(this).raise().select("text").text(d.data.id)
     }
 
-    function hideLabel(evt, d) {
+    function hideLabel() {
         d3.select(this).select("text").text("")
     }
 
