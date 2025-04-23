@@ -27,18 +27,15 @@
 
     // Convert tabular data to hierarchy
     const keyFunctions = [d => d.Supercontinent, d => d.Continent, d => d.UN_Region, d => d.Country];
-    const reduceFunction = d => ([{area: +d[0].Area_km2, population: +d[0].Pop_2016, hdi: +d[0].HDI_2017}]);
+    const reduceFunction = d => ({area: +d[0].Area_km2, population: +d[0].Pop_2016, hdi: +d[0].HDI_2017});
 
     const nested = d3.rollup(result, reduceFunction, ...keyFunctions);
     console.log("nested data", nested);
 
-    const objTree = rootFromRollup(nested, "World");
-    console.log('hier data', objTree)
+    const objTree = rootFromRollup(nested, "World", true);  // all leaves at same level (tidy tree)
+    console.log('hierarchy data', objTree)
 
     const root = d3.hierarchy(objTree);
-
-    console.log(root)
-
     root.sum(d => d.value ? d.value[0].area : d.area);
     root.descendants().forEach(d => d.area = d.value);
 

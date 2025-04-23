@@ -44,10 +44,10 @@
     ];
     const reductionFunction = d => ({area: +d[0].Area_km2, population: +d[0].Pop_2016});
     const rollupRoot = d3.rollup(result, reductionFunction, ...keyFunctions);
-    const hierarchy = rootFromRollup(rollupRoot, "World");
+    const hierarchy = rootFromRollup(rollupRoot, "World", false);
     const root = d3.hierarchy(hierarchy);
 
-    root.sum(d => d.value ? d.value.population : d.value);
+    root.sum(d => d.value ? d.value[0].population : d.population);
     root.sort((a,b) => b.height - a.height || b.value - a.value);
 
     const pack = d3.pack()

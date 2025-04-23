@@ -2,43 +2,48 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Using d3.rollup (d3 version 7) - simple hierarchy</title>
+    <title>Hierarchy with d3.rollups (d3 version 7) - simple hierarchy</title>
     <link rel="stylesheet" href="../css/table-styles.css">
 </head>
 <body>
-<h1>Using d3.rollup (d3 version 7)</h1>
+<h1>Hierarchy with d3.rollups (d3 version 7)</h1>
 <script type="module">
     import * as d3 from "https://cdn.skypack.dev/d3@7";
     import {nest, rootFromNest} from "../../js/nest.js";
     import {makeTable, display} from "../js/table-view.js";
 
-    // Raw tabular data
-    const file = "../../data/venue-level.csv";
+    // Differences in step 2.
+
+    // 1) Raw tabular data
+    const file = "../../data/venue.csv";
     const result = await d3.csv(file, d3.autoType);
     console.log("tabular data", result);
 
-    // Grouped data
+    // 2) Grouping - using d3.rollups from D3 version 7
+    // a) Create a nested array structure
     const keyFunctions = [d => d.location, d => d.name];
     const reductionFunction = d => d[0];
-    const grouped = d3.rollups(result, reductionFunction, ...keyFunctions)
-                      .filter(d => d[0]);
+    const grouped = d3.rollups(result, reductionFunction, ...keyFunctions);
     console.log("grouped data", grouped);
 
-    // Nested data
+    // b) Convert array to make it compatible with the D3v5 d3.nest() function
+    //    using key/value pairs for leaves, and key/values for parents)
     const nested = nest(grouped, keyFunctions.length);   // function to create nested data format
     console.log("nested data", nested);
 
-    // Put in format usable by d3.hierarchy
-    const hier = rootFromNest(nested, "Campus", "capacity");
+    // c) Convert nested structure to single-root hierarchy (with id/children and copied data fields)
+    const hier = rootFromNest(nested, "Campus"); // Creates a root from nested key/value pair structure
     console.log("hierarchical data", hier);
 
-    // Wrap into d3.hierarchy object (generates depth and length)
-    const root = d3.hierarchy(hier);
+    // 3) Wrap into d3.hierarchy object (generates depth, length, and methods)
+    const root = d3.hierarchy(hier, d => d.values);
     console.log("D3 hierarchy", root);
 
+    // 4) Calculate the sum of the values for each node (stored in standard value property)
     root.sum(d => d.capacity);
-    root.descendants().forEach(d => d.capacity = d.value);
+    root.descendants().forEach(d => d.capacity = d.value);  // copy value to capacity property
 
+    // 5) Draw the table
     draw(root);
 
     // Visual presentation as a table

@@ -15,7 +15,7 @@
     const svg = d3.select("body").append("svg").attr("height", dim.height).attr("width", dim.width);
     const chart = svg.append("g").attr("transform", `translate(${[dim.margin,dim.margin]})`);
 
-    const tabular = await d3.csv("../data/venue-link.csv", d3.autoType);
+    const tabular = await d3.csv("../data/venue.csv", d3.autoType);
 
     const root = d3.stratify().id(d => d.name).parentId(d => d.location)(tabular);
     d3.tree().size([cht.w, cht.h])(root);

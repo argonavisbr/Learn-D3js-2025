@@ -25,7 +25,7 @@
         ];
         const reductionFunction = d => ({area: +d[0].Area_km2, population: +d[0].Pop_2016});
         const rollupRoot = d3.rollup(result, reductionFunction, ...keyFunctions);
-        const hierarchy = rootFromRollup(rollupRoot, "World");
+        const hierarchy = rootFromRollup(rollupRoot, "World", false);
         const root = d3.hierarchy(hierarchy);
 
         root.count();

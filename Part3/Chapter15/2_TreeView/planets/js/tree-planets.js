@@ -8,8 +8,7 @@ export function draw(data, container, scale) {
 function drawNodes(g, data, scale) {
     const node = g.selectAll("g")
         .data(data)
-        .enter()
-        .append('g')
+        .join('g')
         .attr('transform', function(d) {
             return 'translate(' + [d.x, d.y] + ')';
         });

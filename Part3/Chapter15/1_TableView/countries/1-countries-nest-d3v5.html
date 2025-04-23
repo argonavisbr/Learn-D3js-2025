@@ -32,7 +32,7 @@
         console.log("hierarchical data", hier);
 
         // wrap into d3.hierarchy object (generates depth and length)
-        const root = d3.hierarchy(hier);
+        const root = d3.hierarchy(hier, d => d.values);
         console.log("D3 hierarchy", root);
 
         // Get total area

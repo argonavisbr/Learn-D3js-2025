@@ -41,10 +41,11 @@
     ];
     const reductionFunction = d => ({area: +d[0].Area_km2, population: +d[0].Pop_2016});
     const rollupRoot = d3.rollup(result, reductionFunction, ...keyFunctions);
-    const hierarchy = rootFromRollup(rollupRoot, "World");
+    const hierarchy = rootFromRollup(rollupRoot, "World", false);
     const root = d3.hierarchy(hierarchy);
 
-    root.sum(d => d.value ? d.value.area : d.value); // this is the only line that changes
+    root.sum(d => d.value ? d.value[0].area : d.area);  // this is the only line that changes
+    root.descendants().forEach(d => d.area = d.value);
     root.sort((a,b) => b.height - a.height || a.value - b.value);
 
     const colorScale = d3.scaleOrdinal(d3.schemeGreens[5].reverse());
