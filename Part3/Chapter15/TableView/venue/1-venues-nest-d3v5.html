@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Hierarchy with d3.nest (d3 version 5)</title>
+    <link rel="stylesheet" href="../css/table-styles.css">
+</head>
+<body>
+<h1>Hierarchy with d3.nest (d3 version 5)</h1>
+<script type="module">
+    import * as d3 from "https://cdn.skypack.dev/d3@5";      // note that this uses D3 version 5
+    import {makeTable, display} from "../js/table-view.js";
+    import {rootFromNest} from "../../js/nest.js";
+
+    // It's much easier to use d3.stratify in this case. These 3 examples use utility functions
+    // to generate the hierarchy. It may be useful in some cases.
+    // Note that this example uses an outdated version of D3. Examples 2 and 3 use new versions.
+
+    // The only differences are in step 2.
+
+    // 1) Raw tabular data
+    const file = "../../data/venue.csv";
+    const result = await d3.csv(file, d3.autoType);
+    console.log("tabular data", result);
+
+    // 2) Grouping - using the d3.nest() method from D3 version 5
+    // a) Create a nested structure (with key/value pairs for leaves, and key/values for parents)
+    const nested = d3.nest()
+                     .key(d => d.location)
+                     .key(d => d.name)
+                     .rollup(d => d[0])
+                     .entries(result);
+    console.log("nested data", nested);
+
+    // b) Convert nested structure to single-root hierarchy (with id/children and copied data fields)
+    const hier = rootFromNest(nested, "Campus"); // Creates a root from nested key/value pair structure
+    console.log("hierarchical data", hier);
+
+    // 3) Wrap into d3.hierarchy object (generates depth, length, and methods)
+    const root = d3.hierarchy(hier, d => d.values);
+    console.log("D3 hierarchy", root);
+
+    // 4) Calculate the sum of the values for each node (stored in standard value property)
+    root.sum(d => d.capacity);
+    root.descendants().forEach(d => d.capacity = d.value);  // copy value to capacity property
+
+    // 5) Draw the table
+    draw(root);
+
+    // Visual presentation as a table
+    function draw(root) {
+        const displayMap = new Map();
+        displayMap.set("capacity", d => display(d.capacity, "Capacity"))
+        makeTable(d3.select("body"), root, displayMap, d => d.data.id);
+    }
+
+</script>
+</body>
+</html>

@@ -2,11 +2,12 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Hierarchy</title>
+    <title>Interactive treemap</title>
     <style>
         rect {
             stroke: black;
-            stroke-width: .5px
+            stroke-width: .5px;
+            fill-opacity: .5;
         }
         text {
             font-family: 'Arial narrow', sans-serif;
@@ -20,49 +21,41 @@
     </style>
 </head>
 <body>
+<h1>Interactive treemap</h1>
+<p>Click to change root. Click again to reset.</p>
 <script type="module">
     import * as d3 from "https://cdn.skypack.dev/d3@7";
 
-    const nestedFile = "../data/sample-hierarchy.json";
-    const simpleHierarchy = await d3.json(nestedFile);
+    import {cht, chart, root} from "./js/treedata-json.js";
 
-    const width  = 1000, height = 800, margin = 25;
-
-    const chart = d3.select("body").append("svg")
-                    .attr("height", height)
-                    .attr("width", width)
-                    .append("g")
-                        .attr("transform", d => `translate(${[margin,margin]})`);
-
-    const root = d3.hierarchy(simpleHierarchy)
-                    .sort((a,b) => b.height - a.height )
-                    .sum(d => d.content ? d.content[0] : 0);
-
-    root.eachBefore(d => d.number = d.parent ? `${d.parent.number}.${d.parent.children.indexOf(d) + 1}` : 1);
+    root.sort((a,b) => d3.descending(a.height, b.height) )
+        .sum(d => d.content ? d.content[0] : 0)
+        .eachBefore(d => d.number = d.parent ? `${d.parent.number}.${d.parent.children.indexOf(d) + 1}` : 1); // number labels
 
     const treemap = d3.treemap()
-                      .size([width - margin*2, height - margin*2])
-                      .paddingInner(5)
-                      .paddingOuter(10)
-                      .paddingTop(50);
+        .size([cht.w, cht.h])
+        .paddingInner(2)
+        .paddingOuter(5)
+        .paddingTop(40);
+    treemap(root);
 
-    treemap(root); // adds x0/x1 and y0/y1 to each node
+    const nodes = root.descendants();
 
     const colorScale = d3.scaleOrdinal(d3.schemeCategory10)
                          .domain(d3.extent(root.descendants(), n => n.height));
     const fontScale = d3.scaleLinear()
                         .domain(d3.extent(root.descendants(), d => d.depth).reverse())
-                        .range([16,40]);
+                        .range([14,35]);
 
     draw(root);
 
     function draw(data) {
         chart.selectAll("g.node")
-            .data(data, d => d.number)
-            .join(enter => appendNodes(enter), update => update, exit => exit.remove())
-            .attr("transform", d => `translate(${[d.x0, d.y0]})`)
-            .on("click", (evt, d) => changeRoot(data, d.number))
-            .each(function(d) { updateNodes(d3.select(this), d); });
+             .data(data, d => d.number)
+                .join(enter => appendNodes(enter), update => update, exit => exit.remove())
+                    .attr("transform", d => `translate(${[d.x0, d.y0]})`)
+                    .on("click", (evt, d) => changeRoot(data, d.number))
+                    .each(function(d) { updateNodes(d3.select(this), d); });
     }
 
     function appendNodes(enter) {

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Using d3.rollup (d3 version 7) - countries</title>
+    <link rel="stylesheet" href="../css/table-styles.css">
+</head>
+<body>
+<h1>Using d3.rollup (d3 version 7)</h1>
+<script type="module">
+    import * as d3 from "https://cdn.skypack.dev/d3@7";   // This example uses an updated version of D3
+    import {nest, rootFromNest} from "../../js/nest.js";
+    import {makeTable, display} from "../js/table-view.js";
+
+    // 1) JSON data: a tabular format
+    const file = "../../data/un_regions.csv";
+    const result = await d3.csv(file);
+    console.log("tabular data", result);
+
+    // 2) Grouping by supercontinent/continent/un-region/country. Will create a 4-level hierarchy with nested arrays.
+    const keyFunctions = [d => d.Supercontinent, d => d.Continent, d => d.UN_Region, d => d.Country];
+    const reductionFunction = d => ({area: +d[0].Area_km2, population: +d[0].Pop_2016, hdi: +d[0].HDI_2017});
+    const grouped = d3.rollups(result, reductionFunction, ...keyFunctions);
+    console.log("grouped data", grouped);
+
+    // 3) Converting to a d3.nest format ({key: ..., values: [{key: ..., value: ...}, ...]}). This transforms output
+    //    from d3.rollups into a 4-level hierarchy with no single root (a root must be either selected or created).
+    const nested = nest(grouped, keyFunctions.length);   // function to create nested data format (see js/nest.js)
+    console.log("nested data", nested);
+
+
+    // *** The rest of the code is identical to 1-countries-nest-d3v5.html ***
+
+    // 4) Use a utility function (see js/nest.js) to create a new root and place top-level elements as children.
+    //    This will generate a single-root nested structure suitable for d3.hierarchy.
+    const hierarchy = rootFromNest(nested, "World");
+    console.log("hierarchical data", hierarchy);
+
+    // 5) Wrap into d3.hierarchy object (generates depth, length, and methods). The values property in each
+    //    non-leaf node contains an array of objects that will be the hierarchy's 'children' property
+    const root = d3.hierarchy(hierarchy, d => d.values);
+    console.log("D3 hierarchy", root);
+
+    // 6) Compute sums for area and population
+    // Get total area
+    root.sum(d => d.area);
+    root.descendants().forEach(d => d.area = d.value);
+
+    // Get total population
+    root.sum(d => d.population);
+    root.descendants().forEach(d => d.pop = d.value);
+
+    // 7) Render as a table
+    draw(root);
+
+    // Visual presentation as a table
+    function draw(root) {
+        const formatInt = d3.format(",d");
+        const displayMap = new Map();
+        displayMap.set("area", d => display(formatInt(d.area), "Area", " km<sup>2</sup>"));
+        displayMap.set("pop", d => display(formatInt(d.pop), "Pop."));
+        displayMap.set("hdi", d => display(d.data.hdi, "HDI"));
+        makeTable(d3.select("body"), root, displayMap, d => d.data.id);
+    }
+
+</script>
+</body>
+</html>

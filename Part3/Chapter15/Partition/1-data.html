@@ -2,36 +2,27 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Hierarchy</title>
-
+    <title>Partition data</title>
 </head>
 <body>
-<h2>Open JavaScript console for details</h2>
+<h1>Partition data</h1>
+<p>Open JavaScript console for details. See <code>x0</code>, <code>y0</code>, <code>x1</code> and <code>y1</code> properties that were added for each node.</p>
 <script type="module">
     import * as d3 from "https://cdn.skypack.dev/d3@7";
-
-    const nestedFile = "../data/sample-hierarchy.json";
-    const simpleHierarchy = await d3.json(nestedFile);
-
-    const width  = 1000, height = 800;
-
-    const root = d3.hierarchy(simpleHierarchy);
+    import {cht, root} from "./js/treedata-json.js";
 
     // sorting nodes by height
-    root.sort((a,b) => b.height - a.height);
+    root.sort((a,b) => d3.descending(a.height, b.height));
 
     // required to generate value attributes used by partition
     root.sum(d => d.content ? d.content[0] : 0);
 
-    const partition = d3.partition()
-            .size([width - 100, height - 100])
+    const partition = d3.partition().size([cht.w, cht.h])  // this will influence the x0, y0, x1 and y1 properties
+        .padding(1); // padding between nodes
     partition(root);
 
-    const nodes = root.descendants();
-
-    console.log("Partition data", root);
-    console.log("Nodes", nodes);
-
+    console.log("Hierarchical partition data", root);
+    console.log("Array of nodes", root.descendants());
 
 </script>
 </body>

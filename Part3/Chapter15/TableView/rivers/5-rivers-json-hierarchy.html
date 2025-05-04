@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Using d3.stratify - river</title>
+  <link rel="stylesheet" href="../css/table-styles.css">
+</head>
+<body>
+<h1>Using d3.stratify with tabular CSV</h1>
+<script type="module">
+  import * as d3 from "https://cdn.skypack.dev/d3@7";
+  import {makeTable, display} from "../js/table-view.js";
+
+  // 1) Using a nested JSON structure
+  const file = "../../data/amazon-river.json";
+  const result = await d3.json(file);
+  console.log("JSON data", result);
+
+  // 3) Generate d3.hierarchy object (generates depth, length, and methods). The JSON file is already
+  // in a nested format, but the children property needs to be informed via an accessor.
+
+  const root = d3.hierarchy(result, d => d.tributaries);
+  console.log("D3 hierarchy", root);
+
+  // 4) This example does not use a sum function, since length values already exist in each node
+  // 5) Draw the table
+  draw(root);
+
+  // Visual presentation as a table
+  function draw(root) {
+    const displayMap = new Map();
+    displayMap.set("length_km", d => display(d.data.length_km, "Length", " km"));
+    makeTable(d3.select("body"), root, displayMap, d => d.data.name);
+  }
+
+</script>
+</body>
+</html>

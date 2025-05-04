@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Hierarchy with d3.nest (d3 version 5)</title>
+  <link rel="stylesheet" href="../css/table-styles.css">
+</head>
+<body>
+<h1>Amazon river - d3.nest (D3 version 5)</h1>
+<script type="module">
+  import * as d3 from "https://cdn.skypack.dev/d3@5";
+  import {makeTable, display} from "../js/table-view.js";
+  import {rootFromNest} from "../../js/nest.js";
+
+    // 1) Raw tabular data
+    const file = "../../data/amazon-river.csv";
+    const result = await d3.csv(file, d3.autoType);
+    console.log("tabular data", result);
+
+    // 2) Grouping - using the d3.nest() method from D3 version 5
+    // a) Create a nested structure (with key/value pairs for leaves, and key/values for parents)
+    const nested = d3.nest()
+                     .key(d => d.Confluence)
+                     .key(d => d.Tributary)
+                     .rollup(d => ({name: d[0].Tributary, length_km: +d[0].km}))
+                     .entries(result);
+    console.log("nested data", nested);
+
+    // b) Convert nested structure to single-root hierarchy (with id/children and copied data fields)
+    const hier = rootFromNest(nested, "Amazon"); // Creates a root from nested key/value pair structure
+    console.log("hierarchical data", hier);
+
+    // 3) Wrap into d3.hierarchy object (generates depth, length, and methods)
+    const root = d3.hierarchy(hier, d => d.values);
+    console.log("D3 hierarchy", root);
+
+    draw(root);
+
+    // Visual presentation as a table
+    function draw(root) {
+        const displayMap = new Map();
+        displayMap.set("length_km", d => display(d.data.length_km, "Length", " km"));
+        makeTable(d3.select("body"), root, displayMap, d => d.data.id);
+    }
+
+</script>
+</body>
+</html>

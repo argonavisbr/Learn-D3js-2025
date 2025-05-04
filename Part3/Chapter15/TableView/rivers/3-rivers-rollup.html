@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Using d3.rollup (d3 version 7) - rivers</title>
+  <link rel="stylesheet" href="../css/table-styles.css">
+</head>
+<body>
+<h1>Using d3.rollup (d3 version 7)</h1>
+<script type="module">
+  import * as d3 from "https://cdn.skypack.dev/d3@7";
+  import {rootFromRollup} from "../../js/nest.js";
+  import {makeTable, display} from "../js/table-view.js";
+
+  // 1) Raw tabular data
+  const file = "../../data/amazon-river.csv";
+  const result = await d3.csv(file, d3.autoType);
+  console.log("tabular data", result);
+
+  // 2) Grouping - using d3.rollups from D3 version 7
+  // a) Create a nested array structure
+  const keyFunctions = [d => d.Confluence, d => d.Tributary];
+  const reductionFunction = d => ({name: d[0].Tributary, length_km: +d[0].km});
+  const grouped = d3.rollup(result, reductionFunction, ...keyFunctions);
+  const groupedMaps = d3.rollup(result, reductionFunction, ...keyFunctions);
+  console.log("grouped data in Maps", groupedMaps);
+
+  // b) Convert nested structure to single-root hierarchy (with id/children and copied data fields)
+  const hierarchy = rootFromRollup(groupedMaps); // Creates a root from nested maps structure
+  console.log("hierarchical data", hierarchy);
+
+  // 3) Wrap into d3.hierarchy object (generates depth, length, and methods)
+  const root = d3.hierarchy(hierarchy);
+  console.log("D3 hierarchy", root);
+
+  // 5) Draw the table
+  draw(root);
+
+  // Visual presentation as a table
+  function draw(root) {
+    const displayMap = new Map();
+    displayMap.set("length_km", d => display(d.data.length_km, "Length", " km"));
+    makeTable(d3.select("body"), root, displayMap, d => d.data.id);
+  }
+
+</script>
+</body>
+</html>

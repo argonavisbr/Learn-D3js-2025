@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Nested structure using rollup and Maps</title>
+    <link rel="stylesheet" href="../css/table-styles.css">
+</head>
+<body>
+<h1>Nested structure using rollup and Maps</h1>
+<script type="module">
+    import * as d3 from "https://cdn.skypack.dev/d3@7";   // This example uses an updated version of D3
+    import {rootFromRollup} from "../../js/nest.js";
+    import {makeTable, display} from "../js/table-view.js";
+
+    // 1) JSON data: a tabular format
+    const file = "../../data/un_regions.csv";
+    const result = await d3.csv(file);
+    console.log("tabular data", result);
+
+    // 2) Grouping by supercontinent/continent/un-region/country. Will create a 4-level hierarchy with nested Maps.
+    const keyFunctions = [d => d.Supercontinent, d => d.Continent, d => d.UN_Region, d => d.Country];
+    const reduceFunction = d => ({area: +d[0].Area_km2, population: +d[0].Pop_2016, hdi: +d[0].HDI_2017});
+    const nestedMaps = d3.rollup(result, reduceFunction, ...keyFunctions);
+    console.log("nested data", nestedMaps);
+
+    // 3) Use a utility function (see js/nest.js) to create a new root and place top-level elements as children.
+    //    This will generate a single-root nested structure suitable for d3.hierarchy. Nodes that have a single child
+    //    with the same key will be merged into a single node if last argument is false.
+    const objTree = rootFromRollup(nestedMaps, "World", true);  // true (default): all leaves at same level (dendrogram)
+    console.log('hierarchy data', objTree)
+
+    // 4) Wrap into d3.hierarchy object (generates depth, length, and methods). The data already contains a default
+    //    'children' property with child nodes.
+    const root = d3.hierarchy(objTree);
+    console.log("D3 hierarchy", root);
+
+    // 5) Compute sums for area and population
+    root.sum(d => d.value ? d.value[0].area : d.area);
+    root.descendants().forEach(d => d.area = d.value);
+
+    root.sum(d => d.value ? d.value[0].population : d.population);
+    root.descendants().forEach(d => d.pop = d.value);
+
+    // 6) Render as a table
+    draw(root);
+
+    // Visual presentation as a table
+    function draw(root) {
+        const formatInt = d3.format(",d");
+        const displayMap = new Map();
+        displayMap.set("area", d => display(formatInt(d.area), "Area", " km<sup>2</sup>"));
+        displayMap.set("pop", d => display(formatInt(d.pop), "Pop."));
+        displayMap.set("hdi", d => display(d.data.hdi, "HDI"));
+
+        makeTable(d3.select("body"), root, displayMap, d => d.data.id);
+    }
+</script>
+</body>
+</html>

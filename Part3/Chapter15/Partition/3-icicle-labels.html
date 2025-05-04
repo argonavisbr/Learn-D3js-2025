@@ -2,51 +2,39 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Hierarchy</title>
+    <title>Partition: icicle chart with labels</title>
     <style>
-    rect {
-        stroke: white;
-    }
+        rect {
+            stroke: white;
+            stroke-width: 1;
+        }
     text {
-        font-family: 'Yanone Kaffeesatz', sans-serif;
+        font-family: 'Arial narrow', sans-serif;
         text-anchor: middle;
         fill: white;
     }
     </style>
 </head>
 <body>
+<h1>Partition: icicle chart with labels</h1>
 <script type="module">
     import * as d3 from "https://cdn.skypack.dev/d3@7";
+    import {cht, chart, root} from "./js/treedata-json.js";
 
-    const nestedFile = "../data/sample-hierarchy.json";
-    const simpleHierarchy = await d3.json(nestedFile);
+    root.sort((a,b) => d3.ascending(a.height, b.height))
+        .sum(d => d.content ? d.content[0]+1 : 1);
 
-    const width  = 1000, height = 800;
+    // Generating labels
+    root.eachBefore(d => d.number = d.parent ? `${d.parent.number}.${d.parent.children.indexOf(d) + 1}` : 1);
 
-    const svg = d3.select("body").append("svg")
-                                 .attr("height", height)
-                                 .attr("width", width);
-    const chart = svg.append("g")
-                     .attr("transform", d => `translate(${[25,25]})`);
+    // Generate partition properties (x0, y0, x1, y1) for each node in root
+    d3.partition().size([cht.w, cht.h])(root);
 
-    const root = d3.hierarchy(simpleHierarchy)
-                   .sort((a,b) => b.height - a.height)
-                   .sum(d => d.content ? d.content[0] : 0);
-
-    root.eachBefore(function(d) {
-        d.number = d.parent ? `${d.parent.number}.${d.parent.children.indexOf(d) + 1}` : 1;
-    });
-
-    const partition = d3.partition()
-            .size([width - 100, height - 100])
-    partition(root);
     const nodes = root.descendants();
-
-    const colorScale = d3.scaleOrdinal(d3.schemeCategory10)
-                         .domain(d3.extent(nodes, n => n.depth));
+    const colorScale = d3.scaleOrdinal(d3.schemeCategory10).domain(d3.extent(nodes, n => n.depth));
     const fontScale = d3.scaleLinear()
                         .domain(d3.extent(root.descendants(), d => d.depth).reverse())
-                        .range([16,40]);
+                        .range([14,40]);
 
     drawPartition();
     drawLabels();

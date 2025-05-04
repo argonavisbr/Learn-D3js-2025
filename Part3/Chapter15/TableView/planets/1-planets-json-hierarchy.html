@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Hierarchy of planets and satellites</title>
+    <link rel="stylesheet" href="../css/table-styles.css">
+</head>
+<body>
+<h1>Hierarchy of planets and satellites</h1>
+<script type="module">
+    import * as d3 from "https://cdn.skypack.dev/d3@7";
+    import {makeTable, display} from "../js/table-view.js";
+
+    // 1) JSON data - a standard nested single-root format
+    const result = await d3.json("../../data/planets.json");
+    console.log("Loaded hierarchy", result);
+
+    // Add Sun
+    result.name = result.star.name;
+    result.diameterKm = result.star.diameterKm;
+
+    // 2) Convert to standard format (see source code to understand this structure)
+    //    The property to copy to the "children" property depends on the category.
+    const root = d3.hierarchy(result, function(d) {
+        if (['rocky', 'gaseous', 'dwarf'].includes(d.category)) {
+            return d.satellites ? d.satellites : [{}];
+        }
+        return d.planets;
+    });
+
+    console.log('D3 hierarchy', root);
+
+    // 3) Draw the table
+    draw(root);
+
+    // Visual presentation as a table
+    function draw(root) {
+        const astronomicUnit = 149600000; // km
+        const fmt = d3.format(",d");
+
+        const displayMap = new Map();
+        displayMap.set("diameter", d => display(d.data.diameterKm, "Diameter", " km", fmt));
+        displayMap.set("semiMajorAxisAU", d => display(d.data.semiMajorAxisAU * astronomicUnit, "Average distance from Sun", " km", fmt));
+        displayMap.set("semiMajorAxisKm", d => display(d.data.semiMajorAxisKm, "Average distance from planet", " km", fmt));
+        makeTable(d3.select("body"), root, displayMap, d => d.data.name);
+    }
+
+
+</script>
+</body>
+</html>
+

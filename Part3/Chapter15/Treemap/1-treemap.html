@@ -2,49 +2,29 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Hierarchy</title>
+    <title>Treemap enclosure</title>
     <style>
         rect {
             stroke: black;
-            stroke-width: .5px
-        }
-        text {
-            font-family: 'Yanone Kaffeesatz', sans-serif;
-            text-anchor: middle;
-            fill: white;
-            font-weight: 100;
+            stroke-width: 1px;
+            fill-opacity: .3;
         }
     </style>
 </head>
 <body>
+<h1>Treemap enclosure</h1>
 <script type="module">
     import * as d3 from "https://cdn.skypack.dev/d3@7";
+    import {cht, chart, root} from "./js/treedata-json.js";
 
-    const nestedFile = "../data/sample-hierarchy.json";
-    const simpleHierarchy = await d3.json(nestedFile);
+    root.sort((a,b) => d3.descending(a.height, b.height) )
+        .sum(d => d.content ? d.content[0] : 0);
 
-    const width  = 1000, height = 800;
-
-    const svg = d3.select("body").append("svg")
-                    .attr("height", height)
-                    .attr("width", width);
-    const chart = svg.append("g")
-                    .attr("transform", d => `translate(${[25,25]})`);
-
-    const root = d3.hierarchy(simpleHierarchy)
-                    .sort((a,b) => b.height - a.height )
-                    .sum(d => d.content ? d.content[0] : 0);
-
-    const treemap = d3.treemap()
-                      .size([width - 100, height - 100]);
+    const treemap = d3.treemap().size([cht.w, cht.h]);
     treemap(root);
     const nodes = root.descendants();
 
-    const colorScale = d3.scaleOrdinal(d3.schemeCategory10)
-                         .domain(d3.extent(nodes, n => n.height));
-    const fontScale = d3.scaleLinear()
-                        .domain(d3.extent(root.descendants(), d => d.depth).reverse())
-                        .range([16,40]);
+    const colorScale = d3.scaleOrdinal(d3.schemeCategory10).domain(d3.extent(nodes, n => n.height));
 
     drawTreemap();
 

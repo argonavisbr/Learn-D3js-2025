@@ -22,6 +22,8 @@ export function nest(data, levels, depth = 0) {
         return data.map(d => ({key: d[0], values: nest(d[1], levels, depth + 1)}));
 }
 
+
+
 /**
  * Creates a root suitable for use by d3.hierarchy() from a D3v5 d3.nest() type structure.
  * Can be used with D3v5 d3.nest() or the output of this module's nest() function
@@ -31,18 +33,7 @@ export function nest(data, levels, depth = 0) {
  */
 export function rootFromNest(nestedData, rootKey) {
     // Get or create the root node
-    const root = nestedData.find(d => d.key === rootKey) || {};
-
-    // If there is a single 'null' or '' node, then use it's first child as the root (get the value props)
-    const nullEntry = nestedData.filter(d => d.key === 'null' || d.key === '' || d.key === null)[0];
-    if(nullEntry && nullEntry.values && nullEntry.values[0]) {
-        const rootNode = nullEntry.values[0];
-        // copy the value properties to the root node
-        Object.assign(root, rootNode.value);
-    } else {
-        // If there is no root key, then create one using rootKey and the nestedData
-        Object.assign(root, { key: rootKey, values: nestedData });
-    }
+    const root = findNamedRoot(nestedData, rootKey) || obtainRootNode(nestedData, rootKey);
 
     // If there is a root, but no values property (it is a leaf), then just return the root node.
     if(!root.values) return root;
@@ -51,7 +42,7 @@ export function rootFromNest(nestedData, rootKey) {
     root.id = root.key; // use key as id
     return root;
 
-    // Inner recursive function to process each child node. TODO: difference in d3.nest (working) and nest (not working)
+    // Inner recursive function to process each child node.
     function nestChild(child, nestedData) {
         const obj = nestedData.filter(d => d.key === child.key);
         if (child.value) { // if it has a value property, then it's a leaf node
@@ -68,6 +59,26 @@ export function rootFromNest(nestedData, rootKey) {
         return child;
     }
 }
+
+// These functions, used by rootFromNest, are exported fo testing only
+export function findNamedRoot(nestedData, rootKey) {
+    return nestedData.filter(d => d.key === rootKey)[0];
+}
+export function obtainRootNode(nestedData, rootKey) {
+    // If there is a single null, 'null' or '' node, then use it's first child as the root (get the value props)
+    const nullEntry = nestedData.filter(d => d.key === 'null' || d.key === '' || d.key === null)[0];
+    const root = findNamedRoot(nestedData, rootKey) || {};
+    if (nullEntry && nullEntry.values && nullEntry.values[0]) {
+        const rootNode = nullEntry.values[0];
+        Object.assign(root, rootNode.value);  // copy the value properties to the root node
+    } else {
+        Object.assign(root, {key: rootKey, values: nestedData}); // If no null key, create new root using rootKey + nestedData
+    }
+    return root;
+}
+//////////
+
+
 
 /**
  * Creates a root suitable for use by d3.hierarchy() from a nested Map structure generated via d3.rollup().

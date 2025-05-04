@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Radial dendrogram of the Amazon tributaries</title>
+    <link rel="stylesheet" href="css/radial.css">
+</head>
+<body>
+<h1>Amazon tributaries</h1>
+<script type="module">
+    import * as d3 from "https://cdn.skypack.dev/d3@7";
+
+    const dim = {width: 1000, height: 1000};
+    const margin = {top: 20, right: 20, bottom: 20, left: 20};
+    const cht = {w: dim.width - margin.left - margin.right, h: dim.height - margin.top - margin.bottom};
+
+    const csvFile = "../../Data/amazon-river.csv";
+    const result = await d3.csv(csvFile);
+
+    const stratify = d3.stratify()
+                       .id(d => d.Tributary)
+                       .parentId(d => d.Confluence);
+
+    const root = stratify(result);
+
+    d3.tree().size([180,dim.width/2])(root);  // use only 180 degrees
+
+    const chart = d3.select("body")
+                    .append("svg")
+                    .attr("height", dim.height)
+                    .attr("width", dim.width)
+                        .append("g")
+                        .attr("transform", `translate(${dim.width/2},${margin.top})`);
+
+    draw(root, chart);
+
+    // FUNCTIONS
+    function draw(data, container) {
+        drawLinks(container.append("g").attr("class", "links"), data.links());
+        drawNodes(container.append("g").attr("class", "nodes"), data.descendants());
+    }
+
+    function drawNodes(g, data) {
+        const node = g.selectAll("g")
+                      .data(data)
+                        .join('g')
+                           .attr("transform", d => "rotate("+d.x+") translate("+d.y+")");
+
+        node.append("circle").attr("r", 4)
+        node.append("text").attr('x', 5).attr('y', 4)
+            .attr("class", d => (d.depth === 0) ? "root" : "leaf")
+            .attr("transform", d => d.x > 90 ? `rotate(-180) translate(-5,-10)` : "translate(-5,-10)")
+            .text(d => d.id);
+
+        node.select(".root").style("transform", "rotate(-90deg)");
+    }
+
+    function drawLinks(g, data) {
+        const link = d3.linkRadial()
+                        .angle(d => (d.x * Math.PI / 180) + Math.PI/2)
+                        .radius(d =>  d.y);
+
+        g.selectAll("path").data(data).join('path').attr("d", link);
+    }
+
+</script>
+</body>
+</html>
+
