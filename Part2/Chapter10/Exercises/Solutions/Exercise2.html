@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Exercise 10.2</title>
+</head>
+<body>
+<h1>Inverting colors</h1>
+<p>Click to invert the colors to their complementary color.</p>
+<script type="module">
+    import * as d3 from "https://cdn.jsdelivr.net/npm/d3@7/+esm";
+
+    // 10.2. Invert the colors from the chart in the template file, so that it becomes
+    // a negative version of the original chart.
+
+    const svg = d3.select("body")
+        .append("svg")
+        .attr("width", 600)
+        .attr("height", 200);
+
+    // A simple bar chart with random colors
+    const data = d3.range(10).map(() => Math.random() * 100);
+    const colors = d3.schemeCategory10;
+
+    svg.selectAll("rect")
+        .data(data)
+        .join("rect")
+        .attr("x", (d, i) => i * 60)
+        .attr("y", d => 200 - d)
+        .attr("width", 50)
+        .attr("height", d => d)
+        .style("fill", (d, i) => colors[i])
+        .on("click", invertColors);
+
+    function invertColors() {
+        svg.selectAll("rect")
+            .style("fill", (d, i) => {
+                // Use HSL color space to invert the hue of the color
+                const color = d3.hsl(colors[i]);
+                color.h = color.h + 180;  // Invert the hue by adding 180 degrees
+                return color;
+            });
+    }
+
+</script>
+</body>
+</html>

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Exercise 6.5</title>
+    <style>
+        line { stroke-width: 4; stroke-linecap: round; }
+    </style>
+</head>
+<body>
+<script type="module">
+    import * as d3 from 'https://cdn.jsdelivr.net/npm/d3@7/+esm';
+
+    // 6.5: This continues Exercise 6.4 (you can also use the template). Configure join() so that the newly
+    // appended lines (the enter selection) are rendered in a different color.
+
+    const size = 220;
+    const svg = d3.select("body")
+        .append("svg")
+        .attr("width", size)
+        .attr("height", size)
+        .attr("viewBox", `${-size} -${size} ${size*2} ${size*2}`);
+
+    const set1 = [
+        [[200,0],[62,190]],
+        [[62,190],[-162,118]],
+        [[-162,118],[-162,-118]],
+        [[-162,-118],[62,-190]],
+        [[62,-190],[200,0]]
+    ];
+
+    const set2 = [
+        [[200,0],[162,118]],
+        [[162,118],[62,190]],
+        [[62,190],[-62,190]],
+        [[-62,190],[-162,118]],
+        [[-162,118],[-200,0]],
+        [[-200,0],[-162,-118]],
+        [[-162,-118],[-62,-190]],
+        [[-62,-190],[62,-190]],
+        [[62,-190],[162,-118]],
+        [[162,-118],[200,0]]
+    ];
+
+    // Steps:
+    //       1. Select all <line> elements and bind the pentagon data
+    //       2. Select all <line> elements again and bind the decagon data after a transition with a delay
+    //       3. Configure join() so that the newly appended lines (the enter selection) are rendered in a different color
+
+    // ADD CODE FOR THE PENTAGON HERE
+
+    // ADD CODE FOR THE DECAGON HERE
+
+    // Add a bypass to use D3 functions at the console prompt
+    window.d3 = d3;
+</script>
+
+</body>
+</html>

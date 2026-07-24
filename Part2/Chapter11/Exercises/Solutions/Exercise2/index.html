@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Exercise 2: multi-series line chart</title>
+    <link rel="stylesheet" href="./css/main.css">
+</head>
+<body>
+<h1>GDP per capita South America <span id="from"></span> to <span id="to"></span></h1>
+<p>Source: <span id="source"></span></p>
+<script type="module">
+    import * as d3 from "https://cdn.jsdelivr.net/npm/d3@7/+esm";
+    import {load} from "./js/data.js";
+    import {draw} from "./js/view.js";
+
+    // Exercise 11.2: Create a multi-series line chart comparing the GDP per capita of South American countries.
+    // Use either data/south-america-gdp-imf.csv or south-america-gdp-wb.csv.
+    // They are compatible, and both contain public domain GDP data for the same countries from different sources
+    // (IMF and World Bank) for different time spans.
+    //
+    // This template loads and parses the CSV, prepare the data, and plot the chart.
+    // To complete th exercise, you just need to edit two files:
+    //  - data.js
+    //  - view.js
+    //
+    // If you prefer to edit everything in a single file, use Exercise1.html instead.
+
+    // Choose a dataset. They have a similar compatible format
+    const dataset =
+        {source: "IMF", file: "../../../data/south-america-gdp-imf.csv", from: 1980, to: 2022};
+    // {source: "World Bank", file: "../../../data/south-america-gdp-wb.csv", from: 1989, to: 2022};
+
+    // This sets the HTML title of the page with the dataset information
+    d3.select("#source").text(dataset.source);
+    d3.select("#from").text(dataset.from);
+    d3.select("#to").text(dataset.to);
+
+    await load(dataset.file);
+    draw();
+</script>
+
+</body>
+</html>

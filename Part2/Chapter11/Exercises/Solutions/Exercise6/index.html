@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Exercise 4: An area chart displaying max and min values for each point and an average</title>
+    <link rel="stylesheet" href="./css/main.css">
+</head>
+<body>
+<h1>Average monthly temperature (ºC) in selected cities</h1>
+<script type="module">
+    import {load} from "./js/data.js";
+    import {draw} from "./js/view.js";
+
+    // EXERCISE 11.6: Create a multi-series line chart. This template uses data/temperatures.csv (average monthly temperature in selected cities).
+    // This template uses data/rainfall.csv (average monthly rainfall in selected cities).
+    // It loads and parses the CSV and prepares the data as an array of data series so that each series consists
+    // of a city name, followed by an array of 12 values. It also sets up the scales
+    // Use this data to plot a chart comparing the values in each city for each month. Use curves.
+
+    // Temperature data (Source: Wikipedia)
+    const file = "../../../data/temperatures.csv";
+
+    await load(file);
+    draw();
+</script>
+</body>
+</html>

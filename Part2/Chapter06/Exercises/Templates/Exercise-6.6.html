@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Exercise 6.6</title>
+    <style>
+        line { stroke-width: 4; stroke-linecap: round; }
+    </style>
+</head>
+<body>
+<script type="module">
+    import * as d3 from 'https://cdn.jsdelivr.net/npm/d3@7/+esm';
+
+    // 6.6: This continues Exercise 6.5 (you can also use the template). Add a key function to the selection so
+    // that when the new lines (of a di!erent color) are added, they are inserted between the existing lines
+    // (instead of after, which is the default), rendering a decagon with sides of alternating colors.
+
+    const size = 220;
+    const svg = d3.select("body")
+        .append("svg")
+        .attr("width", size)
+        .attr("height", size)
+        .attr("viewBox", `${-size} -${size} ${size*2} ${size*2}`);
+
+    const set1 = [
+        [[200,0],[62,190]],
+        [[62,190],[-162,118]],
+        [[-162,118],[-162,-118]],
+        [[-162,-118],[62,-190]],
+        [[62,-190],[200,0]]
+    ];
+
+    const set2 = [
+        [[200,0],[162,118]],
+        [[162,118],[62,190]],
+        [[62,190],[-62,190]],
+        [[-62,190],[-162,118]],
+        [[-162,118],[-200,0]],
+        [[-200,0],[-162,-118]],
+        [[-162,-118],[-62,-190]],
+        [[-62,-190],[62,-190]],
+        [[62,-190],[162,-118]],
+        [[162,-118],[200,0]]
+    ];
+
+    // Steps:
+    //       1. Select all <line> elements and bind the pentagon data
+    //       2. Select all <line> elements again and bind the decagon data after a transition with a delay
+    //       3. Use a key function to the selection so that when the new lines (of a different color) are added,
+    //       they are inserted BETWEEN the existing lines (instead of after, which is the default),
+    //       rendering a decagon with sides of alternating colors.
+
+    // ADD CODE FOR THE PENTAGON HERE
+
+    // ADD CODE FOR THE DECAGON HERE
+
+    // Add a bypass to use D3 functions at the console prompt
+    window.d3 = d3;
+</script>
+
+</body>
+</html>

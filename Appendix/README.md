@@ -6,11 +6,11 @@ This section contains additional code examples, exercises, and resources that co
 
 __`Environment/`__
 
-A D3 data visualization configured in a Node.js environment, for building via npm and running via a local web server. This setup allows local dependency management and allows for integrating D3.js with other libraries and frameworks, such as React, Vue, or Angular.
+D3 data visualizations configured in a Node.js environment, for building via npm and running via a local web server. This setup allows local dependency management and allows for integrating D3.js with other libraries and frameworks, such as React, Vue, or Angular.
 
 __`Frontend/`__
 
-The same D3 data visualization configured to work in different frontend frameworks. Currently only the React framework is included, but other frameworks will be added in the future.
+The same D3 data visualizations configured to work in different frontend frameworks. Currently only the React framework is included, but other frameworks will be added in the future.
 
 __`Migration/`__
 
@@ -18,6 +18,6 @@ Code examples showing how to migrate from older versions of D3.js to the latest 
 
 __`Modules/`__
 
-A list of D3.js modules, describing their purpose, usage, and which chapters in the book use them. This folder also code examples of modules not covered in the book.
+A list of D3.js modules, describing their purpose, usage, and which chapters in the book use them.
 
 
