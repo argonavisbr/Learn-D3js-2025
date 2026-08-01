@@ -1,0 +1,16 @@
+import * as d3 from "https://cdn.jsdelivr.net/npm/d3@7/+esm";
+
+export {dim, app, data};
+
+const dim = {
+    width: 800, height: 500,
+    margin: {top: 10, left: 50, bottom: 50, right: 150}
+};
+const app = {
+    scale: {
+        x: d3.scalePoint().range([dim.margin.left, dim.width - dim.margin.right]),
+        y: d3.scaleLinear().range([dim.height - dim.margin.bottom, dim.margin.top])
+    }
+}
+const data = {};
+

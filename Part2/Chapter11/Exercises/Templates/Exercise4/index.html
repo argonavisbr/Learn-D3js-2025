@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Exercise 4: An area chart displaying max and min values for each point and an average</title>
+    <link rel="stylesheet" href="./css/main.css">
+</head>
+<body>
+<h1>Monthly rainfall in São Paulo, Brazil (1984-2017)</h1>
+<p>Source: inmet.gov.br</p>
+<script type="module">
+    import {load} from "./js/data.js";
+    import {draw} from "./js/view.js";
+
+    // Exercise 11.4: The data/rain_sao_paulo_tidy.csv file (used in Chapter 7) contains rainfall data for
+    // several years. Use it to compute the average, maximum, and minimum rainfall for each month.
+    // Plot an area chart for the difference between maximum and minimum, and a line chart with the average
+    // using the same axes.
+    // This template file loads the data and sets up the scales. You just need to set up the
+    // area and line functions (in data.js), and render them (in view.js).
+    // A single-page solution and template is available in Exercise4.html.
+
+    const file = "../../../data/rain_sao_paulo_tidy.csv";
+
+    await load(file);
+    draw();
+</script>
+</body>
+</html>

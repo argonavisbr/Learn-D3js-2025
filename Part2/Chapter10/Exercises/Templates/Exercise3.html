@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Exercise 3</title>
+    <style>
+        text {
+            alignment-baseline: hanging;
+            font-family: sans-serif;
+            font-size: 10px;
+        }
+        text.month {
+            text-anchor: middle;
+        }
+    </style>
+</head>
+<body>
+<h2>Average monthly temperatures</h2>
+<script type="module">
+    import * as d3 from 'https://cdn.jsdelivr.net/npm/d3@7/+esm';
+
+    // 10.3. The data/temperatures.csv file contains monthly average temperatures from several cities.
+    // It's data is displayed in a table (12 values per city, one city per row.
+    // Use a sequential or diverging interpolated scheme with warm and cold colors to represent
+    // the temperatures correctly. This file already loads the CSV file and prints the temperatures
+    // for each city. All you need to do is add the colors. See steps in the comments.
+
+    const file = '../../data/temperatures.csv';
+    const h = 200, w = 800;
+
+    const svg = d3.select("body")
+        .append("svg")
+        .attr("height", h)
+        .attr("width", w);
+
+    // 1) define a continuous color scale here
+    // ADD CODE HERE;
+
+    d3.csv(file, d3.autoType).then(data => {
+        const months = data.columns.filter(d => d !== 'city');
+        const dataset = data.map(c => ({city: c.city,values: months.map(k => c[k])}));
+        const values = d3.merge(dataset.map(d => d.values));  // use these values for the color scale domain
+
+        // 2) get max and min values and set the domain for the color scale
+        // ADD CODE HERE
+
+        display(dataset);
+    });
+
+    // Displays one city per row, 12 months per city
+    function display(data) {
+        svg.selectAll("g")
+           .data(data)
+             .join("g").attr("class", "city")   // each row is a city
+               .each(function(d,i) {
+                   const city = d3.select(this);
+
+                   city.append("text").attr("class", "city")    // print the name of the city
+                       .text(d.city)
+                       .attr("y", i*20 + 20);
+
+                   // 3. use the color scale to fill the rectangles
+                   city.selectAll("rect.month") // each rectangle is a month
+                       .data(d.values)
+                       .join("rect").attr("class", "month")
+                       .attr("y", i*20 + 20)
+                       .attr("x", (_,j) => j*45 + 100)
+                       .attr("height", 20)
+                       .attr("width", 40)
+                       .attr("stroke", "black")
+                       .attr("fill", "white"); // 3 ADD a fill color using the color scale
+
+                   // 4. use the color scale to add a contrasting text value over the rectangle
+                   city.selectAll("text.month")
+                       .data(d.values)
+                       .join("text").attr("class", "month")
+                       .attr("y", i*20 + 25)
+                       .attr("x", (_,j) => j*45 + 20 + 100) // 4 ADD a contrasting fill color for the text
+                       .text(m => m);
+               })
+    }
+
+</script>
+</body>
+</html>
