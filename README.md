@@ -112,7 +112,7 @@ With its practical approach, this book remains one of the most respected resourc
 <details open> 
   <summary><h2>Description of each subfolder in this folder</h2></summary>
 
-__`Part1/`__
+  __`Part1/`__
 
 Contains code examples and exercises related to the first part of the book (Introduction), which covers the fundamentals of D3.js, how to set up a basic (non-Node.js) development environment, and how to create simple visualizations using D3.js. This part also includes two chapters covering pre-requisites for learning D3.js, such as JavaScript and SVG basics, and a quick start tutorial for creating a bar chart using most features that will be explored in detail in the rest of the book.
 
@@ -144,7 +144,7 @@ _Helder da Rocha_ teaches, writes and develops applications with Java and Web te
   <li><a href="https://www.packtpub.com/en-us/product/learn-d3js-9781838645571">Learn D3.js, First Edition</a></li>
 
   <li><a href="https://www.packtpub.com/en-us/product/getting-started-with-taipy-9781836203810">Getting Started with Taipy, First Edition</a></li>
-
+ 
 </ul>
 
 </details>
