@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Interactive easing algorithms</title>
+    <style>
+        html, body {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+        }
+
+        body {
+            font-family: monospace;
+        }
+
+        #app {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        #controls {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 0.6rem 0.8rem;
+            border-bottom: 1px solid #ddd;
+            flex-wrap: wrap;
+        }
+
+        label {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+        }
+
+        #chart {
+            flex: 1;
+            width: 100%;
+            min-height: 0;
+        }
+
+        svg {
+            width: 100%;
+            height: 100%;
+            display: block;
+        }
+    </style>
+</head>
+<body>
+<h1>Interactive easing algorithms</h1>
+<div id="app">
+    <div id="controls">
+        <label>
+            Easing:
+            <select id="ease-select"></select>
+        </label>
+        <label>
+            Period:
+            <input id="period" type="range" min="0.05" max="2" step="0.05" value="0.3">
+            <span id="period-value">0.30</span>
+        </label>
+        <label>
+            Amplitude:
+            <input id="amplitude" type="range" min="0.5" max="5" step="0.1" value="1">
+            <span id="amplitude-value">1.0</span>
+        </label>
+        <span>(period/amplitude apply to elastic easings)</span>
+    </div>
+    <div id="chart"></div>
+</div>
+
+<script type="module">
+    import * as d3 from "https://cdn.jsdelivr.net/npm/d3@7/+esm";
+
+    const easeNames = [
+        "easeLinear",
+        "easeQuadIn", "easeQuadOut", "easeQuadInOut",
+        "easeCubicIn", "easeCubicOut", "easeCubicInOut",
+        "easePolyIn", "easePolyOut", "easePolyInOut",
+        "easeSinIn", "easeSinOut", "easeSinInOut",
+        "easeExpIn", "easeExpOut", "easeExpInOut",
+        "easeCircleIn", "easeCircleOut", "easeCircleInOut",
+        "easeBounceIn", "easeBounceOut", "easeBounceInOut",
+        "easeBackIn", "easeBackOut", "easeBackInOut",
+        "easeElasticIn", "easeElasticOut", "easeElasticInOut"
+    ];
+
+    const margin = {top: 24, right: 72, bottom: 56, left: 56};
+    const yPaddingRatio = 0.3;
+    const chart = d3.select("#chart");
+    const svg = chart.append("svg");
+    const g = svg.append("g");
+    const curvePath = g.append("path").attr("fill", "none").attr("stroke", "red").attr("stroke-width", 1.8);
+    const baseline = g.append("line").attr("stroke", "#888").attr("stroke-width", 1);
+    const dot = g.append("circle").attr("r", 5).attr("fill", "red");
+    const freeDot = g.append("circle").attr("r", 5).attr("fill", "blue");
+    const sideBar = g.append("rect").attr("fill", "steelblue").attr("opacity", 0.12);
+    const sideCap = g.append("line").attr("stroke", "black").attr("stroke-width", 1);
+    const title = g.append("text").attr("font-size", "12pt").attr("y", -6);
+
+    const easeSelect = document.getElementById("ease-select");
+    const periodInput = document.getElementById("period");
+    const amplitudeInput = document.getElementById("amplitude");
+    const periodValue = document.getElementById("period-value");
+    const amplitudeValue = document.getElementById("amplitude-value");
+
+    easeNames.forEach(name => {
+        const option = document.createElement("option");
+        option.value = name;
+        option.textContent = `d3.${name}`;
+        easeSelect.appendChild(option);
+    });
+    easeSelect.value = "easeCubicInOut";
+
+    let x = d3.scaleLinear();
+    let y = d3.scaleLinear();
+    let currentEase = d3.easeCubicInOut;
+    let animationNonce = 0;
+
+    function buildEase() {
+        let ease = d3[easeSelect.value];
+        const period = Number(periodInput.value);
+        const amplitude = Number(amplitudeInput.value);
+        if (typeof ease.period === "function") ease = ease.period(period);
+        if (typeof ease.amplitude === "function") ease = ease.amplitude(amplitude);
+        periodValue.textContent = period.toFixed(2);
+        amplitudeValue.textContent = amplitude.toFixed(1);
+        return ease;
+    }
+
+    function renderCurve() {
+        const width = chart.node().clientWidth;
+        const height = chart.node().clientHeight;
+        svg.attr("viewBox", `0 0 ${width} ${height}`);
+        x.domain([0, 1]).range([margin.left, width - margin.right]);
+        y.domain([-yPaddingRatio, 1 + yPaddingRatio]).range([height - margin.bottom, margin.top]);
+
+        const sideX = x(1) + 16;
+        g.selectAll(".axis").remove();
+        g.append("g").attr("class", "axis")
+            .attr("transform", `translate(0, ${y(0)})`)
+            .call(d3.axisBottom(x).ticks(10));
+        g.append("g").attr("class", "axis")
+            .attr("transform", `translate(${x(0)}, 0)`)
+            .call(d3.axisLeft(y).ticks(6));
+
+        baseline.attr("x1", x(0)).attr("x2", x(1)).attr("y1", y(0)).attr("y2", y(0));
+        sideBar.attr("x", sideX - 3).attr("y", y(1)).attr("width", 6).attr("height", y(0) - y(1));
+        title.attr("x", x(0)).text(`d3.${easeSelect.value}`);
+
+        const line = d3.line()
+            .x(t => x(t))
+            .y(t => y(currentEase(t)));
+        curvePath.datum(d3.range(0, 1.001, 0.002)).attr("d", line);
+        sideCap.attr("x1", sideX - 3).attr("x2", sideX + 3).attr("y1", y(0)).attr("y2", y(0));
+    }
+
+    function animate() {
+        const nonce = ++animationNonce;
+        const duration = 2500;
+        const sideX = x(1) + 16;
+        dot.interrupt().attr("cx", x(0)).attr("cy", y(0));
+        freeDot.interrupt().attr("cx", sideX).attr("cy", y(0));
+        sideCap.interrupt().attr("x1", sideX - 3).attr("x2", sideX + 3).attr("y1", y(0)).attr("y2", y(0));
+
+        dot.transition().duration(duration).ease(d3.easeLinear)
+            .attrTween("cx", () => t => x(t))
+            .attrTween("cy", () => t => y(currentEase(t)))
+            .on("end", () => { if (nonce === animationNonce) animate(); });
+
+        freeDot.transition().duration(duration).ease(d3.easeLinear)
+            .attr("cx", sideX)
+            .attrTween("cy", () => t => y(currentEase(t)));
+
+        sideCap.transition().duration(duration).ease(d3.easeLinear)
+            .attrTween("y1", () => t => y(currentEase(t)))
+            .attrTween("y2", () => t => y(currentEase(t)));
+    }
+
+    function update() {
+        currentEase = buildEase();
+        renderCurve();
+        animate();
+    }
+
+    easeSelect.addEventListener("change", update);
+    periodInput.addEventListener("input", update);
+    amplitudeInput.addEventListener("input", update);
+    window.addEventListener("resize", update);
+    update();
+</script>
+
+</body>
+</html>
