@@ -1,0 +1,25 @@
+path.steps {
+    stroke-width: 3px;
+    fill: none;
+    opacity: .75;
+}
+h1, p, text {
+    font-family: sans-serif;
+}
+p {font-size: 10pt}
+h1 {font-size: 16pt}
+text.city, text.anim {
+    font-size: 11px;
+    font-weight: bold;
+    text-anchor: middle;
+    alignment-baseline: hanging;
+    pointer-events: none;
+}
+.chart line, .chart path {
+    stroke: darkslategray;
+    opacity: .5;
+    stroke-width: 1px;
+}
+.tick text {
+    text-transform: capitalize;
+}

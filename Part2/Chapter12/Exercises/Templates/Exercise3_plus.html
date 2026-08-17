@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Stacked bar chart with sleep data</title>
+    <link rel="stylesheet" href="../../css/chart-utils.css">
+    <style>
+        .legend text {
+            font-size: 12px !important;
+            font-family: sans-serif;
+            text-transform: capitalize;
+        }
+    </style>
+</head>
+<body>
+
+<script type="module">
+    import * as d3 from 'https://cdn.jsdelivr.net/npm/d3@7/+esm';
+    import * as utils from '../../js/chart-utils.js';
+
+    // Exercise 3 - This template contains only boilerplate code to call utility functions that
+    //              render axes and legends. You have to set up scales, dimensions, SVG viewport,
+    //              and render the chart. If you want a simpler exercise, that focuses on stacking
+    //              use Exercise3_min.html.
+
+    // Chart dimensions - set the dimensions for the chart
+    const dim = {
+        height: 0,
+        width: 0,
+        margin: {top: 0, right: 0, bottom: 0, left: 0}
+    };
+
+    // Create the SVG viewport
+    const svg = null;
+
+    // Use scaleBand() for the x-axis of bar charts - it's easier to align and space the bars
+    // Use a scaleLinear() for the y-axis, so that the data can be compared
+    const scale = {
+        x: null,
+        y: null
+    };
+
+    // The data file (adjust the URL if necessary)
+    const file = "../../data/sleep-data.json";
+
+    // This dataset is in a non-standard format. You must flatten it
+    // before attempting to stack it (the code is much simpler). See step (3) below.
+    //  [
+    //    {day: 'Sun', hours: {light: 5.5, deep: 0.9, rem: 1.6}},
+    //    ...
+    //    {day: 'Sat', hours: {light: 6.1, deep: 1.2, rem: 1.2}}
+    //  ]
+
+    // 1) PARSE THE DATA FILE
+    d3.json(file)
+      .then(sleep => {
+          console.log(sleep); // Inspect the data
+
+          // An array of colors to use for [light, deep, rem] sleep
+          const colors = null; // ADD CODE
+
+          // Use the hours as keys
+          const keys = null; // ADD CODE
+
+          // 2) TRANSFORM THE DATA
+          // Flatten the dataset, to make it easier to stack.
+          // Transform {day, hours: {light, deep, rem}} ==> {day, light, deep, rem}
+          const flatSleep = [];
+
+          // 3) STACK THE DATA
+          // EXERCISE: a) create a stacked layout generator for 3 (keys) layers of data
+          const stack = null;
+
+          // EXERCISE: b) apply the generator and obtain the stacked data
+          const stackedData = [];
+
+          // 4) RENDER THE CHART
+          // EXERCISE: set the domains of the scales
+          // ADD CODE
+
+          // render Cartesian axes - this function is from the file chart-utils.js
+          utils.cartesianAxes()
+              .container(svg)
+              .xScale(scale.x)
+              .yScale(scale.y)
+              .xLabel('Day of the week')
+              .yLabel('Hours of sleep')
+              .showHorizontalGrid(true)();
+
+          // render the stacked bars
+          // ADD CODE
+
+          // Add legend at right margin
+          const legend = svg.append("g")
+              .attr("transform", `translate(${[dim.width - dim.margin.right + 10, dim.height/2 - dim.margin.bottom]})`)
+              .attr("class", "legend");
+
+          // Configure a color function
+          const colorFunction = d3.scaleOrdinal()
+              .domain(keys)
+              .range(colors);
+
+          // Set up a legend
+          utils.legend()
+              .container(legend)
+              .data(keys.map(d => d === 'rem' ? d.toUpperCase() : d))
+              .color(colorFunction)();
+
+      });
+
+</script>
+
+</body>
+</html>

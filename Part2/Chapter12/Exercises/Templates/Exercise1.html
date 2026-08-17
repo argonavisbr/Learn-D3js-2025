@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>GDP pie chart</title>
+    <link rel="stylesheet" href="../../css/chart-utils.css">
+    <style>
+        h1, p {
+            font-family: sans-serif;
+            text-align: center;
+            width: 750px;
+        }
+        h1 {
+            font-size: 16pt;
+        }
+        p {
+            font-size: 10px;
+        }
+        text.label {
+            font-family: sans-serif;
+            font-size: 11px;
+        }
+    </style>
+</head>
+<body>
+<h1>GDP share (US$) of richest countries in 2018</h1>
+<p>Source: World Bank</p>
+<script type="module">
+    import * as d3 from 'https://cdn.jsdelivr.net/npm/d3@7/+esm';
+    import * as utils from '../../js/chart-utils.js';
+
+    // EXERCISE: 1) adjust the view height to fit the half-pie chart (remove 250px from the height)
+    const dim = {width: 800, height: 800, margin: 100};
+    const data = {};
+    const app = {
+        limit: 10,
+        pie: d3.pie()
+            .value(d => d.gdp)
+            .sortValues(d3.descending)
+            .startAngle(Math.PI / 2)    // EXERCISE: 2) Change to start at -90 degrees (left of the circle)
+            .endAngle(Math.PI * 2.5),   // EXERCISE: 3) Change to end at +90 degrees (right of the circle)
+        arc: d3.arc()
+            .innerRadius(50)
+            .outerRadius(dim.width/2 - dim.margin)
+            .padAngle(.5)
+            .padRadius(10)
+    }
+
+    // A simple color scale, for 10 or 20 different coutries + 1 - last color is gray (rest of the world)
+    app.color= d3.scaleOrdinal(d3.schemeTableau10.concat("#777"));
+
+    const file = "../../data/gdp-world-bank-2022.csv";
+
+    d3.select("#limit").text(app.limit); // update the title of the page
+
+    // The SVG container
+    const svg = d3.select("body").append("svg")
+        .attr("width", dim.width)
+        .attr("height",dim.height);
+    // The chart container, placed in the center
+    // EXERCISE:translate - use full height for the half-pie
+    const chart = svg.append("g")
+        .attr("class", "pie")
+        .attr("transform", `translate(${[dim.width/2, dim.height/2]})`);
+
+    load(file).then(draw);
+
+    async function load(file) {
+        // Parse the file, pre-process each row to include only the data we need (2018)
+        const csv = await d3.csv(file, row => ({country: row['Country'], gdp: +row['2018']}));
+        data.countries = prepare(csv, app.limit); // save list of limit countries + sum of the rest
+    }
+
+    /**
+     * Returns a selection, based on app.limit.
+     * @param data
+     * @param limit
+     * @returns {*}
+     */
+    function prepare(data, limit) {
+        // Get first limit countries
+        const selection = data.sort((a,b) => d3.descending(a.gdp, b.gdp))
+            .slice(0, limit);
+        // Create a new value for the rest of the world
+        const rest = data.filter(d => !selection.includes(d));
+        selection.push({country: 'Rest of the world', gdp: d3.sum(rest, d => d.gdp)});
+        return selection;
+    }
+
+    function draw() {
+        // Bind the data the set of slices
+        const slices = chart.selectAll("g.slice")
+            .data( app.pie(data.countries) )
+            .join("g")
+            .attr("class", "slice");
+        // Append a path with the rendered slice
+        slices.append("path")
+            .attr("d", app.arc)
+            .attr("fill", app.color);
+
+        // Alternative - Use labels on slices (remove if using legends):
+        utils.pieLabels()
+            .container(slices.filter(d => d.endAngle - d.startAngle > 0.08)) // Don't display in small slices
+            .arc(app.arc)
+            .property('gdp')
+            .radius(1.52)
+            .direction(utils.direction.RADIAL)
+            .format(d => d3.format(",.3s")(d).replace('G','B'))();
+
+        // EXERCISE - Add the text labels: there are two possible solutions.
+
+        // 1) Using labels on slices (remove if using legends) - see the tutorial solution
+        // Use utils.pieLabels() as above with the country as the property and a radius of 1.72 (to place them outside the slices)
+
+        // 2) An alternative solution is to use legends (remove if using labels on slices)
+        // a) Place the legend (a <g> container) in the top-right corner of the chart
+        // b) Draw the legend (use utils.legend() from chart-utils.js) - use country names as the data
+    }
+
+</script>
+
+</body>
+</html>

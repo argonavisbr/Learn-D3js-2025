@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Stacked area chart with GDP data</title>
+    <link rel="stylesheet" href="../../css/chart-utils.css">
+    <style>
+        path.line {
+            stroke-width: 2px;
+            fill: none;
+            opacity: .85
+        }
+        h1, p {
+            font-family: sans-serif;
+        }
+        h1 {
+            font-size: 16pt;
+            text-align: center;
+        }
+        p {
+            font-size: 10px;
+            text-align: center;
+        }
+        .legend text.label {
+            font-family: sans-serif;
+            font-size: 10px;
+            text-anchor: start;
+        }
+        text.label {
+            font-size: 12px;
+        }
+        svg {border: 1px solid #ccc;}
+    </style>
+</head>
+<body>
+<h1>GDP share 1960 to 2022 in US$</h1>
+<p>Source: World Bank</p>
+<script type="module">
+    import * as d3 from 'https://cdn.jsdelivr.net/npm/d3@7/+esm';
+    import * as utils from '../../js/chart-utils.js';
+
+    // Exercise 4 - This template contains almost all the code. You just need to a) configure a
+    //              stack generator, and b) use the stack generator to stack the data (choose
+    //              stack order and offset). All changes are in the createDataset() function, but before
+    //              making changes, inspect the data and how it is transformed in the plot() function.
+    //              See comments. If you prefer a more challenging exercise, try writing the both the
+    //              plot() function and the createDataset() functions from scratch.
+
+    const file = "../../data/gdp-world-bank-2022.csv";
+
+    // Number of countries to display
+    const limit = 4;  // limit+1 areas will be shown (remaining countries are accumulated in "Rest of the World"
+
+    // Chart dimensions
+    const dim = {
+        height: 500,
+        width: 800,
+        margin: {top: 20, right: 150, bottom: 60, left: 75}
+    };
+
+    // A time scale for the years, a linear scale for the GDPs
+    const scale = {
+        x: d3.scaleTime()
+            .range([dim.margin.left, dim.width - dim.margin.right]),
+        y: d3.scaleLinear()
+            .range([dim.height - dim.margin.bottom, dim.margin.top])
+    }
+
+    // Create the SVG viewport
+    const svg = d3.select("body")
+                  .append("svg")
+                  .attr("width", dim.width)
+                  .attr("height", dim.height);
+
+    // Read the data file (CSV), then plot it
+    d3.csv(file, d3.autoType)
+      .then(csv => {
+          plot(csv);
+    });
+
+    // This functions plots the data as an area chart. The data is not in the expected format and
+    // needs to be prepared.
+    function plot(rawData) {
+
+        // DATA
+        // Prepare the data
+        const data = rawData.map(obj => [obj['Country'],
+                                               Object.entries(obj)
+                                                     .filter(d => d[0] !== 'Country')]);
+        const data1 = data.map(d => d[1].map(v => ({country: d[0], year: +v[0], share: v[1]?v[1]:0}))).flat();
+        console.log(data1); // Inspect it!
+
+        // Now create a dataset that lists the data sorted by GDP share each year
+        const groupByYear = d3.group(data1, d => d.year);
+        const sortedBySharePerYear = d3.map([...groupByYear].filter(d => d[0] >= 1960), y => [y[0],y[1].sort((a,b) => d3.descending(a.share, b.share))]);
+
+        // Get the years array to use
+        const years = rawData.columns.filter(d => (d !== 'Country' && d !== 'Code')).map(d => +d);
+
+        // Create the dataset to be used, providing the full dataset, the years array, the minimum GDP limit
+        // to consider and the vertical scale. The stack will be configured in this function
+        const dataset = createDataset(sortedBySharePerYear, years, limit, scale.y)
+
+        // RENDERING
+        scale.x.domain([new Date().setFullYear(d3.min(years)), new Date().setFullYear(d3.max(years))]);
+
+        const area = d3.area()
+                       .x((d,i) => scale.x(new Date().setFullYear(years[i])))
+                       .y0(d => scale.y(d[0]))
+                       .y1(d => scale.y(d[1]))
+                       .curve(d3.curveBasis);
+
+        const color = d3.scaleOrdinal(d3.schemeCategory10.concat(['blue','gold','#444']))
+                        .domain(dataset.countries);
+
+        svg.selectAll("path")
+            .data(dataset.stackedData)
+            .join("path")
+            .attr("d", area)
+            .style("fill", d => color(d.key));
+
+        // Render Cartesian axes
+        const [,yAxis] =
+            utils.cartesianAxes()
+               .container(svg)
+                .xScale(scale.x)
+                .yScale(scale.y)
+                .xLabel('Years')
+                .yLabel('Gross Domestic Product (current US$)')
+                .showHorizontalGrid(true)();
+        yAxis.tickFormat(d3.format(".0s"));
+        d3.select("g.y-axis").call(yAxis);
+
+        // add legend at right
+        const legend = svg.append("g")
+                          .attr("transform", `translate(${dim.width - dim.margin.right + 20}, ${dim.margin.top})`)
+
+        utils.legend()
+            .container(legend)
+            .data(dataset.countries)
+            .color(color)
+            .useDataAsIndex(true)();
+    }
+
+    // This function creates the dataset to be rendered.
+    function createDataset(data, years, limit, scale) {
+
+        // Select the countries to show (merge smaller countries into "Rest of the World")
+        const series = data.map(d => {
+            const top2 = d[1].slice(0,limit);
+            const rest = d[1].slice(limit);
+            const sumRest = rest.reduce((acc, cur) => acc + cur.share, 0);
+            return [d[0], top2.concat({country: 'Rest of the world', year: d[0], share: sumRest})];
+        });
+
+        const countries = new Set(series.map(d => d[1].map(v => v.country)).flat());
+        countries.delete('Rest of the world');
+        countries.add('Rest of the world');
+
+        // if flag is missing from a series for a flag, add it with share zero
+        series.forEach(s => {
+            countries.forEach(c => {
+                if (!s[1].some(d => d.country === c)) {
+                    s[1].push({country: c, year: s[0], share: 0});
+                }
+            });
+        });
+
+        // a) Configure the stacking function using the countries dataset as keys and choose an appropriate order
+        // (you can also adjust offset if you wish)
+        const stack = d3.stack()
+            .keys(countries)
+            .order(d3.stackOrderDescending);
+
+        // Select the datasets to use
+        const datasets = series.map(d => {
+            const obj = {year: d[0]};
+            countries.forEach(c => obj[c] = d[1].filter(f => f.country === c)
+                .map(v => v.share)[0]);
+            return obj;
+        });
+
+        // b) Apply the stacking function to the datasets (replace the empty array)
+        const stackedData = stack(datasets);
+
+        // Configure domain and return the stacked data and countries in an object
+        scale.domain([0, d3.max(d3.merge(d3.merge(stackedData)))]); // flat(2)
+        return {stackedData: stackedData, countries: countries};
+    }
+
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Radial axes template</title>
+    <style>
+        path.line {
+            stroke: red;
+            fill: none;
+        }
+        path.area {
+            stroke: none;
+            fill: rgb(100%, 0%, 0%, 0.3);
+        }
+        path.dataset {stroke-width: 1px;}
+        /* EXERCISE: Stack the SVG and Canvas viewports on top of each other */
+        svg {
+            position: absolute;
+            top: 5px;
+            left: 5px;
+            width: 500px;
+            height: 400px;
+        }
+    </style>
+</head>
+<body>
+<script type="module">
+    import * as d3 from "https://cdn.jsdelivr.net/npm/d3@7/+esm";
+    import * as utils from "../../js/chart-utils.js";
+
+    // This template is based on Chapter11/Radial/7-radial-area-multiple.html,
+    // but it should use Canvas for the chart layer. The axes are still rendered in SVG.
+
+    const dim = {width: 500, height: 400, margin: 100};
+    const scale = {
+        angle: d3.scaleLinear().range([0, 2*Math.PI]),
+        radius: d3.scaleLinear().range([0, dim.width/2 - dim.margin])
+    }
+
+    // You still need this for the axes, but the chart layer will be rendered in Canvas
+    const svg = d3.select("body").append("svg").attr("height", dim.height).attr("width", dim.width);
+
+    // EXERCISE
+    // ADD CODE here for the canvas view port (layer for chart data)
+    // ADD CODE here to get the 2D rendering context used to render the chart
+
+    // Sample data
+    const series = 3;
+    const data = [];
+
+    const steps = d3.range(0,10,1); // 10 steps
+
+    for (let i = 0; i < series; i++) {
+        data.push(steps.map(d => [d, 20 + Math.random() * 80]));
+    }
+
+    // A container for the chart, moving the origin to the center of the SVG viewport
+    // This will be used by the axes only
+    const container = svg.append("g")
+                         .attr("transform", `translate(${dim.width/2},${dim.height/2})`);
+
+    // Scale domains
+    scale.angle.domain([0, steps.length]);
+    scale.radius.domain([0, 100]);
+
+    const colorScale = d3.scaleOrdinal(d3.schemeCategory10).domain([0,data.length]);
+
+    // Draw radial axes with grid in SVG layer
+    utils.radialAxes()
+        .container(container)
+        .aScale(scale.angle)
+        .rScale(scale.radius)
+        .angularData(steps)
+        .numTicks(6)
+        .useGrid(true)();
+
+    // Radial area function
+    // EXERCISE: Add a method to generate the chart in the Canvas context instead of SVG.
+    const area = d3.areaRadial()
+                   .angle(d => scale.angle(d[0]))
+                   .outerRadius(d => scale.radius(d[1]));
+
+    // Radial area function
+    // EXERCISE: Add a method to generate the chart in the Canvas context instead of SVG.
+    const line = area.lineOuterRadius();
+
+    // EXERCISE: Replace the rest of the code that follows with code to render the area,
+    // line and points in Canvas instead of SVG.
+
+    // Render the area
+    container.selectAll("path.dataset")
+       .data(data)
+         .join("path")
+            .attr("class", "dataset")
+            .attr("d", area)
+            .style("fill", colorScale)
+            .style("fill-opacity", .3);
+
+    // Render the line
+    container.selectAll("path.line")
+        .data(data)
+        .join("path")
+        .attr("class", "line")
+        .attr("d", line)
+        .style("stroke", colorScale)
+        .style("fill", "none");
+
+    // Draw dots at each point
+    container.selectAll("g.dataset")
+       .data(data)
+         .join("g")
+           .attr("class", "dataset")
+           .style("fill", colorScale)
+           .selectAll("circle.point")
+           .data(d => d)
+             .join("circle")
+               .attr("class", "point")
+               .attr("cx", d => d3.pointRadial(scale.angle(d[0]), scale.radius(d[1]))[0])
+               .attr("cy", d => d3.pointRadial(scale.angle(d[0]), scale.radius(d[1]))[1])
+               .attr("r", 4);
+
+</script>
+</body>
+</html>

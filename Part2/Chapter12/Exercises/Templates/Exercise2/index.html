@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Slavery pie chart</title>
+    <link rel="stylesheet" href="../../../css/chart-utils.css">
+    <link rel="stylesheet" href="css/main.css">
+</head>
+<body>
+<h1>Africans embarked on slave ships from 1500 to 1870</h1>
+<p>Source: www.slavevoyages.org</p>
+<script type="module">
+    import {load} from "./js/data.js";
+    import {draw} from "./js/view.js";
+
+    const file = "../../../data/slave-trade-data.csv";
+    load(file).then(draw);
+</script>
+
+</body>
+</html>
