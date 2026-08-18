@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Exercise: zoom - global temperatures</title>
+    <title>Exercise: horizontal brush - global temperatures</title>
     <style>
         path.line {
             stroke-width: .5px;
@@ -25,7 +25,7 @@
     </style>
 </head>
 <body>
-<h2>Global temperatures from 1880 to 2024 - with zooming and panning</h2>
+<h2>Global temperatures from 1880 to 2024 - with range zooming</h2>
 <p>Based on the NASA GISS reference (https://data.giss.nasa.gov/gistemp/)</p>
 
 <script type="module">
@@ -34,7 +34,7 @@
     import {isValid} from "../../js/brush-utils.js";
 
     // Global temperatures 1880 to 2024 (Source: https://data.giss.nasa.gov/gistemp/)
-    const file = "../../data/GLB.Ts.1880.2024.csv";     // If you moved this file, check that this URI still works
+    const file = "../../data/GLB.Ts.1880.2025.csv";     // If you moved this file, check that this URI still works
 
     const dim = {
         width: 800, height: 500,
@@ -88,14 +88,52 @@
                          .yLabel("Anomaly (˚C")();
     // END OF STATIC CHART
 
-    // EXERCISE - add zoom and pan to the chart
-    const zoom = d3.zoom()
-                   .scaleExtent([1, 100])
-                   .translateExtent([[0, 0], [dim.width, dim.height]])
-                   .extent([[0, 0], [dim.width, dim.height]])
-                   .on("zoom", zoomed);
 
-    svg.call(zoom);
+    // EXERCISE: use a brush to add a range zooming feature to this chart
+    // 1) Configure an x-axis brush:
+    // a) Declare a brush constant and define a brush behavior.
+    // b) Define an extent that contains the part of the chart where the data is displayed, relative to the
+    //    `view` container.
+    // c) Implement the 'end' event: get the domain for the selection area and call update().
+    const brush = d3.brushX()
+                    .extent([[0, 0],[dim.width-dim.margin.x*2, dim.height-dim.margin.y*2]])
+                    .on("end", e => {
+                        if (!isValid(e)) return;
+                        const [start, end] = e.selection;   // get the brush selection rectangle
+                        update([scale.date.invert(start), scale.date.invert(end)]);  // update view with new domain
+                        reset.style("opacity", 1);          // show reset button
+                    });
+
+    // 2) Attach brush to the view (<g>) container
+    view.call(brush);
+
+    // 3) Implement a function to updates the view with new domain after brushing (or resetting). Update the
+    //    scale's domain, call functions that use the domain (axisX and line), then update the selections
+    function update(domain) {
+        scale.date.domain(domain);                      // a) update date scale with provided domain
+        d3.select(".x-axis")
+            .transition().duration(750).call(axisX);    // b) update the x-axis with transition
+        view.select("path.line")
+            .transition().duration(750)
+            .attr("d", line);                           // c) update the line with transition
+        view.call(brush.clear);                         // d) hide the brush rectangle
+    }
+
+    // EXTRA: Add a Reset button
+    // 4) Save initial date domain before brushing
+    const domain0 = scale.date.domain();
+
+    // 5) Add a hidden button to reset the domain to its initial value, and call update with the saved domain.
+    // Hide reset button when done.
+    const reset = d3.select("body").append("button").text("Reset Zoom")
+        .on("click", function() {
+            update(domain0);            // reset to initial domain
+            this.style.opacity = 0;     // hide reset button
+        })
+        .style("opacity", 0);
+
+    // 6) Add a command to show the reset button (after an update with a different domain).
+    // (ADD CODE TO THE 'end' EVENT OF THE BRUSH)
 
 </script>
 

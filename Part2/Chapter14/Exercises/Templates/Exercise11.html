@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Exercise: semantic zooming and panning in a world map</title>
+    <style>
+        svg {
+            background-color: #cceaff;
+        }
+        polygon {
+            stroke: white;
+            stroke-width: .2px;
+        }
+        text {
+            font-family: sans-serif;
+        }
+    </style>
+</head>
+<body>
+<h3>Exercise: semantic zooming and panning in a world map</h3>
+<svg id="world-map"
+     width="800" height="400"
+     viewBox="-200 -100 400 200"
+     transform="scale(1,-1)"></svg>
+<script type="module">
+    import * as d3 from 'https://cdn.jsdelivr.net/npm/d3@7/+esm';
+
+    const url = "../../data/world-lowres.geojson";  // If you moved the file, check that this URI still works
+    const rand = d3.randomUniform(256);
+
+    const data = await d3.json(url);
+    const countries = data.features;
+
+    // Fields: asciiname, latitude, longitude, population
+    const cities = await d3.csv("../../data/cities10000.csv", d3.autoType);  // If you moved the file, check that this URI still works
+
+    // EXERCISE: This file shows a world map. Improve zooming and panning and add semantic features.
+    const svg = d3.select("#world-map");
+    const context = svg.append("g").attr("class", "fixed-layer");
+    const view = context.append("g").attr("class", "zoomable-layer");
+
+    view.selectAll(".country")
+       .data(countries) // many countries
+         .join("g")
+         .attr("class", "country")
+         .style("fill", () => `rgb(${rand()},${rand()},${rand()})`)
+         .selectAll("polygon")
+            .data(s => s.geometry.coordinates) // many points
+                .join("polygon")
+                    .attr("points", d => d);
+
+    view.selectAll(".city")
+        .data(cities)
+        .join("g")
+        .attr("class", "city")
+        .each(function(d) {
+            d3.select(this).append("circle")
+                .attr("class", "city")
+                .attr("cx", d.longitude) // Assuming x and y are the coordinates in the CSV
+                .attr("cy", d.latitude)
+                .attr("r", d.population > 10000000 ? 2 : d.population > 1000000 ? 1 : 0.5) // larger radius larger cities
+                .style("fill", "black")
+                .style("opacity", d.population > 1000000 ? 1 : 0); // show only for cities with population > 1 million
+            // if population > 50 million, add city name as text
+            d3.select(this).append("text")
+                .attr("transform",  `translate(${d.longitude + 3}, ${d.latitude + 2}) scale(1, -1)`) // flip text back
+                .text(d.asciiname)
+                .style("font-size", "6px")
+                .style("fill", "red")
+                .style("opacity", d.population > 50000000 ? 1 : 0); // show only for largest cities
+        });
+
+    const zoom = d3.zoom()
+        .scaleExtent([1, 100]) // Limit zooming to 100x
+        .translateExtent([[-200, -100], [200, 100]]) // Limit panning to the chart area
+        .on("zoom", semanticZoom);
+    svg.call(zoom);
+
+    // EXERCISE: Implement the semanticZoom function to keep the country borders and city circles with constant
+    // width and radius, respectively, during zooming. Also, show city names for cities with population > 10 million
+    // only when zoomed in more than 4x, and population > 1 million only when zoomed in more than 10x.
+    function semanticZoom(event) {
+        // Get the event transform
+        const transform = event.transform;
+
+        // Inspect the scale factor
+        console.log(transform.k);
+
+        // Apply the transform to the zoomable layer
+        view.attr("transform", transform);
+
+        // Implement semantic zooming features:
+        // - Keep country borders with constant width
+        // - Keep city circles with constant radius
+        // - Always show dots for cities with population > 1 million; when k >10, show dots for all cities
+        // - Keep city text with constant font size
+        // - Show/hide cities based on population and zoom level
+    }
+
+</script>
+
+</body>
+</html>
