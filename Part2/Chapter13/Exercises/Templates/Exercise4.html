@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Exercise 4</title>
+</head>
+<body>
+<h1>Exercise 4: tweening growing bars</h1>
+<script type="module">
+  import * as d3 from "https://cdn.jsdelivr.net/npm/d3@7/+esm";
+
+  // EXERCISE: See comments in the code below. Add a tween to animate the text value from 0 to the final value.
+
+  const dim = {width: 800, height: 600, margin: 50};
+  const svg = d3.select("body").append("svg").attr("width", dim.width).attr("height", dim.height);
+
+  // A simple bar chart with 12 bars, each with a random height between 0 and 100.
+  const data = Array.from({length: 12}, () => Math.random() * 100);
+
+    const scale = {
+        x: d3.scaleBand().domain(d3.range(data.length)).range([dim.margin, dim.width - dim.margin]).padding(0.1),
+        y: d3.scaleLinear().domain([0, d3.max(data)]).range([dim.height - dim.margin, dim.margin])
+    };
+
+    const color = d3.scaleOrdinal(d3.schemeCategory10).domain(d3.range(data.length));
+
+    const pxPerMs = 0.25; // Constant growth rate: 250 px/s
+    const durations = data.map(d => (dim.height - scale.y(d)) / pxPerMs);
+    const delays = durations.map((_, i) => d3.sum(durations.slice(0, i)));
+
+    // Draws bars that grow in sequence, with a constant growth rate, and a delay between each bar.
+    svg.selectAll("rect")
+       .data(data)
+         .join("rect")
+           .attr("x", (d, i) => scale.x(i))
+           .attr("y", dim.height)
+           .attr("width", scale.x.bandwidth())
+           .attr("height", 0)
+           .style("fill", color)
+           .transition()
+             .ease(d3.easeLinear)
+             .delay((d, i) => delays[i])
+             .duration((d, i) => durations[i])
+                .attr("y", d => scale.y(d))
+                .attr("height", d => dim.height - scale.y(d));
+
+    // Adds the final value of the bar as text above the bar
+    svg.selectAll("text")
+       .data(data)
+         .join("text")
+              .attr("x", (d, i) => scale.x(i) + scale.x.bandwidth() / 2)
+              .attr("y", dim.height)
+              .attr("text-anchor", "middle")
+              .style("fill", "black")
+              .transition()
+                 .ease(d3.easeLinear)
+                 .delay((d, i) => delays[i])
+                 .duration((d, i) => durations[i])
+                 .attr("y", d => scale.y(d) - 5)
+                 .text(d => d.toFixed(1))
+                 // EXERCISE: Add a tween to animate the text value from 0 to the final value
+                 // ADD METHOD HERE
+</script>
+</body>
+</html>

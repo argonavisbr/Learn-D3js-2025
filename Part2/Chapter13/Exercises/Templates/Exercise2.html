@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Exercise 2</title>
+</head>
+<body>
+<h1>Exercise 2: draw random circles every half-second</h1>
+<script type="module">
+  import * as d3 from "https://cdn.jsdelivr.net/npm/d3@7/+esm";
+
+  // EXERCISE: The drawCircle() function draws a random-colored circle in a random position.
+  // Use d3-interval to render a circle every half-second.
+
+  const dim = {width: 800, height: 600};
+  const svg = d3.select("body").append("svg").attr("width", dim.width).attr("height", dim.height);
+
+  // ADD CODE HERE
+
+  function drawCircle() {
+    const x = Math.random() * dim.width;
+    const y = Math.random() * dim.height;
+    const radius = Math.random() * 50 + 10; // Random radius between 10 and 60
+    const color = d3.interpolateRainbow(Math.random()); // Random color
+
+    svg.append("circle")
+      .attr("cx", x)
+      .attr("cy", y)
+      .attr("r", radius)
+      .attr("fill", color);
+  }
+
+</script>
+</body>
+</html>

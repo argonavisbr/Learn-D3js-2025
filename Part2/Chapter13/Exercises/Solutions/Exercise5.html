@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Exercise 5</title>
+</head>
+<body>
+<h1>Exercise 5: tweening growing bars and changing color</h1>
+<script type="module">
+  import * as d3 from "https://cdn.jsdelivr.net/npm/d3@7/+esm";
+
+  // EXERCISE: Make the bars change color to black after they finish growing.
+
+  const dim = {width: 800, height: 600, margin: 50};
+  const svg = d3.select("body").append("svg").attr("width", dim.width).attr("height", dim.height);
+
+  // A simple bar chart with 12 bars, each with a random height between 0 and 100.
+  const data = Array.from({length: 12}, () => Math.random() * 100);
+
+    const scale = {
+        x: d3.scaleBand().domain(d3.range(data.length)).range([dim.margin, dim.width - dim.margin]).padding(0.1),
+        y: d3.scaleLinear().domain([0, d3.max(data)]).range([dim.height - dim.margin, dim.margin])
+    };
+
+    const color = d3.scaleOrdinal(d3.schemeCategory10).domain(d3.range(data.length));
+
+    const pxPerMs = 0.25; // Constant growth rate: 250 px/s
+    const durations = data.map(d => (dim.height - scale.y(d)) / pxPerMs);
+    const delays = durations.map((_, i) => d3.sum(durations.slice(0, i)));
+
+    // Draws bars that grow in sequence, with a constant growth rate, and a delay between each bar.
+    svg.selectAll("rect")
+       .data(data)
+         .join("rect")
+           .attr("x", (d, i) => scale.x(i))
+           .attr("y", dim.height)
+           .attr("width", scale.x.bandwidth())
+           .attr("height", 0)
+           .style("fill", color)
+           .transition()
+             .ease(d3.easeLinear)
+             .delay((d, i) => delays[i])
+             .duration((d, i) => durations[i])
+                .attr("y", d => scale.y(d))
+                .attr("height", d => dim.height - scale.y(d))
+        // EXERCISE: Add a transition event handler to change the color of the bar to b
+        // black after the transition ends (make it transition smoothly)
+        .on("end", function(d, i) {
+            d3.select(this)
+                .transition()
+                .delay(500) // Half a second after the transition ends
+                .duration(1000) // Transition to black in 1000ms
+                .style("fill", "black");
+        });
+
+    // Adds the current value of the bar as text above the bar
+    svg.selectAll("text")
+       .data(data)
+         .join("text")
+              .attr("x", (d, i) => scale.x(i) + scale.x.bandwidth() / 2)
+              .attr("y", dim.height)
+              .attr("text-anchor", "middle")
+              .style("fill", "black")
+              .transition()
+                 .ease(d3.easeLinear)
+                 .delay((d, i) => delays[i])
+                 .duration((d, i) => durations[i])
+                 .attr("y", d => scale.y(d) - 5)
+                 .text(d => d.toFixed(1))
+                 // Add a tween to animate the text value from 0 to the final value
+                 .tween("text", function(d) {
+                    const i = d3.interpolateNumber(0, d);
+                    return function(t) {
+                        d3.select(this).text(i(t).toFixed(1));
+                    };
+                 })
+</script>
+</body>
+</html>
