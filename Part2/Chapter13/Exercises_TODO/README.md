@@ -1,3 +1,5 @@
 17-8-2026
 
-I have removed exercise templates (and some templates+solutions) from this and a few other chapters to adjust them. Some solutions were using outdated techniques, and some templates could be improved. I hope to update them in chapters 13 to 19 in about a week, starting Monday Aug 17.
+I have removed exercise solutions and templates from this chapter to because they weren't matching the correct exercises from the chapter.
+
+I hope to update them in about a week, starting Monday Aug 17.

@@ -1,6 +1,10 @@
 import * as d3 from "https://cdn.jsdelivr.net/npm/d3@7/+esm";
 import * as utils from "../../../js/chart-utils.js";
 
+// EXERCISE 13.8: the solution is the implementation of the animateLabels function below,
+// which creates animated SVG textPath for each item (<textPath href='#line-city'><animate>...</animate></textPath>)
+// See labeled comments.
+
 /**
  * Plots cartesian line chart with points in x-axis
  * @param container
@@ -50,28 +54,40 @@ export function plotCartesian(container, dim, data, points, labels, animLabels =
         .yLabel(labels.y)
         .showHorizontalGrid(true)();
 
-    const leg = container.append("g")
-                         .attr("transform", `translate(${[dim.width - dim.margin.right + 10, dim.margin.top]})`);
-
     if (animLabels) {
-        animateLabels(container, data, color);
+        animateLabels(dim, container, data, color); // Call the animateLabels function to add animated labels along the lines
     } else {
-        utils.legend()
-            .container(leg)
-            .data(data.map(d => d[0]))
-            .color(color)();
+        showLegend(dim, container, data, color); // Call the showLegend function to add a static legend
     }
 
 }
 
 /**
- * Creates animated SVG textPath for each item
- * (<textPath href='#line-city'><animate>...</animate></textPath>)
+ * Adds a static legend to the chart
+ * @param dim
  * @param container
  * @param data
  * @param color
  */
-function animateLabels(container, data, color) {
+function showLegend(dim, container, data, color) {
+    const leg = container.append("g")
+        .attr("transform", `translate(${[dim.width - dim.margin.right + 10, dim.margin.top]})`);
+    utils.legend()
+        .container(leg)
+        .data(data.map(d => d[0]))
+        .color(color)();
+}
+
+// EXERCISE 13.8: the solution is the implementation of the animateLabels function below.
+/**
+ * Creates animated SVG textPath for each item
+ * (<textPath href='#line-city'><animate>...</animate></textPath>)
+ * @param dim
+ * @param container
+ * @param data
+ * @param color
+ */
+function animateLabels(dim, container, data, color) {
     container.selectAll("text.anim")
              .data(data)
                .join("text") // <text>
@@ -79,11 +95,11 @@ function animateLabels(container, data, color) {
                  .attr("x", 100)
                  .attr("dy", -10)
                  .style("fill", (d,i) => color(i))
-                 .append("textPath") // <textPath href='#line-city'>
+                 .append("textPath") // Adding a <textPath href='#line-city'> so the baseline adjusts to the line
                     .attr("startOffset", "-25%")
                     .attr("href", d => `#line-${d[0].split(" ")[0]}`)
                     .text(d => d[0])
-                    .append("animate") // <animate>
+                    .append("animate") // Adding an SVG <animate> tag, to animate the startOffset attribute of the textPath, so the label moves along the line
                         .attr("attributeName", "startOffset")
                         .attr("from", "-25%")
                         .attr("to", "90%")
