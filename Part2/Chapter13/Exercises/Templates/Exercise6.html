@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Exercise 6</title>
+</head>
+<body>
+<h1>Exercise: Moving shapes to bins - synchronization</h1>
+<p>Shapes move to shape bins, then to color bins for each shape.
+All the shapes should move to the shape bins first and wait until all have arrived.
+Only then should they start to move to the color bins (the second transition should only
+start when all the initial transitions have finished). Fix this bug!</p>
+<form><button id="start-button" type="button">Start Animation</button>
+      <button id="reset-button" type="button">Return to initial position</button></form>
+<svg></svg>
+<script type="module">
+      import * as d3 from "https://cdn.jsdelivr.net/npm/d3@7/+esm";
+
+      // Add button to start the animation
+      d3.select("#start-button").on("click", animate);
+      d3.select("#reset-button").on("click", placeShapes);
+
+      const dim = {width: 900, height: 750};
+      const svg = d3.select("svg").attr("width", dim.width).attr("height", dim.height);
+
+      // Bins for shapes and colors
+      const bins = [
+        {x: 400, y: 10, width: 200, height: 290, color: "#eee", border: "gray", id: "Circles"},
+        {x: 400, y: 330, width: 200, height: 290, color: "#eee", border: "gray", id: "Rectangles"},
+        {x: 650, y: 10, width: 200, height: 140, color: "#fee", border: "red", id: "Red Circles"},
+        {x: 650, y: 160, width: 200, height: 140, color: "#eef", border: "blue", id: "Blue Circles"},
+        {x: 650, y: 330, width: 200, height: 140, color: "#fee", border: "red", id: "Red Squares"},
+        {x: 650, y: 480, width: 200, height: 140, color: "#eef", border: "blue", id: "Blue Squares"}
+      ];
+
+      // Create 26 random shapes with random colors and types
+      const smallShapes = d3.range(26).map(i => ({
+        x: Math.random() * (dim.width * .35),
+        y: Math.random() * dim.height * .75,
+        width: 50,
+        height: 50,
+        color: Math.random() > 0.5 ? "red" : "blue",
+        type: i % 2 === 0 ? "rect" : "circle"
+      }));
+
+      // Draw the bins and their labels
+      svg.selectAll("rect.bin").data(bins).join("rect").attr("class", "bin")
+        .attr("x", d => d.x)
+        .attr("y", d => d.y)
+        .attr("rx", 10).attr("ry", 10) // rounded corners
+        .attr("width", d => d.width)
+        .attr("height", d => d.height)
+        .style("fill", d => d.color)
+        .style("stroke", d => d.border);
+
+      svg.selectAll("text.bin-label").data(bins).join("text").attr("class", "bin-label")
+        .attr("x", d => d.x + d.width / 2)
+        .attr("y", d => d.y + d.height / 2)
+        .attr("text-anchor", "middle")
+        .attr("dominant-baseline", "middle")
+        .style("font-size", "16px")
+        .text(d => d.id);
+
+      // Draw the shapes and place them in random positions
+      drawShapes();
+      placeShapes();
+
+      // Animates the shapes to move to the shape bins, then to the color bins
+      // EXERCISE: Fix the bug so that the second transition only starts when
+      // all the shapes have arrived at the shape bins.
+      function animate() {
+          const shapes = svg.selectAll(".shape");
+
+          // Shape bin transition
+          const firstTransition = shapes.transition()
+                .duration(1000)
+                .delay((d, i) => i * 250)
+                .attr("x", d => bins[1].x + Math.random() * (bins[1].width - d.width))
+                .attr("cx", d => bins[0].x + 25 + Math.random() * (bins[0].width - d.width))
+                .attr("y", d => bins[1].y + Math.random() * (bins[1].height - d.height))
+                .attr("cy", d => bins[0].y + 25 + Math.random() * (bins[0].height - d.height))
+
+          // EXERCISE: Color bin transition starts after shape bin transition ends (but it is not
+          // working that way - shapes start moving to the second bin before they all arrive
+          // in the first bin - fix this!
+          firstTransition.transition()
+                .duration(1000)
+                .delay((d, i) => i * 250)
+                .attr("x", d => d.color === "red"
+                    ? bins[2].x + Math.random() * (bins[2].width - d.width)
+                    : bins[3].x + Math.random() * (bins[3].width - d.width))
+                .attr("cx", d => d.color === "red"
+                    ? bins[4].x + 25 + Math.random() * (bins[4].width - d.width)
+                    : bins[5].x + 25 + Math.random() * (bins[5].width - d.width))
+                .attr("y", d => d.color === "red"
+                    ? bins[2].y + Math.random() * (bins[2].height - d.height)
+                    : bins[3].y + Math.random() * (bins[3].height - d.height))
+                .attr("cy", d => d.color === "red"
+                    ? bins[4].y + 25 + Math.random() * (bins[4].height - d.height)
+                    : bins[5].y + 25 + Math.random() * (bins[5].height - d.height));
+
+      }
+
+      function drawShapes() {
+          svg.selectAll(".shape")
+              .data(smallShapes)
+              .join(enter => enter.append(d => d.type === "rect"
+                  ? document.createElementNS("http://www.w3.org/2000/svg", "rect")
+                  : document.createElementNS("http://www.w3.org/2000/svg", "circle")))
+              .attr("class", "shape")
+              .attr("width", d => d.width).attr("height", d => d.height) // ignored by circles
+              .attr("r", d => d.width / 2) // ignored by rectangles
+              .style("fill", d => d.color)
+              .style("fill-opacity", 0.5)
+              .style("stroke", "black");
+      }
+
+      function placeShapes() {
+          svg.selectAll(".shape")
+              .attr("x", d => d.x).attr("cx", d => d.x + d.width / 2) // adjusts to circles or rectangles
+              .attr("y", d => d.y).attr("cy", d => d.y + d.height / 2);
+      }
+
+</script>
+</body>
+</html>
