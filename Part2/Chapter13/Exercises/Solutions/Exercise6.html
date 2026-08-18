@@ -34,11 +34,13 @@ start when all the initial transitions have finished). Fix this bug!</p>
       ];
 
       // Create 26 random shapes with random colors and types
-      const smallShapes = d3.range(26).map(i => ({
+      const side = 50;
+      const num = 26;
+      const smallShapes = d3.range(num).map(i => ({
         x: Math.random() * (dim.width * .35),
         y: Math.random() * dim.height * .75,
-        width: 50,
-        height: 50,
+        width: side,
+        height: side,
         color: Math.random() > 0.5 ? "red" : "blue",
         type: i % 2 === 0 ? "rect" : "circle"
       }));
@@ -76,30 +78,39 @@ start when all the initial transitions have finished). Fix this bug!</p>
                 .duration(1000)
                 .delay((d, i) => i * 250)
                 .attr("x", d => bins[1].x + Math.random() * (bins[1].width - d.width))
-                .attr("cx", d => bins[0].x + 25 + Math.random() * (bins[0].width - d.width))
+                .attr("cx", d => bins[0].x + d.width/2 + Math.random() * (bins[0].width - d.width))
                 .attr("y", d => bins[1].y + Math.random() * (bins[1].height - d.height))
-                .attr("cy", d => bins[0].y + 25 + Math.random() * (bins[0].height - d.height))
+                .attr("cy", d => bins[0].y + d.width/2 + Math.random() * (bins[0].height - d.height))
 
           // EXERCISE: Color bin transition starts after shape bin transition ends (but it is not
           // working that way - shapes start moving to the second bin before they all arrive
           // in the first bin - fix this!
           firstTransition.end()     // waits for the first transition to end completely
-              .then(() => shapes.transition()   // after the promise is fulfilled, start the second transition
-                .duration(1000)
-                .delay((d, i) => i * 250)
-                .attr("x", d => d.color === "red"
-                    ? bins[2].x + Math.random() * (bins[2].width - d.width)
-                    : bins[3].x + Math.random() * (bins[3].width - d.width))
-                .attr("cx", d => d.color === "red"
-                    ? bins[4].x + 25 + Math.random() * (bins[4].width - d.width)
-                    : bins[5].x + 25 + Math.random() * (bins[5].width - d.width))
-                .attr("y", d => d.color === "red"
-                    ? bins[2].y + Math.random() * (bins[2].height - d.height)
-                    : bins[3].y + Math.random() * (bins[3].height - d.height))
-                .attr("cy", d => d.color === "red"
-                    ? bins[4].y + 25 + Math.random() * (bins[4].height - d.height)
-                    : bins[5].y + 25 + Math.random() * (bins[5].height - d.height))
-              );
+              .then(() => {
+                  // This
+                  shapes.transition()
+                      .delay((d, i) => 250 * num)
+                      .attr("width", d => d.width/2)
+                      .attr("height", d => d.height/2)
+                      .attr("r", d => d.width/4)
+
+                  shapes.transition()   // after the promise is fulfilled, start the second transition
+                          .duration(1000)
+                          .delay((d, i) => i * 250)
+                          .attr("x", d => d.color === "red"
+                              ? bins[2].x + Math.random() * (bins[2].width - d.width)
+                              : bins[3].x + Math.random() * (bins[3].width - d.width))
+                          .attr("cx", d => d.color === "red"
+                              ? bins[4].x + d.width/2 + Math.random() * (bins[4].width - d.width)
+                              : bins[5].x + d.width/2 + Math.random() * (bins[5].width - d.width))
+                          .attr("y", d => d.color === "red"
+                              ? bins[2].y + Math.random() * (bins[2].height - d.height)
+                              : bins[3].y + Math.random() * (bins[3].height - d.height))
+                          .attr("cy", d => d.color === "red"
+                              ? bins[4].y + d.width/2 + Math.random() * (bins[4].height - d.height)
+                              : bins[5].y + d.width/2 + Math.random() * (bins[5].height - d.height))
+              });
+
       }
 
       function drawShapes() {

@@ -6,10 +6,8 @@
 </head>
 <body>
 <h1>Exercise: Moving shapes to bins - synchronization</h1>
-<p>Shapes move to shape bins, then to color bins for each shape.
-All the shapes should move to the shape bins first and wait until all have arrived.
-Only then should they start to move to the color bins (the second transition should only
-start when all the initial transitions have finished). Fix this bug!</p>
+<p>Shapes should shrink during or after moving to the smaller bins, but that is not
+    happening. Fix this bug!</p>
 <form><button id="start-button" type="button">Start Animation</button>
       <button id="reset-button" type="button">Return to initial position</button></form>
 <svg></svg>
@@ -68,8 +66,8 @@ start when all the initial transitions have finished). Fix this bug!</p>
       placeShapes();
 
       // Animates the shapes to move to the shape bins, then to the color bins
-      // EXERCISE: Fix the bug so that the second transition only starts when
-      // all the shapes have arrived at the shape bins.
+      // EXERCISE: Fix the bug so that shapes shrink correctly after moving to the smaller bins
+      // (or during the move, if you prefer).
       function animate() {
           const shapes = svg.selectAll(".shape");
 
@@ -82,25 +80,32 @@ start when all the initial transitions have finished). Fix this bug!</p>
                 .attr("y", d => bins[1].y + Math.random() * (bins[1].height - d.height))
                 .attr("cy", d => bins[0].y + d.width/2 + Math.random() * (bins[0].height - d.height))
 
-          // EXERCISE: Color bin transition starts after shape bin transition ends (but it is not
-          // working that way - shapes start moving to the second bin before they all arrive
-          // in the first bin - fix this!
-          firstTransition.transition()
-                .duration(1000)
-                .delay((d, i) => i * 250)
-                .attr("x", d => d.color === "red"
-                    ? bins[2].x + Math.random() * (bins[2].width - d.width)
-                    : bins[3].x + Math.random() * (bins[3].width - d.width))
-                .attr("cx", d => d.color === "red"
-                    ? bins[4].x + d.width/2 + Math.random() * (bins[4].width - d.width)
-                    : bins[5].x + d.width/2 + Math.random() * (bins[5].width - d.width))
-                .attr("y", d => d.color === "red"
-                    ? bins[2].y + Math.random() * (bins[2].height - d.height)
-                    : bins[3].y + Math.random() * (bins[3].height - d.height))
-                .attr("cy", d => d.color === "red"
-                    ? bins[4].y + d.width/2 + Math.random() * (bins[4].height - d.height)
-                    : bins[5].y + d.width/2 + Math.random() * (bins[5].height - d.height));
+          firstTransition.end()     // waits for the first transition to end completely
+              .then(() => {
+                  // This should shrink the shapes after they have moved to the shape bins, but it doesn't work as expected.
+                  // Fix or improve this!
+                  shapes.transition()
+                      .delay((d, i) => 250 * num)
+                      .attr("width", d => d.width/2)
+                      .attr("height", d => d.height/2)
+                      .attr("r", d => d.width/4)
 
+                  shapes.transition()   // after the promise is fulfilled, start the second transition
+                          .duration(1000)
+                          .delay((d, i) => i * 250)
+                          .attr("x", d => d.color === "red"
+                              ? bins[2].x + Math.random() * (bins[2].width - d.width)
+                              : bins[3].x + Math.random() * (bins[3].width - d.width))
+                          .attr("cx", d => d.color === "red"
+                              ? bins[4].x + d.width/2 + Math.random() * (bins[4].width - d.width)
+                              : bins[5].x + d.width/2 + Math.random() * (bins[5].width - d.width))
+                          .attr("y", d => d.color === "red"
+                              ? bins[2].y + Math.random() * (bins[2].height - d.height)
+                              : bins[3].y + Math.random() * (bins[3].height - d.height))
+                          .attr("cy", d => d.color === "red"
+                              ? bins[4].y + d.width/2 + Math.random() * (bins[4].height - d.height)
+                              : bins[5].y + d.width/2 + Math.random() * (bins[5].height - d.height))
+              });
       }
 
       function drawShapes() {
