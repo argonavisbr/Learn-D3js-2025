@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Exercise 1 - A stratigraphic time scale</title>
+</head>
+<body>
+<h1>A stratigraphic time scale</h1>
+<p>Hover the mouse over a circle to see its name.</p>
+<script type="module">
+    // Exercise 15.1: A stratigraphic time scale.
+    // The file ../../data/geotime.json contains a stratigraphic time scale organized in hierarchical eons,
+    // eras, periods, etc. Create a tree or dendrogram using the data from the chart.
+    // Each source node contains a color. Use it to paint the tree’s nodes. Since this is a very
+    // large tree, you don’t need to print the labels (but you can reveal the data via tooltips
+    // if you wish).
+
+    import * as d3 from "https://cdn.jsdelivr.net/npm/d3@7/+esm";
+
+    // 1) Get the data
+    const dataFile = "../../data/geotime.json";
+    const json = await d3.json(dataFile);
+    console.log(json);  // Inspect the data structure to know what you can use
+
+    // 2) Set up the SVG canvas
+    const dim = { width: 1000, height: 1600, margin: 50 };
+    const svg = d3.select("body")
+                  .append("svg")
+                  .attr("width", dim.width)
+                  .attr("height", dim.height);
+
+    // 3) Create a hierarchical structure from the data
+    const root = d3.hierarchy(json);
+    console.log(root);  // Inspect the hierarchical structure
+
+    // 4) Create a tree layout
+    const treeLayout = d3.tree()
+                         .size([dim.height - 2 * dim.margin, dim.width - 2 * dim.margin]);
+    treeLayout(root);
+
+    // 5) Draw the links (edges) - using pathlinks
+    svg.selectAll('path')
+       .data(root.links())
+       .join('path')
+       .attr('d', d3.linkHorizontal()
+           .x(d => d.y + dim.margin)
+           .y(d => d.x + dim.margin))
+       .style('fill', 'none')
+       .style('stroke', '#ccc');
+
+    // 6) Draw the nodes
+    svg.selectAll('circle')
+       .data(root.descendants())
+       .join('circle')
+       .attr('cx', d => d.y + dim.margin)
+       .attr('cy', d => d.x + dim.margin)
+       .attr('r', 5)
+       .style('stroke', 'black').style('stroke-width', .5)
+       .style('fill', d => d.data.color || 'black');  // Use the color from the data, default to black if not present
+
+    // 7) Add optional tooltips (using standard browser tooltips here)
+    svg.selectAll('circle')
+       .append('title')
+       .text(d => d.data.id || 'No name');
+</script>
+
+</body>
+</html>

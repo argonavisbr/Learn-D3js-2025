@@ -6,32 +6,31 @@ Files and exercises for chapter 15.
 
 __`Hierarchies/`__
 
-Description.
+Code for the Hierarchies section of the chapter.
 
 __`Methods/`__
 
-Description.
+Examples exploring the main methods from the d3-hierarchy module.
 
 __`TableView/`__
 
-Description.
+Hierarchical examples rendered as a table view.
 
 __`Trees/`__
 
-
-Description.
+Hierarchical examples rendered as a tree or dendrogram view.
 
 __`Examples/`__
 
-Description.
+Examples of tree visualizations.
 
 __`Exercises/`__
 
-Description.
+Exercises (templates and solutions) for this chapter.
 
 __`js/`__
 
-Description.
+JavaScript code used by examples and exercises in the other folders.
 
 __`data/`__
 

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Exercise 3 - A radial stratigraphic time scale</title>
+</head>
+<body>
+<h1>A stratigraphic time scale</h1>
+<p>Hover the mouse over a circle to see its name.</p>
+<script type="module">
+    // Exercise 15.3 Render the tree created in Exercise 15.1 as a radial visualization.
+
+    import * as d3 from "https://cdn.jsdelivr.net/npm/d3@7/+esm";
+
+    // 1) Get the data
+    const dataFile = "../../data/geotime.json";
+    const json = await d3.json(dataFile);
+    console.log(json);  // Inspect the data structure to know what you can use
+
+    // 2) Set up the SVG canvas - EXERCISE: Adjust the size and margins to fit a radial layout (done)
+    // (done using viewBox - a simpler alternative is to add a <g> element and translate it to the center of the SVG)
+    const dim = { width: 1000, height: 1000, margin: 50 };
+    const svg = d3.select("body")
+                  .append("svg")
+                  .attr("viewBox", [-dim.width/2 - dim.margin/2, -dim.height/2, dim.width + dim.margin, dim.height])
+                  .attr("width", dim.width - dim.margin)
+                  .attr("height", dim.height - dim.margin);
+
+    // 3) Create a hierarchical structure from the data
+    const root = d3.hierarchy(json);
+    console.log(root);  // Inspect the hierarchical structure
+
+    // 4) Create a radial tree layout
+    const treeLayout = d3.tree()
+                         .size([2 * Math.PI, dim.width / 2 - dim.margin]);
+    treeLayout(root);
+
+    // 5) Draw the links (edges) - using pathlinks - EXERCISE: use d3.linkRadial() to create radial links
+    svg.selectAll('path')
+       .data(root.links())
+       .join('path')
+       .attr('d', d3.linkRadial()
+           .angle(d => d.x)
+           .radius(d => d.y + dim.margin))
+       .style('fill', 'none')
+       .style('stroke', '#ccc');
+
+    // 6) Draw the nodes - EXERCISE: position them using polar coordinates and
+    // adjust the radius and stroke width for the root node to highlight it
+    svg.selectAll('circle')
+       .data(root.descendants())
+         .join('circle')
+           .attr('cx', d => d3.pointRadial(d.x, d.y + dim.margin)[0])
+           .attr('cy', d => d3.pointRadial(d.x, d.y + dim.margin)[1])
+           .attr('r', d => d.depth === 0 ? 10 : 5)  // Different radius for root
+           .style('stroke', 'black').style('stroke-width', d => d.depth === 0 ? 2 : .5)  // Different stroke width for root
+           .style('fill', d => d.data.color || 'white');  // Use the color from the data, default to white if not present
+
+    // 7) Add optional tooltips (using standard browser tooltips here)
+    svg.selectAll('circle')
+       .append('title')
+       .text(d => d.data.id || 'No name');
+</script>
+
+</body>
+</html>
