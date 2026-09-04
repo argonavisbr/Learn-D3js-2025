@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Exercise 1</title>
+    <style>
+        rect {
+            stroke: white;
+            stroke-width: 1;
+        }
+        text {
+            font-family: 'Arial', sans-serif;
+            font-size: 10px;
+            alignment-baseline: hanging;
+        }
+    </style>
+</head>
+<body>
+<h1>Exercise - Creating a suburst</h1>
+<script type="module">
+    import * as d3 from "https://cdn.jsdelivr.net/npm/d3@7/+esm";
+
+    // Exercise 16.2 Create a sunburst chart. Using the JSON file. The hierarchy code does not
+    // change. The values are rendered using angles and radii instead of x and y coordinates.
+    // The arcs are drawn using d3.arc() instead of rects. See comments marked as EXERCISE.
+
+    const nestedFile = "../../data/venue.json";
+    const hierarchy = await d3.json(nestedFile);
+    const root = d3.hierarchy(hierarchy);
+    console.log("D3 hierarchy", root);
+
+    root.sum(d => d.capacity);
+    root.descendants().forEach(d => d.capacity = d.value);
+
+    draw(root);
+
+    function draw(root) {
+        // Set up the SVG and chart dimensions.
+        // EXERCISE: Refactor to fit the radial chart (done).
+        const dim = {width: 600, height: 600};
+        const margin = {top: 10, right: 10, bottom: 10, left: 10};
+        const cht = {w: dim.width - margin.left - margin.right, h: dim.height - margin.top - margin.bottom};
+
+        // EXERCISE: Refactor so that the chart is drawn as a radial layout instead of a rectangular layout.
+        // Move the center of the chart (g) to the center of the SVG (done).
+        const chart = d3.select("body").append("svg")
+                        .attr("width", dim.width)
+                        .attr("height", dim.height)
+                        .style("font", "10px sans-serif")
+                        .append("g")
+                           .attr("transform", `translate(${cht.w / 2}, ${cht.h / 2})`);
+
+        // EXERCISE: Create the partition layout and compute the positions of each node
+        // Refactor to use radial values for the partition layout: angle and radius instead of width and height.
+        d3.partition().size([cht.w, cht.h])(root);   // EXERCISE: Refactor this line
+
+        const nodes = root.descendants();
+        const color = d3.scaleOrdinal(d3.schemeGnBu[6].slice(1).reverse());
+
+        // EXERCISE: Create an arc generator for the radial layout.
+        // Use d3.arc() and set the inner and outer radius, start and end angle.
+        // ADD CODE HERE
+
+        // EXERCISE: Draw the arcs for each node using the arc generator.
+        // Refactor to use the arc generator instead of rects for the radial layout.
+        chart.selectAll("rect")     // replace this code with a path selection
+             .data(nodes)
+                .join("rect")
+                .attr("x", d => d.x0)   // use arc generator instead of x and y coordinates
+                .attr("y", d => d.y0)
+                .attr("width", d => d.x1 - d.x0)
+                .attr("height", d => d.y1 - d.y0)
+                .style("fill", d => color(d.depth));    // keep the color scale for the arcs
+
+        // EXERCISE: Add labels in the arcs. Refactor the code to use the centroid to position the
+        // labels in the arcs. Use d3.arc().centroid() to get the centroid of each arc. Show the id
+        // only if the arc is 18 degrees or larger (Math.PI / 10).
+        // ADD CODE HERE
+
+    }
+</script>
+</body>
+</html>

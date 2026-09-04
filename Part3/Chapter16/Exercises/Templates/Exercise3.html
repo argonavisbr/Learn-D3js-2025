@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Exercise 3</title>
+</head>
+<body>
+<script type="module">
+    import * as d3 from "https://cdn.jsdelivr.net/npm/d3@7/+esm";
+
+    // Exercise 16.3 Create a circle pack that compares the rocky worlds in the Solar System,
+    // organized by their orbits. The data consists of the names and radii of the rocky planets and their satellites.
+    // Their average radii should be the value property. Bodies should be grouped by orbit
+    // (e.g. the Moon and the Earth are packed in a circle) and the four gaseous planets (Jupiter, Saturn, Uranus, Neptune)
+    // are not included, but their satellites are (e.g. Jupiter’s satellites are packed in a circle, without Jupiter).
+    // You can use the template file as a starting point, which already loads and parses the data file (data/planets.json).
+
+    const dataFile = "../../data/planets.json";
+    const json = await d3.json(dataFile);
+    console.log(json);  // Inspect the data structure to know what you can use
+
+    const dim = { width: 800, height: 800, margin: 50 };
+    const cht = { w: dim.width - 2 * dim.margin, h: dim.height - 2 * dim.margin };
+    const svg = d3.select("body")
+                  .append("svg")
+                  .attr("width", dim.width)
+                  .attr("height", dim.height);
+    const chart = svg.append("g")
+                     .attr("transform", `translate(${dim.margin}, ${dim.margin})`);
+
+    // Prepare the data.
+    json.planets.forEach(d => {
+        // Add the planet to its satellites array, so that the planet and its satellites are packed together.
+        // This way, the planet will be packed with its satellites.
+        // But don't add gaseous planets (we just want rocky worlds)
+        if(d.satellites) {
+            if(d.category !== "gaseous") {
+                d.satellites.push({
+                    name: d.name,
+                    diameterKm: d.diameterKm
+                });
+            }
+        } else {
+            d.satellites = [{
+                    name: d.name,
+                    diameterKm: d.diameterKm
+            }];
+        }
+        // reduce the data
+        d.satellites = d.satellites.map(s => ({name: s.name, radius: s.diameterKm / 2}));
+    });
+
+    // 1) EXERCISE: create a hierarchical structure from the json file,
+    // using the planets and satellites properties to define the children of each node.
+    // ADD CODE HERE
+
+    // 2) EXERCISE: compute the value property based on the sum (required for a circle pack).
+    // Use the sum method to set the value of each node to the radius of the body (or satellite).
+    // ADD CODE HERE
+
+    // 3) EXERCISE: Create the circle pack layout and call it to compute the positions of each node.
+    // ADD CODE HERE
+
+
+    const color = d3.scaleOrdinal(["gray", "lightblue", "orange"]);
+
+    // EXERCISE: draw the circles in the chart object (use the computed x, y and r positions) and color by depth.
+    // Use a light black stroke (0.5px).
+    // ADD CODE HERE (attr and style methods) to complete the selection below
+    chart.selectAll("circle")
+          .data(root)
+          .join("circle")
+
+    // Add tooltips to show the name of each body or orbit when hovering over a circle
+    chart.selectAll("circle")
+      .append("title")
+        .text(d => d.data.name);
+
+
+</script>
+</body>
+</html>

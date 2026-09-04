@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Exercise 5</title>
+</head>
+<body>
+<script type="module">
+    import * as d3 from "https://cdn.jsdelivr.net/npm/d3@7/+esm";
+
+    // 16.5 Add zooming and panning to the circle pack so that the node clicked takes most of the space in the viewport.
+    // Clicking the enlarged node again should zoom out. You should also be able to use the wheel to zoom in and out.
+    // Keep line widths and font sizes constant while zooming in and out.
+    // See EXERCISE comment below for hints on how to implement this.
+
+    const dataFile = "../../data/planets.json";
+    const json = await d3.json(dataFile);
+    console.log(json);  // Inspect the data structure to know what you can use
+
+    const dim = { width: 800, height: 800, margin: 50 };
+    const cht = { w: dim.width - 2 * dim.margin, h: dim.height - 2 * dim.margin };
+    const svg = d3.select("body")
+                  .append("svg")
+                  .attr("width", dim.width)
+                  .attr("height", dim.height);
+    const chart = svg.append("g")
+                     .attr("transform", `translate(${dim.margin}, ${dim.margin})`);
+
+    json.planets.forEach(d => {
+        if(d.satellites) {
+            if(d.category !== "gaseous") {
+                d.satellites.push({
+                    name: d.name,
+                    diameterKm: d.diameterKm
+                });
+            }
+        } else {
+            d.satellites = [{
+                    name: d.name,
+                    diameterKm: d.diameterKm
+            }];
+        }
+        // reduce the data
+        d.satellites = d.satellites.map(s => ({name: s.name, radius: s.diameterKm / 2}));
+    });
+
+    const root = d3.hierarchy(json, d => d.planets || d.satellites);
+    root.sum(d => d.radius);
+    const pack = d3.pack().size([cht.w, cht.h]);
+    pack(root);
+    const color = d3.scaleOrdinal(["gray", "lightblue", "orange"]);
+
+    chart.selectAll("circle")
+      .data(root)
+      .join("circle")
+      .attr("cx", d => d.x)
+      .attr("cy", d => d.y)
+      .attr("r", d => d.r)
+        .attr("id", (d,i) => i)
+      .style("fill", d => color(d.depth))
+      .style("stroke", "black")
+      .style("stroke-width", 0.5);
+
+    chart.selectAll("circle")
+      .append("title")
+        .text(d => d.data.name);
+
+    // EXERCISE: Implement zooming and panning here.
+
+    // 1) Implement basic interactive zooming and panning (use d3.zoom to create a zoom function,
+    // configure the transform on the `zoom` event, and call the zoom function from the SVG)
+    // Call a function (semanticZoom) to adjust the line widths and font sizes based on the zoom scale.
+    // ADD CODE HERE
+
+    // 2) Programmatic zooming to the clicked node (this will zoom so that the clicked circle takes most of the space
+    // in the viewport). Clicking the enlarged node again should zoom out to the original view.
+    // Use a flag (e.g. a `zoomed` class) to track whether the node is currently zoomed in or not.
+    // If it is, zoom out to the original view (you can also track the current zoom transform).
+    chart.selectAll("circle")
+        .on("click", (event, d) => {
+            // ADD CODE HERE to implement programmatic zooming to the clicked node and zooming out when clicked again
+        });
+
+    // 3) Semantic zooming (to keep line widths and font sizes constant while zooming in and out)
+    function semanticZoom(scale) {
+        // ADD CODE HERE to adjust the line widths and font sizes based on the zoom scale
+    }
+
+</script>
+</body>
+</html>

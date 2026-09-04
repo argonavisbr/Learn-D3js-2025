@@ -31,7 +31,7 @@
     const chart = svg.append("g")
                      .attr("transform", `translate(${[offsetX, offsetY]})`);
 
-    const data = await d3.json('../data/paris-sample.json');
+    const data = await d3.json('../../data/paris-sample.json');
     data.connections.forEach(function(link) {
         const nodeKeys = data.stations.map(n => n.station + ':' + n.line);
         link.source = nodeKeys.indexOf(link.source + ":" + link.lines[0]);

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Exercise</title>
+    <title>Exercise 1</title>
     <style>
         rect {
             stroke: white;
@@ -16,25 +16,33 @@
     </style>
 </head>
 <body>
-<h1>Exercise</h1>
+<h1>Exercise - JSON (hierarchical) version</h1>
 <script type="module">
     import * as d3 from "https://cdn.jsdelivr.net/npm/d3@7/+esm";
 
-    // 1) Raw hierarchical data
-    const nestedFile = "../../data/venue.json";
+    // Exercise 16.1 Create a partition using the data/venue.csv or data/venue.json data file,
+    // using the capacity property to generate the value for each node.
+    // Start with this template file, which already creates the hierarchy object for you.
+    // See comments labeled EXERCISE below to know where to refactor the code (some refactorings are already done).
+
+    // 1) Raw hierarchical data - get the data and inspect it
+    const nestedFile = "../../data/venue.json"; // This solution uses the JSON file. See the other solution for the CSV file.
     const hierarchy = await d3.json(nestedFile);
 
-    // 2) Generate d3.hierarchy object (generates depth, length, and methods)
+    // EXERCISE: The data is in hierarchical format. We need to generate the hierarchy object from it.
+    // Solution: d3.hierarchy is the best option for this file.
+
+    // 2) EXERCISE: Generate d3.hierarchy object (generates depth, length, and methods)
     const root = d3.hierarchy(hierarchy);
     console.log("D3 hierarchy", root);
 
-    // EXERCISE: The file contains a capacity column. Use that to create a partition proportional to the capacity of each venue.
-
-    // 4) Calculate the sum of the values for each node (stored in standard value property)
+    // 3) EXERCISE: Calculate the sum of the values for each node (stored in standard value property).
+    // Hint: The file contains a capacity column. Use that to create a partition proportional
+    // to the capacity of each venue.
     root.sum(d => d.capacity);
     root.descendants().forEach(d => d.capacity = d.value);
 
-    // 5) Draw the partition as an icicle chart.
+    // 4) Draw the partition as an icicle chart (just call the draw function passing the root).
     draw(root);
 
     function draw(root) {
@@ -49,13 +57,14 @@
             .style("font", "10px sans-serif")
             .append("g").attr("transform", `translate(${margin.left}, ${margin.top})`);
 
-        // Create the partition layout and compute the positions of each node
+        // 5) EXERCISE: Create the partition layout and compute the positions of each node
+        // Use the cht object for the size, which already accounts for the margins. The size is [w, h].
         d3.partition().size([cht.w, cht.h])(root);
 
         const nodes = root.descendants();
         const color = d3.scaleOrdinal(d3.schemeGnBu[6].slice(1).reverse());
 
-        // Draw the rectangles
+        // 6) EXERCISE: Draw the rectangles
         chart.selectAll("rect")
             .data(nodes)
             .join("rect")
@@ -65,7 +74,7 @@
             .attr("height", d => d.y1 - d.y0)
             .style("fill", d => color(d.depth));
 
-        // Add horizontal labels at top left of each node.
+        // EXERCISE: Add horizontal labels at top left of each node.
         chart.selectAll("text")
             .data(nodes)
             .join("text")
@@ -76,6 +85,8 @@
             .style("fill", d => d3.hsl(color(d.depth)).l > 0.5 ? "black" : "white");
 
         // Fit labels inside nodes if possible, otherwise rotate or remove them.
+        // This code is tricky, since it needs to compute the bounding box of the text and compare it to the
+        // width and height of the node. If it doesn't fit, rotate it 90 degrees. If it still doesn't fit, remove it.
         chart.selectAll("text").nodes()
             .forEach((textNode, i) => {
                 const d = nodes[i];

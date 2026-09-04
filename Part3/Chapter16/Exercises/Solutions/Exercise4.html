@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Exercise 4</title>
+</head>
+<body>
+<h1>Rocky worlds treemap</h1>
+<script type="module">
+    import * as d3 from "https://cdn.jsdelivr.net/npm/d3@7/+esm";
+
+    // Exercise 16.4 Make a treemap version of Exercise 3.
+
+    const dataFile = "../../data/planets.json";
+    const json = await d3.json(dataFile);
+    console.log(json);  // Inspect the data structure to know what you can use
+
+    const dim = { width: 1200, height: 800, margin: 50 };   // Adjusted for treemap
+    const cht = { w: dim.width - 2 * dim.margin, h: dim.height - 2 * dim.margin };
+    const svg = d3.select("body")
+                  .append("svg")
+                  .attr("width", dim.width)
+                  .attr("height", dim.height);
+    const chart = svg.append("g")
+                     .attr("transform", `translate(${dim.margin}, ${dim.margin})`);
+
+    // Prepare the data.
+    json.planets.forEach(d => {
+        // Add the planet to its satellites array, so that the planet and its satellites are packed together.
+        // This way, the planet will be packed with its satellites.
+        // But don't add gaseous planets (we just want rocky worlds)
+        if(d.satellites) {
+            if(d.category !== "gaseous") {
+                d.satellites.push({
+                    name: d.name,
+                    diameterKm: d.diameterKm
+                });
+            }
+        } else {
+            d.satellites = [{
+                    name: d.name,
+                    diameterKm: d.diameterKm
+            }];
+        }
+        // reduce the data
+        d.satellites = d.satellites.map(s => ({name: s.name, radius: s.diameterKm / 2}));
+    });
+
+    // Create a hierarchical structure from the json file,
+    // using the planets and satellites properties to define the children of each node.
+    const root = d3.hierarchy(json, d => d.planets || d.satellites);
+
+    // Compute the value property based on the sum (required for a circle pack).
+    // Use the sum method to set the value of each node to the radius of the body (or satellite).
+    root.sum(d => d.radius);
+
+    // 1) EXERCISE: Create the treemap layout and call it to compute the positions of each node.
+    // Add padding (e.g. paddingTop, etc.) to make the rectangles more readable.
+    const treemap = d3.treemap().size([cht.w, cht.h]).padding(3).paddingTop(20);
+    treemap(root);
+    const color = d3.scaleOrdinal(d3.schemeTableau10);
+
+    // EXERCISE: draw the rectangles in the chart object (use the computed x0, y0, x1, y1 positions) and color by depth.
+    // Use a light black stroke (0.5px).
+    // ADD CODE HERE
+    chart.selectAll("rect")
+      .data(root)
+      .join("rect")
+      .attr("x", d => d.x0)
+      .attr("y", d => d.y0)
+      .attr("width", d => d.x1 - d.x0)
+      .attr("height", d => d.y1 - d.y0)
+      .style("fill", d => d.children ? color(d) : 'lightgray')
+      .style("fill-opacity", d => d.children ? 1 : .4)
+      .style("stroke", "black")
+      .style("stroke-width", 0.5);
+
+    // Add text labels (optional)
+    chart.selectAll("text")
+      .data(root)
+      .join("text")
+      .attr("x", d => d.x0 + 5)
+      .attr("y", d => d.y0 + 15)
+      .text(d => d.x1 - d.x0 > 30 && d.y1 - d.y0 > 30 ? d.data.name : '')
+      .style("font-size", "10px")
+      .style("fill", "black");
+
+    // Add tooltips to show the name of each body or orbit when hovering over a circle
+    chart.selectAll("rect")
+      .append("title")
+        .text(d => d.data.name);
+
+
+</script>
+</body>
+</html>

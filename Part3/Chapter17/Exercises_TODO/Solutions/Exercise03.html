@@ -113,7 +113,7 @@
 
         chart.selectAll('path.ribbon')
                 .data(chords)
-                .enter().append("path").attr("class",'ribbon')
+                .join("path").attr("class",'ribbon')
                 .attr("d", ribbon)
                 .style("fill", gradient.url)
                 .on("mouseover", highlightRibbon)
@@ -126,7 +126,7 @@
 
         chart.selectAll('path.arc')
                 .data(chords.groups)
-                .enter().append("path").attr("class",'arc')
+                .join("path").attr("class",'arc')
                 .attr("d", arc)
                 .style("fill", d => color(d.index))
                 .on("mouseover", highlightNode)
@@ -134,7 +134,7 @@
 
         chart.selectAll("text")
                 .data(chords.groups)
-                .enter().append("text")
+                .join("text")
                 .attr("x", d => arc.centroid(d)[0])
                 .attr("y", d => arc.centroid(d)[1])
                 .text(d => headers[d.index])
@@ -168,7 +168,7 @@
 
     function highlightNode(evt, node) {
         d3.selectAll("path.arc").classed('faded', d => !(d.index === node.index));
-        d3.selectAll("path.ribbon").classed('faded', edge => !(edge.source.index === node.index || edge.target.index == node.index));
+        d3.selectAll("path.ribbon").classed('faded', edge => !(edge.source.index === node.index || edge.target.index === node.index));
     }
     function highlightRibbon(evt, edge) {
         d3.selectAll("path.arc").classed('faded', node => !(node.index === edge.source.index || node.index === edge.target.index))

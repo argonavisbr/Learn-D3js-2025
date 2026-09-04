@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Exercise 6</title>
+</head>
+<body>
+<h1>Rocky worlds treemap</h1>
+<script type="module">
+    import * as d3 from "https://cdn.jsdelivr.net/npm/d3@7/+esm";
+
+    // 16.6 Add zooming to the treemap in the template file so that the user can click on a node and zoom in so it
+    // occupies most of the viewport. Each zooming level should reveal the next level below each node. For example,
+    // only show a node’s children when it occupies at least 50% of the viewport.
+
+    const dataFile = "../../data/planets.json";
+    const json = await d3.json(dataFile);
+    console.log(json);  // Inspect the data structure to know what you can use
+
+    const dim = { width: 1200, height: 800, margin: 50 };   // Adjusted for treemap
+    const cht = { w: dim.width - 2 * dim.margin, h: dim.height - 2 * dim.margin };
+    const svg = d3.select("body")
+                  .append("svg")
+                  .attr("width", dim.width)
+                  .attr("height", dim.height);
+    const chart = svg.append("g")
+                     .attr("transform", `translate(${dim.margin}, ${dim.margin})`);
+
+    json.planets.forEach(d => {
+        if(d.satellites) {
+            if(d.category !== "gaseous") {
+                d.satellites.push({
+                    name: d.name,
+                    diameterKm: d.diameterKm
+                });
+            }
+        } else {
+            d.satellites = [{
+                    name: d.name,
+                    diameterKm: d.diameterKm
+            }];
+        }
+        d.satellites = d.satellites.map(s => ({name: s.name, radius: s.diameterKm / 2}));
+    });
+
+    const root = d3.hierarchy(json, d => d.planets || d.satellites);
+    root.sum(d => d.radius);
+
+    const treemap = d3.treemap().size([cht.w, cht.h]).padding(1).paddingTop(20); // Padding adjusted for zoom
+    treemap(root);
+    const color = d3.scaleOrdinal(d3.schemeTableau10);
+
+    chart.selectAll("rect")
+      .data(root)
+      .join("rect")
+      .attr("x", d => d.x0)
+      .attr("y", d => d.y0)
+      .attr("width", d => d.x1 - d.x0)
+      .attr("height", d => d.y1 - d.y0)
+      .style("fill", d => d.children ? color(d) : 'lightgray')
+      .style("fill-opacity", d => d.children ? 1 : .4)
+      .style("stroke", "black")
+      .style("stroke-width", 0.5);
+
+    chart.selectAll("text")
+      .data(root)
+      .join("text")
+      .attr("x", d => d.x0 + 5)
+      .attr("y", d => d.y0 + 15)
+      .text(d => d.x1 - d.x0 > 30 && d.y1 - d.y0 > 30 ? d.data.name : '')
+      .style("font-size", "10px")
+      .style("fill", "black");
+
+    chart.selectAll("rect")
+      .append("title")
+        .text(d => d.data.name);
+
+    // EXERCISE: Implement zooming and panning here.
+    // 1) Implement basic interactive zooming and panning (use d3.zoom to create a zoom function,
+    // configure the transform on the `zoom` event, and call the zoom function from the SVG)
+    const zoom = d3.zoom()
+        .scaleExtent([0.5, 250]) // Limit the zoom scale
+        .on("zoom", (event) => {
+            chart.attr("transform", event.transform);
+            semanticZoom(event.transform.k);
+        });
+    svg.call(zoom);
+
+    // 2) Implement semantic zooming: adjust the font size of the text labels and stroke widths based on the zoom scale.
+    function semanticZoom(scale) {
+        chart.selectAll("text")
+            .style("font-size", 10 / (.8 * scale) )
+            .attr("x", d => d.x0 + 5/scale)
+            .attr("y", d => d.y0 + 15/scale)
+            .text(d => d.x1 - d.x0 > 30/scale && d.y1 - d.y0 > 30/scale ? d.data.name : '');
+        chart.selectAll("rect")
+            .style("stroke-width", 0.5 / scale);
+    }
+
+    // 3) Programmatic zoom in and out with one click on a node. Clicking the enlarged node again should zoom out to the original view.
+    let zoomedNode = null;
+    chart.selectAll("rect")
+        .on("click", (event, d) => {
+            if (zoomedNode === d) {
+                svg.transition().duration(750).call(zoom.transform, d3.zoomIdentity);
+                zoomedNode = null;
+            } else {
+                const scale = Math.min(cht.w / (d.x1 - d.x0), cht.h / (d.y1 - d.y0));
+                const translate = [cht.w / 2 - (d.x0 + d.x1) / 2 * scale, cht.h / 2 - (d.y0 + d.y1) / 2 * scale];
+                svg.transition().duration(750).call(zoom.transform, d3.zoomIdentity.translate(translate[0], translate[1]).scale(scale));
+                zoomedNode = d;
+            }
+        });
+
+</script>
+</body>
+</html>

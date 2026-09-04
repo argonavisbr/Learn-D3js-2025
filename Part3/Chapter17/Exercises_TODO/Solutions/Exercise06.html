@@ -25,7 +25,7 @@
 
         const line = [];
         for(let key in row) {
-            if(key != 'Population' && key != 'Destination' && key != 'Total' && key != 'Code') {
+            if(key !== 'Population' && key !== 'Destination' && key !== 'Total' && key !== 'Code') {
                 if(isNaN(row[key])) continue;
                 const obj = {
                     value: +row[key] ,
@@ -41,12 +41,12 @@
 
         const edges = d3.merge(data)
 
-        const filteredNodes  = nodes.filter(d => d.continent == 'North America')
+        const filteredNodes  = nodes.filter(d => d.continent === 'North America')
                                     .sort((a,b) => d3.descending(a.pop, b.pop))
                                     .filter((d,i) => i < 3)
 
 
-        const filteredEdges = edges.filter(d => filteredNodes.find(e => e.node == d.target));
+        const filteredEdges = edges.filter(d => filteredNodes.find(e => e.node === d.target));
 
         const arcDiagLayout = dvj.arcDiagram().width(width-margin);
         const arcData = arcDiagLayout(filteredNodes, filteredEdges);
@@ -67,8 +67,7 @@
 
         chart.selectAll("path")
                 .data(data.links())
-                .enter()
-                .append("path")
+                .join("path")
                 .attr("d", curve)
                 .style("stroke-width", d => widthScale(d.value))
                 .style("stroke", d => d3.rgb(color(d.source.i)).darker(.5))
@@ -77,8 +76,7 @@
 
         chart.selectAll("circle")
                 .data(data.nodes())
-                .enter()
-                .append("circle")
+                .join("circle")
                 .attr("cx", d => d.x)
                 .style("fill", (d,i) => d3.rgb(color(i)).darker(.5))
                 .attr("r", 30)
@@ -87,8 +85,7 @@
 
         chart.selectAll("text")
                 .data(data.nodes())
-                .enter()
-                .append("text")
+                .join("text")
                 .attr("x", d => d.x)
                 .text(d => d.node)
                 .style("font-size", function() {

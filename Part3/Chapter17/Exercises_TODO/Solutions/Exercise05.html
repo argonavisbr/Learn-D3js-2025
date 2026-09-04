@@ -40,7 +40,7 @@
     const links = [];
 
     // The nodes array
-    const nodes = await d3.csv("../../data/EuropeUSSR_1990_2010_nodes.csv", function(row) {
+    const nodes = await d3.csv("../../data/EuropeUSSR_1990_2010.csv", function(row) {
         if(row.Containers.length > 0 &&  row.Id !== 'WB') { // don' include West berlin
             const groups = row.Containers.split('|');
             groups.forEach(function(group) {
