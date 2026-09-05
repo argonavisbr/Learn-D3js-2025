@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>A Chord-Ribbon Diagram</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <style>
+        text {
+            font-size: 12px;
+            font-weight: bold;
+        }
+        .tooltip text {
+            font-size: 20px;
+            font-weight: normal;
+            fill: black;
+        }
+    </style>
+</head>
+<body>
+<h1>Borders between countries in South America</h1>
+<script type="module">
+    import * as d3 from "https://cdn.jsdelivr.net/npm/d3@7/+esm";
+    import * as nwu from "../../js/network-utils.js"; // custom module for network utilities
+    import * as highlight from "./js/chord-highlight.js"; // custom module for highlighting nodes and ribbons
+    import * as gradient from "./js/chord-gradient.js";   // custom module for creating gradients for ribbons
+
+    // This exercise creates a chord diagram. Special features such as highlighting and tooltips are already
+    // implemented in the chord-highlight.js module. A gradient for the ribbons is implemented in the
+    // chord-gradient.js module. Inspect the code in this file and in these modules to understand how they work.
+    // Your task is to complete the parts marked as EXERCISE, which involves creating the chord layout,
+    // ribbon and arc generators, and drawing the ribbons, arcs, and labels.
+
+    const dim = {width: 800, height: 800, margin: 100};
+    const radius = dim.height/2 - dim.margin/2;  // This is used to determine the radius of the chord diagram.
+
+    const svg = d3.select("body").append("svg").attr("width", dim.width).attr("height", dim.height);
+    const chart = svg.append("g")
+        .attr("class", 'chart')
+        .attr("transform", `translate(${[dim.width/2 + dim.margin/4, dim.height/2 + dim.margin/4]})`);
+
+    const colors = ['#a6cee3','#1f78b4','#b2df8a','#33a02c','#fb9a99','#e31a1c','#fdbf6f','#ff7f00','#cab2d6','#6a3d9a','#ffff99','#b15928','#ffed6f'];
+    const color = (index) => colors[index];
+
+    const data =
+        await d3.csv("../../data/sa_borders.csv", row => {
+            const line = [];
+            for(let key in row) {
+                if(isNaN(row[key])) continue;
+                const obj = {
+                    value: +row[key] ,
+                    source: row.Country,
+                    target: key
+                }
+                line.push(obj);
+            }
+            return line.filter(d => d.value !== 0);
+        });
+
+    const filtered = d3.merge(data)
+                       .filter(d => d.target !== 'Atlantic' && d.target !== 'Pacific');
+    const groups = d3.rollups(filtered, d => d[0].value, d => d.target, d => d.source);
+    const columns = data.columns
+                        .filter((d,i) => i>0)
+                        .filter(d => d !== 'Atlantic' && d !== 'Pacific')
+
+    // compute the links array from the groups array. Each link has the following format: {source, target, value}
+    const links = [];
+    groups.forEach(function(item) {
+        item[1].forEach(function(subItem) {
+            links.push({source: item[0], target: subItem[0], value: subItem[1]});
+        });
+    });
+
+    // See network-utils.js for the linksToMatrix function. It takes the columns and links arrays and returns an adjacency matrix.
+    // true - uses object ID
+    // true - reflects the matrix across the diagonal (so that the matrix is symmetric - required in this case)
+    const matrix = nwu.linksToMatrix(columns, links, true, true);
+
+    const headers = columns.map(d => d === 'French Guyana' ? 'F. Guyana' : d);
+
+    // EXERCISE 3: Create the chord layout using d3.chord() and the matrix.
+    // Use padAngle(.02) to add some padding between the ribbons.
+    // Sort groups in descending order of value.
+    // Inspect the result (an array of objects) in the console to understand its structure.
+    const chord = null; // ADD YOUR CODE HERE (replace the null with the chord layout)
+
+    // EXERCISE 3: Create the ribbon generator using d3.ribbon()
+    const ribbon = null; // ADD YOUR CODE HERE (replace the null with the ribbon generator)
+
+    // EXERCISE 3: Create the arc generator using d3.arc() with inner radius = radius and outer radius = radius + 20
+    const arc = null; // ADD YOUR CODE HERE (replace the null with the arc generator)
+
+    // Set up the gradiant function for the ribbons.
+    // This is implemented in the chord-gradient.js module.
+    gradient.setup(svg.append("defs"), radius, color, chords);
+
+    // EXERCISE 3: Draw the chords (use the ribbon generator and the gradient for the fill color)
+    // The data for the ribbons is in chords, which contains the start and end angles for each ribbon (migration flow)
+    // ADD YOUR CODE HERE (draw the ribbons in the chart object)
+
+    // EXERCISE 3: Draw the arcs (use the arc generator and the color function for the fill color)
+    // The data for the arcs is in chords.groups, which contains the start and end angles for each group (country)
+    // ADD YOUR CODE HERE (draw the arcs in the chart object)
+
+    // EXERCISE 3: Draw the country labels (use the arc generator to position the text and the contrast function for the fill color)
+    // The data for the labels is in chords.groups, which contains the start and end angles for each group (country)
+    // Rotate the labels to be readable (use the arc generator to get the centroid and the start and end angles)
+    // Hint: use this transform: rotate(${(arc.endAngle()(d) + arc.startAngle()(d))*90/Math.PI},${arc.centroid(d)})
+    // ADD YOUR CODE HERE (draw the labels in the chart object)
+
+    // Setup highlighting and tooltips (this uses js/chord-highlight.js)
+    highlight.setup(chords, columns, color);
+
+    // Luminance contrast function for text on nodes
+    function contrast(color, darker = false) {
+        const c = d3.hsl(darker ? color : d3.color(color).darker());
+        return c.l < .6 ? 'black' : 'white';
+    }
+</script>
+
+</body>
+</html>

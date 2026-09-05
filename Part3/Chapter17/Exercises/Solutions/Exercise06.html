@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Migrations arc diagram: North America</title>
+    <link rel="stylesheet" href="./css/arc-styles.css">
+</head>
+<body>
+<h1>Migrations arc diagram: North America</h1>
+<script type="module">
+    import * as d3 from "https://cdn.jsdelivr.net/npm/d3@7/+esm";
+    import * as nwu from "../../js/network-utils.js";
+
+    // This exercise creates an arc diagram. Your task is to complete the parts marked as EXERCISE, which involves
+    // creating the arc diagram layout, and drawing the arcs and labels. There is no arc diagram layout in D3, so
+    // you will need to use the custom arc diagram layout in the network-utils.js module. The arc diagram layout
+    // computes the x position of each node and the start and end angles of each edge. You also need to create a
+    // curve generator function for the arcs, which is also provided in the network-utils.js module. The curve generator
+    // function takes the start and end angles of each edge and returns a path string for the arc.
+    // Inspect the code and look for the EXERCISE comments.
+
+    const dim = { width: 1000, height: 600, margin: 100 };
+
+    // Set up the SVG and chart group
+    const svg = d3.select("body").append("svg").attr("width",dim.width).attr("height",dim.height);
+    const chart = svg.append("g").attr("transform", `translate(${[dim.margin/2,dim.height/2]})`);
+
+    // Create a curve generator function for the arcs (this is a custom curve generator from the network-utils.js module)
+    // This is the basic configuration for the curve generator. You can adjust the size of the arcs by changing the size parameter.
+    // Use this function to render the curves (see the EXERCISE comments below)
+    const curve = nwu.curve().size([dim.width- dim.margin, dim.height]);
+
+    // Get and prepare the data
+    const nodes = [];
+    const rawData = await d3.csv("../../data/migrations_2017_continent.csv", row => {
+        nodes.push({node: row.Destination, total: +row.Total, code: row.Code, pop: +row.Population, continent: row.Continent});
+        const line = [];
+        for(let key in row) {
+            if(key !== 'Population' && key !== 'Destination' && key !== 'Total' && key !== 'Code') {
+                if(isNaN(row[key])) continue;
+                const obj = {
+                    value: +row[key] ,
+                    target: row.Destination,
+                    source: key
+                }
+                line.push(obj);
+            }
+        }
+        return line;
+    });
+
+    const edges = d3.merge(rawData);
+
+    // Get first three nodes in North America by population and filter edges to only include those nodes
+    const filteredNodes  = nodes.filter(d => d.continent === 'North America')
+                                .sort((a,b) => d3.descending(a.pop, b.pop))
+                                .filter((d,i) => i < 3)
+    const filteredEdges = edges.filter(d => filteredNodes.find(e => e.node === d.target));
+
+    /////////////////////////////////////////////////////////////////
+
+    // EXERCISE: Create an arc diagram layout using the network-utils.js module. The layout should be based on the
+    // filtered nodes and edges, and should have a width of dim.width - dim.margin.
+    const arcDiagLayout = nwu.arcDiagram().width(dim.width - dim.margin);
+
+    // EXERCISE: Use the arc diagram layout to compute the positions of the nodes and edges (this is a custom
+    // layout function from the network-utils.js module). The result should be an object with two properties: nodes and links.
+    const data = arcDiagLayout(filteredNodes, filteredEdges);
+
+    // EXERCISE: Set a color scale based on the number of nodes
+    const color = d3.scaleSequential(d3.interpolateRainbow).domain([0, filteredNodes.length]);
+
+    // EXERCISE: Set a width scale for the edges based on their value
+    const widthScale = d3.scalePow().exponent(.75).range([0,25]).domain([0, d3.max(filteredEdges, d => d.value)]);
+
+    // EXERCISE: Render the curves (edges) using the computed positions from the arc diagram layout.
+    // The data is in data.links() and the curve generator function (see above) is used to create the path for each edge.
+    // Use the widthScale to set the stroke-width of each edge based on its value, and the color scale to set the stroke
+    // color based on the source node index.
+    chart.selectAll("path")
+            .data(data.links())
+            .join("path")
+            .attr("d", curve)
+            .style("stroke-width", d => widthScale(d.value))
+            .style("stroke", d => d3.rgb(color(d.source.i)).darker(.5))
+            .style("stroke-opacity", .6)
+            .style("fill", 'none');
+
+    // EXERCISE: Render the nodes (circles) using the computed positions from the arc diagram layout.
+    // The data is in data.nodes() and the x position of each node is used to set the cx attribute of the circle.
+    chart.selectAll("circle")
+            .data(data.nodes())
+            .join("circle")
+            .attr("cx", d => d.x)
+            .style("fill", (d,i) => d3.rgb(color(i)).darker(.5))
+            .attr("r", 30);
+
+    // EXERCISE: Render the node labels (text) using the computed positions from the arc diagram layout.
+    // The data is in data.nodes() and the x position of each node is used to set the x attribute of the text.
+    // The text content is the node name.
+    chart.selectAll("text")
+            .data(data.nodes())
+            .join("text")
+            .attr("x", d => d.x)
+            .text(d => d.node)
+            .style("font-size", function() {
+                return 20 * 30 / this.getComputedTextLength();
+            });
+
+    ///////////////////////////////////////////////////////////////
+
+    // Implement interactive highlighting of nodes  on mouseover
+    chart.selectAll("circle")
+        .on("mouseover", highlight)
+        .on("mouseout", () => d3.selectAll("path, circle").classed('faded', false));
+
+    function highlight(evt, d) {
+        d3.selectAll("path")
+                .classed('faded', s => !(s.source === d || s.target === d))
+        d3.selectAll("circle")
+                .classed('faded', n => !(n === d  || n.sources.filter(s => s.target === d).filter(k => k.value > 1000).length > 0
+                                                  || n.targets.filter(s => s.source === d).filter(k => k.value > 1000).length > 0));
+    }
+
+</script>
+</body>
+</html>

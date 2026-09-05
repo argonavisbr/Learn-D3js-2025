@@ -32,9 +32,17 @@
 </head>
 <body>
 <h1>Lengths of borders and coastlines in thousands of km</h1>
+
+<!-- Most of the code is done. You only need to complete the parts related to the exercise.
+     Inspect the code. Then roll to the comments marked as EXERCISE, in this file -->
+
 <script type="module">
     import * as d3 from "https://cdn.jsdelivr.net/npm/d3@7/+esm";
     import * as nwu from "../../js/network-utils.js";
+
+    // This exercise involves using a custom adjacency matrix layout generator (in network-utils.js) to create a
+    // heatmap of border lengths between South American countries. This is not a standard D3 function, but is simple.
+    // Check the code in network-utils.js to understand how it works. See comments marked as EXERCISE below.
 
     // Data file
     const dataFile = "../../data/sa_borders.csv";
@@ -78,20 +86,21 @@
     // (a) Convert the node-link structure to an adjacency matrix required by the adjacency matrix layout.
     // Use the linksToMatrix function imported from network-utils.js.
     // Set the third parameter to true to use object keys instead of their indices.
-    const matrix = nwu.linksToMatrix(nodes, links, true);
+    // ADD CODE HERE
 
     // (b) Create the adjacency matrix layout in the chart area (call the imported adjacencyMatrix function
     // from network-utils.js and set the size with the size() method)
-    const matrixLayout = nwu.adjacencyMatrix().size([chart.width, chart.height]);
+    // ADD CODE HERE
 
     // (c) Generate the data for the adjacency matrix (call the function created in (b) with nodes and matrix)
-    const data = matrixLayout(nodes, matrix);
+    // ADD CODE HERE
 
     // (d) Draw the adjacency matrix (call the draw function with nodes and data)
-    draw(nodes, data);
+    // ADD CODE HERE
     ///////////////////////////////////////////////////////////
 
-    // Draw the adjacency matrix
+    // Draw the adjacency matrix - this function is complete and does not require any changes.
+    // Inspect it to understand how it works, and how the highlight and fade functions are used for interactivity.
     function draw(nodes, data) {
 
         // Set color scale domains

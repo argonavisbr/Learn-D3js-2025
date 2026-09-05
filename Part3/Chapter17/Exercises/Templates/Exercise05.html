@@ -23,6 +23,13 @@
     import * as d3x from "https://cdn.skypack.dev/d3-sankey@0.12.3";
     import * as ui from "./js/sankey-interactive.js";
 
+    // Exercise: make this Sankey diagram interactive!
+    // This exercise involves using adding interactive features to a sankey diagram. The code for the sankey diagram
+    // is already implemented in the sankey-interactive.js file. You only need to add event listeners to the nodes
+    // and links, and to call the d3.drag() function to enable dragging. The functions are already implemented
+    // in the sankey-interactive.js file. Inspect the code in sankey-interactive.js to understand how it works.
+    // Then inspect how it is used in this file. See comments marked as "EXERCISE" below.
+
     const width = 1400;
     const height = 800;
     const margin = 50;
@@ -80,12 +87,6 @@
     // Generate the sankey graph and store it in ui.sankey.graph (from the sankey-interactive.js file)
     ui.sankey.graph = ui.sankey({nodes: nodes, links: links});
 
-    // Call the draw function to render the diagram
-    draw();
-
-    // Implement the draw() function
-    function draw() {
-
         // Draw the links (use d3x.sankeyLinkHorizontal() to generate the path and ui.sankey.graph to access the nodes and links)
         chart.selectAll('path.link')
              .data(ui.sankey.graph.links)
@@ -94,9 +95,7 @@
                     .style("stroke-opacity", .5)
                     .style("stroke-width", d => d.width)
                     .style("stroke", d => d.target.Id.indexOf('EU') === 0 || d.target.Id === 'DEU' ? color(d.source.index) : color(d.target.index))
-                    .style("fill", 'none')
-                    .on("mouseover", ui.highlightPath)
-                    .on("mouseout", ui.fade);
+                    .style("fill", 'none');
 
         // Draw the nodes (use ui.sankey.graph to access the nodes)
         chart.selectAll('g.node')
@@ -116,15 +115,22 @@
                         .attr("y", (d.y1 - d.y0)/2)
                         .text(d.Country)
                         .style("fill", contrast(d3.rgb(color(i)).darker(.5)));
-            })
-            .on("mouseover", ui.highlightNode)      // Implement highlighting (from sankey-interactive.js)
-            .on("mouseout", ui.fade)
-            .call(d3.drag()
-                    .on('start', ui.dragStart)      // Implement dragging (from sankey-interactive.js)
-                    .on('drag', ui.dragging)
-                    .on('end', ui.dragEnd)
-            );
-    }
+            });
+
+    ///////////////////////////////////////////////////////////////////
+
+    // EXERCISE: Make the chart interactive. Use the functions from the sankey-interactive.js file to add
+    // highlighting and dragging of nodes and links. You just need to add the event listeners to the nodes and links,
+    // and to call the d3.drag() function to enable dragging. The functions are already implemented in the sankey-interactive.js file.
+    // The functions are already implemented in the sankey-interactive.js file.
+
+    // ADD YOUR CODE HERE (add event listeners to the nodes selected via the chart object:
+    // highlighting and fading - and call d3.drag() to enable dragging)
+
+    // ADD YOUR CODE HERE (add event listeners to the links selected via the chart object:
+    // highlighting and fading on mouseover and mouseout)
+
+    ////////////////////////////////////////////////////////////////
 
     // Function to compute a contrasting color (black or lightyellow) based on the input color brightness
     function contrast(color) {

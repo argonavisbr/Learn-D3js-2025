@@ -32,12 +32,18 @@
 <h1>Migrations (25 largest populations, in millions)</h1>
 <p>Move mouse over a cell for details. Source: United Nations Data (2024)</p>
 
-<!-- Roll the code below for the Exercise -->
+<!-- Most of the code is done. You only need to complete the parts related to the exercise.
+     Inspect the code. Part of it - the parts that draw the chart and handle interactive events -
+     is in the ./js/migration-diagrams.js file. Then roll to the comments marked as EXERCISE, in this file -->
 
 <script type="module">
     import * as d3 from "https://cdn.jsdelivr.net/npm/d3@7/+esm";
     import * as nwu from "../../js/network-utils.js";   // Utility with layout functions
     import {draw} from "./js/migration-diagrams.js";    // Inspect this file - it contains D3 drawing code
+
+    // This exercise involves using a custom adjacency matrix layout generator (in network-utils.js) to create a
+    // heatmap of migrations between countries. This is not a standard D3 function, but is simple. Check the code
+    // in network-utils.js to understand how it works. See comments marked as EXERCISE below.
 
     // Data file
     const migrationsFile = "../../data/migrations_2024.csv"; // inspect this file!
@@ -63,7 +69,8 @@
         return link;
     });
 
-    // Create the nodes array from edges {node: country, totalIn: total_immigrants, totalOut: total_emigrants}
+    // Create the nodes array from edges; each node in the array has the following format:
+    //    {node: country, totalIn: total_immigrants, totalOut: total_emigrants}
     const allNodes = [... new Set(allEdges.map(edge => edge.target))]
                   .map(n => ({node: n,
                               totalIn: allEdges.filter(e => e.target === n)
