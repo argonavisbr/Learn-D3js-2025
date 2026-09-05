@@ -4,25 +4,37 @@ Files and exercises for chapter 17.
 
 ## 1) Description of each subfolder in this folder
 
-__`TODO/`__
+__`Adjacency/`__
 
-Description.
+Examples of how to create and configure adjacency diagrams.
 
-__`TODO/`__
+__`Chord/`__
 
-Description.
+Examples of how to create and configure chord diagrams.
 
-__`TODO/`__
+__`Linear/`__
 
-Description.
+Examples of how to create and configure linear diagrams.
 
-__`TODO/`__
+__`Radial/`__
 
-Description.
+Examples of how to create and configure radial diagrams.
 
-__`StepByStep/`__
+__`Sankey/`__
 
-Description.
+Examples of how to create and configure Sankey diagrams.
+
+__`Examples/`__
+
+Examples of the different types of visualizations in this chapter.
+
+__`Exercises/`__
+
+Templates and solutions for the exercises in this chapter.
+
+__`js/`__
+
+Libraries used by examples and exercises in the other folders (they are loaded using relative URLs).
 
 __`data/`__
 
