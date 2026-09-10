@@ -130,7 +130,7 @@ Contains additional code examples, exercises, and resources that complement the 
 </details>
 
 <details> 
-  <summary><h2>Get to know Author</h2></summary>
+  <summary><h2>Get to know the author</h2></summary>
 
 _Helder da Rocha_ teaches, writes and develops applications with Java and Web technologies since 1995. In 1996 he wrote one of the first books in Portuguese about HTML and JavaScript, and since then he created hundreds of presentations, tutorials, and course materials on Java, Java EE, programming tools, patterns, techniques, methodologies, HTML, CSS, JavaScript, SVG, XML and related technologies, data visualization, Arduino and Internet of Things. He holds a masters degree in Computer Science. He also has a background in the visual arts and design and has some of his artwork in permanent museum exhibits. He lives in Brazil, where he works as an independent consultant, developer and instructor and a frequent speaker at technological events.
 
