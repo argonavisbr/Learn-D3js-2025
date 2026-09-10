@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Exercise 17.1: a simple force-directed graph using data from a CSV file</title>
+    <title>Exercise 18.2: a simple force-directed graph using data from a CSV file - static version</title>
     <style>
         text {
             font-family: 'Arial Narrow', sans-serif;
@@ -18,8 +18,13 @@
     </style>
 </head>
 <body>
+<h1>Sample static diagram created using the force algorithm</h1>
+<p>Each circle represents a city with more than 4 million inhabitants from the <code>cities15000.csv</code> file.
+The algorithm runs for 50 iterations and the last positions are used to place the circles.</p>
 <script type="module">
     import * as d3 from "https://cdn.jsdelivr.net/npm/d3@7/+esm";
+
+    // EXERCISE 18.2: Create a static version of the chart from Exercise 18.1, stopping after 50 iterations.
 
     const dataFile = "../../data/cities15000.csv";
 
@@ -58,7 +63,7 @@
                         .range([0, 30])
                         .domain([0, d3.max(nodes, d => d.population)]);
 
-    // The simulation
+    // EXERCISE: Set up the simulation - use the manybody force with a strength of -13, and run the simulation for 50 iterations before stopping it.
     const sim = d3.forceSimulation(nodes);
     sim.force("manybody", d3.forceManyBody().strength(-13));
 
@@ -66,8 +71,12 @@
         sim.tick(); // run the simulation for 50 iterations
     }
     sim.stop();
+
+    // Draw the nodes in their starting position.
     draw();
-    redraw(); // place the nodes in their final position
+
+    // EXERCISE: Move the nodes to their final position after the simulation has stopped.
+    redraw();
 
     function draw() {
         chart.selectAll("g.node")

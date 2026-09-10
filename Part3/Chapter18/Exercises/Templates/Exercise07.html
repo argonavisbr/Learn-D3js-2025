@@ -18,11 +18,23 @@
     </style>
 </head>
 <body>
+<h1>Adding and removing nodes</h1>
+<p>Click near a node to add a new node or shift+click to add a link between nodes. Click on a node to remove it.</p>
 <script type="module">
     import * as d3 from "https://cdn.jsdelivr.net/npm/d3@7/+esm";
     import {links, nodes, chart, dim, draw, redraw} from "./js/alphabet.js";
 
-    // 1) Create a variable to store the currently selected node (e.g. selectedNode) initially set to null.
+    // EXERCISE 18.7: Add a feature to the code example explored in this section (Interactive/6-edit.html) to allow
+    // the user to connect two existing nodes. They should first find and select one node clicking near a node
+    // (but not on it) with the Shift key pressed. Without the Shift key, the current code adds a new node.
+    // The selected node should stay highlighted unless a user clicks somewhere else. Clicking on a second node
+    // (or near it) should add the link between the nodes. Attempting to create a link between existing nodes should
+    // increment the link’s value. Links are removed deleting a node between them (this is already implemented).
+    // You can start with Interactive/6-edit.html or with the template, which contains comments and suggestions.
+    // Item 1 is already implemented in the template. You need to implement items 2 and 3.
+
+    // EXERCISE (1)
+    // 1) Create a variable to store the currently selected node (e.g. selectedNode) initially set to null (DONE).
     let selectedNode = null;
 
     const offsetX = dim.margin/2 + dim.width/2;
@@ -37,19 +49,12 @@
                   .force("collide", d3.forceCollide(30));
     sim.on("tick", redraw);
 
-    // EXERCISE - Add links between existing nodes
+    // EXERCISE (2) - Add links between existing nodes (TODO)
     // 2) Modify this code to distinguish between adding a new node and selecting and
     //    existing node to link to. Using shift+click should call the addLink(evt) function (to be implemented),
     //    while a normal click should add a new node as before, clearing any selected node.
-    // 3) SEE BELOW for addLink(evt) function to implement.
-    d3.select("svg").on('click', function(evt) {
-        if (evt.shiftKey || selectedNode) {
-            addLink.call(this, evt);
-        } else {
-            clearSelection();
-            addNode.call(this, evt);
-        }
-    });
+    // SEE BELOW for addLink(evt) function to implement (Item 3).
+    // ADD CODE HERE (click event handler for the SVG background to add nodes or links)
 
     // Render the initial graph
     draw();
@@ -110,7 +115,7 @@
         }
     }
 
-    // EXERCISE
+    // EXERCISE (3)
     // 3) Implement the addLink(evt) function to add or bump links between nodes. This function should
     //    highlight the nearest node to the mouse event.
     //    a) If there is a stored selectedNode already and this selectedNode is not the same node as the nearest node,
@@ -124,39 +129,29 @@
     //       clear the selection (clearSelection).
     //    c) If there is no stored selectedNode, it should store the nearest node as the selectedNode and highlight it.
     function addLink(evt) {
+
+        // Find nearest node to the mouse event (DONE)
         const nearest = highlightNearestNode(evt);
         if (!nearest) return;
 
-        if (selectedNode && nearest !== selectedNode) { // create or bump a link
-            const newLink = {
-                source: selectedNode.index,
-                target: nearest.index,
-                value: 1
-            };
+        // If there is a selected node and it's not the same as the nearest node, create or bump a link (TODO)
+        if (selectedNode && nearest !== selectedNode) {
+            // Declare a new link object with source, target, and value properties
+            // source should be the index of the selectedNode, target should be the index of the nearest node, and value should be 1
+            // ADD CODE HERE
 
             // Check if link already exists between these nodes
-            const existingLink = links.find(link =>
-                (link.source.index === selectedNode.index && link.target.index === nearest.index) ||
-                (link.source.index === nearest.index && link.target.index === selectedNode.index)
-            );
+            // ADD CODE HERE
 
             // If the link already exists, increment its value; otherwise, add the new link
-            if (existingLink) {
-                existingLink.value = ++existingLink.value;
-            } else {
-                links.push(newLink);
-            }
+            // ADD CODE HERE
 
-            // Update simulation
-            sim.force("link").links(links).initialize(nodes);
+            // Update simulation, draw the chart, reheat simulation, and clear selection
+            // ADD CODE HERE
 
-            draw();
-            reheatSimulation();
+        } else if (selectedNode) { // Deselect if clicked the same node (DONE)
             clearSelection();
-
-        } else if (selectedNode) { // Deselect if clicked the same node
-            clearSelection();
-        } else { // Select nearest
+        } else { // Select nearest node (DONE)
             selectedNode = nearest;
             chart.selectAll('g.node').classed('highlight', d => d === selectedNode);
         }

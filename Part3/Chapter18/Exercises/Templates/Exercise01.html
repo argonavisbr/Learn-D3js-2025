@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Exercise 17.1: a simple force-directed graph using data from a CSV file</title>
+    <title>Exercise 18.1: a simple force-directed graph using data from a CSV file</title>
     <style>
         text {
             font-family: 'Arial Narrow', sans-serif;
@@ -18,8 +18,16 @@
     </style>
 </head>
 <body>
+<h1>Sample force simulation</h1>
+<p>Each circle represents a city with more than 4 million inhabitants from the <code>cities15000.csv</code> file.</p>
 <script type="module">
     import * as d3 from "https://cdn.jsdelivr.net/npm/d3@7/+esm";
+
+    // EXERCISE 18.1: Load the file data/cities15000.csv and create a nodes array containing the cities that have a
+    // population of 4 million inhabitants or more. Each object should contain the city’s name and population.
+    // Represent each object as a labeled circle with a diameter proportional to its population (use an exponential
+    // scale) and create a force diagram to display them. Apply the d3.forceManyBody() force to animate the
+    // simulation, adjusting the best strength.
 
     const dataFile = "../../data/cities15000.csv";
 
@@ -46,29 +54,22 @@
         if(city.population >= 4000000) {
             nodes.push({
                 name: city.asciiname,
-                population: +city.population,
-                continent: city.timezone.split("/")[0]
+                population: +city.population
             });
         }
     });
 
     nodes.sort((a, b) => d3.descending(a.population, b.population));
 
-    const continents = Array.from(new Set(nodes.map(d => d.continent)));
-    color.domain(continents);
-
     // A scale for populations
     const popScale = d3.scaleSqrt()
-                        .range([0, 60])
+                        .range([0, 30])
                         .domain([0, d3.max(nodes, d => d.population)]);
 
-    // The simulation
-    const sim = d3.forceSimulation(nodes);
-    sim.force("collide", d3.forceCollide(d => popScale(d.population) + 3));
-    sim.force("manybody", d3.forceManyBody().strength(.05));
-    sim.force("y", d3.forceY(0).strength(0.05));
-    sim.on("tick", redraw);
+    // EXERCISE: Set up the simulation - use the manybody force with a strength of -13 and call redraw on each tick
+    // ADD CODE HERE
 
+    // Draw the nodes in their starting positions
     draw();
 
     function draw() {
@@ -80,7 +81,7 @@
                         .attr("class", "node");
                     nodeEnter.append("circle")
                         .attr("r", d => popScale(d.population))
-                        .attr("fill", d => color(d.continent))
+                        .attr("fill", color)
                         .attr("stroke", "black");
                     nodeEnter.append("text")
                         .text(d => d.name)
@@ -94,11 +95,6 @@
     function redraw() {
         chart.selectAll("g.node")
              .attr("transform", d => `translate(${[d.x, d.y]})`);
-    }
-
-    function contrast(color, darker = false) {
-        const c = d3.hsl(darker ? color : d3.color(color).darker());
-        return c.l > .3 ? 'black' : 'white';
     }
 </script>
 

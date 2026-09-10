@@ -19,8 +19,16 @@
     </style>
 </head>
 <body>
+<h1>Paris Metro Network</h1>
 <script type="module">
     import * as d3 from "https://cdn.jsdelivr.net/npm/d3@7/+esm";
+
+    // EXERCISE 18.4: The JSON file data/paris-sample.json contains three arrays: a list of stations from four
+    // lines of the Paris subway, a list of connections between these stations, and a list of lines, including
+    // their names and standard colors. Use this file to create a network diagram showing how the stations are
+    // connected to each other, with standard line colors for nodes and lines. Configure link distances and
+    // strength so that stations that connect different lines are kept as close as possible.
+    // Draw the link that connects them in black and make it three times thicker than the connections within a line.
 
     const dim = { width: 1200, height: 900, margin: 40 };
     const offsetX = dim.margin / 2 + dim.width / 2;
@@ -42,6 +50,12 @@
     const lines = data.lines.filter(d => lineNums.includes(d.line));
     const color = num => lines.find(l => l.line === num).color;
 
+    // EXERCISE: Set up the simulation with a center force, a link force, a manybody force and a collision force.
+    // - Configure the link force so that transfer links are shorter and stronger than the other links (use distance()
+    //   and strength()). Transfer links are those that connect two stations with different line numbers. Use the
+    //   lines array to get and compare the line number of a station.
+    // - Configure the manybody force so that the nodes repel each other (use a negative strength).
+    // - Configure the collision force so that the nodes do not overlap (adjust forceCollide() radius and iterations as needed).
     const sim = d3.forceSimulation(data.stations);
     sim.force("center", d3.forceCenter())
        .force("link", d3.forceLink(data.connections)
@@ -51,6 +65,7 @@
     sim.force("manybody", d3.forceManyBody().strength(-100))
        .force("collide", d3.forceCollide(20).iterations(10));
 
+    // EXERCISE: Redraw the chart on each tick of the simulation
     sim.on("tick", redraw);
 
     draw(data.stations, data.connections);
