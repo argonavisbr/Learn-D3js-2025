@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Exercise 1</title>
+</head>
+<body>
+
+<script type="module">
+    // EXERCISE: The Exercises/data folder contains several GeoJSON and TopoJSON files that represent different
+    // places on the Earth. Choose one and use the template file or create your own file to load, project,
+    // and display the features in a map. Scale the so space is used efficiently, if there are properties,
+    // use them to name the features. Add a graticule. Some regions include a CSV with cities, which should
+    // be projected on the map.
+
+    // This solution uses africa.topojson and africa-cities.csv
+
+    import * as d3 from "https://cdn.jsdelivr.net/npm/d3@7/+esm";
+    import * as topojson from "https://cdn.jsdelivr.net/npm/topojson@3/+esm";
+
+    // The data files
+    const shapeFile = "../../data/africa/africa.topojson";
+    const citiesFile = "../../data/africa/africa-cities.csv";
+
+    // Set the dimensions and margins of the map
+    const dim = { width: 800, height: 600 };
+
+    // Create the main viewport SVG element
+    const svg = d3.select("body").append("svg")
+                  .attr("width", dim.width)
+                  .attr("height", dim.height);
+
+    // Load the data files and select relevant properties
+    const [topology, cities] = await Promise.all([
+        d3.json(shapeFile),
+        d3.csv(citiesFile, d => ({
+            city: d.asciiname,
+            coordinates: [+d.longitude, +d.latitude],
+            population: +d.population
+        }))
+    ]);
+
+    // EXERCISE: Convert TopoJSON to GeoJSON (the Africa object is named "africa" in the TopoJSON file)
+    const geojson = topojson.feature(topology, topology.objects.africa);
+
+    // EXERCISE: Set up the projection
+    // Use geoEqualEarth, scaled by 400, translated to 40% width and 50% height)
+    // A more efficient way to scale and translate is to use fitSize (see Configuring Projections in the book)
+    const projection = d3.geoEqualEarth()
+                         .scale(400).translate([dim.width * .4, dim.height / 2])
+                         //.fitSize([dim.width, dim.height], geojson); // not implemented here
+
+    // EXERCISE: Set up the geopath using the projection
+    const geoPath = d3.geoPath().projection(projection);
+
+    // EXERCISE: Draw a basic graticule (optional) - use a light stroke and no fill
+    const graticule = d3.geoGraticule();
+    svg.append("path")
+       .datum(graticule())
+           .attr("class", "graticule")
+           .attr("d", geoPath)
+           .style("fill", "none")
+           .style("stroke", "#ccc");
+
+    // EXERCISE: Render the countries - use the GeoJSON features object as the data and the geoPath to draw the paths
+    // Choose a single light color for the countries or set up a color scale with pale colors
+
+    // Using a color scale
+    const color = d3.scaleOrdinal(d3.schemePastel1);
+
+    // Rendering the countries
+    svg.selectAll("path.country")
+       .data(geojson.features)
+           .join("path").attr("class", "country")
+             .attr("d", geoPath)
+                .style("fill", color)  // *
+                .style("stroke", "#999");
+
+    // * This doesn't guarantee that bordering countries will have different colors!
+    //   You can use TopoJSON's neighbors function to find bordering countries and assign colors accordingly,
+    //   but that is beyond the scope of this exercise.
+    //   See Exercise1-neighbors.html and Extras/Tutorials/TopoJSON for an example of how to do that.
+
+    // EXERCISE: Draw labels for each country (the labels may overlap in this simple solution)
+    // Use the properties.name property of each feature for the label text
+    // Align with the centroid and use CSS to center the text and set a small font size
+    svg.selectAll("text.country-label")
+       .data(geojson.features)
+           .join("text").attr("class", "country-label")
+             .attr("transform", d => `translate(${geoPath.centroid(d)})`)
+             .style("alignment-baseline", "central")
+             .style("text-anchor", "middle")
+             .style("font-family", "Arial narrow, sans-serif")
+             .style("font-size", "10px")
+             .text(d => d.properties.name);
+
+    // EXERCISE: Render the cities on the map (show name and population on hover)
+    // Sort cities by population and take the top 20
+    const majorCities = cities.sort((a, b) => b.population - a.population).slice(0, 20);
+
+    // Render the cities on the map (show name and population on hover)
+    // Use a circle radius proportional to the square root of the population (scale it down so it fits)
+    // Use the `title` attribute to show the name and population on hover
+    svg.selectAll("circle.city")
+       .data(majorCities)
+           .join("circle").attr("class", "city")
+             .attr("transform", d => `translate(${projection(d.coordinates)})`)
+             .attr("r", d => Math.sqrt(d.population) / 1000)
+             .style("fill", "red")
+             .style("fill-opacity", 0.6)
+             .style("stroke", "black")
+             .style("stroke-width", 0.5)
+             .append("title")
+                .text(d => `${d.city}: ${d.population.toLocaleString()}`);
+
+</script>
+</body>
+</html>

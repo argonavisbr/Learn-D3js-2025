@@ -44,10 +44,11 @@ svg.append("rect").attr("class","zoom-context")
 const geoPath = d3.geoPath();
 
 // center in Africa using a geometric fit, and scale to fit
+// Fitting overrides translate and scale, so it should be called after these
 const projection = d3.geoMercator()
-                     .center([34.5, -8.78])
-                     .fitExtent([[140,0],[480,480]], data)
-                     .scale(350);
+                     .center([-40, -50]) // adjusting to center the continent (call BEFORE fitSize)
+                     .fitSize([dim.width,dim.height], data)
+                     .scale(350); // scale to fit the continent (call AFTER fitSize)
 geoPath.projection(projection);
 
 const extent = d3.extent(cities, d => d.pop);

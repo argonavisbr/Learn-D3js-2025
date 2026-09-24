@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Creating a choropleth with a legend</title>
+    <title>A choropleth with a legend</title>
     <link rel="stylesheet" href="css/map.css">
     <style>
         svg {
@@ -11,18 +11,18 @@
     </style>
 </head>
 <body>
-<h1>Creating a choropleth with a legend</h1>
+<h1>A choropleth with a legend</h1>
 <p>A choropleth is a thematic map where areas are colored based on a data variable.
     In this example, we color countries based on their population using a sequential color scale.
     Graticules are not necessary since we are focusing on the data. A legend can be included to
-    add extra information (exercise). Tooltips can be used for specific values (exercise).
+    add extra information (exercise).
 </p>
 <script type="module">
     import * as d3 from "https://cdn.jsdelivr.net/npm/d3@7/+esm";
     import * as topojson from "https://cdn.skypack.dev/topojson-client@3";
 
     // 1) Load the data and convert to GeoJSON
-    const tjdata = await d3.json('../data/world/world-lowres.topojson');
+    const tjdata = await d3.json('../../data/world/world-lowres.topojson');
     const key = "world";
     const data = topojson.feature(tjdata, tjdata.objects[key]);
 
