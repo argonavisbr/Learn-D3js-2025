@@ -40,8 +40,8 @@
     // mouseover/mouseout events near the country.
     // You can use the js/tooltips.js module or create your own implementation.
 
-    // 1) Import the tooltip.js module.
-    import * as tooltip from "./js/tooltips.js";
+    // 1) Import the tooltip.js module (Inspect it!).
+    // ADD CODE HERE
 
     // Load the data and convert to GeoJSON
     const tjdata = await d3.json('../../data/world/world-lowres.topojson');
@@ -90,21 +90,17 @@
     // - formatter (optional): a formatter function to format the value (e.g. d3.format(",.0f"))
     // - suffix (optional): a string to append to the value (e.g. " people")
     // In this case we only want to show the population, so we create a single object in the array.
-    const tooltipData = [
-        {property: 'pop', label: "Population", formatter: d3.format(",.0f"), suffix: " people"}
-    ];
+    // ADD CODE HERE
 
     // 3) Create the tooltip elements (a rectangle and text) and hide them initially.
-    // Hint: call the tooltip.create function from the tooltips.js module and pass the svg selection
-    // and the tooltipData object to it.
-    tooltip.create(svg, tooltipData);
+    // Hint: call the tooltip.create function from the tooltip.js module and pass the svg selection
+    // and the tooltip data array created in the previous step to it.
+    // ADD CODE HERE
 
     // 4) Add mouseover and mouseout event listeners to the countries to show and hide the tooltip.
     // Hint: call the tooltip.show and tooltip.hide functions from the tooltip.js module and pass
     // the event and data to them.
-    svg.selectAll("path.feature")
-       .on("mouseover", tooltip.show)
-       .on("mouseout", tooltip.hide);
+    // ADD CODE HERE
 
 </script>
 

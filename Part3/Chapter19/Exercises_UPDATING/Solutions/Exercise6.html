@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>A choropleth with a legend</title>
+    <title>A choropleth with a legend (exercise)</title>
     <link rel="stylesheet" href="css/map.css">
     <style>
         svg {
@@ -59,31 +59,48 @@
            .style("fill", d => color(d.properties.pop))
            .style("stroke-width", .5).style("stroke", "blue");
 
+    // EXERCISE 6: Add a legend to the choropleth map that relates the color scale to the corresponding population
+    // values. Create any graphical representation of the legend that you like. A gradient-colored rectangle,
+    // a series of rectangles using selected colors. See the solution for some ideas.
 
+    // Here is a possible implementation. We will draw a wide horizontal rectangle at the bottom of the map.
+    // filled with a gradient that represents the color scale. An axis below shows the population values.
 
-    // Legend implementation - This is an exercise - you can make a simpler one!
+    // 1) Dimensions and position
     const legendWidth = dim.width * 0.8;
     const legendHeight = 10;
     const legendX = (dim.width - legendWidth) / 2;  // place it centered at the bottom of the map
     const legendY = dim.height - legendHeight - 25;
 
-    // A scale for the levnd
+    // 2) A scale for the legend axis.
+    // We use the same exponent as the color scale to make the axis values match the color bins.
     const legendAxisScale = d3.scalePow().exponent(0.25).domain(popExtent).range([0, legendWidth]);
 
-    // Choose tick values for the legend axis. We want to include the min and max population,
+    // 3) Choose tick values for the legend axis. We want to include the min and max population,
     // but also some round numbers in between
     const tickCandidates = [popMin, 5e5, 5e7, 5e8, 1e9, popMax];
-    const tickValues = [...new Set(tickCandidates)].filter(v => v >= popMin && v <= popMax).sort((a, b) => a - b);
+    const tickValues = [...new Set(tickCandidates)].filter(v => v >= popMin && v <= popMax)
+                                                   .sort((a, b) => a - b);
 
-    // The axis
+    // 4) Draw the axis. We will use a SI-prefix format for the tick labels, but replace "G" with "B" for billions.
     const fmt = d3.format(".2s");
-    const legendAxis = d3.axisBottom(legendAxisScale).tickValues(tickValues).tickFormat(d => fmt(d).replace("G", "B"));
+    const legendAxis = d3.axisBottom(legendAxisScale)
+                         .tickValues(tickValues)
+                         .tickFormat(d => fmt(d).replace("G", "B"));
 
-    // Now we can create the legend
+    // 5) Create a container for the legend
     const legendSvg = svg.append("g").attr("class", "legend")
                          .attr("transform", `translate(${legendX}, ${legendY})`);
 
-    // A 100-bin legend with thin rects using the same color scale as the countries.
+    // 6) Now comes the tricky part: we want to draw a gradient that matches the color scale. We will do this by
+    // drawing 100 thin rectangles side by side, each filled with the color corresponding to its population value.
+    // We will use a data join to draw and place the rectangles from the array generated below.
+    // This code generates an array containing 100 objects, each with the following properties:
+    // - x0: the left edge of the rectangle in pixels
+    // - x1: the right edge of the rectangle in pixels
+    // - value: the population value corresponding to the center of the rectangle,
+    //   which will be used to determine the fill color.
+
     const legendBins = 100;
     const binData = d3.range(legendBins).map(i => {
         const x0 = (i * legendWidth) / legendBins;
@@ -93,7 +110,8 @@
         return {x0, x1, value};
     });
 
-    // Draw the rectangles
+    // 7) Render the mini rectangles, which will blend together to form a gradient.
+    // We add 0.5 to the width of each rectangle to avoid gaps between them.
     legendSvg.selectAll(".legend-bin")
              .data(binData)
                .join("rect")
@@ -104,8 +122,13 @@
                  .attr("height", legendHeight)
                  .style("fill", d => color(d.value));
 
-    // Add the axis
+    // 8) Append the axis to the container
     legendSvg.append("g").attr("transform", `translate(0, ${legendHeight})`).call(legendAxis);
+
+    // Some ideas to improve this visualization:
+    // - Place the legend code in a separate module and reuse it for other choropleth maps.
+    //   (e.g. Reuse it in the multi-theme choropleth map from Exercise 5)
+    // - Add tooltips to the map and to the legend
 
 </script>
 

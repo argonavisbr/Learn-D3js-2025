@@ -30,12 +30,11 @@ Hover the mouse over a city to see its name (exercise).</p>
 
     // EXERCISE 4: Add tooltips to the graduated dot map to show the name of the city at mouse hover.
     // Don't use the title attribute. Draw a rectangle and text elements and place, and hide/show
-    // them on mouseover/mouseout events. You can use the tooltips.js or simple-tooltips.js modules
-    // or create your own implementation.
+    // them on mouseover/mouseout events. You can use the tooltips.js module or create your own implementation.
     // This is based on Thematic/3-graduated-dot-map.html.
 
-    // 1) Import the tooltip.js or simple-tooltips.js module.
-    import * as tooltip from "./js/tooltips.js";    // this module supports 0 fields (or more than 1 field if you wish)
+    // 1) Import the tooltips.js module.
+    // ADD CODE HERE
 
     // Load the data and convert to GeoJSON
     const shapesFile = '../../data/world/world-lowres.topojson';
@@ -120,12 +119,10 @@ Hover the mouse over a city to see its name (exercise).</p>
 
     // 2) Create the tooltip elements (a rectangle and text) and hide them initially.
     // Hint: call the tooltip.create function from the tooltip.js module and pass the svg selection
-    tooltip.create(svg);
+    // ADD CODE HERE
 
     // 3) Add mouseover and mouseout event listeners to the cities to show and hide the tooltip.
-    svg.selectAll("g.city")
-        .on("mouseover", tooltip.show)
-        .on("mouseout", tooltip.hide);
+    // ADD CODE HERE
 </script>
 
 </body>

@@ -39,7 +39,7 @@
     // Multiply the GDP per capita by the population to get the absolute GDP in USD.
 
     const topojsonFile = "../../data/world/world-lowres.topojson";
-    const themesFile = "../../data/world/un_regions_gdp.csv";
+    const themesFile = "../../data/world/un_regions_gdp.csv";   // using this file for the themes
     const key = "world";
 
     // Load the data
@@ -49,12 +49,8 @@
             // EXERCISE: Inspect the data file, select the desired columns and return an object
             // with the following properties: pop, gdp, gdpPerCapita, code. Don't forget to convert
             // the values to numbers (using the unary + operator).
-            return {
-                pop: +row.Pop_2016,
-                gdp: +row.GDP_2017 * +row.Pop_2016,  // absolute GDP in USD, calculated from GDP per capita and population
-                gdpPerCapita: +row.GDP_2017,
-                code: row.Code
-            }
+            // ADD CODE HERE - replace row with an object with the desired properties
+            return row;
         })
     ]);
 
@@ -64,17 +60,11 @@
 
     const data = topojson.feature(tjdata, tjdata.objects[key]);
 
-    // EXERCISE: Copy gdp, gdpPerCapita and pop to the properties array of each feature in the
-    // shapefile (each object in data.features), matching by the country code. Create
-    // new properties called gdp, pop and gdpPerCapita.
-    data.features.forEach(function(d) {
-        const entry = themes.filter(t => t.code === d.id)[0];
-        if(entry) {
-            d.properties.gdp = entry.gdp;
-            d.properties.pop = entry.pop;
-            d.properties.gdpPerCapita = entry.gdpPerCapita;
-        }
-    });
+    // EXERCISE: Add the CSV data to the shapefile data (GeoJSON) in the `properties` array of each feature.
+    // Match the data by the country code (compare the themes `code` property with the `feature.id`).
+    // Copy the data to the new properties: gdp, pop, gdpPerCapita (e.g. you will access feature.properties.gdp
+    // to get the GDP of a country).
+    // ADD CODE HERE
 
     // Set up the view
     const dim = {width: 960, height: 500};
@@ -88,25 +78,21 @@
     // EXERCISE: Look below for a function called addThemeSelector(). It creates a set of buttons to select the
     // current theme. You must adjust or create your code to use it to change the map's theme.
 
-
     // First, populate a list of themes that we support. Each theme is an object with a label and a key.
     // The label is the text that will be displayed on the button, and the key is the property name in the data
     // that will be used to color the map. Use the property names that you added to the feature.properties array.
     // EXERCISE: Add three themes to the list below:
-    const themesList = [
-        {label: "Population", key: "pop"},
-        {label: "GDP", key: "gdp"},
-        {label: "GDP per capita", key: "gdpPerCapita"}
-    ];
+    const themesList = [ /* ADD CODE */ ];
 
-    // EXERCISE: Call the theme selector passing the list above and the callback function to will be called when a button is
-    // clicked. The callback function will receive the key of the selected theme and update the map.
-    addThemeSelector(themesList, applyTheme);
+    // EXERCISE: Call the theme selector function (addThemeSelector) passing the list above and the callback function
+    // (applyTheme) to be called when a button is clicked. This will render buttons below your map. The callback
+    // function will receive the key of the selected theme and update the map.
+    // ADD CODE HERE
 
     // Render the map
-    drawMap(svg, data, geoPath); // moved the rendering code to a a function
+    drawMap(svg, data, geoPath); // moved the rendering code to a function
 
-    // EXERCISE: Implement the applyTheme() function that will be called when a button is clicked.
+    // EXERCISE: Implement the applyTheme() callback function that will be called when a button is clicked.
     // It should update the map's colors based on the selected theme.
     // The main idea is to create a color scale based on the extent of the selected theme's values and apply it to
     // the map (select all features and change their fill via the color scale and theme property).
@@ -114,17 +100,8 @@
     // You may wish to apply different color scales for each theme, to highlight the differences in the data.
     // For example, you can use a different exponent for the sequential scale for each theme.
     function applyTheme(t) {
-        let color;
-        const extent = d3.extent(data.features, d => d.properties[t]);
-        if (t === "gdp") { // use a different scale for absolute GDP
-            color = d3.scaleSequentialPow(d3.interpolateRdYlGn).exponent(.2).domain(extent);
-        } else if (t === "gdpPerCapita") { // use a different scale for GDP per capita
-            color = d3.scaleSequentialSqrt(d3.interpolateRdYlGn).domain(extent);
-        } else { // population - just greens
-            color = d3.scaleSequentialSqrt(d3.interpolateGreens).domain(extent);
-        }
-        // update the features with the new color scale
-        svg.selectAll("path.feature").style("fill", d => color(d.properties[t]));
+        // IMPLEMENTATION: Create a color scale based on the extent of the selected theme's values and apply
+        // it to the map.
 
         // update the title to show the current theme
         d3.select("h3").text(themesList.filter(d => d.key === t)[0].label);
